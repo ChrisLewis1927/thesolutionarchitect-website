@@ -39,80 +39,235 @@
   <main id="main">
     <section class="page-header">
       <div class="container">
-        <h1 class="page-header__title">AI Governance &amp; Guardrails</h1>
+        <h1 class="page-header__title">AI governance and guardrails</h1>
         <p class="page-header__subtitle">Practical guidance on responsible AI use in government. What frameworks exist, why they matter, and how Solution Architects should approach them.</p>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="content-wrapper">
-          <h2>What Are AI Guardrails?</h2>
-          <p>AI guardrails are the policies, processes, technical controls, and governance structures that ensure artificial intelligence is used responsibly, safely, and ethically. They're not about stopping innovation — they're about ensuring innovation doesn't cause harm.</p>
-          <p>For Solution Architects, guardrails are a design concern. Just as you'd consider security, accessibility, and data protection when designing a service, you need to consider AI governance when any part of your solution involves machine learning, large language models, or automated decision-making.</p>
-          <p>In government, this matters more than anywhere else. Public services affect millions of people. Decisions made by AI systems can determine benefit eligibility, risk assessments, resource allocation, and access to services. Getting it wrong doesn't just mean a bad user experience — it can mean real harm to real people.</p>
+    <div class="lesson-content">
+      <h2>A scenario, then a definition</h2>
+      <p>In summer 2020, students across the UK received A-level grades produced by an algorithm. Ofqual's own analysis found 39% of grades came back lower than the centre-assessed grades teachers had submitted, with the downgrades falling disproportionately on students at state schools and in disadvantaged areas. There was no meaningful right of appeal, no published explanation of how the model worked, and no human review before grades were issued. The whole system was withdrawn within five days.</p>
+      <p>That episode is almost a complete catalogue of what AI guardrails are supposed to prevent. No fairness testing across protected characteristics. No human in the loop at the point of decision. No transparency about the model's logic. No fallback when the model produced results that were obviously wrong on the face of them.</p>
+      <p>So: AI guardrails are the policies, controls, and design choices that keep automated systems from causing that kind of damage. For Solution Architects, they sit alongside security and accessibility as a design concern. You consider them at discovery, you build for them through delivery, and you do not bolt them on once the system is live.</p>
 
-          <h2>Why AI Guardrails Matter in Government</h2>
-          <p>Government use of AI carries unique responsibilities:</p>
-          <ul>
-            <li><strong>Public trust:</strong> Citizens expect government to use technology responsibly. A single high-profile AI failure can erode trust in digital services broadly.</li>
-            <li><strong>Legal obligations:</strong> The Equality Act 2010, Data Protection Act 2018, and UK GDPR all apply to AI systems. Automated decision-making has specific legal requirements around transparency and the right to human review.</li>
-            <li><strong>Accountability:</strong> Ministers and senior officials are accountable for the decisions their departments make — including decisions made or supported by AI systems.</li>
-            <li><strong>Fairness:</strong> AI systems can perpetuate or amplify existing biases. In government, where services must be equitable, this is unacceptable.</li>
-            <li><strong>Transparency:</strong> The public has a right to understand how decisions affecting them are made. 'The algorithm decided' is not an acceptable explanation.</li>
-          </ul>
+      <h2>Why this matters more in government</h2>
+      <p>A bad AI feature in a consumer app costs the company users. A bad AI feature in a public service costs people their benefits, their visas, their grades, or in some cases their liberty. The standard that applies to government AI use is higher because the consequences are.</p>
+      <p>There is also a legal floor. The Equality Act 2010, Data Protection Act 2018, and UK GDPR all apply to AI systems, and Article 22 of UK GDPR specifically restricts solely automated decisions with significant effects on individuals. Ministers and Permanent Secretaries remain accountable for what their departments do, which extends to what their algorithms do on their behalf. "The model decided" is not a defence that survives a select committee.</p>
 
-          <h2>Key Frameworks and Guidance</h2>
-          <p>Several frameworks guide AI use in UK government:</p>
-
-          <h3>The UK Government AI Framework</h3>
-          <p>Published by CDDO and DSIT, this framework provides principles for AI use across government. It covers proportionality, accountability, transparency, fairness, and security. Solution Architects should treat these principles as non-negotiable requirements when designing AI-enabled services.</p>
-
-          <h3>The Algorithmic Transparency Recording Standard</h3>
-          <p>This standard requires government departments to publish information about algorithmic tools used in decision-making. As an architect, you need to design systems that can provide this transparency — which means logging decisions, explaining reasoning, and maintaining audit trails.</p>
-
-          <h3>Data Ethics Framework</h3>
-          <p>The Data Ethics Framework helps teams consider the ethical implications of data use, including AI. It provides a structured approach to identifying and mitigating ethical risks. Use it early in discovery, not as an afterthought in beta.</p>
-
-          <h3>The Bletchley Declaration and AI Safety Institute</h3>
-          <p>The UK's AI Safety Institute focuses on evaluating frontier AI models for safety. While most government services won't use frontier models directly, the safety principles — testing, evaluation, red-teaming, and monitoring — apply to any AI deployment.</p>
-
-          <h2>Practical Guidance for Solution Architects</h2>
-          <p>When designing solutions that involve AI, consider these architectural concerns:</p>
-
-          <h3>1. Human in the Loop</h3>
-          <p>Design for human oversight. AI should support decisions, not make them autonomously — especially for high-stakes outcomes. Your architecture should include review points, escalation paths, and the ability for humans to override AI recommendations.</p>
-
-          <h3>2. Explainability by Design</h3>
-          <p>Build explainability into the architecture from the start. This means choosing models that can provide reasoning, logging the inputs and outputs of AI components, and designing user interfaces that communicate uncertainty and confidence levels.</p>
-
-          <h3>3. Bias Testing and Monitoring</h3>
-          <p>Design your system to detect and measure bias. This requires representative test data, ongoing monitoring of outcomes across protected characteristics, and alerting when patterns suggest unfair treatment.</p>
-
-          <h3>4. Data Governance</h3>
-          <p>AI systems are only as good as their training data. Ensure your architecture addresses data quality, provenance, consent, and retention. In government, you'll also need to consider data classification and cross-departmental data sharing agreements.</p>
-
-          <h3>5. Fail Safely</h3>
-          <p>Design for failure. What happens when the AI component is unavailable? What happens when it produces low-confidence results? Your architecture should degrade gracefully, falling back to manual processes when AI cannot be relied upon.</p>
-
-          <h3>6. Audit and Accountability</h3>
-          <p>Every AI-influenced decision should be traceable. Design comprehensive logging that captures what data was used, what model version produced the output, what confidence level was assigned, and what action was taken as a result.</p>
-
-          <div class="info-box mt-2xl">
-            <p><strong>The architect's role in AI governance</strong> isn't to become an AI ethics expert. It's to ensure that ethical considerations are embedded in the architecture — that the system is designed to be transparent, fair, accountable, and safe. You bring the same rigour to AI governance that you bring to security or accessibility: it's a non-functional requirement that shapes the design.</p>
-          </div>
-
-          <h2>Common Pitfalls</h2>
-          <ul>
-            <li><strong>Treating AI governance as a compliance checkbox</strong> rather than a design concern. If you're adding governance after the system is built, you're too late.</li>
-            <li><strong>Assuming 'off-the-shelf' AI tools are pre-approved.</strong> Even commercial AI products need assessment for bias, data handling, and appropriateness for government use.</li>
-            <li><strong>Ignoring the supply chain.</strong> If your solution uses third-party AI services, you're still accountable for how they behave. Understand what models are being used and how they're trained.</li>
-            <li><strong>Over-relying on AI for decisions that require human judgement.</strong> Some decisions are too consequential or too nuanced for automation, regardless of model accuracy.</li>
-            <li><strong>Failing to plan for model drift.</strong> AI models degrade over time as the world changes. Your architecture needs monitoring and retraining capabilities.</li>
-          </ul>
-        </div>
+      <div class="info-box mb-2xl">
+        <p><strong>Article 22, briefly</strong></p>
+        <p>Article 22 of UK GDPR gives individuals the right not to be subject to a decision based <em>solely</em> on automated processing where it produces legal effects or similarly significant ones. The word "solely" is doing real work here. If a human reviews the output meaningfully — not as a rubber stamp — the restriction doesn't apply.</p>
+        <p>This is part of why "human in the loop" matters legally, not just ethically. But the human review has to be substantive. The ICO has been clear that a reviewer who routinely approves AI recommendations without engaging with the underlying reasoning doesn't satisfy the test. Design the reviewer's interface accordingly.</p>
       </div>
-    </section>
+
+      <p>Public trust is the third factor. The Post Office Horizon scandal, the 2020 A-level results, the Home Office visa streaming tool withdrawn that same year — each one has made it harder for the next government AI project to earn the benefit of the doubt. Architects working in this space are designing for an audience that is, with good reason, sceptical.</p>
+
+      <h2>The frameworks that apply</h2>
+      <p>Four come up most often.</p>
+      <p>The <strong>UK Government AI Framework</strong>, published by CDDO and DSIT, sets out principles for AI use across departments: proportionality, accountability, transparency, fairness, security. Treat these as non-functional requirements that shape the design from the start, not text to copy into the assurance pack at the end.</p>
+      <p>The <strong>Algorithmic Transparency Recording Standard (ATRS)</strong> requires central government departments to publish information about algorithmic tools used in decisions affecting the public. That has practical implications for architecture: the system needs to capture inputs, model version, reasoning, and outcomes in a form that can be published — and that means designing the data model for it on day one.</p>
+      <p>The <strong>Data Ethics Framework</strong> gives delivery teams a structured way to surface ethical risks in data and AI work. It is most useful in discovery and design phases, before the architectural decisions are locked in. Use it early or do not bother.</p>
+      <p>The <strong>AI Safety Institute (AISI)</strong>, set up after the Bletchley Declaration in 2023, focuses on frontier model evaluation. Most government services will not use frontier models directly, but the disciplines AISI champions — pre-deployment evaluation, red-teaming, ongoing monitoring — apply at every scale of deployment.</p>
+      <p>The diagram below shows where each framework bites hardest across a project's lifecycle.</p>
+
+      <figure class="wide" aria-labelledby="fig1-caption">
+        <svg viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing where each UK AI governance framework applies across the project lifecycle">
+          <style>
+            .fl-bg { fill: #f7f5ef; }
+            .fl-title { font: 600 16px "Inter", system-ui, sans-serif; fill: #1a2332; }
+            .fl-phase { font: 600 13px "Inter", system-ui, sans-serif; fill: #1a2332; letter-spacing: 0.04em; text-transform: uppercase; }
+            .fl-framework { font: 600 14px "Inter", system-ui, sans-serif; fill: #1a2332; }
+            .fl-detail { font: 12px "Inter", system-ui, sans-serif; fill: #4a5468; }
+            .fl-rule { stroke: #d8d2c4; stroke-width: 1; }
+            .fl-cell-heavy { fill: #9a5424; }
+            .fl-cell-medium { fill: #c48556; }
+            .fl-cell-light { fill: #ebd6bc; }
+            .fl-cell-faint { fill: #f7eee0; stroke: #ebd6bc; }
+            .fl-cell-label { font: 600 11px "Inter", system-ui, sans-serif; fill: #f7f5ef; }
+            .fl-cell-label-dark { font: 600 11px "Inter", system-ui, sans-serif; fill: #4a5468; }
+          </style>
+          <rect class="fl-bg" width="880" height="420"/>
+          <text class="fl-title" x="40" y="38">Where each framework applies, by lifecycle phase</text>
+          <g transform="translate(260, 70)">
+            <text class="fl-phase" x="0" y="0" text-anchor="middle">Discovery</text>
+            <text class="fl-phase" x="120" y="0" text-anchor="middle">Design</text>
+            <text class="fl-phase" x="240" y="0" text-anchor="middle">Build</text>
+            <text class="fl-phase" x="360" y="0" text-anchor="middle">Live</text>
+            <text class="fl-phase" x="480" y="0" text-anchor="middle">Continuous</text>
+          </g>
+          <line class="fl-rule" x1="260" y1="90" x2="260" y2="370"/>
+          <line class="fl-rule" x1="380" y1="90" x2="380" y2="370"/>
+          <line class="fl-rule" x1="500" y1="90" x2="500" y2="370"/>
+          <line class="fl-rule" x1="620" y1="90" x2="620" y2="370"/>
+          <line class="fl-rule" x1="740" y1="90" x2="740" y2="370"/>
+          <g transform="translate(0, 110)">
+            <text class="fl-framework" x="40" y="22">UK Gov AI Framework</text>
+            <text class="fl-detail" x="40" y="40">CDDO / DSIT principles</text>
+            <rect class="fl-cell-heavy" x="205" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="325" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="445" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="565" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="685" y="6" width="110" height="36" rx="2"/>
+            <text class="fl-cell-label" x="440" y="29" text-anchor="middle">Principles apply throughout</text>
+          </g>
+          <g transform="translate(0, 175)">
+            <text class="fl-framework" x="40" y="22">Data Ethics Framework</text>
+            <text class="fl-detail" x="40" y="40">Surface ethical risks early</text>
+            <rect class="fl-cell-heavy" x="205" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="325" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-medium" x="445" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-light" x="565" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-faint" x="685" y="6" width="110" height="36" rx="2"/>
+          </g>
+          <g transform="translate(0, 240)">
+            <text class="fl-framework" x="40" y="22">AISI principles</text>
+            <text class="fl-detail" x="40" y="40">Evaluation, red-teaming, monitoring</text>
+            <rect class="fl-cell-faint" x="205" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-light" x="325" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="445" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="565" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-medium" x="685" y="6" width="110" height="36" rx="2"/>
+          </g>
+          <g transform="translate(0, 305)">
+            <text class="fl-framework" x="40" y="22">ATRS</text>
+            <text class="fl-detail" x="40" y="40">Algorithmic Transparency Recording Standard</text>
+            <rect class="fl-cell-light" x="205" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-medium" x="325" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-medium" x="445" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="565" y="6" width="110" height="36" rx="2"/>
+            <rect class="fl-cell-heavy" x="685" y="6" width="110" height="36" rx="2"/>
+          </g>
+          <g transform="translate(40, 390)">
+            <text class="fl-detail" x="0" y="0">Intensity:</text>
+            <rect class="fl-cell-faint" x="60" y="-10" width="20" height="14" rx="2"/>
+            <text class="fl-detail" x="86" y="0">light touch</text>
+            <rect class="fl-cell-light" x="158" y="-10" width="20" height="14" rx="2"/>
+            <text class="fl-detail" x="184" y="0">applies</text>
+            <rect class="fl-cell-medium" x="240" y="-10" width="20" height="14" rx="2"/>
+            <text class="fl-detail" x="266" y="0">significant</text>
+            <rect class="fl-cell-heavy" x="334" y="-10" width="20" height="14" rx="2"/>
+            <text class="fl-detail" x="360" y="0">primary obligation</text>
+          </g>
+        </svg>
+        <figcaption id="fig1-caption">Framework landscape across the AI delivery lifecycle. Some frameworks shape early thinking; others kick in when the system is live.</figcaption>
+      </figure>
+
+      <h2>Designing for guardrails</h2>
+      <p>When you are designing a service that uses AI, the architectural concerns cluster into six areas. They are not sequential, and some matter more than others depending on the use case and the stakes.</p>
+
+      <h3>Human in the loop</h3>
+      <p>For high-stakes decisions, AI should support a human reviewer rather than make the call on its own. The architecture needs review points, escalation paths, and a clear way for a human to override the model. The reference architecture below shows the pattern: a confidence threshold gates whether a recommendation is auto-actioned or routed to a person, an override path lets the reviewer disagree with the model, and an audit log captures everything underneath.</p>
+
+      <figure class="wide" aria-labelledby="fig2-caption">
+        <svg viewBox="0 0 880 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reference architecture diagram for a human-in-the-loop AI decision system">
+          <style>
+            .hl-bg { fill: #f7f5ef; }
+            .hl-title { font: 600 16px "Inter", system-ui, sans-serif; fill: #1a2332; }
+            .hl-box { fill: #ffffff; stroke: #2f4e6b; stroke-width: 1.5; }
+            .hl-box-human { fill: #ebd6bc; stroke: #9a5424; stroke-width: 1.8; }
+            .hl-box-auto { fill: #dce8df; stroke: #2d5c3d; stroke-width: 1.5; }
+            .hl-box-outcome { fill: #1a2332; stroke: #1a2332; }
+            .hl-box-audit { fill: #ece9e0; stroke: #4a5468; stroke-width: 1; }
+            .hl-box-fallback { fill: #f7f5ef; stroke: #8c2424; stroke-width: 1.5; stroke-dasharray: 5 3; }
+            .hl-label { font: 600 13px "Inter", system-ui, sans-serif; fill: #1a2332; }
+            .hl-label-outcome { font: 600 13px "Inter", system-ui, sans-serif; fill: #f7f5ef; }
+            .hl-label-human { font: 600 13px "Inter", system-ui, sans-serif; fill: #5c2f10; }
+            .hl-label-auto { font: 600 13px "Inter", system-ui, sans-serif; fill: #1b3a26; }
+            .hl-sub { font: 11px "Inter", system-ui, sans-serif; fill: #4a5468; }
+            .hl-sub-human { font: 11px "Inter", system-ui, sans-serif; fill: #5c2f10; }
+            .hl-sub-auto { font: 11px "Inter", system-ui, sans-serif; fill: #1b3a26; }
+            .hl-arrow { stroke: #2f4e6b; stroke-width: 1.5; fill: none; }
+            .hl-arrow-human { stroke: #9a5424; stroke-width: 1.8; fill: none; }
+            .hl-arrow-auto { stroke: #2d5c3d; stroke-width: 1.5; fill: none; }
+            .hl-arrow-fallback { stroke: #8c2424; stroke-width: 1.5; stroke-dasharray: 5 3; fill: none; }
+            .hl-arrow-label { font: 600 11px "Inter", system-ui, sans-serif; fill: #4a5468; }
+            .hl-arrow-label-human { font: 600 11px "Inter", system-ui, sans-serif; fill: #9a5424; }
+            .hl-arrow-label-auto { font: 600 11px "Inter", system-ui, sans-serif; fill: #2d5c3d; }
+            .hl-arrow-label-fallback { font: 600 11px "Inter", system-ui, sans-serif; fill: #8c2424; }
+            .hl-monitor { fill: #ece9e0; stroke: #4a5468; stroke-width: 1; stroke-dasharray: 2 2; }
+            .hl-monitor-label { font: 600 11px "Inter", system-ui, sans-serif; fill: #2f4e6b; letter-spacing: 0.04em; text-transform: uppercase; }
+          </style>
+          <rect class="hl-bg" width="880" height="540"/>
+          <text class="hl-title" x="40" y="32">Human-in-the-loop reference architecture</text>
+          <defs>
+            <marker id="arr-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f4e6b"/></marker>
+            <marker id="arr-human" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9a5424"/></marker>
+            <marker id="arr-auto" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2d5c3d"/></marker>
+            <marker id="arr-fallback" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8c2424"/></marker>
+          </defs>
+          <text class="hl-monitor-label" x="40" y="68">Monitoring &amp; bias dashboard</text>
+          <rect class="hl-monitor" x="40" y="78" width="800" height="32" rx="4"/>
+          <text class="hl-sub" x="440" y="98" text-anchor="middle">Live outcome monitoring · drift detection · fairness metrics across protected characteristics</text>
+          <rect class="hl-box" x="40" y="150" width="130" height="60" rx="4"/>
+          <text class="hl-label" x="105" y="178" text-anchor="middle">Request /</text>
+          <text class="hl-label" x="105" y="194" text-anchor="middle">data input</text>
+          <rect class="hl-box" x="200" y="150" width="150" height="60" rx="4"/>
+          <text class="hl-label" x="275" y="178" text-anchor="middle">Pre-process &amp;</text>
+          <text class="hl-label" x="275" y="194" text-anchor="middle">input validation</text>
+          <rect class="hl-box" x="380" y="150" width="150" height="60" rx="4"/>
+          <text class="hl-label" x="455" y="178" text-anchor="middle">Model inference</text>
+          <text class="hl-sub" x="455" y="200" text-anchor="middle">versioned, logged</text>
+          <rect class="hl-box" x="560" y="150" width="160" height="60" rx="4"/>
+          <text class="hl-label" x="640" y="178" text-anchor="middle">Confidence &amp;</text>
+          <text class="hl-label" x="640" y="194" text-anchor="middle">decision threshold</text>
+          <line class="hl-arrow" x1="170" y1="180" x2="198" y2="180" marker-end="url(#arr-ink)"/>
+          <line class="hl-arrow" x1="350" y1="180" x2="378" y2="180" marker-end="url(#arr-ink)"/>
+          <line class="hl-arrow" x1="530" y1="180" x2="558" y2="180" marker-end="url(#arr-ink)"/>
+          <line class="hl-arrow" x1="640" y1="210" x2="640" y2="250" marker-end="url(#arr-ink)"/>
+          <text class="hl-arrow-label-auto" x="380" y="282">High confidence →</text>
+          <text class="hl-arrow-label-human" x="730" y="282">Low confidence →</text>
+          <line class="hl-arrow-auto" x1="640" y1="252" x2="300" y2="290" marker-end="url(#arr-auto)"/>
+          <line class="hl-arrow-human" x1="640" y1="252" x2="780" y2="290" marker-end="url(#arr-human)"/>
+          <rect class="hl-box-auto" x="180" y="296" width="220" height="64" rx="4"/>
+          <text class="hl-label-auto" x="290" y="322" text-anchor="middle">Automated action</text>
+          <text class="hl-sub-auto" x="290" y="342" text-anchor="middle">action taken, recipient notified,</text>
+          <text class="hl-sub-auto" x="290" y="354" text-anchor="middle">flagged for sample review</text>
+          <rect class="hl-box-human" x="660" y="296" width="200" height="64" rx="4"/>
+          <text class="hl-label-human" x="760" y="322" text-anchor="middle">Human reviewer</text>
+          <text class="hl-sub-human" x="760" y="342" text-anchor="middle">sees inputs, model output,</text>
+          <text class="hl-sub-human" x="760" y="354" text-anchor="middle">confidence, reasoning</text>
+          <path class="hl-arrow-human" d="M 760 296 Q 760 250 700 235" marker-end="url(#arr-human)" fill="none"/>
+          <text class="hl-arrow-label-human" x="775" y="265">override</text>
+          <rect class="hl-box-outcome" x="320" y="406" width="240" height="56" rx="4"/>
+          <text class="hl-label-outcome" x="440" y="432" text-anchor="middle">Outcome / decision</text>
+          <text class="hl-label-outcome" x="440" y="450" text-anchor="middle" style="font-size:11px; font-weight:400; fill:#d8d2c4;">communicated with explanation</text>
+          <path class="hl-arrow-auto" d="M 290 360 L 290 432 L 318 432" marker-end="url(#arr-auto)" fill="none"/>
+          <path class="hl-arrow-human" d="M 760 360 L 760 432 L 562 432" marker-end="url(#arr-human)" fill="none"/>
+          <rect class="hl-box-fallback" x="40" y="296" width="120" height="64" rx="4"/>
+          <text class="hl-label" x="100" y="322" text-anchor="middle" style="fill:#8c2424">Manual queue</text>
+          <text class="hl-sub" x="100" y="342" text-anchor="middle" style="fill:#8c2424">when AI is</text>
+          <text class="hl-sub" x="100" y="354" text-anchor="middle" style="fill:#8c2424">unavailable</text>
+          <path class="hl-arrow-fallback" d="M 275 210 L 275 250 L 100 250 L 100 294" marker-end="url(#arr-fallback)" fill="none"/>
+          <text class="hl-arrow-label-fallback" x="110" y="240">fallback</text>
+          <path class="hl-arrow-fallback" d="M 100 360 L 100 432 L 318 432" marker-end="url(#arr-fallback)" fill="none"/>
+          <rect class="hl-box-audit" x="40" y="488" width="800" height="36" rx="4"/>
+          <text class="hl-monitor-label" x="50" y="510">Audit log</text>
+          <text class="hl-sub" x="540" y="510" text-anchor="middle">inputs · model version · confidence · human decision · action taken · timestamp</text>
+        </svg>
+        <figcaption id="fig2-caption">Reference pattern for an AI-supported decision flow. The amber boxes are the points where a human reviews, overrides, or is required by the design. The audit band underneath captures everything; the monitoring band on top observes it.</figcaption>
+      </figure>
+
+      <h3>Explainability</h3>
+      <p>Pick models that can show their reasoning where you can. Log inputs and outputs at the AI component boundary. Design the UI to communicate confidence levels, not just decisions — a recommendation flagged as low-confidence should be handled differently from one the system is sure about, and the user receiving the decision should be able to see which it was.</p>
+
+      <h3>Bias testing and live monitoring</h3>
+      <p>Representative test data is non-negotiable, and that is harder than it sounds for public services where the population skews differently in different regions. Live monitoring of outcomes across protected characteristics matters at least as much: the bias you catch in testing is the bias you happened to think to look for, while live monitoring is how you catch the rest. Budget for both.</p>
+
+      <h3>Data governance</h3>
+      <p>AI quality follows data quality. Provenance, consent, retention, classification — the boring questions that determine whether your system is legal and whether its outputs are defensible. In government you will also need to think about cross-departmental data sharing agreements, which adds its own layer of complications.</p>
+
+      <h3>Failing safely</h3>
+      <p>What happens when the AI component is down, or returns low-confidence results, or returns nothing? The system needs to degrade gracefully, and "the AI is unavailable, please try again later" is rarely an acceptable failure mode for a public service. Design the manual path properly. It is not a stopgap, it is part of the system.</p>
+
+      <h3>Audit and accountability</h3>
+      <p>Every AI-influenced decision needs to be reconstructable months or years later. That means logging the data used, the model version, the confidence score, the human decision (where there was one), and the action that followed. Build this in from day one. Retrofitting it is painful and sometimes impossible.</p>
+
+      <h2>Where it goes wrong</h2>
+      <p>A few patterns recur across projects that get into trouble. Governance treated as a compliance exercise rather than a design concern, with the assurance work starting only after build — by which point the architecture is already wrong. Commercial AI products assumed to be pre-approved because the vendor is well-known: even Microsoft Copilot, AWS Bedrock, and Google's models need departmental assessment for bias, data handling, and fit for purpose. Third-party AI services brought in without understanding what models sit underneath; the supply chain matters, and so do the assumptions baked into someone else's training pipeline. Decisions automated that should not have been, because some calls are too consequential or too context-dependent to delegate to a model regardless of how accurate the model is. And no plan for model drift, which is what gets you eighteen months in when the world has moved on and the training data has not.</p>
+
+      <h2>The architect's job</h2>
+      <p>You do not need to become an AI ethics specialist. You need to make sure the ethical considerations are baked into the architecture: that the system is transparent, that humans can intervene, that bias can be detected, that failure is survivable, and that decisions can be explained to the person they affected. The same rigour you apply to security and accessibility, applied to a problem that is newer, less well-understood, and watched more closely.</p>
+    </div>
   </main>
 
   <footer class="footer" role="contentinfo">
