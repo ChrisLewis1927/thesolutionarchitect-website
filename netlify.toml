@@ -1,3 +1,7 @@
+[build]
+  publish = "."
+  command = "echo 'No build needed'"
+
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
