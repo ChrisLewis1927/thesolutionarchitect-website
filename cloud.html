@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cloud Fundamentals for Solution Architects — AWS, Azure, and GCP concepts through a government architecture lens.">
+  <meta property="og:title" content="Cloud Fundamentals — The Solution Architect">
+  <meta property="og:description" content="Key cloud concepts for architects. Understand the services, patterns, and decisions that matter most.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>Cloud Fundamentals — The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="infographics.html" class="nav__link">Infographics</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link nav__link--active">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Cloud Fundamentals</h1>
+        <p class="page-header__subtitle">Key cloud concepts for Solution Architects. Understanding the services, patterns, and architectural decisions that matter most in government.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="content-wrapper">
+          <p>The UK government's Cloud First policy means that cloud hosting should be the default for new services. As a Solution Architect, you need to understand cloud services well enough to make informed decisions about hosting, architecture patterns, cost management, and security — without necessarily being a cloud engineer.</p>
+          
+          <div class="info-box mb-2xl">
+            <p><strong>The architect's cloud role:</strong> You don't need to configure VPCs or write Terraform. You need to understand what's possible, what's appropriate, what the trade-offs are, and how to have informed conversations with cloud engineers and vendors.</p>
+          </div>
+
+          <h2>Amazon Web Services (AWS)</h2>
+          <p>AWS is the most widely used cloud platform in UK government, available through the Crown Commercial Service framework. Understanding its core services is essential for any government Solution Architect.</p>
+
+          <h3>Compute</h3>
+          <p>AWS offers multiple compute options, each suited to different architectural patterns:</p>
+          <ul>
+            <li><strong>EC2 (Elastic Compute Cloud):</strong> Virtual machines. Maximum control, maximum responsibility. Use when you need specific OS configurations or long-running processes.</li>
+            <li><strong>Lambda:</strong> Serverless functions. No servers to manage, pay only for execution time. Ideal for event-driven architectures and APIs with variable traffic.</li>
+            <li><strong>ECS/Fargate:</strong> Container orchestration. Good middle ground — containerised workloads without managing the underlying infrastructure.</li>
+            <li><strong>Elastic Beanstalk:</strong> Platform-as-a-Service. Simplest deployment model for web applications. Good for teams with limited cloud expertise.</li>
+          </ul>
+
+          <h3>Storage</h3>
+          <ul>
+            <li><strong>S3 (Simple Storage Service):</strong> Object storage. Virtually unlimited, highly durable. Use for files, backups, static website hosting, and data lakes.</li>
+            <li><strong>EBS (Elastic Block Store):</strong> Block storage attached to EC2 instances. Use for databases and applications that need filesystem access.</li>
+            <li><strong>EFS (Elastic File System):</strong> Managed file storage shared across multiple instances. Use when multiple services need access to the same files.</li>
+          </ul>
+
+          <h3>Databases</h3>
+          <ul>
+            <li><strong>RDS (Relational Database Service):</strong> Managed relational databases (PostgreSQL, MySQL, SQL Server). Handles backups, patching, and failover.</li>
+            <li><strong>DynamoDB:</strong> Managed NoSQL database. Excellent for high-throughput, low-latency workloads with simple access patterns.</li>
+            <li><strong>Aurora:</strong> AWS's cloud-native relational database. Higher performance and availability than standard RDS, at higher cost.</li>
+          </ul>
+
+          <h3>Networking</h3>
+          <ul>
+            <li><strong>VPC (Virtual Private Cloud):</strong> Your isolated network in AWS. Understanding VPC design is critical for security and compliance.</li>
+            <li><strong>CloudFront:</strong> Content delivery network. Caches content at edge locations for faster delivery to users.</li>
+            <li><strong>Route 53:</strong> DNS service. Manages domain names and routes traffic.</li>
+            <li><strong>API Gateway:</strong> Managed API front door. Handles authentication, rate limiting, and routing for APIs.</li>
+          </ul>
+
+          <h3>Security &amp; Identity</h3>
+          <ul>
+            <li><strong>IAM (Identity and Access Management):</strong> Controls who can do what in your AWS account. The foundation of cloud security.</li>
+            <li><strong>KMS (Key Management Service):</strong> Manages encryption keys. Essential for data protection compliance.</li>
+            <li><strong>WAF (Web Application Firewall):</strong> Protects web applications from common attacks.</li>
+            <li><strong>GuardDuty:</strong> Threat detection service. Monitors for suspicious activity in your account.</li>
+          </ul>
+
+          <h3>Key Architectural Decisions for Government</h3>
+          <ul>
+            <li><strong>Region selection:</strong> UK government data typically must stay in the UK (eu-west-2, London region). Understand data residency requirements.</li>
+            <li><strong>Multi-account strategy:</strong> Separate environments (dev, staging, production) into different AWS accounts for security isolation.</li>
+            <li><strong>Managed vs. self-managed:</strong> Default to managed services. They reduce operational burden and are usually more secure out of the box.</li>
+            <li><strong>Cost management:</strong> Cloud costs can spiral. Design with cost awareness — right-size instances, use reserved capacity for predictable workloads, and implement cost monitoring.</li>
+          </ul>
+        </div>
+
+        <div class="content-wrapper mt-3xl">
+          <h2>Microsoft Azure</h2>
+          <div class="info-box info-box--amber">
+            <p><strong>Coming soon.</strong> Azure content is being developed. Azure is increasingly used in government, particularly where departments have existing Microsoft licensing agreements. Key topics will include Azure Government, Azure AD integration, and comparison with equivalent AWS services.</p>
+          </div>
+
+          <h2 class="mt-2xl">Google Cloud Platform (GCP)</h2>
+          <div class="info-box info-box--amber">
+            <p><strong>Coming soon.</strong> GCP content is being developed. While less common in UK government than AWS or Azure, GCP offers strong data analytics and machine learning capabilities that are relevant for certain use cases.</p>
+          </div>
+
+          <h2 class="mt-2xl">Cloud Architecture Patterns</h2>
+          <p>Regardless of which cloud provider you use, certain architectural patterns recur:</p>
+          <ul>
+            <li><strong>Serverless-first:</strong> Start with serverless and only move to containers or VMs when you have a specific reason. Less to manage, less to secure.</li>
+            <li><strong>Event-driven:</strong> Decouple components using events and queues. Improves resilience and scalability.</li>
+            <li><strong>Infrastructure as Code:</strong> Define your infrastructure in version-controlled templates. Enables repeatability, auditability, and disaster recovery.</li>
+            <li><strong>Immutable infrastructure:</strong> Don't patch servers — replace them. Reduces configuration drift and simplifies rollback.</li>
+            <li><strong>Defence in depth:</strong> Multiple layers of security controls. Network isolation, encryption at rest and in transit, least-privilege access, monitoring and alerting.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="infographics.html">Infographics</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

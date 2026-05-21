@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#1a1a2e"/>
+  <rect x="40" y="40" width="720" height="520" rx="12" fill="#2a2a3e"/>
+  
+  <!-- Title -->
+  <text x="400" y="100" text-anchor="middle" fill="#4a6cf7" font-size="28" font-family="sans-serif" font-weight="bold">What a Solution Architect Actually Does</text>
+  <text x="400" y="130" text-anchor="middle" fill="#cccccc" font-size="14" font-family="sans-serif">SA Academy — Lesson 1</text>
+  
+  <!-- Four Hats -->
+  <rect x="80" y="170" width="300" height="80" rx="8" fill="#1a1a2e"/>
+  <text x="230" y="200" text-anchor="middle" fill="#4a6cf7" font-size="14" font-family="sans-serif" font-weight="bold">🔄 Translator</text>
+  <text x="230" y="225" text-anchor="middle" fill="#cccccc" font-size="11" font-family="sans-serif">Bridge between business and technology</text>
+  
+  <rect x="420" y="170" width="300" height="80" rx="8" fill="#1a1a2e"/>
+  <text x="570" y="200" text-anchor="middle" fill="#f59e0b" font-size="14" font-family="sans-serif" font-weight="bold">⚖️ Decision-Maker</text>
+  <text x="570" y="225" text-anchor="middle" fill="#cccccc" font-size="11" font-family="sans-serif">Making decisions explicit and defensible</text>
+  
+  <rect x="80" y="270" width="300" height="80" rx="8" fill="#1a1a2e"/>
+  <text x="230" y="300" text-anchor="middle" fill="#f59e0b" font-size="14" font-family="sans-serif" font-weight="bold">⚠️ Risk-Manager</text>
+  <text x="230" y="325" text-anchor="middle" fill="#cccccc" font-size="11" font-family="sans-serif">Identify, quantify, communicate risk</text>
+  
+  <rect x="420" y="270" width="300" height="80" rx="8" fill="#1a1a2e"/>
+  <text x="570" y="300" text-anchor="middle" fill="#4a6cf7" font-size="14" font-family="sans-serif" font-weight="bold">🛡️ Quality Guardian</text>
+  <text x="570" y="325" text-anchor="middle" fill="#cccccc" font-size="11" font-family="sans-serif">Holding the standard for 'good enough'</text>
+  
+  <!-- Key Message -->
+  <rect x="80" y="390" width="640" height="60" rx="8" fill="rgba(74, 108, 247, 0.1)"/>
+  <text x="400" y="425" text-anchor="middle" fill="#ffffff" font-size="14" font-family="sans-serif">Architecture is fundamentally about decisions — which ones to make, when to make them,</text>
+  <text x="400" y="445" text-anchor="middle" fill="#ffffff" font-size="14" font-family="sans-serif">and how to make them defensible.</text>
+  
+  <!-- Footer -->
+  <text x="400" y="530" text-anchor="middle" fill="#666666" font-size="11" font-family="sans-serif">thesolutionarchitect.uk</text>
+</svg>

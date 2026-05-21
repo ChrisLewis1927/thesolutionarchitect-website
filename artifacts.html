@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Architecture Artifacts Reference — the documents, diagrams, and deliverables that Solution Architects produce across the delivery lifecycle.">
+  <meta property="og:title" content="Architecture Artifacts — The Solution Architect">
+  <meta property="og:description" content="A reference guide to architecture artifacts categorised by type and delivery phase.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>Architecture Artifacts — The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="infographics.html" class="nav__link">Infographics</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Architecture Artifacts</h1>
+        <p class="page-header__subtitle">A reference guide to the documents, diagrams, and deliverables that Solution Architects produce. What they are, when to use them, and which phase they belong to.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="content-wrapper">
+          <div class="info-box mb-2xl">
+            <p><strong>A note on proportionality:</strong> Not every project needs every artifact. The right set of documents depends on the complexity of the solution, the phase of delivery, and the governance requirements. Producing documents nobody reads is waste. Produce what's needed to make good decisions and enable the team.</p>
+          </div>
+        </div>
+
+        <!-- Architecture Artifacts -->
+        <div class="artifacts-category fade-in">
+          <h2 class="artifacts-category__title">Architecture</h2>
+          
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Solution Architecture Document (SAD)</h3>
+            <p class="artifact-item__description">The primary architecture deliverable. Describes the solution's components, their interactions, technology choices, and how they meet requirements. A living document that evolves throughout delivery.</p>
+            <p class="artifact-item__meta">Phase: Alpha onwards • Updated throughout delivery</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Architecture Decision Record (ADR)</h3>
+            <p class="artifact-item__description">A short document capturing a single architecture decision — the context, the options considered, the decision made, and the consequences. Lightweight, version-controlled, and invaluable for future teams.</p>
+            <p class="artifact-item__meta">Phase: All phases • One per significant decision</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Solution Options Paper</h3>
+            <p class="artifact-item__description">Presents 2-4 solution approaches with trade-offs across cost, time, risk, and alignment with standards. Used to support governance decisions. Should include a clear recommendation.</p>
+            <p class="artifact-item__meta">Phase: Alpha • Presented to programme board or architecture review</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Architecture Principles</h3>
+            <p class="artifact-item__description">A set of guiding statements that shape architecture decisions for a programme or department. Should be specific enough to be useful and few enough to be remembered.</p>
+            <p class="artifact-item__meta">Phase: Discovery/Alpha • Reviewed periodically</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Context Diagram (C4 Level 1)</h3>
+            <p class="artifact-item__description">Shows the system in context — who uses it and what other systems it interacts with. The most important diagram for communicating with non-technical stakeholders.</p>
+            <p class="artifact-item__meta">Phase: Alpha onwards • Audience: Everyone</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Container Diagram (C4 Level 2)</h3>
+            <p class="artifact-item__description">Shows the high-level technical building blocks — applications, databases, message queues, file stores — and how they communicate. The primary technical architecture view.</p>
+            <p class="artifact-item__meta">Phase: Alpha onwards • Audience: Technical stakeholders</p>
+          </div>
+        </div>
+
+        <!-- Governance Artifacts -->
+        <div class="artifacts-category fade-in">
+          <h2 class="artifacts-category__title">Governance</h2>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Architecture Review Board Submission</h3>
+            <p class="artifact-item__description">A structured submission for architecture governance review. Typically includes the solution overview, key decisions, risks, alignment with standards, and any exceptions requested.</p>
+            <p class="artifact-item__meta">Phase: Alpha/Beta • Required for governance approval</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Technical Design Authority Paper</h3>
+            <p class="artifact-item__description">A paper seeking approval for a specific technical approach from the department's design authority. More detailed than an options paper, focused on implementation approach.</p>
+            <p class="artifact-item__meta">Phase: Alpha/Beta • Required for significant technical decisions</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Risk Register (Architecture Risks)</h3>
+            <p class="artifact-item__description">Documents identified architecture risks with likelihood, impact, mitigations, and owners. Should be actively managed, not filed and forgotten.</p>
+            <p class="artifact-item__meta">Phase: All phases • Reviewed regularly</p>
+          </div>
+        </div>
+
+        <!-- Delivery Artifacts -->
+        <div class="artifacts-category fade-in">
+          <h2 class="artifacts-category__title">Delivery</h2>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Integration Specification</h3>
+            <p class="artifact-item__description">Defines how two systems will integrate — protocols, data formats, authentication, error handling, and SLAs. Essential when working with other teams or external systems.</p>
+            <p class="artifact-item__meta">Phase: Alpha/Beta • One per integration point</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Non-Functional Requirements (NFRs)</h3>
+            <p class="artifact-item__description">Specifies quality attributes — performance targets, availability requirements, scalability expectations, and capacity needs. Should be measurable and testable.</p>
+            <p class="artifact-item__meta">Phase: Alpha • Validated in Beta</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Operational Readiness Checklist</h3>
+            <p class="artifact-item__description">Confirms the service is ready for live operation — monitoring in place, runbooks written, incident process defined, support model agreed, disaster recovery tested.</p>
+            <p class="artifact-item__meta">Phase: Late Beta • Required before go-live</p>
+          </div>
+        </div>
+
+        <!-- Security Artifacts -->
+        <div class="artifacts-category fade-in">
+          <h2 class="artifacts-category__title">Security</h2>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Security Architecture Document</h3>
+            <p class="artifact-item__description">Describes the security controls, threat model, trust boundaries, and security patterns for the solution. May be a section of the SAD or a standalone document for complex services.</p>
+            <p class="artifact-item__meta">Phase: Alpha onwards • Reviewed by security team</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Threat Model</h3>
+            <p class="artifact-item__description">Identifies potential threats to the system, assesses their likelihood and impact, and defines mitigations. STRIDE or similar methodology. Should be revisited when the architecture changes.</p>
+            <p class="artifact-item__meta">Phase: Alpha • Updated when architecture changes</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Data Protection Impact Assessment (DPIA)</h3>
+            <p class="artifact-item__description">Required when processing personal data in ways that pose high risk to individuals. The Solution Architect contributes the technical description of data flows, storage, and access controls.</p>
+            <p class="artifact-item__meta">Phase: Alpha/Beta • Led by DPO, architect contributes</p>
+          </div>
+        </div>
+
+        <!-- Data Artifacts -->
+        <div class="artifacts-category fade-in">
+          <h2 class="artifacts-category__title">Data</h2>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Data Flow Diagram</h3>
+            <p class="artifact-item__description">Shows how data moves through the system — where it enters, how it's processed, where it's stored, and where it exits. Essential for security review and data protection compliance.</p>
+            <p class="artifact-item__meta">Phase: Alpha onwards • Required for DPIA</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Data Model</h3>
+            <p class="artifact-item__description">Defines the logical structure of data in the system — entities, relationships, and key attributes. Not necessarily a full physical database schema, but enough to understand the data landscape.</p>
+            <p class="artifact-item__meta">Phase: Alpha/Beta • Evolves with the solution</p>
+          </div>
+
+          <div class="artifact-item">
+            <h3 class="artifact-item__name">Information Asset Register Entry</h3>
+            <p class="artifact-item__description">Documents what data the service holds, its classification, who owns it, retention periods, and disposal approach. Required for information governance compliance.</p>
+            <p class="artifact-item__meta">Phase: Beta/Live • Maintained throughout service life</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="infographics.html">Infographics</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

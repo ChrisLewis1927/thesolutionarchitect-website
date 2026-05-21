@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Governance and Guardrails in UK Government — practical guidance on responsible AI use in public services.">
+  <meta property="og:title" content="AI Governance & Guardrails — The Solution Architect">
+  <meta property="og:description" content="Practical guidance on AI guardrails in government. What frameworks exist, why they matter, and how to apply them.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>AI Governance & Guardrails — The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="infographics.html" class="nav__link">Infographics</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link nav__link--active">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">AI Governance &amp; Guardrails</h1>
+        <p class="page-header__subtitle">Practical guidance on responsible AI use in government. What frameworks exist, why they matter, and how Solution Architects should approach them.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="content-wrapper">
+          <h2>What Are AI Guardrails?</h2>
+          <p>AI guardrails are the policies, processes, technical controls, and governance structures that ensure artificial intelligence is used responsibly, safely, and ethically. They're not about stopping innovation — they're about ensuring innovation doesn't cause harm.</p>
+          <p>For Solution Architects, guardrails are a design concern. Just as you'd consider security, accessibility, and data protection when designing a service, you need to consider AI governance when any part of your solution involves machine learning, large language models, or automated decision-making.</p>
+          <p>In government, this matters more than anywhere else. Public services affect millions of people. Decisions made by AI systems can determine benefit eligibility, risk assessments, resource allocation, and access to services. Getting it wrong doesn't just mean a bad user experience — it can mean real harm to real people.</p>
+
+          <h2>Why AI Guardrails Matter in Government</h2>
+          <p>Government use of AI carries unique responsibilities:</p>
+          <ul>
+            <li><strong>Public trust:</strong> Citizens expect government to use technology responsibly. A single high-profile AI failure can erode trust in digital services broadly.</li>
+            <li><strong>Legal obligations:</strong> The Equality Act 2010, Data Protection Act 2018, and UK GDPR all apply to AI systems. Automated decision-making has specific legal requirements around transparency and the right to human review.</li>
+            <li><strong>Accountability:</strong> Ministers and senior officials are accountable for the decisions their departments make — including decisions made or supported by AI systems.</li>
+            <li><strong>Fairness:</strong> AI systems can perpetuate or amplify existing biases. In government, where services must be equitable, this is unacceptable.</li>
+            <li><strong>Transparency:</strong> The public has a right to understand how decisions affecting them are made. 'The algorithm decided' is not an acceptable explanation.</li>
+          </ul>
+
+          <h2>Key Frameworks and Guidance</h2>
+          <p>Several frameworks guide AI use in UK government:</p>
+
+          <h3>The UK Government AI Framework</h3>
+          <p>Published by CDDO and DSIT, this framework provides principles for AI use across government. It covers proportionality, accountability, transparency, fairness, and security. Solution Architects should treat these principles as non-negotiable requirements when designing AI-enabled services.</p>
+
+          <h3>The Algorithmic Transparency Recording Standard</h3>
+          <p>This standard requires government departments to publish information about algorithmic tools used in decision-making. As an architect, you need to design systems that can provide this transparency — which means logging decisions, explaining reasoning, and maintaining audit trails.</p>
+
+          <h3>Data Ethics Framework</h3>
+          <p>The Data Ethics Framework helps teams consider the ethical implications of data use, including AI. It provides a structured approach to identifying and mitigating ethical risks. Use it early in discovery, not as an afterthought in beta.</p>
+
+          <h3>The Bletchley Declaration and AI Safety Institute</h3>
+          <p>The UK's AI Safety Institute focuses on evaluating frontier AI models for safety. While most government services won't use frontier models directly, the safety principles — testing, evaluation, red-teaming, and monitoring — apply to any AI deployment.</p>
+
+          <h2>Practical Guidance for Solution Architects</h2>
+          <p>When designing solutions that involve AI, consider these architectural concerns:</p>
+
+          <h3>1. Human in the Loop</h3>
+          <p>Design for human oversight. AI should support decisions, not make them autonomously — especially for high-stakes outcomes. Your architecture should include review points, escalation paths, and the ability for humans to override AI recommendations.</p>
+
+          <h3>2. Explainability by Design</h3>
+          <p>Build explainability into the architecture from the start. This means choosing models that can provide reasoning, logging the inputs and outputs of AI components, and designing user interfaces that communicate uncertainty and confidence levels.</p>
+
+          <h3>3. Bias Testing and Monitoring</h3>
+          <p>Design your system to detect and measure bias. This requires representative test data, ongoing monitoring of outcomes across protected characteristics, and alerting when patterns suggest unfair treatment.</p>
+
+          <h3>4. Data Governance</h3>
+          <p>AI systems are only as good as their training data. Ensure your architecture addresses data quality, provenance, consent, and retention. In government, you'll also need to consider data classification and cross-departmental data sharing agreements.</p>
+
+          <h3>5. Fail Safely</h3>
+          <p>Design for failure. What happens when the AI component is unavailable? What happens when it produces low-confidence results? Your architecture should degrade gracefully, falling back to manual processes when AI cannot be relied upon.</p>
+
+          <h3>6. Audit and Accountability</h3>
+          <p>Every AI-influenced decision should be traceable. Design comprehensive logging that captures what data was used, what model version produced the output, what confidence level was assigned, and what action was taken as a result.</p>
+
+          <div class="info-box mt-2xl">
+            <p><strong>The architect's role in AI governance</strong> isn't to become an AI ethics expert. It's to ensure that ethical considerations are embedded in the architecture — that the system is designed to be transparent, fair, accountable, and safe. You bring the same rigour to AI governance that you bring to security or accessibility: it's a non-functional requirement that shapes the design.</p>
+          </div>
+
+          <h2>Common Pitfalls</h2>
+          <ul>
+            <li><strong>Treating AI governance as a compliance checkbox</strong> rather than a design concern. If you're adding governance after the system is built, you're too late.</li>
+            <li><strong>Assuming 'off-the-shelf' AI tools are pre-approved.</strong> Even commercial AI products need assessment for bias, data handling, and appropriateness for government use.</li>
+            <li><strong>Ignoring the supply chain.</strong> If your solution uses third-party AI services, you're still accountable for how they behave. Understand what models are being used and how they're trained.</li>
+            <li><strong>Over-relying on AI for decisions that require human judgement.</strong> Some decisions are too consequential or too nuanced for automation, regardless of model accuracy.</li>
+            <li><strong>Failing to plan for model drift.</strong> AI models degrade over time as the world changes. Your architecture needs monitoring and retraining capabilities.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="infographics.html">Infographics</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

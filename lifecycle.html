@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Government Project Lifecycle — Discovery, Alpha, Beta, Live, and Retirement phases explained for Solution Architects.">
+  <meta property="og:title" content="Government Project Lifecycle — The Solution Architect">
+  <meta property="og:description" content="Understand each phase of government digital delivery and what architecture looks like at every stage.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>Government Project Lifecycle — The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="infographics.html" class="nav__link">Infographics</a></li>
+          <li><a href="lifecycle.html" class="nav__link nav__link--active">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Government Project Lifecycle</h1>
+        <p class="page-header__subtitle">Discovery → Alpha → Beta → Live → Retirement. What architecture looks like at every stage of government digital delivery.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="content-wrapper">
+          <p>UK government digital services follow a phased delivery approach defined by the GDS Service Manual. Each phase has a distinct purpose, and the Solution Architect's role shifts significantly between them. Understanding this lifecycle is fundamental to effective architecture practice in government.</p>
+          
+          <div class="info-box mb-2xl">
+            <p>This lifecycle applies to services assessed against the <strong>Service Standard</strong>. Not every project follows it rigidly, but the principles — start with understanding, test assumptions, build incrementally, iterate based on evidence — apply broadly.</p>
+          </div>
+
+          <!-- Lifecycle Overview (text) -->
+          <div class="phase-card fade-in mb-2xl" style="border-left-color: var(--color-accent-amber); background: linear-gradient(135deg, rgba(74, 108, 247, 0.03), rgba(245, 158, 11, 0.03));">
+            <h2 class="phase-card__title" style="font-size: 1.5rem;">The Five Phases at a Glance</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+              <div>
+                <p style="font-weight: 700; color: var(--color-accent-blue); margin-bottom: 0.25rem;">1. Discovery</p>
+                <p style="font-size: 0.9rem;">Understand the problem. Research users. Map the landscape. Don't design yet.</p>
+              </div>
+              <div>
+                <p style="font-weight: 700; color: var(--color-accent-amber); margin-bottom: 0.25rem;">2. Alpha</p>
+                <p style="font-size: 0.9rem;">Test hypotheses. Prototype options. Prove feasibility. Test the riskiest assumptions first.</p>
+              </div>
+              <div>
+                <p style="font-weight: 700; color: #10b981; margin-bottom: 0.25rem;">3. Beta</p>
+                <p style="font-size: 0.9rem;">Build the real service. Test with real users. Iterate based on evidence. Prepare for live.</p>
+              </div>
+              <div>
+                <p style="font-weight: 700; color: #6366f1; margin-bottom: 0.25rem;">4. Live</p>
+                <p style="font-size: 0.9rem;">Operate, monitor, and continuously improve. Support the team that inherits it.</p>
+              </div>
+              <div>
+                <p style="font-weight: 700; color: #ef4444; margin-bottom: 0.25rem;">5. Retirement</p>
+                <p style="font-size: 0.9rem;">Plan decommissioning. Migrate data. Transition users. Document lessons learned.</p>
+              </div>
+            </div>
+            <p style="margin-top: 1.5rem; font-size: 0.85rem; color: #666;">Each phase has a service assessment gate. The architect's role shifts significantly between phases — from understanding, to designing, to guiding, to governing.</p>
+          </div>
+        </div>
+
+        <!-- Discovery -->
+        <div class="phase-card fade-in">
+          <h2 class="phase-card__title">
+            <span class="phase-card__number">1</span>
+            Discovery
+          </h2>
+          <p class="phase-card__description">Discovery is about understanding the problem before committing to a solution. The goal is to identify user needs, understand the existing landscape, and determine whether building a service is the right approach.</p>
+          <h3>What the Solution Architect does in Discovery:</h3>
+          <ul class="phase-card__list">
+            <li>Maps the current technology landscape and identifies existing services that might be reused or extended</li>
+            <li>Engages with stakeholders to understand constraints — security, data, procurement, timelines</li>
+            <li>Identifies high-level architectural risks and dependencies</li>
+            <li>Contributes to the decision on whether to proceed to Alpha</li>
+            <li>Produces an initial architecture brief — not a design, but a framing of the problem space</li>
+          </ul>
+          <h3>Key principle:</h3>
+          <p class="phase-card__description"><strong>Don't design in Discovery.</strong> Resist the urge to jump to solutions. Your job is to understand the problem deeply enough that you can make informed decisions in Alpha.</p>
+          <div class="mt-lg fade-in" style="text-align: center;">
+            <img src="images/lifecycle-1-discovery.png" alt="Discovery Phase infographic — understanding the problem before designing the solution" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+          </div>
+        </div>
+
+        <!-- Alpha -->
+        <div class="phase-card fade-in" style="border-left-color: var(--color-accent-amber);">
+          <h2 class="phase-card__title">
+            <span class="phase-card__number" style="background: var(--color-accent-amber);">2</span>
+            Alpha
+          </h2>
+          <p class="phase-card__description">Alpha is about testing hypotheses and exploring solution options. You build prototypes to test the riskiest assumptions, not to build the final product.</p>
+          <h3>What the Solution Architect does in Alpha:</h3>
+          <ul class="phase-card__list">
+            <li>Develops and evaluates solution options — typically 2-3 approaches with different trade-offs</li>
+            <li>Produces Architecture Decision Records (ADRs) for significant choices</li>
+            <li>Designs technical prototypes to test feasibility of key components</li>
+            <li>Engages with security, data protection, and accessibility specialists early</li>
+            <li>Produces the initial Solution Architecture Document</li>
+            <li>Identifies integration points and begins engagement with dependent teams</li>
+          </ul>
+          <h3>Key principle:</h3>
+          <p class="phase-card__description"><strong>Test the riskiest assumptions first.</strong> If your architecture depends on a particular integration working, prove it in Alpha. Don't leave the hardest problems for Beta.</p>
+          <div class="mt-lg fade-in" style="text-align: center;">
+            <img src="images/lifecycle-2-alpha.png" alt="Alpha Phase infographic — prototyping options and testing the riskiest assumptions" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+          </div>
+        </div>
+
+        <!-- Beta -->
+        <div class="phase-card fade-in" style="border-left-color: #10b981;">
+          <h2 class="phase-card__title">
+            <span class="phase-card__number" style="background: #10b981;">3</span>
+            Beta
+          </h2>
+          <p class="phase-card__description">Beta is about building the real service and testing it with real users. The architecture moves from design to implementation, and the architect's role shifts from designing to guiding and governing.</p>
+          <h3>What the Solution Architect does in Beta:</h3>
+          <ul class="phase-card__list">
+            <li>Guides the development team on implementing the architecture — available for questions, reviews, and unblocking</li>
+            <li>Reviews technical decisions against the architecture principles and ADRs</li>
+            <li>Manages architecture changes as requirements evolve based on user feedback</li>
+            <li>Ensures non-functional requirements (performance, security, accessibility) are being met</li>
+            <li>Prepares for the Live service assessment</li>
+            <li>Documents the as-built architecture (which always differs from the as-designed)</li>
+          </ul>
+          <h3>Key principle:</h3>
+          <p class="phase-card__description"><strong>The architecture will change.</strong> Beta reveals things Alpha couldn't. Good architects adapt the design based on evidence rather than defending the original plan.</p>
+          <div class="mt-lg fade-in" style="text-align: center;">
+            <img src="images/lifecycle-3-beta.png" alt="Beta Phase infographic — building the real service and testing with real users" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+          </div>
+        </div>
+
+        <!-- Live -->
+        <div class="phase-card fade-in" style="border-left-color: #6366f1;">
+          <h2 class="phase-card__title">
+            <span class="phase-card__number" style="background: #6366f1;">4</span>
+            Live
+          </h2>
+          <p class="phase-card__description">Live is not the end — it's the beginning of the service's operational life. The architecture must support ongoing operation, monitoring, iteration, and evolution.</p>
+          <h3>What the Solution Architect does in Live:</h3>
+          <ul class="phase-card__list">
+            <li>Ensures operational readiness — monitoring, alerting, runbooks, and incident response procedures</li>
+            <li>Supports the transition from build team to operational team</li>
+            <li>Reviews and approves changes that affect the architecture</li>
+            <li>Monitors technical debt and plans for remediation</li>
+            <li>Evaluates new requirements against the existing architecture</li>
+            <li>Plans for scaling, evolution, and eventual retirement</li>
+          </ul>
+          <h3>Key principle:</h3>
+          <p class="phase-card__description"><strong>Design for the team that inherits it.</strong> The people operating the service in two years probably weren't involved in building it. Clear documentation, sensible patterns, and good observability are essential.</p>
+          <div class="mt-lg fade-in" style="text-align: center;">
+            <img src="images/lifecycle-4-live.png" alt="Live Phase infographic — operating, monitoring, and evolving the service" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+          </div>
+        </div>
+
+        <!-- Retirement -->
+        <div class="phase-card fade-in" style="border-left-color: #ef4444;">
+          <h2 class="phase-card__title">
+            <span class="phase-card__number" style="background: #ef4444;">5</span>
+            Retirement
+          </h2>
+          <p class="phase-card__description">All services eventually reach end-of-life. Retirement needs to be planned and executed carefully — data must be preserved or migrated, users must be transitioned, and dependencies must be managed.</p>
+          <h3>What the Solution Architect does in Retirement:</h3>
+          <ul class="phase-card__list">
+            <li>Plans the decommissioning approach — what gets migrated, what gets archived, what gets deleted</li>
+            <li>Identifies all dependencies and ensures they're addressed</li>
+            <li>Ensures data retention obligations are met</li>
+            <li>Manages the transition of users to replacement services</li>
+            <li>Documents lessons learned for future projects</li>
+          </ul>
+          <h3>Key principle:</h3>
+          <p class="phase-card__description"><strong>Plan for retirement from the start.</strong> The best time to think about how a service will be decommissioned is when you're designing it. Data formats, vendor contracts, and integration patterns all affect how easy retirement will be.</p>
+        </div>
+
+        <div class="content-wrapper mt-2xl">
+          <div class="info-box">
+            <p><strong>Further reading:</strong> The <a href="https://www.gov.uk/service-manual" target="_blank" rel="noopener noreferrer">GDS Service Manual</a> provides comprehensive guidance on each phase, including what's expected at service assessments.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="infographics.html">Infographics</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
