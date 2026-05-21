@@ -1,0 +1,37 @@
+{
+  "title": "Sequence Diagram Essentials",
+  "diagramType": "sequence",
+  "sequenceOrder": 1,
+  "explanation": "Sequence diagrams show how objects or components interact over time by depicting the order of messages exchanged between them. They are invaluable for documenting API interactions, authentication flows, and service-to-service communication patterns. This module covers UML sequence diagram notation and best practices for architecture documentation.",
+  "annotatedExamples": [
+    {
+      "imageUrl": "resources/images/diagrams/sequence-example.png",
+      "annotations": [
+        { "element": "Lifeline", "explanation": "A vertical dashed line representing the existence of a participant (actor or system component) over time." },
+        { "element": "Synchronous Message", "explanation": "A solid arrow with a filled arrowhead representing a call that waits for a response." },
+        { "element": "Return Message", "explanation": "A dashed arrow showing the response returned to the caller." }
+      ]
+    }
+  ],
+  "walkthrough": [
+    { "stepNumber": 1, "instruction": "Identify the participants (actors and system components) and place them as lifelines across the top of the diagram.", "imageUrl": "resources/images/diagrams/sequence-step1.png" },
+    { "stepNumber": 2, "instruction": "Draw the messages between participants in chronological order from top to bottom.", "imageUrl": "resources/images/diagrams/sequence-step2.png" },
+    { "stepNumber": 3, "instruction": "Add return messages, activation bars, and any alternative or loop fragments as needed.", "imageUrl": "resources/images/diagrams/sequence-step3.png" }
+  ],
+  "exercises": [
+    {
+      "scenario": "Model the authentication flow for a government service where a user logs in via GOV.UK One Login, the service validates the token with the identity provider, and returns the user's session.",
+      "expectedDiagramType": "sequence",
+      "hints": ["Include User, Web Application, and GOV.UK One Login as participants", "Show the redirect to the identity provider", "Include the token validation and session creation steps"],
+      "sampleSolution": "resources/images/diagrams/sequence-exercise1-solution.png"
+    }
+  ],
+  "commonMistakes": [
+    {
+      "description": "Not showing return messages for synchronous calls",
+      "incorrectExample": "Drawing a request arrow from Service A to Service B without a corresponding return arrow",
+      "correctedExample": "Always pair synchronous request arrows with dashed return arrows showing the response",
+      "explanation": "Omitting return messages makes it unclear whether a call is synchronous or asynchronous (fire-and-forget), which can lead to incorrect assumptions about system behaviour and error handling."
+    }
+  ]
+}

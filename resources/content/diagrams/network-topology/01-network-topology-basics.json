@@ -1,0 +1,37 @@
+{
+  "title": "Network Topology Diagram Basics",
+  "diagramType": "network-topology",
+  "sequenceOrder": 1,
+  "explanation": "Network topology diagrams show the physical or logical arrangement of network devices, connections, and security boundaries. In UK government architecture, these diagrams are critical for demonstrating compliance with security standards, network segmentation, and Zero Trust principles. This module covers the fundamentals of creating clear and accurate network topology diagrams.",
+  "annotatedExamples": [
+    {
+      "imageUrl": "resources/images/diagrams/network-topology-example.png",
+      "annotations": [
+        { "element": "Security Zone", "explanation": "A bounded area representing a network segment with a specific trust level, such as a DMZ or private subnet." },
+        { "element": "Firewall", "explanation": "A security device controlling traffic between zones, shown with standard firewall notation." },
+        { "element": "Load Balancer", "explanation": "Distributes incoming traffic across multiple servers for availability and performance." }
+      ]
+    }
+  ],
+  "walkthrough": [
+    { "stepNumber": 1, "instruction": "Define the security zones and network boundaries. Draw them as labelled regions on your diagram.", "imageUrl": "resources/images/diagrams/network-topology-step1.png" },
+    { "stepNumber": 2, "instruction": "Place network devices (firewalls, load balancers, servers) within their respective zones.", "imageUrl": "resources/images/diagrams/network-topology-step2.png" },
+    { "stepNumber": 3, "instruction": "Draw connections between devices showing network paths, protocols, and port numbers where relevant.", "imageUrl": "resources/images/diagrams/network-topology-step3.png" }
+  ],
+  "exercises": [
+    {
+      "scenario": "Design a network topology for a government web application with a public-facing load balancer, web servers in a DMZ, application servers in a private subnet, and a database in an isolated data subnet.",
+      "expectedDiagramType": "network-topology",
+      "hints": ["Create three security zones: DMZ, private, and data", "Place firewalls between each zone", "Show the internet gateway and load balancer in the DMZ"],
+      "sampleSolution": "resources/images/diagrams/network-topology-exercise1-solution.png"
+    }
+  ],
+  "commonMistakes": [
+    {
+      "description": "Not showing security boundaries between network zones",
+      "incorrectExample": "Drawing all servers on a flat diagram without any zone boundaries or firewalls",
+      "correctedExample": "Group servers into clearly labelled security zones with firewalls or security groups controlling traffic between them",
+      "explanation": "Without security boundaries, the diagram fails to communicate the network segmentation strategy, which is essential for Zero Trust compliance and security reviews in government contexts."
+    }
+  ]
+}

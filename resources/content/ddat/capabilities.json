@@ -1,0 +1,158 @@
+{
+  "roles": {
+    "solution-architect": {
+      "title": "Solution Architect",
+      "capabilities": [
+        {
+          "name": "Strategic thinking",
+          "description": "Ability to think strategically about technology and its application to business problems",
+          "requiredLevel": "practitioner"
+        },
+        {
+          "name": "Technical leadership",
+          "description": "Ability to lead technical teams and make sound architectural decisions",
+          "requiredLevel": "practitioner"
+        },
+        {
+          "name": "Cloud and infrastructure",
+          "description": "Understanding of cloud platforms, infrastructure patterns, and deployment strategies",
+          "requiredLevel": "practitioner"
+        },
+        {
+          "name": "Security",
+          "description": "Knowledge of security principles including Secure by Design and Zero Trust",
+          "requiredLevel": "working"
+        },
+        {
+          "name": "Communication",
+          "description": "Ability to communicate complex technical concepts to diverse audiences",
+          "requiredLevel": "working"
+        },
+        {
+          "name": "Governance and assurance",
+          "description": "Understanding of governance frameworks, service standards, and assurance processes",
+          "requiredLevel": "working"
+        }
+      ],
+      "certificationMappings": [
+        {
+          "certificationPattern": "AWS Solutions Architect",
+          "capabilities": ["Cloud and infrastructure", "Security"],
+          "levelGranted": "practitioner"
+        },
+        {
+          "certificationPattern": "AWS Cloud Practitioner",
+          "capabilities": ["Cloud and infrastructure"],
+          "levelGranted": "working"
+        },
+        {
+          "certificationPattern": "Azure Solutions Architect",
+          "capabilities": ["Cloud and infrastructure", "Security"],
+          "levelGranted": "practitioner"
+        },
+        {
+          "certificationPattern": "Azure Fundamentals",
+          "capabilities": ["Cloud and infrastructure"],
+          "levelGranted": "working"
+        },
+        {
+          "certificationPattern": "TOGAF",
+          "capabilities": ["Strategic thinking", "Governance and assurance"],
+          "levelGranted": "practitioner"
+        },
+        {
+          "certificationPattern": "CISSP",
+          "capabilities": ["Security"],
+          "levelGranted": "expert"
+        },
+        {
+          "certificationPattern": "Security+",
+          "capabilities": ["Security"],
+          "levelGranted": "working"
+        },
+        {
+          "certificationPattern": "Google Cloud Professional",
+          "capabilities": ["Cloud and infrastructure"],
+          "levelGranted": "practitioner"
+        }
+      ]
+    },
+    "lead-solution-architect": {
+      "title": "Lead Solution Architect",
+      "capabilities": [
+        {
+          "name": "Strategic thinking",
+          "description": "Ability to think strategically about technology and its application to business problems",
+          "requiredLevel": "expert"
+        },
+        {
+          "name": "Technical leadership",
+          "description": "Ability to lead technical teams and make sound architectural decisions",
+          "requiredLevel": "expert"
+        },
+        {
+          "name": "Cloud and infrastructure",
+          "description": "Understanding of cloud platforms, infrastructure patterns, and deployment strategies",
+          "requiredLevel": "expert"
+        },
+        {
+          "name": "Security",
+          "description": "Knowledge of security principles including Secure by Design and Zero Trust",
+          "requiredLevel": "practitioner"
+        },
+        {
+          "name": "Communication",
+          "description": "Ability to communicate complex technical concepts to diverse audiences",
+          "requiredLevel": "practitioner"
+        },
+        {
+          "name": "Governance and assurance",
+          "description": "Understanding of governance frameworks, service standards, and assurance processes",
+          "requiredLevel": "practitioner"
+        }
+      ],
+      "certificationMappings": [
+        {
+          "certificationPattern": "AWS Solutions Architect",
+          "capabilities": ["Cloud and infrastructure", "Security"],
+          "levelGranted": "practitioner"
+        },
+        {
+          "certificationPattern": "AWS Cloud Practitioner",
+          "capabilities": ["Cloud and infrastructure"],
+          "levelGranted": "working"
+        },
+        {
+          "certificationPattern": "Azure Solutions Architect",
+          "capabilities": ["Cloud and infrastructure", "Security"],
+          "levelGranted": "practitioner"
+        },
+        {
+          "certificationPattern": "Azure Fundamentals",
+          "capabilities": ["Cloud and infrastructure"],
+          "levelGranted": "working"
+        },
+        {
+          "certificationPattern": "TOGAF",
+          "capabilities": ["Strategic thinking", "Governance and assurance"],
+          "levelGranted": "practitioner"
+        },
+        {
+          "certificationPattern": "CISSP",
+          "capabilities": ["Security"],
+          "levelGranted": "expert"
+        },
+        {
+          "certificationPattern": "Security+",
+          "capabilities": ["Security"],
+          "levelGranted": "working"
+        },
+        {
+          "certificationPattern": "Google Cloud Professional",
+          "capabilities": ["Cloud and infrastructure"],
+          "levelGranted": "practitioner"
+        }
+      ]
+    }
+  }
+}

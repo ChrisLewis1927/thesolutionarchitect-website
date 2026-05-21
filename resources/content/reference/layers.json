@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Business Layer",
+    "description": "Depicts business services offered to customers, which are realised in the organisation by business processes performed by business actors.",
+    "colour": "#FFFFB5",
+    "elements": ["Business Actor", "Business Role", "Business Process", "Business Service", "Business Object", "Business Event", "Business Function", "Business Interaction", "Contract", "Product"]
+  },
+  {
+    "name": "Application Layer",
+    "description": "Depicts application services that support the business, and the applications that realise them.",
+    "colour": "#B5FFFF",
+    "elements": ["Application Component", "Application Service", "Application Interface", "Application Function", "Application Interaction", "Application Event", "Data Object"]
+  },
+  {
+    "name": "Technology Layer",
+    "description": "Depicts technology services such as processing, storage, and communication services needed to run the applications, and the computer and communication hardware and system software that realise those services.",
+    "colour": "#C9E7B7",
+    "elements": ["Node", "Device", "System Software", "Technology Service", "Technology Interface", "Technology Function", "Technology Interaction", "Technology Event", "Artefact", "Communication Network", "Path"]
+  },
+  {
+    "name": "Strategy Layer",
+    "description": "Provides elements for modelling the strategic direction and choices of the enterprise.",
+    "colour": "#F5DEAA",
+    "elements": ["Resource", "Capability", "Value Stream", "Course of Action"]
+  },
+  {
+    "name": "Motivation Layer",
+    "description": "Provides elements for modelling the motivations, or reasons, that guide the design or change of an enterprise architecture.",
+    "colour": "#CCCCFF",
+    "elements": ["Stakeholder", "Driver", "Assessment", "Goal", "Outcome", "Principle", "Requirement", "Constraint", "Meaning", "Value"]
+  }
+]

@@ -1,0 +1,187 @@
+{
+  "id": "lesson-001",
+  "lessonNumber": 1,
+  "title": "What a Solution Architect Actually Does",
+  "level": "foundation",
+  "theme": "Role & Identity",
+  "objectives": [
+    "Understand the real role, responsibilities and value of a Solution Architect in UK government",
+    "Distinguish the SA role from other architecture disciplines",
+    "Recognise what 'good' looks like in government solution architecture",
+    "Understand how the DDaT framework and Technology Code of Practice shape SA work"
+  ],
+  "estimatedMinutes": 45,
+  "prerequisites": [],
+  "skillsAddressed": ["Discovery & Problem Framing", "Stakeholder Understanding", "Architecture Communication"],
+  "recommendedNext": 2,
+  "whyThisMatters": "Most people who become Solution Architects learn the role by doing it, often without a clear picture of what the role actually demands. Job descriptions are vague. Expectations vary wildly between departments. Some teams treat the SA as a senior developer who draws diagrams; others expect a strategic advisor who never touches code. Neither is right. If you don't understand what the role truly is — and isn't — you'll spend years doing the wrong things well. This lesson gives you the honest, practical picture.",
+  "content": [
+    {
+      "heading": "The Real Role of a Solution Architect",
+      "body": "Let's start with what a Solution Architect actually does, stripped of the corporate language and job-description padding.\n\nA Solution Architect is the person responsible for ensuring that a specific solution — a system, service, or set of integrated components — is fit for purpose, technically sound, deliverable, and aligned with the wider organisational landscape. You are the bridge between what the organisation needs and what technology can realistically deliver.\n\nThat sounds simple. It isn't.\n\nIn practice, the SA role is one of the most context-dependent roles in technology. What you do on Monday in a discovery phase looks nothing like what you do on Thursday in a live service review. Your day might include:\n\n- Running a workshop with policy colleagues to understand a new regulatory requirement\n- Reviewing a development team's proposed API design and pushing back on unnecessary complexity\n- Writing an Architecture Decision Record explaining why you chose a managed service over a custom build\n- Presenting a solution options paper to a programme board, translating technical trade-offs into business language\n- Reviewing a vendor's proposal and identifying the risks they've conveniently omitted\n- Sitting in a stand-up with the delivery team, unblocking a technical dependency\n- Updating the solution architecture document to reflect a change in scope\n\nThe common thread? You're making decisions, enabling decisions, or ensuring decisions are well-informed. Architecture is fundamentally about decisions — which ones to make, when to make them, and how to make them defensible.\n\nIn UK government specifically, the SA operates within a unique set of constraints. You're working with public money, which means every decision must be justifiable. You're working within procurement frameworks that limit your choices. You're working alongside policy teams who may not understand technology, and technology teams who may not understand policy. You're expected to follow the Technology Code of Practice, meet the Service Standard, and align with departmental strategies — all while delivering something that actually works for users."
+    },
+    {
+      "heading": "How the SA Role Differs from Other Architecture Disciplines",
+      "body": "One of the most common sources of confusion — especially in government — is the overlap between architecture roles. Let's be precise about the differences.\n\n**Enterprise Architect (EA):** The EA works at the organisational level. They're concerned with the overall technology landscape, strategic direction, standards, and principles. They think in terms of capabilities, roadmaps, and portfolios. An EA might define that the department should adopt a cloud-first approach; the SA figures out what that means for a specific service.\n\n**Technical Architect (TA):** The TA goes deep on implementation. They're concerned with code quality, framework choices, deployment pipelines, and technical standards. Where the SA decides 'we need an event-driven integration pattern here,' the TA decides which message broker to use and how to configure it. In many government teams, the boundary between SA and TA is blurred — and that's fine, as long as someone is covering both the strategic and tactical perspectives.\n\n**Business Architect (BA):** The BA maps business capabilities, processes, and organisational structures. They're the bridge between strategy and operations on the business side. The SA needs to understand business architecture — you can't design a good solution without understanding the business context — but the BA owns the business model while the SA owns the solution design.\n\n**Data Architect:** The Data Architect focuses on data models, data flows, data governance, and data quality. In government, where data sharing across departments is both critical and politically sensitive, the Data Architect's work directly shapes what the SA can and cannot do. The SA needs to understand data architecture principles but typically doesn't own the data strategy.\n\nThe key insight: the Solution Architect is the integrator. You don't need to be the deepest expert in any one area, but you need to be competent across all of them and excellent at synthesising them into a coherent solution. You're the person who sees how the enterprise strategy, the business process, the data model, the security requirements, and the technical implementation all connect — or fail to connect."
+    },
+    {
+      "heading": "The SA as Translator, Decision-Maker, Risk-Manager and Quality Guardian",
+      "body": "The SA wears four hats, often simultaneously. Understanding these hats helps you prioritise your time and energy.\n\n**Translator:** You translate between worlds. Policy colleagues speak in outcomes and legislation. Delivery teams speak in sprints and story points. Security teams speak in threats and controls. Commercial teams speak in contracts and SLAs. Senior leaders speak in risk and value. Your job is to ensure these groups understand each other well enough to make good decisions together. This isn't about dumbing things down — it's about finding the right level of abstraction for each audience.\n\n**Decision-Maker:** Architecture is decision-making. Every day you're choosing between options, accepting trade-offs, and setting constraints. The quality of your decisions depends on the quality of your understanding — of the problem, the context, the constraints, and the consequences. Good architects make decisions explicit, document them, and revisit them when the context changes. Poor architects make decisions implicitly, forget them, and wonder why the system ended up the way it did.\n\n**Risk-Manager:** Every architecture decision carries risk. Choosing a new technology carries adoption risk. Choosing a legacy technology carries obsolescence risk. Building custom carries maintenance risk. Buying off-the-shelf carries vendor lock-in risk. Your job isn't to eliminate risk — that's impossible — but to identify it, quantify it where you can, communicate it honestly, and ensure the right people accept it consciously.\n\n**Quality Guardian:** You're the last line of defence against poor design. Not in a gatekeeping sense — nobody wants an architect who blocks everything — but in the sense that you hold the standard for what 'good enough' looks like. You push back when a team wants to skip non-functional requirements. You challenge when a vendor claims their product does everything. You insist on documentation when the delivery pressure says 'we'll do it later.' This requires courage and diplomacy in equal measure."
+    },
+    {
+      "heading": "What 'Good Architecture' Looks Like in Government",
+      "body": "Good architecture in government isn't the same as good architecture in a startup or a bank. The context shapes what 'good' means.\n\nIn government, good architecture:\n\n**Serves users first.** The GDS Service Standard exists for a reason. If your architecture doesn't enable a service that meets user needs simply and effectively, it's failed regardless of how elegant the technical design is.\n\n**Is proportionate.** Government services range from a simple form that collects data to complex, multi-departmental platforms processing millions of transactions. Good architecture matches the complexity of the solution to the complexity of the problem. Over-engineering a simple service is as much a failure as under-engineering a critical one.\n\n**Is honest about trade-offs.** Every architecture involves compromises. Good architecture makes those compromises explicit and ensures they're accepted by the right people. 'We chose this approach because it's faster to deliver, but it means we'll need to re-platform within three years' is honest architecture. Pretending there are no trade-offs is dishonest architecture.\n\n**Works within constraints.** Government has constraints that the private sector doesn't: procurement rules, security classifications, accessibility requirements, Welsh language obligations, cross-departmental dependencies, ministerial priorities. Good architecture acknowledges these constraints and works within them creatively, rather than pretending they don't exist.\n\n**Is maintainable by the team that inherits it.** In government, teams change. Contractors leave. Civil servants move departments. Good architecture can be understood, operated, and evolved by people who weren't involved in the original design. This means clear documentation, sensible patterns, and avoiding unnecessary cleverness.\n\n**Aligns with the wider landscape.** No government service exists in isolation. Good architecture considers how the solution fits with departmental platforms, cross-government services (GOV.UK, GOV.UK Notify, GOV.UK Pay), and the broader technology strategy."
+    },
+    {
+      "heading": "The Technology Code of Practice and Service Standard",
+      "body": "Two documents fundamentally shape how Solution Architects work in UK government.\n\nThe **Technology Code of Practice** (TCoP) sets out 12 principles that government technology must follow. As an SA, you need to know these cold — not because you'll be tested on them, but because they're the lens through which your work will be judged. Key principles include:\n\n- Define user needs — start with what users need, not what technology can do\n- Make things accessible and inclusive — design for everyone\n- Be open and use open source — default to open standards and open source\n- Make use of cloud — Cloud First policy means you need good reasons not to use cloud\n- Make things secure — security is a design concern, not an afterthought\n- Integrate and adapt technology — don't build monoliths; design for integration\n- Make better use of data — treat data as a shared asset\n- Share and reuse technology — look for existing solutions before building new ones\n\nThe **Service Standard** applies to all public-facing digital services. It sets 14 points that services must meet at each assessment stage. As an SA, you're directly responsible for several of these, including choosing the right technology, making the service secure, and ensuring it can operate reliably.\n\nThe practical implication: when you make an architecture decision, you should be able to explain how it aligns with the TCoP and supports the Service Standard. If you can't, you need to reconsider the decision or prepare a strong justification for the exception."
+    },
+    {
+      "heading": "The DDaT Capability Framework for Solution Architects",
+      "body": "The Digital, Data and Technology (DDaT) Profession Capability Framework defines what's expected of Solution Architects at each level in government. Understanding this framework helps you identify your current level and what you need to develop.\n\nThe framework defines SA levels from Associate to Principal/Lead, with expectations across several skill areas:\n\n- **Availability and capacity management** — understanding how to design for reliability and scale\n- **Development process optimisation** — improving how solutions are built and delivered\n- **Information security** — embedding security into architecture decisions\n- **IT strategy** — contributing to and implementing technology strategy\n- **Making and guiding decisions** — the core of the SA role\n- **Ownership and initiative** — taking responsibility for architecture quality\n- **Strategic thinking** — seeing the bigger picture and planning ahead\n- **Technical understanding** — maintaining sufficient technical depth\n- **Turning business problems into technical design** — the fundamental SA skill\n\nAt more senior levels, the emphasis shifts from doing the work to enabling others, from individual solutions to cross-cutting concerns, and from following standards to setting them. A Senior SA is expected to influence strategy, mentor others, and handle the most complex, ambiguous problems.\n\nThe honest truth: the DDaT framework is a useful reference, but it doesn't capture everything. The best SAs in government also have political awareness, emotional intelligence, and the ability to say 'I don't know' without losing credibility. These soft skills matter as much as the technical ones."
+    },
+    {
+      "heading": "Common Misconceptions About the Role",
+      "body": "Let's address the myths head-on.\n\n**'The SA is just a senior developer who draws diagrams.'** No. While technical depth is valuable, the SA role is fundamentally about decision-making, communication, and synthesis. A brilliant coder who can't explain their decisions to a non-technical stakeholder will struggle as an SA.\n\n**'The SA designs the solution and hands it over.'** No. Architecture isn't a phase — it's a continuous activity. The SA stays involved throughout delivery, adapting the design as requirements evolve and reality intrudes on the plan.\n\n**'The SA has the final say on all technical decisions.'** No. The SA makes architecture decisions — the significant, hard-to-reverse ones that shape the solution. Day-to-day technical decisions belong to the development team. Trying to control everything is a recipe for bottlenecks and resentment.\n\n**'Architecture is about choosing technologies.'** Partly, but mostly no. Technology selection is one small part of architecture. The bigger part is understanding the problem, defining the approach, managing trade-offs, and ensuring the solution works as a whole.\n\n**'You need to know everything.'** Absolutely not. You need to know enough to ask the right questions, recognise good answers, and identify when you need specialist input. The best SAs are comfortable saying 'I need to bring in a security specialist for this' or 'Let me check with the data team before we commit to this approach.'"
+    },
+    {
+      "heading": "What Makes the Difference Between Competent and Excellent",
+      "body": "A competent SA can design a solution that works. An excellent SA does something more.\n\n**Excellent SAs anticipate.** They see problems before they arrive. They ask 'what happens when this scales?' before the scaling problem hits. They ask 'what happens when this vendor goes bust?' before the contract is signed. This isn't pessimism — it's professional responsibility.\n\n**Excellent SAs simplify.** Anyone can design a complex solution. It takes real skill to design a simple one that still meets all the requirements. The best architects constantly ask 'do we really need this?' and 'is there a simpler way?'\n\n**Excellent SAs communicate.** They can explain a complex architecture to a minister in two minutes and to a developer in two hours. They write documents that people actually read. They draw diagrams that clarify rather than confuse.\n\n**Excellent SAs build trust.** They're honest about what they know and don't know. They admit when they're wrong. They give credit to others. They push back respectfully but firmly when they see a bad decision being made. Over time, this builds the credibility that allows them to influence decisions at the highest level.\n\n**Excellent SAs learn continuously.** Technology changes. Government priorities change. The best architects stay curious, read widely, attend communities of practice, and learn from every project — especially the ones that go wrong.\n\n**Excellent SAs care about outcomes, not outputs.** They don't measure success by the number of documents produced or diagrams drawn. They measure it by whether the service works for users, whether the team can maintain it, and whether the organisation got value for money."
+    }
+  ],
+  "workedExample": {
+    "title": "DESNZ Energy Efficiency Reporting Service",
+    "context": "The Department for Energy Security and Net Zero (DESNZ) policy team has identified a need for a new digital service that allows large commercial building owners to report their energy efficiency data annually. This is driven by upcoming legislation requiring mandatory reporting. The policy team has a rough idea of what they want but no technical specification. They've been told they need a Solution Architect.",
+    "approach": "Here's what the SA actually does from first engagement through to design:\n\n**Week 1 — Understanding the Problem:**\nThe SA doesn't start by designing anything. They start by listening. They meet with the policy team to understand the legislative driver, the timeline, the political sensitivity, and what success looks like. They meet with the operational team to understand how similar reporting currently works (spoiler: spreadsheets emailed to a shared inbox). They review the existing technology landscape to understand what platforms and services are already available.\n\nKey questions the SA asks: Who are the actual users? How many buildings are we talking about? What data needs to be collected? What happens to the data after collection? Who needs to access it? What are the security classification requirements? Is there an existing service we could extend rather than building new?\n\n**Week 2 — Mapping the Landscape:**\nThe SA maps the stakeholders (policy, operations, legal, security, data protection, GDS assessors), identifies the constraints (must use GOV.UK branding, must meet accessibility standards, data is OFFICIAL, must integrate with existing DESNZ data warehouse), and starts to form a picture of the solution boundary.\n\nThey discover that DEFRA has a similar reporting service for environmental data. They investigate whether the platform could be reused or adapted — this is the 'share and reuse' principle from the TCoP in action.\n\n**Week 3 — Solution Options:**\nThe SA develops three options: (1) Extend the DEFRA platform, (2) Build a new service using GOV.UK PaaS and common components, (3) Procure a commercial off-the-shelf reporting tool. For each option, they assess cost, time, risk, alignment with standards, and long-term maintainability.\n\n**Week 4 — Architecture Decision:**\nThe SA presents the options to the programme board with a clear recommendation, honest trade-offs, and identified risks. They don't just recommend the 'best' option — they explain why the others were rejected and what would need to change for them to become viable.",
+    "outcome": "The programme board selects Option 2 with modifications. The SA produces an initial Solution Architecture Document covering the service boundary, key components, integration points, security approach, and hosting strategy. This becomes the foundation for the alpha phase.",
+    "lessonsLearned": "The SA's value wasn't in the technical design — that came later. The value was in asking the right questions, mapping the landscape, identifying the reuse opportunity, and presenting options honestly. A developer could have designed the technical components. Only an architect could have navigated the organisational complexity and made the strategic decision defensible."
+  },
+  "civilServiceScenario": {
+    "title": "Cross-Departmental Data Sharing Initiative",
+    "background": "ICS Digital (the shared technology function serving the Department for Business and Trade, the Department for Energy Security and Net Zero, and the Department for Science, Innovation and Technology) has been asked to support a new cross-departmental data sharing initiative. The initiative aims to create a shared platform where all three departments can access common reference data about UK businesses — company registration details, energy usage data, innovation grant history, and trade compliance records.",
+    "challenge": "Each department has its own systems, data standards, and security requirements. The data includes commercially sensitive information and some personal data. There are existing contracts with different technology vendors in each department. The timeline is politically driven — a minister wants to announce the platform at a conference in nine months.",
+    "constraints": [
+      "Three different departments with different technology stacks and data standards",
+      "Commercially sensitive and personal data requiring careful classification",
+      "Existing vendor contracts that can't be easily changed",
+      "Nine-month politically driven timeline",
+      "No additional budget — must be delivered within existing allocations",
+      "Must comply with Data Protection Act 2018 and UK GDPR",
+      "Must pass GDS spend control if costs exceed threshold"
+    ],
+    "yourRole": "You are the Solution Architect assigned to lead the technical design. You report to the programme's Senior Responsible Owner (SRO) and work alongside a delivery manager, a business analyst, and representatives from each department's technology team.",
+    "discussion": "This scenario tests every aspect of the SA role. You need to translate between three departments' different technical languages. You need to make decisions about integration patterns, data governance, and security that will affect all three departments. You need to manage the risk of the aggressive timeline while being honest about what's achievable. You need to navigate the political pressure without compromising on security or data protection. And you need to document everything clearly enough that the solution can be maintained by teams you haven't met yet.\n\nThe key SA skill here isn't technical — it's the ability to hold the whole picture in your head while making progress on the parts. You can't design the perfect solution on day one. You need to identify the minimum viable architecture that addresses the most critical requirements, then iterate as you learn more."
+  },
+  "practiceArtefact": {
+    "type": "Stakeholder Map and First-Fortnight Plan",
+    "description": "Given the cross-departmental data sharing scenario above, produce two artefacts: (1) A stakeholder map identifying all the key stakeholders, their interests, their influence level, and your engagement strategy for each. (2) A plan for your first two weeks as the SA on this programme — what meetings you'd hold, what questions you'd ask, what documents you'd review, and what your first deliverable would be.",
+    "guidance": "For the stakeholder map, think beyond the obvious technical stakeholders. Consider: data protection officers, information asset owners, commercial teams (who manage the vendor contracts), security teams, GDS assessors, the minister's private office, and the operational teams who'll actually use the platform. For the first-fortnight plan, resist the urge to start designing. Your first two weeks should be almost entirely about understanding — the problem, the people, the constraints, and the landscape.",
+    "modelAnswer": "**Stakeholder Map:**\n\n| Stakeholder | Interest | Influence | Engagement Strategy |\n|---|---|---|---|\n| SRO | Delivery on time, political credibility | Very High | Weekly 1:1, honest progress updates |\n| Minister's Private Office | Announcement readiness | High | Via SRO, no direct technical detail |\n| Dept Tech Leads (x3) | Integration with their systems | High | Fortnightly architecture working group |\n| Data Protection Officers (x3) | GDPR compliance, DPIA | High | Early engagement, formal sign-off |\n| Security Teams (x3) | Data classification, access control | High | Security design review at alpha |\n| Commercial Teams | Vendor contract implications | Medium | Early assessment of contract flexibility |\n| GDS Assessors | TCoP and Service Standard compliance | Medium | Pre-assessment engagement |\n| Operational Users | Usability, reliability | Medium | User research sessions |\n| Delivery Manager | Feasibility, planning | High | Daily stand-ups, joint planning |\n\n**First Fortnight Plan:**\n\nDays 1-3: Meet each department's tech lead individually. Understand their current systems, data formats, pain points, and concerns. Review existing architecture documentation.\n\nDays 4-5: Meet the DPOs and security leads. Understand data classification requirements and any existing data sharing agreements.\n\nDays 6-7: Review existing vendor contracts with commercial teams. Identify what's flexible and what's locked in.\n\nDays 8-9: Run a joint workshop with all three tech leads to map the current data landscape — what data exists where, in what format, with what quality.\n\nDay 10: Produce a 'Current State Summary' document capturing what you've learned, the key constraints, and the open questions that need answering before design can begin.\n\nFirst deliverable: A one-page architecture brief that defines the problem, lists the constraints, identifies the key risks, and proposes the approach for the alpha phase."
+  },
+  "reflectiveQuestions": [
+    "Think about a recent project you worked on. Were the architecture decisions made explicitly and documented, or did they happen implicitly? What was the impact?",
+    "Which of the four SA hats (translator, decision-maker, risk-manager, quality guardian) do you wear most naturally? Which do you need to develop?",
+    "How well do you understand the Technology Code of Practice? Could you explain how each principle applies to your current work?",
+    "When was the last time you said 'I don't know' in a professional context? How was it received?",
+    "Think about the best architect you've worked with. What made them effective? Was it their technical knowledge, their communication skills, or something else?"
+  ],
+  "knowledgeCheck": [
+    {
+      "question": "What is the primary role of a Solution Architect in UK government?",
+      "options": [
+        "Writing code and building systems",
+        "Ensuring a specific solution is fit for purpose, technically sound, deliverable, and aligned with the wider landscape",
+        "Managing the project timeline and budget",
+        "Choosing which programming languages the team should use"
+      ],
+      "correctIndex": 1,
+      "explanation": "The SA's core responsibility is ensuring the solution works as a whole — technically, organisationally, and strategically. While SAs may occasionally write code or influence timelines, their primary role is about design decisions, trade-offs, and alignment."
+    },
+    {
+      "question": "How does the Solution Architect role differ from the Enterprise Architect role?",
+      "options": [
+        "The SA works at the organisational level while the EA works on specific solutions",
+        "The EA works at the organisational level while the SA works on specific solutions",
+        "There is no meaningful difference between the two roles",
+        "The SA is more senior than the EA"
+      ],
+      "correctIndex": 1,
+      "explanation": "The Enterprise Architect focuses on the overall technology landscape, strategy, and standards at the organisational level. The Solution Architect applies those strategies and standards to specific solutions and services."
+    },
+    {
+      "question": "Which of the following best describes what 'good architecture' looks like in government?",
+      "options": [
+        "Using the most advanced and modern technologies available",
+        "Producing comprehensive documentation for every decision",
+        "Proportionate design that serves users, works within constraints, and is maintainable by future teams",
+        "Following every industry framework and standard to the letter"
+      ],
+      "correctIndex": 2,
+      "explanation": "Good government architecture is proportionate, user-focused, honest about trade-offs, works within government constraints, and can be maintained by teams who inherit it. It's not about using the newest tech or producing the most documentation."
+    },
+    {
+      "question": "According to the Technology Code of Practice, what should be the starting point for any technology decision?",
+      "options": [
+        "Available budget and procurement frameworks",
+        "User needs",
+        "The department's existing technology stack",
+        "Industry best practices and analyst recommendations"
+      ],
+      "correctIndex": 1,
+      "explanation": "The first principle of the Technology Code of Practice is 'Define user needs.' All technology decisions should start from understanding what users need, not from what technology is available or what the budget allows."
+    },
+    {
+      "question": "What distinguishes an excellent Solution Architect from a merely competent one?",
+      "options": [
+        "Having more certifications and qualifications",
+        "Being able to code in more programming languages",
+        "Anticipating problems, simplifying designs, communicating effectively, and building trust",
+        "Producing more detailed and comprehensive documentation"
+      ],
+      "correctIndex": 2,
+      "explanation": "Excellence in solution architecture comes from anticipation, simplification, communication, and trust-building. These are the qualities that allow an SA to influence decisions, prevent problems, and deliver solutions that truly work."
+    }
+  ],
+  "practicalExercise": {
+    "title": "First Two Weeks as SA on a New Government Service",
+    "scenario": "You've just been assigned as the Solution Architect for a new digital service. The Department for Education wants to build an online portal where schools can report their compliance with new building safety regulations. The service needs to collect structured data from approximately 25,000 schools in England, validate it against known building records, and produce compliance reports for regional safety inspectors. The policy team has a draft of the regulations but they won't be finalised for another three months. The minister wants the service live within 12 months.",
+    "task": "Write a plan for your first two weeks as the SA on this project. Specifically:\n\n1. List the key stakeholders you would engage with and what you'd want to learn from each\n2. Identify the top 5 questions you'd need answered before you could start designing\n3. List the artefacts you would produce in the first two weeks\n4. Identify the biggest risk you can see already and how you'd communicate it",
+    "hints": [
+      "Think about who owns the building records data that you'd need to validate against",
+      "Consider what happens if the regulations change significantly after you've started building",
+      "Remember that schools have varying levels of digital capability",
+      "Think about the GDS Service Standard and what it means for your approach"
+    ],
+    "modelAnswer": "**Key Stakeholders:**\n- Policy team (DfE) — understand the regulations, timeline flexibility, and what data they actually need\n- Schools operational team — understand how schools currently report, their digital capability, and pain points\n- Building safety data owners — identify who holds the building records and how to access them\n- GDS assessment team — understand assessment timeline and any early concerns\n- DfE security and data protection — classification requirements, DPIA needs\n- DfE technology team — existing platforms, hosting, and integration points\n- Regional safety inspectors — understand how they'll use the compliance reports\n\n**Top 5 Questions:**\n1. What building records data exists, where is it held, and how reliable is it?\n2. How digitally capable are the 25,000 schools — can we assume internet access and modern browsers?\n3. What's the real flexibility on the 12-month timeline if the regulations aren't finalised for 3 months?\n4. Is there an existing DfE platform or service we could extend rather than building from scratch?\n5. What security classification applies to the building safety data?\n\n**First Two Weeks Artefacts:**\n1. Stakeholder map with engagement plan\n2. Current state summary (existing systems, data sources, constraints)\n3. Key risks and assumptions register\n4. Architecture brief (problem definition, constraints, proposed approach for discovery/alpha)\n5. Initial questions log with owners and target dates for answers\n\n**Biggest Risk:**\nThe regulations won't be finalised for three months, but the minister wants the service live in 12 months. This means you'll be designing and potentially building against requirements that could change. Communicate this to the SRO immediately: 'We can start discovery and alpha work now, but we need to design the service to accommodate regulatory changes. This means a more modular architecture that's slightly more expensive to build but significantly cheaper to change. If the regulations change substantially, the timeline may need to flex. I recommend we plan for a phased launch — core reporting first, advanced validation features after regulations are finalised.'",
+    "assessmentCriteria": [
+      "Identified a comprehensive range of stakeholders beyond the obvious technical ones",
+      "Questions focus on understanding the problem, not jumping to solutions",
+      "Artefacts are practical and decision-enabling, not bureaucratic",
+      "Risk communication is honest, specific, and includes a proposed mitigation"
+    ]
+  },
+  "commonMistakes": [
+    "Jumping straight to technology selection before understanding the problem and constraints",
+    "Treating architecture as a phase that ends when development starts, rather than a continuous activity",
+    "Trying to make all technical decisions yourself instead of empowering the development team",
+    "Writing architecture documents that nobody reads because they're too long, too abstract, or too technical",
+    "Ignoring the political and organisational context — in government, these shape architecture as much as technical requirements",
+    "Failing to engage with security, data protection, and accessibility early enough",
+    "Over-engineering solutions for simple problems because 'that's what architects do'",
+    "Not being honest about trade-offs and risks in your recommendations"
+  ],
+  "weakVsStrong": {
+    "weak": "A weak SA receives the brief for the energy efficiency reporting service and immediately starts designing a microservices architecture on AWS. They produce a detailed technical design document within a week, complete with technology choices, database schemas, and deployment diagrams. They haven't spoken to the policy team about what data is actually needed, haven't checked whether a similar service exists elsewhere in government, and haven't considered whether the complexity of their design is proportionate to the problem. When the policy team changes the requirements three months later, the entire design needs to be reworked.",
+    "strong": "A strong SA receives the same brief and spends the first two weeks understanding the problem. They discover that DEFRA has a similar reporting platform that could potentially be reused. They map all the stakeholders and their concerns. They identify that the data classification is lower than initially assumed, which opens up simpler hosting options. They present three options to the programme board with honest trade-offs. The selected option is simpler, cheaper, and more adaptable than what the weak SA designed — and it's grounded in a thorough understanding of the real requirements and constraints."
+  },
+  "workplaceSignals": [
+    "You're invited to programme boards and governance meetings, not just technical stand-ups",
+    "Policy and business colleagues seek your input on feasibility before committing to approaches",
+    "You can explain your architecture decisions to a non-technical audience without using jargon",
+    "Your architecture documents are referenced and used by the team, not filed and forgotten",
+    "You know the names and concerns of your key stakeholders across business, technology, and security",
+    "When requirements change, your architecture can accommodate the change without a complete redesign",
+    "You can articulate how your solution aligns with the Technology Code of Practice",
+    "Junior architects and developers come to you for guidance, and you help them grow rather than just giving answers"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "title": "Deployment Diagram Fundamentals",
+  "diagramType": "deployment",
+  "sequenceOrder": 1,
+  "explanation": "Deployment diagrams show how software artefacts are deployed onto hardware or cloud infrastructure. They map the relationship between software components and the execution environments that host them. In UK government projects, deployment diagrams are essential for demonstrating hosting arrangements, resilience patterns, and compliance with cloud-first policies.",
+  "annotatedExamples": [
+    {
+      "imageUrl": "resources/images/diagrams/deployment-example.png",
+      "annotations": [
+        { "element": "Execution Environment", "explanation": "A container or platform that hosts deployed artefacts, such as a Docker container, VM, or managed service." },
+        { "element": "Artefact", "explanation": "A deployable unit of software, such as a WAR file, container image, or Lambda function package." },
+        { "element": "Communication Path", "explanation": "A connection between nodes showing how deployed components communicate, typically labelled with the protocol." }
+      ]
+    }
+  ],
+  "walkthrough": [
+    { "stepNumber": 1, "instruction": "Identify the execution environments (cloud regions, availability zones, containers, VMs) and draw them as nested nodes.", "imageUrl": "resources/images/diagrams/deployment-step1.png" },
+    { "stepNumber": 2, "instruction": "Place software artefacts within their hosting environments to show the deployment mapping.", "imageUrl": "resources/images/diagrams/deployment-step2.png" },
+    { "stepNumber": 3, "instruction": "Add communication paths between nodes, labelling them with protocols and ports.", "imageUrl": "resources/images/diagrams/deployment-step3.png" }
+  ],
+  "exercises": [
+    {
+      "scenario": "Create a deployment diagram for a containerised government service running on AWS ECS with an RDS database, deployed across two availability zones for resilience.",
+      "expectedDiagramType": "deployment",
+      "hints": ["Show the AWS region containing two availability zones", "Place ECS tasks in each AZ", "Show the RDS instance with a read replica in the second AZ"],
+      "sampleSolution": "resources/images/diagrams/deployment-exercise1-solution.png"
+    }
+  ],
+  "commonMistakes": [
+    {
+      "description": "Confusing deployment diagrams with solution overview diagrams",
+      "incorrectExample": "Showing business users and data flows in a deployment diagram instead of focusing on infrastructure and artefact placement",
+      "correctedExample": "Focus on execution environments, deployed artefacts, and communication paths. Leave business context for solution overview diagrams",
+      "explanation": "Deployment diagrams should focus on the physical or cloud infrastructure view. Mixing in business-level concerns makes the diagram unclear and reduces its value for infrastructure and operations teams."
+    }
+  ]
+}

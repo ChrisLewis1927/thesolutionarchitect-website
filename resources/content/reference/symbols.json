@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Application Component",
+    "description": "Represents a modular, deployable, and replaceable part of a software system that encapsulates its behaviour and data.",
+    "layer": "application",
+    "notation": "Rectangle with component icon"
+  },
+  {
+    "name": "Application Service",
+    "description": "Represents an explicitly defined exposed application behaviour.",
+    "layer": "application",
+    "notation": "Rectangle with rounded corners"
+  },
+  {
+    "name": "Application Interface",
+    "description": "Represents a point of access where application services are made available to a user, another application component, or a node.",
+    "layer": "application",
+    "notation": "Rectangle with vertical bar on left"
+  },
+  {
+    "name": "Business Actor",
+    "description": "Represents a business entity that is capable of performing behaviour.",
+    "layer": "business",
+    "notation": "Stick figure icon"
+  },
+  {
+    "name": "Business Process",
+    "description": "Represents a sequence of business behaviours that achieves a specific result.",
+    "layer": "business",
+    "notation": "Rectangle with arrow icon"
+  },
+  {
+    "name": "Business Service",
+    "description": "Represents an explicitly defined exposed business behaviour.",
+    "layer": "business",
+    "notation": "Rectangle with rounded corners"
+  },
+  {
+    "name": "Node",
+    "description": "Represents a computational or physical resource that hosts, manipulates, or interacts with other computational or physical resources.",
+    "layer": "technology",
+    "notation": "3D box"
+  },
+  {
+    "name": "Device",
+    "description": "Represents a physical IT resource upon which system software and artefacts may be stored or deployed for execution.",
+    "layer": "technology",
+    "notation": "3D box with device icon"
+  },
+  {
+    "name": "System Software",
+    "description": "Represents software that provides or contributes to an environment for storing, executing, and using software or data deployed within it.",
+    "layer": "technology",
+    "notation": "Rectangle with system icon"
+  },
+  {
+    "name": "Artefact",
+    "description": "Represents a piece of data that is used or produced in a software development process, or by deployment and operation of an IT system.",
+    "layer": "technology",
+    "notation": "Document icon with folded corner"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Composition",
+    "description": "Indicates that an element consists of one or more other concepts.",
+    "notation": "Line with filled diamond at the composite end",
+    "category": "structural"
+  },
+  {
+    "name": "Aggregation",
+    "description": "Indicates that an element combines one or more other concepts.",
+    "notation": "Line with open diamond at the aggregate end",
+    "category": "structural"
+  },
+  {
+    "name": "Assignment",
+    "description": "Expresses the allocation of responsibility, performance of behaviour, storage, or execution.",
+    "notation": "Line with filled circle and arrow",
+    "category": "structural"
+  },
+  {
+    "name": "Realisation",
+    "description": "Indicates that an entity plays a critical role in the creation, achievement, sustenance, or operation of a more abstract entity.",
+    "notation": "Dashed line with open arrowhead",
+    "category": "structural"
+  },
+  {
+    "name": "Serving",
+    "description": "Models that an element provides its functionality to another element.",
+    "notation": "Line with open arrowhead",
+    "category": "dependency"
+  },
+  {
+    "name": "Access",
+    "description": "Models the ability of behaviour and active structure elements to observe or act upon passive structure elements.",
+    "notation": "Dashed line with open arrowhead",
+    "category": "dependency"
+  },
+  {
+    "name": "Influence",
+    "description": "Models that an element affects the implementation or achievement of some motivation element.",
+    "notation": "Dashed line with open arrowhead and label",
+    "category": "dependency"
+  },
+  {
+    "name": "Triggering",
+    "description": "Describes a temporal or causal relationship between elements.",
+    "notation": "Line with filled arrowhead",
+    "category": "dynamic"
+  },
+  {
+    "name": "Flow",
+    "description": "Describes the exchange or transfer of, for example, information or value between processes, function, interactions, and events.",
+    "notation": "Dashed line with filled arrowhead",
+    "category": "dynamic"
+  },
+  {
+    "name": "Specialisation",
+    "description": "Indicates that an element is a particular kind of another element.",
+    "notation": "Line with open triangle arrowhead",
+    "category": "other"
+  }
+]

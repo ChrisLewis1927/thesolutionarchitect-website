@@ -1,0 +1,54 @@
+{
+  "feeds": [
+    {
+      "url": "https://aws.amazon.com/blogs/architecture/feed/",
+      "source": "AWS Architecture Blog",
+      "category": "architecture"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/blog/feed/",
+      "source": "Azure Blog",
+      "category": "cloud"
+    },
+    {
+      "url": "https://cloud.google.com/blog/rss",
+      "source": "Google Cloud Blog",
+      "category": "cloud"
+    },
+    {
+      "url": "https://www.ncsc.gov.uk/feeds/blog.xml",
+      "source": "NCSC Blog",
+      "category": "cybersecurity"
+    },
+    {
+      "url": "https://technology.blog.gov.uk/feed/",
+      "source": "GOV.UK Technology Blog",
+      "category": "government-digital"
+    },
+    {
+      "url": "https://feed.infoq.com/architecture-design/",
+      "source": "InfoQ Architecture",
+      "category": "architecture"
+    },
+    {
+      "url": "https://martinfowler.com/feed.atom",
+      "source": "Martin Fowler",
+      "category": "architecture"
+    },
+    {
+      "url": "https://www.thoughtworks.com/rss/insights.xml",
+      "source": "ThoughtWorks Insights",
+      "category": "enterprise-tech"
+    },
+    {
+      "url": "https://www.theregister.com/headlines.atom",
+      "source": "The Register",
+      "category": "enterprise-tech"
+    },
+    {
+      "url": "https://feeds.arstechnica.com/arstechnica/technology-lab",
+      "source": "Ars Technica",
+      "category": "enterprise-tech"
+    }
+  ]
+}

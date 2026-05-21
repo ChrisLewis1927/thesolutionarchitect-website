@@ -1,0 +1,37 @@
+{
+  "title": "Introduction to ArchiMate Notation",
+  "diagramType": "archimate",
+  "sequenceOrder": 1,
+  "explanation": "ArchiMate is an open and independent modelling language for enterprise architecture. It provides a uniform representation for diagrams that describe enterprise architectures across business, application, and technology layers. This module introduces the core concepts and notation conventions used in ArchiMate diagrams.",
+  "annotatedExamples": [
+    {
+      "imageUrl": "resources/images/diagrams/archimate-basic-layered.png",
+      "annotations": [
+        { "element": "Business Layer", "explanation": "The top layer shows business actors, processes, and services that deliver value to customers." },
+        { "element": "Application Layer", "explanation": "The middle layer shows application components and services that support business processes." },
+        { "element": "Technology Layer", "explanation": "The bottom layer shows infrastructure nodes, devices, and networks that host applications." }
+      ]
+    }
+  ],
+  "walkthrough": [
+    { "stepNumber": 1, "instruction": "Start by identifying the business services your architecture supports. Place Business Service elements at the top of your diagram.", "imageUrl": "resources/images/diagrams/archimate-step1.png" },
+    { "stepNumber": 2, "instruction": "Add Application Components that realise the business services. Connect them using Realisation relationships.", "imageUrl": "resources/images/diagrams/archimate-step2.png" },
+    { "stepNumber": 3, "instruction": "Add Technology Nodes that host the application components. Use Assignment relationships to show deployment.", "imageUrl": "resources/images/diagrams/archimate-step3.png" }
+  ],
+  "exercises": [
+    {
+      "scenario": "A government digital service allows citizens to apply for a licence online. The service uses a web application hosted on cloud infrastructure with a database backend. Model this using ArchiMate layers.",
+      "expectedDiagramType": "archimate",
+      "hints": ["Start with the Business Service: 'Licence Application'", "Add an Application Component for the web app and a Data Object for the application form", "Include Technology Nodes for the cloud hosting and database server"],
+      "sampleSolution": "resources/images/diagrams/archimate-exercise1-solution.png"
+    }
+  ],
+  "commonMistakes": [
+    {
+      "description": "Mixing elements from different layers without proper cross-layer relationships",
+      "incorrectExample": "Placing a Node directly inside a Business Process without a Realisation or Serving relationship",
+      "correctedExample": "Use Serving relationships to connect Technology Services to Application Components, and Realisation relationships from Application Services to Business Services",
+      "explanation": "ArchiMate layers should be connected through well-defined cross-layer relationships. Direct containment across layers violates the metamodel and makes diagrams harder to understand."
+    }
+  ]
+}

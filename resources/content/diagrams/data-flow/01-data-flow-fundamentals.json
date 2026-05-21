@@ -1,0 +1,37 @@
+{
+  "title": "Data Flow Diagram Fundamentals",
+  "diagramType": "data-flow",
+  "sequenceOrder": 1,
+  "explanation": "Data flow diagrams (DFDs) show how data moves through a system, from input sources through processing steps to output destinations. They are essential for understanding data handling, which is particularly important in UK government contexts where data protection and GDPR compliance are critical. This module covers the core notation and best practices for creating clear data flow diagrams.",
+  "annotatedExamples": [
+    {
+      "imageUrl": "resources/images/diagrams/data-flow-example.png",
+      "annotations": [
+        { "element": "External Entity", "explanation": "Represents a source or destination of data outside the system boundary, such as a citizen or an external API." },
+        { "element": "Process", "explanation": "A transformation or processing step that acts on data, shown as a rounded rectangle or circle." },
+        { "element": "Data Store", "explanation": "A repository where data is held, shown as an open-ended rectangle." }
+      ]
+    }
+  ],
+  "walkthrough": [
+    { "stepNumber": 1, "instruction": "Identify all external entities that send data to or receive data from your system.", "imageUrl": "resources/images/diagrams/data-flow-step1.png" },
+    { "stepNumber": 2, "instruction": "Map out the major processes that transform or route data within the system.", "imageUrl": "resources/images/diagrams/data-flow-step2.png" },
+    { "stepNumber": 3, "instruction": "Add data stores and draw arrows showing the direction of data flow between all elements.", "imageUrl": "resources/images/diagrams/data-flow-step3.png" }
+  ],
+  "exercises": [
+    {
+      "scenario": "Create a data flow diagram for a citizen feedback system where citizens submit feedback via a web form, the data is stored in a database, and caseworkers review and respond to feedback.",
+      "expectedDiagramType": "data-flow",
+      "hints": ["Citizens and caseworkers are external entities", "The web form submission and review processes are separate", "Include the feedback database as a data store"],
+      "sampleSolution": "resources/images/diagrams/data-flow-exercise1-solution.png"
+    }
+  ],
+  "commonMistakes": [
+    {
+      "description": "Omitting data flow direction arrows",
+      "incorrectExample": "Drawing lines between processes and data stores without arrowheads indicating direction",
+      "correctedExample": "Always use directed arrows showing whether data is being read from or written to a data store",
+      "explanation": "Without direction arrows, readers cannot determine whether data is being read or written, making the diagram ambiguous and potentially misleading for security and data protection reviews."
+    }
+  ]
+}
