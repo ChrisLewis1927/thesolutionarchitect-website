@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Blog — Perspectives on architecture, delivery, and working in public service technology.">
+  <meta property="og:title" content="Blog — The Solution Architect">
+  <meta property="og:description" content="Honest perspectives on solution architecture in UK government and beyond.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>Blog — The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="infographics.html" class="nav__link">Infographics</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Blog</h1>
+        <p class="page-header__subtitle">Perspectives on architecture, delivery, and working in public service technology. Honest, practical, and occasionally opinionated.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid--2">
+          {{posts}}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="infographics.html">Infographics</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

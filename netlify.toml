@@ -1,6 +1,6 @@
 [build]
+  command = "npm install && node build-blog.js"
   publish = "."
-  command = "echo 'No build needed'"
 
 [[redirects]]
   from = "/admin/*"
