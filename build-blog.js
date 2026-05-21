@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
-const { marked } = require('marked');
+
+let marked;
 
 const CONTENT_DIR = 'content/blog';
 const TEMPLATE_DIR = '_templates';
@@ -170,4 +171,10 @@ function buildBlog() {
   console.log(`Built ${posts.length} blog post(s).`);
 }
 
-buildBlog();
+async function main() {
+  const { marked: markedLib } = await import('marked');
+  marked = markedLib;
+  buildBlog();
+}
+
+main();
