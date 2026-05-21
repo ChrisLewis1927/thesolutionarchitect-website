@@ -1,0 +1,29 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/blog"
+public_folder: "/images/blog"
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Publish Date", name: "date", widget: "datetime", required: true }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Architecture"
+          - "Government"
+          - "Delivery"
+          - "Practice"
+          - "Cloud"
+          - "Governance"
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Author", name: "author", widget: "string", default: "The Solution Architect" }
+      - { label: "Body", name: "body", widget: "markdown" }
