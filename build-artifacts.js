@@ -107,12 +107,11 @@ function generateListingPage() {
   const cards = artifacts.map(artifact => {
     const excerpt = getFirstSentence(artifact.description);
     const badges = renderPhaseBadges(artifact.projectPhase);
-    return `        <div class="card">
-          <a href="artifacts/${artifact.id}.html" class="card__link">
+    return `        <div class="card fade-in">
             <h3 class="card__title">${artifact.name}</h3>
-            <p class="card__excerpt">${excerpt}</p>
-            <div class="card__badges">${badges}</div>
-          </a>
+            <p class="card__description">${excerpt}</p>
+            <div style="margin-top: auto; padding-top: 1rem;">${badges}</div>
+            <a href="artifacts/${artifact.id}.html" class="card__link">View artifact</a>
         </div>`;
   }).join('\n');
 
