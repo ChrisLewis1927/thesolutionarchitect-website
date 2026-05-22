@@ -1,291 +1,343 @@
-<!--
-  cloud.html — Solution Architect site
-  Rewritten main content. Drop in between your existing <main>...</main> tags
-  (or whatever wraps your page body). Header, nav, and footer left unchanged.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cloud Fundamentals — Key cloud concepts for Solution Architects in a government context.">
+  <meta property="og:title" content="Cloud Fundamentals — The Solution Architect">
+  <meta property="og:description" content="Key cloud concepts for Solution Architects. The services, the patterns, and the calls you'll actually be asked to make in a government context.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>Cloud Fundamentals — The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Provider-coloured horizontal rules above each provider section */
+    .provider-rule {
+      border: 0;
+      border-top: 4px solid #ddd;
+      margin: 3rem 0 1.5rem;
+    }
+    .provider-rule--aws   { border-top-color: #FF9900; }
+    .provider-rule--azure { border-top-color: #0078D4; }
+    .provider-rule--gcp   { border-top-color: #34A853; }
+
+    /* Comparison figure */
+    .comparison-figure {
+      margin: 1.5rem 0 2rem;
+    }
+    .comparison-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid #e5e9f0;
+      border-radius: 4px;
+    }
+    .comparison-figure figcaption {
+      font-size: 0.9rem;
+      color: #5a6b85;
+      margin-top: 0.5rem;
+    }
+
+    /* Pattern list */
+    .pattern-list li {
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link nav__link--active">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Cloud Fundamentals</h1>
+        <p class="page-header__subtitle">Key cloud concepts for Solution Architects. The services, the patterns, and the calls you'll actually be asked to make in a government context.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <p>The UK government's Cloud First policy means cloud hosting is the default for new services, not the exception. As a Solution Architect, you need enough cloud knowledge to make sensible calls on hosting, architecture, cost, and security &mdash; without ever needing to open a Terraform file in anger.</p>
+
+      <div class="info-box mb-2xl">
+        <p><strong>The architect's cloud role.</strong> You don't need to configure VPCs or write IaC. You need to know what's possible, what's appropriate, where the trade-offs sit, and how to hold a credible conversation with cloud engineers and vendors who will absolutely test you on it.</p>
+      </div>
+
+      <h2>Procurement: G-Cloud and the CCS framework</h2>
+
+      <p>Before any of the technical detail matters, the procurement route does. AWS, Azure, and GCP are all available through the Crown Commercial Service's <strong>G-Cloud 14</strong> framework, which is how most UK public sector cloud spend reaches the providers. G-Cloud sits alongside the Digital Marketplace and the Technology Services frameworks, and which one you use depends on whether you're buying raw cloud capacity, a managed service on top of it, or a delivery partner to build the thing.</p>
+
+      <p>The practical implication for an architect: if a service you're designing around isn't listed on G-Cloud for your chosen provider, your business case has a problem you'll need to solve before anyone signs anything off. Check early.</p>
+
+      <h2>Cloud services at a glance</h2>
+
+      <p>Architects compare. If you already know one provider, you can pick up the others fastest by translating service names rather than relearning concepts. The table below is the cheatsheet I wish I'd had on day one.</p>
+
+      <figure class="comparison-figure">
+        <img src="images/cloud-comparison-table.svg" alt="Comparison table showing equivalent AWS, Azure, and Google Cloud services across compute, storage, data, networking, and security categories." loading="lazy">
+        <figcaption>Equivalent services across the three major providers. Names differ; the underlying patterns mostly don't.</figcaption>
+      </figure>
+
+      <hr class="provider-rule provider-rule--aws">
 
-  The comparison table image is referenced as images/cloud-comparison-table.svg.
-  Adjust the path to wherever you upload the SVG file on your site.
--->
+      <h2 id="aws">Amazon Web Services (AWS)</h2>
 
-<article id="main">
+      <p>AWS has the largest footprint in UK central government and the deepest catalogue of the three. If you're joining a department that already has a cloud presence, the odds are it's AWS, and the odds are it's running in the London region (eu-west-2).</p>
 
-  <h1>Cloud Fundamentals</h1>
+      <h3>Compute</h3>
 
-  <p class="lede">Key cloud concepts for Solution Architects. The services, the patterns, and the calls you'll actually be asked to make in a government context.</p>
+      <ul>
+        <li><strong>EC2 (Elastic Compute Cloud):</strong> Virtual machines, and the answer when nothing else fits. If you reach for EC2 first, stop and ask why the managed option won't work &mdash; the operational burden is yours from the moment you launch it.</li>
+        <li><strong>Lambda:</strong> Serverless functions. Brilliant for event-driven work, APIs with spiky traffic, and glue code between services. Cold starts are real and will catch you out if you have low-latency SLAs; budget for provisioned concurrency or pick a different runtime.</li>
+        <li><strong>ECS / Fargate:</strong> Managed containers without the full Kubernetes weight. Usually the right answer for containerised workloads in government &mdash; you get the portability without paying the EKS operational tax.</li>
+        <li><strong>Elastic Beanstalk:</strong> The closest AWS has to old-school PaaS. Fine for small teams or quick wins, but you'll outgrow it. Most departments shouldn't start new builds here.</li>
+      </ul>
 
-  <p>The UK government's Cloud First policy means cloud hosting is the default for new services, not the exception. As a Solution Architect, you need enough cloud knowledge to make sensible calls on hosting, architecture, cost, and security &mdash; without ever needing to open a Terraform file in anger.</p>
+      <h3>Storage</h3>
 
-  <aside class="callout callout--role">
-    <p><strong>The architect's cloud role.</strong> You don't need to configure VPCs or write IaC. You need to know what's possible, what's appropriate, where the trade-offs sit, and how to hold a credible conversation with cloud engineers and vendors who will absolutely test you on it.</p>
-  </aside>
+      <ul>
+        <li><strong>S3 (Simple Storage Service):</strong> Object storage, and arguably the most consequential service AWS ever shipped. Use it for files, backups, static sites, data lakes, and anything else that doesn't need a filesystem. Storage classes matter &mdash; lifecycle rules from Standard to Infrequent Access to Glacier will pay for themselves quickly.</li>
+        <li><strong>EBS (Elastic Block Store):</strong> Block storage for EC2. Pick gp3 over gp2 as a default; you get better baseline performance for less money.</li>
+        <li><strong>EFS (Elastic File System):</strong> Shared file storage across instances. Useful but expensive at scale &mdash; check whether S3 with a smarter access pattern would do the job first.</li>
+      </ul>
 
-  <h2>Procurement: G-Cloud and the CCS framework</h2>
+      <h3>Databases</h3>
 
-  <p>Before any of the technical detail matters, the procurement route does. AWS, Azure, and GCP are all available through the Crown Commercial Service's <strong>G-Cloud 14</strong> framework, which is how most UK public sector cloud spend reaches the providers. G-Cloud sits alongside the Digital Marketplace and the Technology Services frameworks, and which one you use depends on whether you're buying raw cloud capacity, a managed service on top of it, or a delivery partner to build the thing.</p>
+      <ul>
+        <li><strong>RDS (Relational Database Service):</strong> Managed PostgreSQL, MySQL, SQL Server, and friends. Handles backups, patching, and failover. Multi-AZ is a tick-box that costs roughly double; use it for production and stop arguing about it.</li>
+        <li><strong>DynamoDB:</strong> Managed NoSQL. Exceptional at scale if your access patterns are well understood. Painful if they aren't &mdash; you'll find yourself adding global secondary indexes to work around a design you should have caught earlier.</li>
+        <li><strong>Aurora:</strong> AWS-native relational database compatible with Postgres or MySQL. Better performance and availability than vanilla RDS, at a price. Worth it for production workloads with real traffic.</li>
+      </ul>
 
-  <p>The practical implication for an architect: if a service you're designing around isn't listed on G-Cloud for your chosen provider, your business case has a problem you'll need to solve before anyone signs anything off. Check early.</p>
+      <h3>Networking</h3>
 
-  <h2>Cloud services at a glance</h2>
+      <ul>
+        <li><strong>VPC (Virtual Private Cloud):</strong> Your isolated network. Get the CIDR planning right at the start because retrofitting is genuinely awful.</li>
+        <li><strong>CloudFront:</strong> CDN with edge caching. Worth pairing with WAF for any public-facing service.</li>
+        <li><strong>Route 53:</strong> DNS, with health-check based routing if you need it.</li>
+        <li><strong>API Gateway:</strong> Managed API front door for authentication, throttling, and request transformation. Pairs naturally with Lambda.</li>
+      </ul>
 
-  <p>Architects compare. If you already know one provider, you can pick up the others fastest by translating service names rather than relearning concepts. The table below is the cheatsheet I wish I'd had on day one.</p>
+      <h3>Security and identity</h3>
 
-  <figure class="comparison-figure">
-    <img src="images/cloud-comparison-table.svg" alt="Comparison table showing equivalent AWS, Azure, and Google Cloud services across compute, storage, data, networking, and security categories." loading="lazy">
-    <figcaption>Equivalent services across the three major providers. Names differ; the underlying patterns mostly don't.</figcaption>
-  </figure>
+      <ul>
+        <li><strong>IAM (Identity and Access Management):</strong> The foundation. Use roles and policies generously, users sparingly, and root accounts almost never.</li>
+        <li><strong>KMS (Key Management Service):</strong> Encryption keys. Customer-managed keys cost a small amount per month each but give you a clean audit story; worth it for anything classified.</li>
+        <li><strong>WAF (Web Application Firewall):</strong> Rule-based protection for web apps and APIs. The managed rule groups will catch most automated nuisance traffic with little tuning.</li>
+        <li><strong>GuardDuty:</strong> Threat detection across your account. Cheap to run, high signal-to-noise. Switch it on by default.</li>
+      </ul>
 
-  <hr class="provider-rule provider-rule--aws">
+      <h3>Key decisions for government work</h3>
 
-  <h2 id="aws">Amazon Web Services (AWS)</h2>
+      <ul>
+        <li><strong>Region selection:</strong> eu-west-2 (London) is the default for UK government data. If you genuinely need in-region disaster recovery, eu-west-1 (Ireland) is the usual fallback &mdash; but the data residency conversation needs to happen with your SIRO first, not after.</li>
+        <li><strong>Multi-account strategy:</strong> Separate dev, staging, and production into different accounts under AWS Organizations. Service Control Policies give you genuine blast-radius isolation; shared VPCs do not.</li>
+        <li><strong>Managed by default:</strong> Reach for managed services first. They reduce operational burden and ship with better security defaults than anything you'll build yourself.</li>
+        <li><strong>Cost management:</strong> Tag everything from day one. Reserved Instances or Savings Plans for predictable workloads. AWS Budgets with alerts before the bill arrives, not after.</li>
+      </ul>
 
-  <p>AWS has the largest footprint in UK central government and the deepest catalogue of the three. If you're joining a department that already has a cloud presence, the odds are it's AWS, and the odds are it's running in the London region (eu-west-2).</p>
+      <div class="info-box mb-2xl">
+        <p><strong>Anti-patterns to avoid.</strong> Putting an RDS instance in a public subnet "just for now". Running production on a single AZ. Using NAT Gateways at scale without understanding the data-processing charges. Leaving S3 buckets with default ACLs in a department that's about to get a security audit. None of these are theoretical &mdash; all of them have hit live government services.</p>
+      </div>
 
-  <h3>Compute</h3>
+      <hr class="provider-rule provider-rule--azure">
 
-  <ul>
-    <li><strong>EC2 (Elastic Compute Cloud):</strong> Virtual machines, and the answer when nothing else fits. If you reach for EC2 first, stop and ask why the managed option won't work &mdash; the operational burden is yours from the moment you launch it.</li>
-    <li><strong>Lambda:</strong> Serverless functions. Brilliant for event-driven work, APIs with spiky traffic, and glue code between services. Cold starts are real and will catch you out if you have low-latency SLAs; budget for provisioned concurrency or pick a different runtime.</li>
-    <li><strong>ECS / Fargate:</strong> Managed containers without the full Kubernetes weight. Usually the right answer for containerised workloads in government &mdash; you get the portability without paying the EKS operational tax.</li>
-    <li><strong>Elastic Beanstalk:</strong> The closest AWS has to old-school PaaS. Fine for small teams or quick wins, but you'll outgrow it. Most departments shouldn't start new builds here.</li>
-  </ul>
+      <h2 id="azure">Microsoft Azure</h2>
 
-  <h3>Storage</h3>
+      <p>Azure has been gaining ground in UK government, often because the department already holds an Enterprise Agreement for Microsoft 365 and the procurement conversation is shorter. It rarely wins on raw technical merit alone, but the integration story with Entra ID, Defender, and Purview is genuinely strong for a Microsoft-heavy estate.</p>
 
-  <ul>
-    <li><strong>S3 (Simple Storage Service):</strong> Object storage, and arguably the most consequential service AWS ever shipped. Use it for files, backups, static sites, data lakes, and anything else that doesn't need a filesystem. Storage classes matter &mdash; lifecycle rules from Standard to Infrequent Access to Glacier will pay for themselves quickly.</li>
-    <li><strong>EBS (Elastic Block Store):</strong> Block storage for EC2. Pick gp3 over gp2 as a default; you get better baseline performance for less money.</li>
-    <li><strong>EFS (Elastic File System):</strong> Shared file storage across instances. Useful but expensive at scale &mdash; check whether S3 with a smarter access pattern would do the job first.</li>
-  </ul>
+      <h3>Compute</h3>
 
-  <h3>Databases</h3>
+      <ul>
+        <li><strong>Virtual Machines:</strong> The EC2 equivalent. Use when you need a specific OS image, custom networking, or a straight lift from on-premise. Azure Hybrid Benefit can drop Windows licensing costs significantly if your department already owns the licences.</li>
+        <li><strong>App Service:</strong> Managed hosting for web apps. The closest thing Azure has to Elastic Beanstalk, with deeper Visual Studio and GitHub integration.</li>
+        <li><strong>Azure Functions:</strong> Serverless. The Consumption plan is excellent for spiky workloads, but the maths flips around 50,000 executions a day &mdash; move to a Premium plan once traffic is predictable.</li>
+        <li><strong>AKS (Azure Kubernetes Service):</strong> Managed Kubernetes. Heavier lift than ECS or Fargate, but the right call when you need full Kubernetes APIs and have the team to run them.</li>
+        <li><strong>Container Apps:</strong> A newer middle option. Containerised workloads without the full Kubernetes overhead. Worth a look for greenfield builds.</li>
+      </ul>
 
-  <ul>
-    <li><strong>RDS (Relational Database Service):</strong> Managed PostgreSQL, MySQL, SQL Server, and friends. Handles backups, patching, and failover. Multi-AZ is a tick-box that costs roughly double; use it for production and stop arguing about it.</li>
-    <li><strong>DynamoDB:</strong> Managed NoSQL. Exceptional at scale if your access patterns are well understood. Painful if they aren't &mdash; you'll find yourself adding global secondary indexes to work around a design you should have caught earlier.</li>
-    <li><strong>Aurora:</strong> AWS-native relational database compatible with Postgres or MySQL. Better performance and availability than vanilla RDS, at a price. Worth it for production workloads with real traffic.</li>
-  </ul>
+      <h3>Storage</h3>
 
-  <h3>Networking</h3>
+      <ul>
+        <li><strong>Blob Storage:</strong> Azure's S3. Hot, cool, and archive tiers &mdash; use lifecycle policies aggressively or you'll pay hot rates for data nobody is touching.</li>
+        <li><strong>Managed Disks:</strong> Block storage attached to VMs. Premium SSD for production, Standard for dev and test.</li>
+        <li><strong>Azure Files:</strong> Managed SMB and NFS shares. Useful for lifting Windows file servers without re-architecting them.</li>
+      </ul>
 
-  <ul>
-    <li><strong>VPC (Virtual Private Cloud):</strong> Your isolated network. Get the CIDR planning right at the start because retrofitting is genuinely awful.</li>
-    <li><strong>CloudFront:</strong> CDN with edge caching. Worth pairing with WAF for any public-facing service.</li>
-    <li><strong>Route 53:</strong> DNS, with health-check based routing if you need it.</li>
-    <li><strong>API Gateway:</strong> Managed API front door for authentication, throttling, and request transformation. Pairs naturally with Lambda.</li>
-  </ul>
+      <h3>Databases</h3>
 
-  <h3>Security and identity</h3>
+      <ul>
+        <li><strong>Azure SQL Database:</strong> Managed SQL Server. The Hyperscale tier handles large workloads well. The serverless tier auto-pauses, which makes it ideal for non-production.</li>
+        <li><strong>Cosmos DB:</strong> Multi-model NoSQL. Powerful, but the pricing model is opaque &mdash; read the RU/s documentation properly before you commit, because surprises here get expensive quickly.</li>
+        <li><strong>Azure Database for PostgreSQL / MySQL:</strong> Managed open-source databases. Use these when you want the engine without SQL Server licensing in the picture.</li>
+      </ul>
 
-  <ul>
-    <li><strong>IAM (Identity and Access Management):</strong> The foundation. Use roles and policies generously, users sparingly, and root accounts almost never.</li>
-    <li><strong>KMS (Key Management Service):</strong> Encryption keys. Customer-managed keys cost a small amount per month each but give you a clean audit story; worth it for anything classified.</li>
-    <li><strong>WAF (Web Application Firewall):</strong> Rule-based protection for web apps and APIs. The managed rule groups will catch most automated nuisance traffic with little tuning.</li>
-    <li><strong>GuardDuty:</strong> Threat detection across your account. Cheap to run, high signal-to-noise. Switch it on by default.</li>
-  </ul>
+      <h3>Networking</h3>
 
-  <h3>Key decisions for government work</h3>
+      <ul>
+        <li><strong>Virtual Network (VNet):</strong> The VPC equivalent. Get peering, NSGs, and route tables right early &mdash; retrofitting is painful.</li>
+        <li><strong>Application Gateway:</strong> Layer 7 load balancer with WAF built in.</li>
+        <li><strong>Front Door:</strong> Global edge service for content delivery and global routing.</li>
+        <li><strong>Private Link:</strong> Keeps traffic to PaaS services off the public internet. Worth the effort for anything handling OFFICIAL-SENSITIVE or above.</li>
+      </ul>
 
-  <ul>
-    <li><strong>Region selection:</strong> eu-west-2 (London) is the default for UK government data. If you genuinely need in-region disaster recovery, eu-west-1 (Ireland) is the usual fallback &mdash; but the data residency conversation needs to happen with your SIRO first, not after.</li>
-    <li><strong>Multi-account strategy:</strong> Separate dev, staging, and production into different accounts under AWS Organizations. Service Control Policies give you genuine blast-radius isolation; shared VPCs do not.</li>
-    <li><strong>Managed by default:</strong> Reach for managed services first. They reduce operational burden and ship with better security defaults than anything you'll build yourself.</li>
-    <li><strong>Cost management:</strong> Tag everything from day one. Reserved Instances or Savings Plans for predictable workloads. AWS Budgets with alerts before the bill arrives, not after.</li>
-  </ul>
+      <h3>Security and identity</h3>
 
-  <aside class="callout callout--gotcha">
-    <p><strong>Anti-patterns to avoid.</strong> Putting an RDS instance in a public subnet "just for now". Running production on a single AZ. Using NAT Gateways at scale without understanding the data-processing charges. Leaving S3 buckets with default ACLs in a department that's about to get a security audit. None of these are theoretical &mdash; all of them have hit live government services.</p>
-  </aside>
-
-  <hr class="provider-rule provider-rule--azure">
-
-  <h2 id="azure">Microsoft Azure</h2>
-
-  <p>Azure has been gaining ground in UK government, often because the department already holds an Enterprise Agreement for Microsoft 365 and the procurement conversation is shorter. It rarely wins on raw technical merit alone, but the integration story with Entra ID, Defender, and Purview is genuinely strong for a Microsoft-heavy estate.</p>
-
-  <h3>Compute</h3>
-
-  <ul>
-    <li><strong>Virtual Machines:</strong> The EC2 equivalent. Use when you need a specific OS image, custom networking, or a straight lift from on-premise. Azure Hybrid Benefit can drop Windows licensing costs significantly if your department already owns the licences.</li>
-    <li><strong>App Service:</strong> Managed hosting for web apps. The closest thing Azure has to Elastic Beanstalk, with deeper Visual Studio and GitHub integration.</li>
-    <li><strong>Azure Functions:</strong> Serverless. The Consumption plan is excellent for spiky workloads, but the maths flips around 50,000 executions a day &mdash; move to a Premium plan once traffic is predictable.</li>
-    <li><strong>AKS (Azure Kubernetes Service):</strong> Managed Kubernetes. Heavier lift than ECS or Fargate, but the right call when you need full Kubernetes APIs and have the team to run them.</li>
-    <li><strong>Container Apps:</strong> A newer middle option. Containerised workloads without the full Kubernetes overhead. Worth a look for greenfield builds.</li>
-  </ul>
-
-  <h3>Storage</h3>
-
-  <ul>
-    <li><strong>Blob Storage:</strong> Azure's S3. Hot, cool, and archive tiers &mdash; use lifecycle policies aggressively or you'll pay hot rates for data nobody is touching.</li>
-    <li><strong>Managed Disks:</strong> Block storage attached to VMs. Premium SSD for production, Standard for dev and test.</li>
-    <li><strong>Azure Files:</strong> Managed SMB and NFS shares. Useful for lifting Windows file servers without re-architecting them.</li>
-  </ul>
-
-  <h3>Databases</h3>
-
-  <ul>
-    <li><strong>Azure SQL Database:</strong> Managed SQL Server. The Hyperscale tier handles large workloads well. The serverless tier auto-pauses, which makes it ideal for non-production.</li>
-    <li><strong>Cosmos DB:</strong> Multi-model NoSQL. Powerful, but the pricing model is opaque &mdash; read the RU/s documentation properly before you commit, because surprises here get expensive quickly.</li>
-    <li><strong>Azure Database for PostgreSQL / MySQL:</strong> Managed open-source databases. Use these when you want the engine without SQL Server licensing in the picture.</li>
-  </ul>
-
-  <h3>Networking</h3>
-
-  <ul>
-    <li><strong>Virtual Network (VNet):</strong> The VPC equivalent. Get peering, NSGs, and route tables right early &mdash; retrofitting is painful.</li>
-    <li><strong>Application Gateway:</strong> Layer 7 load balancer with WAF built in.</li>
-    <li><strong>Front Door:</strong> Global edge service for content delivery and global routing.</li>
-    <li><strong>Private Link:</strong> Keeps traffic to PaaS services off the public internet. Worth the effort for anything handling OFFICIAL-SENSITIVE or above.</li>
-  </ul>
-
-  <h3>Security and identity</h3>
-
-  <ul>
-    <li><strong>Entra ID (formerly Azure AD):</strong> Azure's identity backbone. If the department already runs M365, this is your single sign-on story by default.</li>
-    <li><strong>Key Vault:</strong> Encryption keys plus secrets management in one service.</li>
-    <li><strong>Defender for Cloud:</strong> Posture management and workload protection. The free tier covers the basics; the paid tier is where the useful detections live.</li>
-    <li><strong>Microsoft Sentinel:</strong> Cloud-native SIEM. Often the deciding factor when a department wants a single security pane across cloud and M365.</li>
-  </ul>
-
-  <h3>Key decisions for government work</h3>
-
-  <ul>
-    <li><strong>Region selection:</strong> UK South (London) and UK West (Cardiff) for data residency. Both are sovereign regions, but service availability lags in UK West &mdash; check before designing around it.</li>
-    <li><strong>Subscription strategy:</strong> Subscriptions in Azure play the role accounts play in AWS. Separate workloads by subscription, group them under management groups, and apply Azure Policy at the group level.</li>
-    <li><strong>Licence portability:</strong> Azure Hybrid Benefit takes a serious chunk off Windows VM and SQL Server costs if existing licences are in place. Always worth raising in a business case.</li>
-    <li><strong>Where Azure wins:</strong> Microsoft-native estates, Power Platform integration, the Defender / Purview / Sentinel bundle, and citizen-facing identity via Entra External ID.</li>
-    <li><strong>Where it can bite:</strong> Pricing is harder to predict than AWS. Service quality varies across the catalogue &mdash; some services feel polished, others feel half-finished.</li>
-  </ul>
-
-  <aside class="callout callout--gotcha">
-    <p><strong>Anti-patterns to avoid.</strong> Running Azure Functions on Consumption plan for predictable workloads (you'll pay for the privilege of cold starts). Skipping Private Endpoints on PaaS services that handle anything sensitive. Treating Cosmos DB like a generic document database without modelling partition keys properly. Building a landing zone without management groups and then trying to add them later.</p>
-  </aside>
-
-  <hr class="provider-rule provider-rule--gcp">
-
-  <h2 id="gcp">Google Cloud Platform (GCP)</h2>
-
-  <p>GCP has the smallest footprint of the three in UK government, but it punches above its weight in specific areas &mdash; data analytics, machine learning, and Kubernetes. If a department is building a data platform from scratch and isn't already committed elsewhere, BigQuery alone is often enough to justify the conversation.</p>
-
-  <h3>Compute</h3>
-
-  <ul>
-    <li><strong>Compute Engine:</strong> Virtual machines. Per-second billing and automatic sustained-use discounts often make it cheaper than the AWS equivalent for steady workloads.</li>
-    <li><strong>Cloud Run:</strong> Containers as a service, and arguably the cleanest serverless container option across the three providers. Push a container, get an HTTPS endpoint, pay per request.</li>
-    <li><strong>Cloud Functions:</strong> Serverless functions. Smaller catalogue of triggers than Lambda, but quicker to stand up.</li>
-    <li><strong>GKE (Google Kubernetes Engine):</strong> Google invented Kubernetes, and GKE is the most polished managed offering. Autopilot mode is worth a look if you don't want to manage node pools yourself.</li>
-  </ul>
-
-  <h3>Storage</h3>
-
-  <ul>
-    <li><strong>Cloud Storage:</strong> Object storage, the S3 equivalent. One API across hot, nearline, coldline, and archive &mdash; simpler than the AWS storage class story.</li>
-    <li><strong>Persistent Disk:</strong> Block storage for VMs. Resizable without downtime, which AWS still can't quite match cleanly.</li>
-    <li><strong>Filestore:</strong> Managed NFS for shared workloads.</li>
-  </ul>
-
-  <h3>Databases</h3>
-
-  <ul>
-    <li><strong>Cloud SQL:</strong> Managed MySQL, PostgreSQL, and SQL Server.</li>
-    <li><strong>BigQuery:</strong> GCP's signature service. Serverless data warehouse with storage and compute billed separately. The pricing model rewards careful query design and punishes lazy <code>SELECT *</code> &mdash; a single careless query can cost more than a small EC2 fleet runs in a month.</li>
-    <li><strong>Spanner:</strong> Globally distributed relational database with strong consistency. Expensive, but unique &mdash; nothing else in the market does quite what it does.</li>
-    <li><strong>Firestore:</strong> Managed NoSQL document store. Good fit for mobile and web backends.</li>
-  </ul>
-
-  <h3>Networking</h3>
-
-  <ul>
-    <li><strong>VPC:</strong> GCP VPCs are global by default rather than regional. This is a real architectural difference from AWS, and usually a positive one.</li>
-    <li><strong>Cloud Load Balancing:</strong> Global load balancing behind a single anycast IP. Simpler than the AWS or Azure equivalents.</li>
-    <li><strong>Cloud CDN:</strong> Edge caching tied to the load balancer.</li>
-    <li><strong>Cloud Armor:</strong> WAF and DDoS protection.</li>
-  </ul>
-
-  <h3>Security and identity</h3>
-
-  <ul>
-    <li><strong>Cloud IAM:</strong> Identity and access. The resource hierarchy (organisation, folder, project) gives cleaner inheritance than AWS account boundaries.</li>
-    <li><strong>Cloud KMS:</strong> Key management.</li>
-    <li><strong>Security Command Center:</strong> Posture management and threat detection. The Premium tier holds the bits that actually matter.</li>
-  </ul>
-
-  <h3>Key decisions for government work</h3>
-
-  <ul>
-    <li><strong>Region selection:</strong> europe-west2 (London) for UK data residency. There's only one UK region today, so if your design needs in-country disaster recovery, Azure or AWS give you more room to work with.</li>
-    <li><strong>Project hierarchy:</strong> Projects in GCP are smaller and cheaper to spin up than AWS accounts. Use them generously &mdash; one per workload per environment is sensible.</li>
-    <li><strong>Where GCP wins:</strong> Data platforms (BigQuery, Looker, Dataflow), ML and AI workloads, anything Kubernetes-heavy, and web frontends that benefit from the global load balancer.</li>
-    <li><strong>Where it can bite:</strong> Smaller G-Cloud footprint and fewer UK-based partners. The marketplace is thinner. If you need a specialist tool, check it's actually available on GCP before you commit.</li>
-  </ul>
-
-  <aside class="callout callout--gotcha">
-    <p><strong>Anti-patterns to avoid.</strong> Using BigQuery for OLTP workloads (it's a warehouse, not a database). Running <code>SELECT *</code> against a BigQuery table without a partition filter and watching your monthly bill double. Treating Firestore like a relational database. Skipping VPC Service Controls when you're handling sensitive data.</p>
-  </aside>
-
-  <h2>Patterns that travel across all three</h2>
-
-  <p>The provider names change, the underlying patterns don't. These are the ones worth committing to memory:</p>
-
-  <ul class="pattern-list">
-    <li><strong>Serverless first.</strong> Start with managed and serverless. Move to containers or VMs only when you have a specific reason &mdash; not "it feels more familiar".</li>
-    <li><strong>Event-driven where it fits.</strong> Decouple components with events and queues. Better resilience, better scalability, more moving parts to test.</li>
-    <li><strong>Infrastructure as Code, always.</strong> Terraform, Bicep, or CDK &mdash; pick one and stick to it. ClickOps gets you to a demo. It doesn't get you to production.</li>
-    <li><strong>Immutable infrastructure.</strong> Replace servers rather than patching them. Reduces drift, simplifies rollback, and makes "works on my machine" a much shorter conversation.</li>
-    <li><strong>Defence in depth.</strong> Network isolation, encryption at rest and in transit, least-privilege access, monitoring and alerting. No single control should be load-bearing.</li>
-  </ul>
-
-</article>
-
-
-<!--
-  Suggested CSS additions for your stylesheet.
-  These match the visual cues the new content uses (provider-coloured rules,
-  callout boxes, comparison figure). Adjust to match your existing design tokens.
--->
-<style>
-  /* Provider-coloured horizontal rules above each provider section */
-  .provider-rule {
-    border: 0;
-    border-top: 4px solid #ddd;
-    margin: 3rem 0 1.5rem;
-  }
-  .provider-rule--aws   { border-top-color: #FF9900; }
-  .provider-rule--azure { border-top-color: #0078D4; }
-  .provider-rule--gcp   { border-top-color: #34A853; }
-
-  /* Callouts: role callout vs gotcha callout */
-  .callout {
-    margin: 1.5rem 0;
-    padding: 1rem 1.25rem;
-    border-left: 4px solid;
-    background: #f6f8fb;
-    border-radius: 4px;
-  }
-  .callout--role   { border-left-color: #0b5cad; background: #eef4fb; }
-  .callout--gotcha { border-left-color: #c0392b; background: #fdf2f0; }
-  .callout p { margin: 0; }
-
-  /* Comparison figure */
-  .comparison-figure {
-    margin: 1.5rem 0 2rem;
-  }
-  .comparison-figure img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border: 1px solid #e5e9f0;
-    border-radius: 4px;
-  }
-  .comparison-figure figcaption {
-    font-size: 0.9rem;
-    color: #5a6b85;
-    margin-top: 0.5rem;
-  }
-
-  /* Lede paragraph */
-  .lede {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    color: #2c3e57;
-  }
-</style>
+      <ul>
+        <li><strong>Entra ID (formerly Azure AD):</strong> Azure's identity backbone. If the department already runs M365, this is your single sign-on story by default.</li>
+        <li><strong>Key Vault:</strong> Encryption keys plus secrets management in one service.</li>
+        <li><strong>Defender for Cloud:</strong> Posture management and workload protection. The free tier covers the basics; the paid tier is where the useful detections live.</li>
+        <li><strong>Microsoft Sentinel:</strong> Cloud-native SIEM. Often the deciding factor when a department wants a single security pane across cloud and M365.</li>
+      </ul>
+
+      <h3>Key decisions for government work</h3>
+
+      <ul>
+        <li><strong>Region selection:</strong> UK South (London) and UK West (Cardiff) for data residency. Both are sovereign regions, but service availability lags in UK West &mdash; check before designing around it.</li>
+        <li><strong>Subscription strategy:</strong> Subscriptions in Azure play the role accounts play in AWS. Separate workloads by subscription, group them under management groups, and apply Azure Policy at the group level.</li>
+        <li><strong>Licence portability:</strong> Azure Hybrid Benefit takes a serious chunk off Windows VM and SQL Server costs if existing licences are in place. Always worth raising in a business case.</li>
+        <li><strong>Where Azure wins:</strong> Microsoft-native estates, Power Platform integration, the Defender / Purview / Sentinel bundle, and citizen-facing identity via Entra External ID.</li>
+        <li><strong>Where it can bite:</strong> Pricing is harder to predict than AWS. Service quality varies across the catalogue &mdash; some services feel polished, others feel half-finished.</li>
+      </ul>
+
+      <div class="info-box mb-2xl">
+        <p><strong>Anti-patterns to avoid.</strong> Running Azure Functions on Consumption plan for predictable workloads (you'll pay for the privilege of cold starts). Skipping Private Endpoints on PaaS services that handle anything sensitive. Treating Cosmos DB like a generic document database without modelling partition keys properly. Building a landing zone without management groups and then trying to add them later.</p>
+      </div>
+
+      <hr class="provider-rule provider-rule--gcp">
+
+      <h2 id="gcp">Google Cloud Platform (GCP)</h2>
+
+      <p>GCP has the smallest footprint of the three in UK government, but it punches above its weight in specific areas &mdash; data analytics, machine learning, and Kubernetes. If a department is building a data platform from scratch and isn't already committed elsewhere, BigQuery alone is often enough to justify the conversation.</p>
+
+      <h3>Compute</h3>
+
+      <ul>
+        <li><strong>Compute Engine:</strong> Virtual machines. Per-second billing and automatic sustained-use discounts often make it cheaper than the AWS equivalent for steady workloads.</li>
+        <li><strong>Cloud Run:</strong> Containers as a service, and arguably the cleanest serverless container option across the three providers. Push a container, get an HTTPS endpoint, pay per request.</li>
+        <li><strong>Cloud Functions:</strong> Serverless functions. Smaller catalogue of triggers than Lambda, but quicker to stand up.</li>
+        <li><strong>GKE (Google Kubernetes Engine):</strong> Google invented Kubernetes, and GKE is the most polished managed offering. Autopilot mode is worth a look if you don't want to manage node pools yourself.</li>
+      </ul>
+
+      <h3>Storage</h3>
+
+      <ul>
+        <li><strong>Cloud Storage:</strong> Object storage, the S3 equivalent. One API across hot, nearline, coldline, and archive &mdash; simpler than the AWS storage class story.</li>
+        <li><strong>Persistent Disk:</strong> Block storage for VMs. Resizable without downtime, which AWS still can't quite match cleanly.</li>
+        <li><strong>Filestore:</strong> Managed NFS for shared workloads.</li>
+      </ul>
+
+      <h3>Databases</h3>
+
+      <ul>
+        <li><strong>Cloud SQL:</strong> Managed MySQL, PostgreSQL, and SQL Server.</li>
+        <li><strong>BigQuery:</strong> GCP's signature service. Serverless data warehouse with storage and compute billed separately. The pricing model rewards careful query design and punishes lazy <code>SELECT *</code> &mdash; a single careless query can cost more than a small EC2 fleet runs in a month.</li>
+        <li><strong>Spanner:</strong> Globally distributed relational database with strong consistency. Expensive, but unique &mdash; nothing else in the market does quite what it does.</li>
+        <li><strong>Firestore:</strong> Managed NoSQL document store. Good fit for mobile and web backends.</li>
+      </ul>
+
+      <h3>Networking</h3>
+
+      <ul>
+        <li><strong>VPC:</strong> GCP VPCs are global by default rather than regional. This is a real architectural difference from AWS, and usually a positive one.</li>
+        <li><strong>Cloud Load Balancing:</strong> Global load balancing behind a single anycast IP. Simpler than the AWS or Azure equivalents.</li>
+        <li><strong>Cloud CDN:</strong> Edge caching tied to the load balancer.</li>
+        <li><strong>Cloud Armor:</strong> WAF and DDoS protection.</li>
+      </ul>
+
+      <h3>Security and identity</h3>
+
+      <ul>
+        <li><strong>Cloud IAM:</strong> Identity and access. The resource hierarchy (organisation, folder, project) gives cleaner inheritance than AWS account boundaries.</li>
+        <li><strong>Cloud KMS:</strong> Key management.</li>
+        <li><strong>Security Command Center:</strong> Posture management and threat detection. The Premium tier holds the bits that actually matter.</li>
+      </ul>
+
+      <h3>Key decisions for government work</h3>
+
+      <ul>
+        <li><strong>Region selection:</strong> europe-west2 (London) for UK data residency. There's only one UK region today, so if your design needs in-country disaster recovery, Azure or AWS give you more room to work with.</li>
+        <li><strong>Project hierarchy:</strong> Projects in GCP are smaller and cheaper to spin up than AWS accounts. Use them generously &mdash; one per workload per environment is sensible.</li>
+        <li><strong>Where GCP wins:</strong> Data platforms (BigQuery, Looker, Dataflow), ML and AI workloads, anything Kubernetes-heavy, and web frontends that benefit from the global load balancer.</li>
+        <li><strong>Where it can bite:</strong> Smaller G-Cloud footprint and fewer UK-based partners. The marketplace is thinner. If you need a specialist tool, check it's actually available on GCP before you commit.</li>
+      </ul>
+
+      <div class="info-box mb-2xl">
+        <p><strong>Anti-patterns to avoid.</strong> Using BigQuery for OLTP workloads (it's a warehouse, not a database). Running <code>SELECT *</code> against a BigQuery table without a partition filter and watching your monthly bill double. Treating Firestore like a relational database. Skipping VPC Service Controls when you're handling sensitive data.</p>
+      </div>
+
+      <h2>Patterns that travel across all three</h2>
+
+      <p>The provider names change, the underlying patterns don't. These are the ones worth committing to memory:</p>
+
+      <ul class="pattern-list">
+        <li><strong>Serverless first.</strong> Start with managed and serverless. Move to containers or VMs only when you have a specific reason &mdash; not "it feels more familiar".</li>
+        <li><strong>Event-driven where it fits.</strong> Decouple components with events and queues. Better resilience, better scalability, more moving parts to test.</li>
+        <li><strong>Infrastructure as Code, always.</strong> Terraform, Bicep, or CDK &mdash; pick one and stick to it. ClickOps gets you to a demo. It doesn't get you to production.</li>
+        <li><strong>Immutable infrastructure.</strong> Replace servers rather than patching them. Reduces drift, simplifies rollback, and makes "works on my machine" a much shorter conversation.</li>
+        <li><strong>Defence in depth.</strong> Network isolation, encryption at rest and in transit, least-privilege access, monitoring and alerting. No single control should be load-bearing.</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
