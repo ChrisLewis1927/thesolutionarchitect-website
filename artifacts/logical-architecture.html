@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Logical Architecture Diagram — A diagram showing the logical components of a system, their responsibilities, and how they interact, independent of physical deployment or specific technology implementations.">
+  <meta property="og:title" content="Logical Architecture Diagram — The Solution Architect">
+  <meta property="og:description" content="A diagram showing the logical components of a system, their responsibilities, and how they interact, independent of physical deployment or specific technology implementations.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Logical Architecture Diagram — The Solution Architect</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="../blog.html" class="nav__link">Blog</a></li>
+          <li><a href="../about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Logical Architecture Diagram</h1>
+        <p class="page-header__subtitle">A diagram showing the logical components of a system, their responsibilities, and how they interact, independent of physical deployment or specific technology implementations.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lesson-content">
+        <section class="lesson-section">
+          <h2>Purpose</h2>
+          <p>The logical architecture separates concerns by showing what the system does (logically) without prescribing how it is deployed. This allows architects to reason about structure, responsibility allocation, and coupling independently of infrastructure decisions.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>When to Use</h2>
+          <p>Create during alpha when decomposing the solution into its constituent parts. The logical architecture informs both the physical deployment decisions and the team structure (Conway's Law).</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>How to Build</h2>
+          <p>Identify the major functional areas or bounded contexts of your solution. Each should have a clear, single responsibility and well-defined boundaries.</p>
+          <p>For each logical component, document its responsibility (what it does), the data it owns, and the interfaces it exposes to other components.</p>
+          <p>Show the relationships between components: which components communicate, what data flows between them, and whether the coupling is synchronous or asynchronous.</p>
+          <p>Layer the architecture if appropriate — presentation, business logic, data access, integration. Show cross-cutting concerns (security, logging, monitoring) as aspects that span layers.</p>
+          <p>Validate the logical architecture against your non-functional requirements — does the decomposition support the required scalability, availability, and security characteristics?</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Tips</h2>
+          <ul>
+            <li>Align logical components with business capabilities for a stable architecture.</li>
+            <li>Use Domain-Driven Design bounded contexts to identify natural component boundaries.</li>
+            <li>Show data ownership clearly — each piece of data should have one authoritative source.</li>
+            <li>Consider Conway's Law — your logical architecture will influence team structure.</li>
+            <li>Keep it technology-agnostic at this level — technology choices come in the physical architecture.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Common Mistakes</h2>
+          <ul>
+            <li>Conflating logical and physical architecture — mixing deployment concerns with logical structure.</li>
+            <li>Creating too many fine-grained components that increase integration complexity.</li>
+            <li>Not clearly defining component boundaries and responsibilities, leading to overlap.</li>
+            <li>Ignoring data ownership, resulting in shared databases and tight coupling.</li>
+            <li>Not validating the logical architecture against non-functional requirements.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Government Context</h2>
+          <p>In UK government, logical architecture diagrams support the GDS principle of building for reuse. By separating logical concerns, components can potentially be shared across services or departments. The logical architecture should align with the government's domain model and reference architecture patterns published by CDDO.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Related Artifacts</h2>
+          <ul>
+            <li><a href="context-diagram.html">Context Diagram</a></li>
+            <li><a href="hld.html">High-Level Design (HLD)</a></li>
+            <li><a href="component-model.html">Component Model</a></li>
+            <li><a href="deployment-view.html">Deployment View / Diagram</a></li>
+            <li><a href="data-flow-diagram.html">Data Flow Diagram</a></li>
+          </ul>
+        </section>
+
+        <div class="lesson-nav">
+          <a href="../artifacts.html" class="btn btn--secondary">&larr; Back to Artifacts</a>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../library.html">Architect's Library</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="../cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="../guardrails.html">AI Guardrails</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

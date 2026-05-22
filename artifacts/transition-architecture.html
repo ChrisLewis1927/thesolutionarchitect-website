@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Transition Architecture / Migration Plan — A plan describing the intermediate architectural states between the current state and target state, showing how the organisation will migrate from one to the other in manageable, low-risk increments.">
+  <meta property="og:title" content="Transition Architecture / Migration Plan — The Solution Architect">
+  <meta property="og:description" content="A plan describing the intermediate architectural states between the current state and target state, showing how the organisation will migrate from one to the other in manageable, low-risk increments.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Transition Architecture / Migration Plan — The Solution Architect</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="../blog.html" class="nav__link">Blog</a></li>
+          <li><a href="../about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Transition Architecture / Migration Plan</h1>
+        <p class="page-header__subtitle">A plan describing the intermediate architectural states between the current state and target state, showing how the organisation will migrate from one to the other in manageable, low-risk increments.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lesson-content">
+        <section class="lesson-section">
+          <h2>Purpose</h2>
+          <p>Transition architectures break a large transformation into achievable steps, each delivering value while moving towards the target state. They manage risk by ensuring the system remains operational and stable during migration.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>When to Use</h2>
+          <p>Create after the target state architecture is defined and before detailed project planning begins. Essential for programmes involving legacy migration, platform changes, or significant architectural evolution.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>How to Build</h2>
+          <p>Define the current state architecture clearly — you cannot plan a journey without knowing the starting point.</p>
+          <p>Identify the major changes needed to reach the target state. Group these into logical increments that can be delivered independently and each leave the system in a stable, operational state.</p>
+          <p>For each transition state, document: what changes, what stays the same, what temporary scaffolding is needed (e.g., data synchronisation, API adapters), and what can be decommissioned.</p>
+          <p>Sequence the transitions considering: dependencies, risk, value delivery, and resource availability. Earlier transitions should reduce risk and deliver learning.</p>
+          <p>Plan the cutover approach for each transition: big bang, phased rollout, canary deployment, or strangler fig pattern.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Tips</h2>
+          <ul>
+            <li>Each transition state must be stable and operational — never plan a state where the system is broken.</li>
+            <li>Use the Strangler Fig pattern for legacy replacement — gradually route traffic to the new system.</li>
+            <li>Plan for rollback at each transition — what happens if the new state has problems?</li>
+            <li>Include data migration strategy for each transition — this is often the hardest part.</li>
+            <li>Communicate transition states to operations teams early — they need to support each state.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Common Mistakes</h2>
+          <ul>
+            <li>Planning transitions that are too large, creating big-bang risk.</li>
+            <li>Not planning for coexistence — old and new systems often need to run in parallel.</li>
+            <li>Ignoring data migration complexity and the need for data synchronisation during transition.</li>
+            <li>Not planning rollback strategies for each transition.</li>
+            <li>Underestimating the operational overhead of supporting multiple architectural states simultaneously.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Government Context</h2>
+          <p>In UK government, transition architectures are essential for legacy modernisation programmes. The government's commitment to reducing legacy IT risk means many departments are planning multi-year migrations. Transition plans should account for spending review cycles, parliamentary recesses (for ministerial approvals), and the GDS service assessment process at each phase gate.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Related Artifacts</h2>
+          <ul>
+            <li><a href="target-state-architecture.html">Target State Architecture</a></li>
+            <li><a href="technology-roadmap.html">Technology Roadmap</a></li>
+            <li><a href="system-landscape.html">System Landscape Diagram</a></li>
+            <li><a href="deployment-view.html">Deployment View / Diagram</a></li>
+          </ul>
+        </section>
+
+        <div class="lesson-nav">
+          <a href="../artifacts.html" class="btn btn--secondary">&larr; Back to Artifacts</a>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../library.html">Architect's Library</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="../cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="../guardrails.html">AI Guardrails</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -11,9 +11,9 @@
     gtag('config', 'G-DF1MYHFXP4');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Architecture Artifacts Reference — the documents, diagrams, and deliverables that Solution Architects produce across the delivery lifecycle.">
+  <meta name="description" content="Architecture Artifacts — A reference guide to the documents, diagrams, and deliverables that Solution Architects produce across the delivery lifecycle.">
   <meta property="og:title" content="Architecture Artifacts — The Solution Architect">
-  <meta property="og:description" content="A reference guide to architecture artifacts categorised by type and delivery phase.">
+  <meta property="og:description" content="A reference guide to the documents, diagrams, and deliverables that Solution Architects produce across the delivery lifecycle.">
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <title>Architecture Artifacts — The Solution Architect</title>
   <link rel="stylesheet" href="css/style.css">
@@ -48,149 +48,188 @@
     <section class="page-header">
       <div class="container">
         <h1 class="page-header__title">Architecture Artifacts</h1>
-        <p class="page-header__subtitle">A reference guide to the documents, diagrams, and deliverables that Solution Architects produce. What they are, when to use them, and which phase they belong to.</p>
+        <p class="page-header__subtitle">A reference guide to the documents, diagrams, and deliverables that Solution Architects produce across the delivery lifecycle.</p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="content-wrapper">
-          <div class="info-box mb-2xl">
-            <p><strong>A note on proportionality:</strong> Not every project needs every artifact. The right set of documents depends on the complexity of the solution, the phase of delivery, and the governance requirements. Producing documents nobody reads is waste. Produce what's needed to make good decisions and enable the team.</p>
-          </div>
+        <div class="grid grid--2">
+        <div class="card">
+          <a href="artifacts/adr.html" class="card__link">
+            <h3 class="card__title">Architecture Decision Record (ADR)</h3>
+            <p class="card__excerpt">A concise document that captures a single architecture decision, its context, the options considered, and the rationale for the chosen approach.</p>
+            <div class="card__badges"><span class="badge badge--discovery">discovery</span> <span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
         </div>
-
-        <!-- Architecture Artifacts -->
-        <div class="artifacts-category fade-in">
-          <h2 class="artifacts-category__title">Architecture</h2>
-          
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Solution Architecture Document (SAD)</h3>
-            <p class="artifact-item__description">The primary architecture deliverable. Describes the solution's components, their interactions, technology choices, and how they meet requirements. A living document that evolves throughout delivery.</p>
-            <p class="artifact-item__meta">Phase: Alpha onwards • Updated throughout delivery</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Architecture Decision Record (ADR)</h3>
-            <p class="artifact-item__description">A short document capturing a single architecture decision — the context, the options considered, the decision made, and the consequences. Lightweight, version-controlled, and invaluable for future teams.</p>
-            <p class="artifact-item__meta">Phase: All phases • One per significant decision</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Solution Options Paper</h3>
-            <p class="artifact-item__description">Presents 2-4 solution approaches with trade-offs across cost, time, risk, and alignment with standards. Used to support governance decisions. Should include a clear recommendation.</p>
-            <p class="artifact-item__meta">Phase: Alpha • Presented to programme board or architecture review</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Architecture Principles</h3>
-            <p class="artifact-item__description">A set of guiding statements that shape architecture decisions for a programme or department. Should be specific enough to be useful and few enough to be remembered.</p>
-            <p class="artifact-item__meta">Phase: Discovery/Alpha • Reviewed periodically</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Context Diagram (C4 Level 1)</h3>
-            <p class="artifact-item__description">Shows the system in context — who uses it and what other systems it interacts with. The most important diagram for communicating with non-technical stakeholders.</p>
-            <p class="artifact-item__meta">Phase: Alpha onwards • Audience: Everyone</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Container Diagram (C4 Level 2)</h3>
-            <p class="artifact-item__description">Shows the high-level technical building blocks — applications, databases, message queues, file stores — and how they communicate. The primary technical architecture view.</p>
-            <p class="artifact-item__meta">Phase: Alpha onwards • Audience: Technical stakeholders</p>
-          </div>
+        <div class="card">
+          <a href="artifacts/sad.html" class="card__link">
+            <h3 class="card__title">Solution Architecture Document (SAD)</h3>
+            <p class="card__excerpt">A comprehensive document describing the overall architecture of a solution, including its components, interactions, technology choices, and how it meets both functional and non-functional requirements.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
         </div>
-
-        <!-- Governance Artifacts -->
-        <div class="artifacts-category fade-in">
-          <h2 class="artifacts-category__title">Governance</h2>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Architecture Review Board Submission</h3>
-            <p class="artifact-item__description">A structured submission for architecture governance review. Typically includes the solution overview, key decisions, risks, alignment with standards, and any exceptions requested.</p>
-            <p class="artifact-item__meta">Phase: Alpha/Beta • Required for governance approval</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Technical Design Authority Paper</h3>
-            <p class="artifact-item__description">A paper seeking approval for a specific technical approach from the department's design authority. More detailed than an options paper, focused on implementation approach.</p>
-            <p class="artifact-item__meta">Phase: Alpha/Beta • Required for significant technical decisions</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Risk Register (Architecture Risks)</h3>
-            <p class="artifact-item__description">Documents identified architecture risks with likelihood, impact, mitigations, and owners. Should be actively managed, not filed and forgotten.</p>
-            <p class="artifact-item__meta">Phase: All phases • Reviewed regularly</p>
-          </div>
+        <div class="card">
+          <a href="artifacts/hld.html" class="card__link">
+            <h3 class="card__title">High-Level Design (HLD)</h3>
+            <p class="card__excerpt">A design document that describes the system architecture at a conceptual level, showing major components, their interactions, and the technology platforms used without diving into implementation specifics.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span></div>
+          </a>
         </div>
-
-        <!-- Delivery Artifacts -->
-        <div class="artifacts-category fade-in">
-          <h2 class="artifacts-category__title">Delivery</h2>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Integration Specification</h3>
-            <p class="artifact-item__description">Defines how two systems will integrate — protocols, data formats, authentication, error handling, and SLAs. Essential when working with other teams or external systems.</p>
-            <p class="artifact-item__meta">Phase: Alpha/Beta • One per integration point</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Non-Functional Requirements (NFRs)</h3>
-            <p class="artifact-item__description">Specifies quality attributes — performance targets, availability requirements, scalability expectations, and capacity needs. Should be measurable and testable.</p>
-            <p class="artifact-item__meta">Phase: Alpha • Validated in Beta</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Operational Readiness Checklist</h3>
-            <p class="artifact-item__description">Confirms the service is ready for live operation — monitoring in place, runbooks written, incident process defined, support model agreed, disaster recovery tested.</p>
-            <p class="artifact-item__meta">Phase: Late Beta • Required before go-live</p>
-          </div>
+        <div class="card">
+          <a href="artifacts/lld.html" class="card__link">
+            <h3 class="card__title">Low-Level Design (LLD)</h3>
+            <p class="card__excerpt">A detailed technical design document that specifies the internal structure of components, including class designs, database schemas, API contracts, algorithms, and configuration details needed for implementation.</p>
+            <div class="card__badges"><span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
         </div>
-
-        <!-- Security Artifacts -->
-        <div class="artifacts-category fade-in">
-          <h2 class="artifacts-category__title">Security</h2>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Security Architecture Document</h3>
-            <p class="artifact-item__description">Describes the security controls, threat model, trust boundaries, and security patterns for the solution. May be a section of the SAD or a standalone document for complex services.</p>
-            <p class="artifact-item__meta">Phase: Alpha onwards • Reviewed by security team</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Threat Model</h3>
-            <p class="artifact-item__description">Identifies potential threats to the system, assesses their likelihood and impact, and defines mitigations. STRIDE or similar methodology. Should be revisited when the architecture changes.</p>
-            <p class="artifact-item__meta">Phase: Alpha • Updated when architecture changes</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Data Protection Impact Assessment (DPIA)</h3>
-            <p class="artifact-item__description">Required when processing personal data in ways that pose high risk to individuals. The Solution Architect contributes the technical description of data flows, storage, and access controls.</p>
-            <p class="artifact-item__meta">Phase: Alpha/Beta • Led by DPO, architect contributes</p>
-          </div>
+        <div class="card">
+          <a href="artifacts/context-diagram.html" class="card__link">
+            <h3 class="card__title">Context Diagram</h3>
+            <p class="card__excerpt">A high-level diagram showing the system as a single box surrounded by its users and the other systems it interacts with.</p>
+            <div class="card__badges"><span class="badge badge--discovery">discovery</span> <span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
         </div>
-
-        <!-- Data Artifacts -->
-        <div class="artifacts-category fade-in">
-          <h2 class="artifacts-category__title">Data</h2>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Data Flow Diagram</h3>
-            <p class="artifact-item__description">Shows how data moves through the system — where it enters, how it's processed, where it's stored, and where it exits. Essential for security review and data protection compliance.</p>
-            <p class="artifact-item__meta">Phase: Alpha onwards • Required for DPIA</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Data Model</h3>
-            <p class="artifact-item__description">Defines the logical structure of data in the system — entities, relationships, and key attributes. Not necessarily a full physical database schema, but enough to understand the data landscape.</p>
-            <p class="artifact-item__meta">Phase: Alpha/Beta • Evolves with the solution</p>
-          </div>
-
-          <div class="artifact-item">
-            <h3 class="artifact-item__name">Information Asset Register Entry</h3>
-            <p class="artifact-item__description">Documents what data the service holds, its classification, who owns it, retention periods, and disposal approach. Required for information governance compliance.</p>
-            <p class="artifact-item__meta">Phase: Beta/Live • Maintained throughout service life</p>
-          </div>
+        <div class="card">
+          <a href="artifacts/system-landscape.html" class="card__link">
+            <h3 class="card__title">System Landscape Diagram</h3>
+            <p class="card__excerpt">A diagram showing all the systems within an enterprise or domain and how they relate to each other, providing a bird's-eye view of the IT estate and its interconnections.</p>
+            <div class="card__badges"><span class="badge badge--pre-discovery">pre-discovery</span> <span class="badge badge--discovery">discovery</span> <span class="badge badge--throughout">throughout</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/logical-architecture.html" class="card__link">
+            <h3 class="card__title">Logical Architecture Diagram</h3>
+            <p class="card__excerpt">A diagram showing the logical components of a system, their responsibilities, and how they interact, independent of physical deployment or specific technology implementations.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/integration-architecture.html" class="card__link">
+            <h3 class="card__title">Integration Architecture Document</h3>
+            <p class="card__excerpt">A document describing how multiple systems connect and exchange data, including integration patterns, protocols, data formats, error handling, and the overall integration strategy.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/data-flow-diagram.html" class="card__link">
+            <h3 class="card__title">Data Flow Diagram</h3>
+            <p class="card__excerpt">A diagram showing how data moves through a system, from input sources through processing steps to output destinations, including data stores and transformations along the way.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/sequence-diagram.html" class="card__link">
+            <h3 class="card__title">Sequence Diagram</h3>
+            <p class="card__excerpt">A diagram showing the order of interactions between components or actors over time, illustrating how messages flow between participants to accomplish a specific scenario or use case.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/deployment-view.html" class="card__link">
+            <h3 class="card__title">Deployment View / Diagram</h3>
+            <p class="card__excerpt">A diagram showing how software components are mapped to infrastructure — servers, containers, cloud services, networks, and availability zones — illustrating the physical topology of the running system.</p>
+            <div class="card__badges"><span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/nfr-spec.html" class="card__link">
+            <h3 class="card__title">Non-Functional Requirements (NFR) Specification</h3>
+            <p class="card__excerpt">A document that defines the quality attributes and constraints of a system — performance, scalability, availability, security, usability, and other characteristics that describe how the system should behave rather than what it should do.</p>
+            <div class="card__badges"><span class="badge badge--discovery">discovery</span> <span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/architecture-principles.html" class="card__link">
+            <h3 class="card__title">Architecture Principles Document</h3>
+            <p class="card__excerpt">A set of guiding statements that inform and constrain architectural decisions across a programme or organisation, ensuring consistency and alignment with strategic objectives.</p>
+            <div class="card__badges"><span class="badge badge--pre-discovery">pre-discovery</span> <span class="badge badge--throughout">throughout</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/technology-roadmap.html" class="card__link">
+            <h3 class="card__title">Technology Roadmap</h3>
+            <p class="card__excerpt">A time-based plan showing the evolution of technology platforms, tools, and capabilities over a defined period, typically 1-3 years, aligned with business strategy and programme delivery milestones.</p>
+            <div class="card__badges"><span class="badge badge--pre-discovery">pre-discovery</span> <span class="badge badge--discovery">discovery</span> <span class="badge badge--throughout">throughout</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/target-state-architecture.html" class="card__link">
+            <h3 class="card__title">Target State Architecture</h3>
+            <p class="card__excerpt">A description of the desired future architecture that the organisation is working towards, showing the end-state technology landscape, capabilities, and integration patterns after transformation is complete.</p>
+            <div class="card__badges"><span class="badge badge--pre-discovery">pre-discovery</span> <span class="badge badge--discovery">discovery</span> <span class="badge badge--throughout">throughout</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/transition-architecture.html" class="card__link">
+            <h3 class="card__title">Transition Architecture / Migration Plan</h3>
+            <p class="card__excerpt">A plan describing the intermediate architectural states between the current state and target state, showing how the organisation will migrate from one to the other in manageable, low-risk increments.</p>
+            <div class="card__badges"><span class="badge badge--discovery">discovery</span> <span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/architecture-options-paper.html" class="card__link">
+            <h3 class="card__title">Architecture Options Paper</h3>
+            <p class="card__excerpt">A document presenting multiple architectural approaches to solving a problem, with analysis of each option against defined criteria, enabling stakeholders to make an informed decision on the preferred approach.</p>
+            <div class="card__badges"><span class="badge badge--discovery">discovery</span> <span class="badge badge--alpha">alpha</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/architecture-risk-register.html" class="card__link">
+            <h3 class="card__title">Architecture Risk Register</h3>
+            <p class="card__excerpt">A structured log of risks specifically related to architectural decisions, technology choices, and technical design, tracking their likelihood, impact, and mitigation strategies.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/component-model.html" class="card__link">
+            <h3 class="card__title">Component Model</h3>
+            <p class="card__excerpt">A detailed view of the internal components within a system or service, showing their responsibilities, interfaces, dependencies, and how they collaborate to deliver functionality.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/api-specification.html" class="card__link">
+            <h3 class="card__title">API Specification (OpenAPI)</h3>
+            <p class="card__excerpt">A machine-readable definition of a REST API's endpoints, request/response schemas, authentication requirements, and error codes, typically written in OpenAPI (Swagger) format.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span> <span class="badge badge--live">live</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/architecture-vision.html" class="card__link">
+            <h3 class="card__title">Architecture Vision Document</h3>
+            <p class="card__excerpt">A TOGAF Phase A deliverable that provides a high-level aspirational view of the end-state architecture, articulating the business value, key stakeholder concerns, and the scope of the architecture engagement.</p>
+            <div class="card__badges"><span class="badge badge--pre-discovery">pre-discovery</span> <span class="badge badge--discovery">discovery</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/architecture-roadmap-togaf.html" class="card__link">
+            <h3 class="card__title">Architecture Roadmap (TOGAF)</h3>
+            <p class="card__excerpt">A TOGAF deliverable showing the timeline for transitioning from the baseline architecture to the target architecture, including work packages, milestones, and the sequence of transition architectures.</p>
+            <div class="card__badges"><span class="badge badge--discovery">discovery</span> <span class="badge badge--alpha">alpha</span> <span class="badge badge--throughout">throughout</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/architecture-requirements-spec.html" class="card__link">
+            <h3 class="card__title">Architecture Requirements Specification</h3>
+            <p class="card__excerpt">A TOGAF deliverable that provides a quantitative set of architecture requirements, including functional, non-functional, and constraint requirements that the architecture must satisfy.</p>
+            <div class="card__badges"><span class="badge badge--discovery">discovery</span> <span class="badge badge--alpha">alpha</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/architecture-definition-doc.html" class="card__link">
+            <h3 class="card__title">Architecture Definition Document</h3>
+            <p class="card__excerpt">A TOGAF deliverable that provides a comprehensive view of the architecture across all domains (business, data, application, technology), showing the baseline, target, and gap analysis for each domain.</p>
+            <div class="card__badges"><span class="badge badge--alpha">alpha</span> <span class="badge badge--beta">beta</span></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="artifacts/stakeholder-map-togaf.html" class="card__link">
+            <h3 class="card__title">Stakeholder Map (TOGAF)</h3>
+            <p class="card__excerpt">A TOGAF-specific stakeholder analysis that maps stakeholders to their architecture concerns and the architecture views that address those concerns, ensuring the architecture communication is tailored to each audience.</p>
+            <div class="card__badges"><span class="badge badge--pre-discovery">pre-discovery</span> <span class="badge badge--discovery">discovery</span></div>
+          </a>
+        </div>
         </div>
       </div>
     </section>

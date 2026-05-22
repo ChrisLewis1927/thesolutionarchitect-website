@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Solution Architecture Document (SAD) — A comprehensive document describing the overall architecture of a solution, including its components, interactions, technology choices, and how it meets both functional and non-functional requirements.">
+  <meta property="og:title" content="Solution Architecture Document (SAD) — The Solution Architect">
+  <meta property="og:description" content="A comprehensive document describing the overall architecture of a solution, including its components, interactions, technology choices, and how it meets both functional and non-functional requirements.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Solution Architecture Document (SAD) — The Solution Architect</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="../blog.html" class="nav__link">Blog</a></li>
+          <li><a href="../about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Solution Architecture Document (SAD)</h1>
+        <p class="page-header__subtitle">A comprehensive document describing the overall architecture of a solution, including its components, interactions, technology choices, and how it meets both functional and non-functional requirements.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lesson-content">
+        <section class="lesson-section">
+          <h2>Purpose</h2>
+          <p>The SAD serves as the definitive reference for how a solution is structured and why. It communicates the architecture to all stakeholders, guides implementation teams, and provides a baseline for architecture governance and change management.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>When to Use</h2>
+          <p>Create a SAD at the start of the alpha phase once the solution approach is agreed. Update it throughout beta and into live as the architecture evolves. It should be a living document that reflects the current state of the system.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>How to Build</h2>
+          <p>Begin with an executive summary that explains what the solution does, who it serves, and what business problem it solves. Keep this to one page — it should be readable by non-technical stakeholders.</p>
+          <p>Document the architecture principles that guided your design decisions. These should align with your organisation's enterprise architecture principles and the Technology Code of Practice.</p>
+          <p>Create the views: start with a context diagram showing the solution boundary and external actors/systems. Then produce a logical architecture showing the major components and their responsibilities. Add integration views showing how data flows between systems. Include a deployment view showing the infrastructure topology.</p>
+          <p>For each significant component, document its responsibility, technology choice, and key design decisions. Reference ADRs for detailed decision rationale.</p>
+          <p>Finish with a section on risks, assumptions, issues, and dependencies (RAID). Include a technology stack summary table and a glossary of terms.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Tips</h2>
+          <ul>
+            <li>Use diagrams extensively — a picture is worth a thousand words. Follow C4 model conventions for consistency.</li>
+            <li>Keep the document modular so sections can be updated independently.</li>
+            <li>Include a version history and change log.</li>
+            <li>Write for your audience — executive summary for leadership, detailed views for developers.</li>
+            <li>Cross-reference ADRs rather than duplicating decision rationale.</li>
+            <li>Include a How to Read This Document section for large SADs.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Common Mistakes</h2>
+          <ul>
+            <li>Writing the SAD once and never updating it, so it becomes stale and untrustworthy.</li>
+            <li>Including too much implementation detail that belongs in low-level design documents.</li>
+            <li>Omitting the why — describing what the architecture is without explaining why.</li>
+            <li>Not including non-functional requirements and how the architecture addresses them.</li>
+            <li>Making it so long that nobody reads it — aim for 20-40 pages maximum.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Government Context</h2>
+          <p>In UK government, the SAD is a key artefact for GDS service assessments (particularly points 8 and 11 of the Service Standard). It demonstrates compliance with the Technology Code of Practice and supports spend control submissions to CDDO. For OFFICIAL and above classifications, the SAD should reference the security architecture. Cross-government shared platforms (GOV.UK Notify, Pay, PaaS) should be referenced where used.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Related Artifacts</h2>
+          <ul>
+            <li><a href="adr.html">Architecture Decision Record (ADR)</a></li>
+            <li><a href="hld.html">High-Level Design (HLD)</a></li>
+            <li><a href="context-diagram.html">Context Diagram</a></li>
+            <li><a href="nfr-spec.html">Non-Functional Requirements (NFR) Specification</a></li>
+            <li><a href="integration-architecture.html">Integration Architecture Document</a></li>
+            <li><a href="deployment-view.html">Deployment View / Diagram</a></li>
+          </ul>
+        </section>
+
+        <div class="lesson-nav">
+          <a href="../artifacts.html" class="btn btn--secondary">&larr; Back to Artifacts</a>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../library.html">Architect's Library</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="../cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="../guardrails.html">AI Guardrails</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

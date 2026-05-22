@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Architecture Roadmap (TOGAF) — A TOGAF deliverable showing the timeline for transitioning from the baseline architecture to the target architecture, including work packages, milestones, and the sequence of transition architectures.">
+  <meta property="og:title" content="Architecture Roadmap (TOGAF) — The Solution Architect">
+  <meta property="og:description" content="A TOGAF deliverable showing the timeline for transitioning from the baseline architecture to the target architecture, including work packages, milestones, and the sequence of transition architectures.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Architecture Roadmap (TOGAF) — The Solution Architect</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="../blog.html" class="nav__link">Blog</a></li>
+          <li><a href="../about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Architecture Roadmap (TOGAF)</h1>
+        <p class="page-header__subtitle">A TOGAF deliverable showing the timeline for transitioning from the baseline architecture to the target architecture, including work packages, milestones, and the sequence of transition architectures.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lesson-content">
+        <section class="lesson-section">
+          <h2>Purpose</h2>
+          <p>The TOGAF Architecture Roadmap provides a time-sequenced view of how the architecture will evolve, enabling programme planning, resource allocation, and investment decisions. It shows the path from current state to target state in manageable increments.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>When to Use</h2>
+          <p>Create during TOGAF Phase E (Opportunities and Solutions) and Phase F (Migration Planning). Update as implementation progresses and priorities shift.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>How to Build</h2>
+          <p>Start with the gap analysis between baseline and target architecture. Identify all the changes needed across business, data, application, and technology domains.</p>
+          <p>Group changes into work packages that can be delivered together. Consider dependencies, risk, and value delivery when grouping.</p>
+          <p>Sequence work packages on a timeline considering: dependencies between packages, resource availability, risk (do high-risk items early), and value delivery (deliver value incrementally).</p>
+          <p>Define transition architectures — stable intermediate states between baseline and target. Each transition should be operational and deliver value.</p>
+          <p>Include decision points where the roadmap may need to adapt based on outcomes from earlier phases.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Tips</h2>
+          <ul>
+            <li>Align with financial planning cycles — work packages should map to budget periods.</li>
+            <li>Show dependencies clearly — they drive the sequence more than anything else.</li>
+            <li>Include both build and decommission activities.</li>
+            <li>Mark decision points where the roadmap may pivot.</li>
+            <li>Keep it at the right level of detail — too detailed and it becomes unmanageable.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Common Mistakes</h2>
+          <ul>
+            <li>Creating a roadmap that is too detailed and becomes stale quickly.</li>
+            <li>Not showing dependencies between work packages.</li>
+            <li>Ignoring decommissioning of legacy systems.</li>
+            <li>Not including decision points where the roadmap may need to adapt.</li>
+            <li>Treating the roadmap as fixed rather than a living plan.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Government Context</h2>
+          <p>In UK government, architecture roadmaps support Spending Review submissions and CDDO spend control processes. They should align with departmental transformation plans and cross-government platform adoption timelines. The roadmap should show how legacy IT risk is being addressed progressively. IPA gateway reviews will assess whether the roadmap is realistic and achievable.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Related Artifacts</h2>
+          <ul>
+            <li><a href="technology-roadmap.html">Technology Roadmap</a></li>
+            <li><a href="target-state-architecture.html">Target State Architecture</a></li>
+            <li><a href="transition-architecture.html">Transition Architecture / Migration Plan</a></li>
+            <li><a href="architecture-vision.html">Architecture Vision Document</a></li>
+          </ul>
+        </section>
+
+        <div class="lesson-nav">
+          <a href="../artifacts.html" class="btn btn--secondary">&larr; Back to Artifacts</a>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../library.html">Architect's Library</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="../cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="../guardrails.html">AI Guardrails</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

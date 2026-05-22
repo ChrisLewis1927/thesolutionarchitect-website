@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Integration Architecture Document — A document describing how multiple systems connect and exchange data, including integration patterns, protocols, data formats, error handling, and the overall integration strategy.">
+  <meta property="og:title" content="Integration Architecture Document — The Solution Architect">
+  <meta property="og:description" content="A document describing how multiple systems connect and exchange data, including integration patterns, protocols, data formats, error handling, and the overall integration strategy.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Integration Architecture Document — The Solution Architect</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="../blog.html" class="nav__link">Blog</a></li>
+          <li><a href="../about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Integration Architecture Document</h1>
+        <p class="page-header__subtitle">A document describing how multiple systems connect and exchange data, including integration patterns, protocols, data formats, error handling, and the overall integration strategy.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lesson-content">
+        <section class="lesson-section">
+          <h2>Purpose</h2>
+          <p>The integration architecture ensures that system interconnections are designed consistently, reliably, and securely. It prevents point-to-point spaghetti integration and establishes patterns that teams can follow for new integrations.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>When to Use</h2>
+          <p>Create when the solution needs to integrate with two or more external systems. Essential during alpha when integration approaches are being decided, and maintained through beta as integrations are implemented.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>How to Build</h2>
+          <p>Start by cataloguing all integration points — every system-to-system connection. For each, document the source, target, data exchanged, direction, frequency, and volume.</p>
+          <p>Define the integration patterns to be used: synchronous request-response, asynchronous messaging, event-driven, batch file transfer, or API-led connectivity. Justify why each pattern is appropriate for its use case.</p>
+          <p>Specify the technical standards: API design standards (REST, GraphQL, SOAP), message formats (JSON, XML, Avro), authentication mechanisms (OAuth2, mTLS, API keys), and error handling approaches.</p>
+          <p>Document the integration infrastructure: API gateways, message brokers, ESBs, or integration platforms. Show how they fit into the deployment architecture.</p>
+          <p>Define operational concerns: monitoring, alerting, retry policies, circuit breakers, dead letter queues, and reconciliation processes.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Tips</h2>
+          <ul>
+            <li>Prefer asynchronous patterns for resilience — synchronous calls create temporal coupling.</li>
+            <li>Use an API gateway for external-facing integrations to centralise security and rate limiting.</li>
+            <li>Define clear data contracts (schemas) for each integration and version them.</li>
+            <li>Plan for failure — every integration will fail at some point. Design retry and fallback strategies.</li>
+            <li>Document SLAs for each integration point including availability and response time expectations.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Common Mistakes</h2>
+          <ul>
+            <li>Not planning for integration failure scenarios and recovery.</li>
+            <li>Using synchronous calls everywhere, creating brittle chains of dependencies.</li>
+            <li>Not versioning APIs, making it impossible to evolve without breaking consumers.</li>
+            <li>Ignoring data transformation requirements between systems with different data models.</li>
+            <li>Not monitoring integration health, discovering failures only when users report problems.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Government Context</h2>
+          <p>In UK government, integration architecture must consider cross-government platforms (GOV.UK Notify, Pay, Verify, One Login) and departmental APIs published on the API catalogue. The Government Integration Hub and cross-government API standards should be referenced. Data sharing between departments requires Data Sharing Agreements and must comply with the Digital Economy Act 2017 where applicable.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Related Artifacts</h2>
+          <ul>
+            <li><a href="sad.html">Solution Architecture Document (SAD)</a></li>
+            <li><a href="api-specification.html">API Specification (OpenAPI)</a></li>
+            <li><a href="data-flow-diagram.html">Data Flow Diagram</a></li>
+            <li><a href="sequence-diagram.html">Sequence Diagram</a></li>
+          </ul>
+        </section>
+
+        <div class="lesson-nav">
+          <a href="../artifacts.html" class="btn btn--secondary">&larr; Back to Artifacts</a>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../library.html">Architect's Library</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="../cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="../guardrails.html">AI Guardrails</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

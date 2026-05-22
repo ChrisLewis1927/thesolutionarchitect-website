@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Architecture Decision Record (ADR) — A concise document that captures a single architecture decision, its context, the options considered, and the rationale for the chosen approach.">
+  <meta property="og:title" content="Architecture Decision Record (ADR) — The Solution Architect">
+  <meta property="og:description" content="A concise document that captures a single architecture decision, its context, the options considered, and the rationale for the chosen approach.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Architecture Decision Record (ADR) — The Solution Architect</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="../blog.html" class="nav__link">Blog</a></li>
+          <li><a href="../about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Architecture Decision Record (ADR)</h1>
+        <p class="page-header__subtitle">A concise document that captures a single architecture decision, its context, the options considered, and the rationale for the chosen approach. ADRs create an immutable log of why decisions were made.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lesson-content">
+        <section class="lesson-section">
+          <h2>Purpose</h2>
+          <p>ADRs provide a historical record of architecture decisions so that future team members understand why the system is built the way it is. They prevent repeated debates, support onboarding, and create accountability for technical choices.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>When to Use</h2>
+          <p>Create an ADR whenever a significant technical decision is made that affects the structure, non-functional characteristics, dependencies, interfaces, or construction techniques of the system.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>How to Build</h2>
+          <p>Start by identifying the decision that needs to be recorded. Write a clear, concise title that summarises the decision in active voice (e.g., 'Use PostgreSQL for transactional data storage'). Document the context — what forces are at play, what constraints exist, and what problem you are solving.</p>
+          <p>Next, list the options you considered. For each option, provide a brief description and note its pros and cons. Be honest about trade-offs; an ADR that only lists positives for the chosen option lacks credibility.</p>
+          <p>State the decision clearly and explain the rationale. Link back to the forces and constraints you identified in the context. If the decision was influenced by a spike, proof of concept, or vendor demonstration, reference that evidence.</p>
+          <p>Finally, document the consequences — both positive and negative. What will this decision enable? What technical debt might it introduce? What future decisions does it constrain or enable? Record the status (proposed, accepted, deprecated, superseded) and date.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Tips</h2>
+          <ul>
+            <li>Keep ADRs short — one to two pages maximum. If it is longer, you are probably documenting multiple decisions.</li>
+            <li>Use a sequential numbering scheme (ADR-001, ADR-002) and store them in version control alongside the code.</li>
+            <li>Write in past tense for accepted decisions and present tense for proposed ones.</li>
+            <li>Link ADRs to each other when decisions are related or when one supersedes another.</li>
+            <li>Include the names of people involved in the decision for future reference.</li>
+            <li>Review ADRs periodically — mark outdated ones as superseded with a link to the replacement.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Common Mistakes</h2>
+          <ul>
+            <li>Writing ADRs after the fact without capturing the original context and alternatives considered.</li>
+            <li>Making ADRs too long or too detailed — they should be decision records, not design documents.</li>
+            <li>Not recording rejected alternatives, which leads to the same options being re-evaluated later.</li>
+            <li>Failing to update the status when a decision is superseded or deprecated.</li>
+            <li>Using vague language like 'we chose the best option' without explaining why it was best for this context.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Government Context</h2>
+          <p>In UK government, ADRs are particularly valuable for spend control submissions and service assessments. GDS assessors will ask why certain technology choices were made, and ADRs provide ready-made evidence. They also support the Technology Code of Practice requirement to make things open by documenting reasoning transparently. CDDO encourages departments to share ADRs across government to prevent duplicated evaluation effort.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Related Artifacts</h2>
+          <ul>
+            <li><a href="sad.html">Solution Architecture Document (SAD)</a></li>
+            <li><a href="architecture-options-paper.html">Architecture Options Paper</a></li>
+            <li><a href="architecture-principles.html">Architecture Principles Document</a></li>
+            <li><a href="technology-roadmap.html">Technology Roadmap</a></li>
+          </ul>
+        </section>
+
+        <div class="lesson-nav">
+          <a href="../artifacts.html" class="btn btn--secondary">&larr; Back to Artifacts</a>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../library.html">Architect's Library</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="../cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="../guardrails.html">AI Guardrails</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

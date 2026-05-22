@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="System Landscape Diagram — A diagram showing all the systems within an enterprise or domain and how they relate to each other, providing a bird's-eye view of the IT estate and its interconnections.">
+  <meta property="og:title" content="System Landscape Diagram — The Solution Architect">
+  <meta property="og:description" content="A diagram showing all the systems within an enterprise or domain and how they relate to each other, providing a bird's-eye view of the IT estate and its interconnections.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>System Landscape Diagram — The Solution Architect</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="../blog.html" class="nav__link">Blog</a></li>
+          <li><a href="../about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">System Landscape Diagram</h1>
+        <p class="page-header__subtitle">A diagram showing all the systems within an enterprise or domain and how they relate to each other, providing a bird's-eye view of the IT estate and its interconnections.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lesson-content">
+        <section class="lesson-section">
+          <h2>Purpose</h2>
+          <p>The system landscape provides visibility of the entire IT estate, helping identify dependencies, redundancies, and integration complexity. It supports strategic planning by showing where systems overlap or where gaps exist.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>When to Use</h2>
+          <p>Create during pre-discovery or discovery when understanding the existing landscape. Update it as new systems are introduced or retired. Essential for enterprise architecture planning and rationalisation exercises.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>How to Build</h2>
+          <p>Start by cataloguing all systems in the domain or enterprise. Group them by business capability or domain area. For each system, note its name, primary purpose, technology platform, and owner.</p>
+          <p>Arrange systems on the diagram grouped by domain or capability area. Use consistent shapes and colours to distinguish system types (e.g., custom-built vs COTS vs SaaS).</p>
+          <p>Draw integration lines between systems that exchange data or depend on each other. Label with the integration mechanism (API, file transfer, database link, manual).</p>
+          <p>Highlight the system under consideration (if this supports a specific project) and show how it fits into the broader landscape.</p>
+          <p>Include a legend explaining your notation and colour coding.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Tips</h2>
+          <ul>
+            <li>Use ArchiMate notation for enterprise-level landscapes for consistency with TOGAF.</li>
+            <li>Colour-code by lifecycle status: green for strategic, amber for tactical, red for retirement.</li>
+            <li>Include data classification labels where relevant for security planning.</li>
+            <li>Keep it at one level of abstraction — don't mix enterprise and component views.</li>
+            <li>Update quarterly as the landscape evolves.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Common Mistakes</h2>
+          <ul>
+            <li>Trying to show every system in the entire organisation on one diagram.</li>
+            <li>Not keeping it updated as systems are added or retired.</li>
+            <li>Omitting shadow IT or departmental systems that create hidden dependencies.</li>
+            <li>Not showing the direction and nature of data flows between systems.</li>
+            <li>Making it too detailed — this should be a strategic view, not a technical one.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Government Context</h2>
+          <p>In UK government, system landscape diagrams support the Technology Code of Practice principle of sharing and reusing. They help identify where cross-government platforms could replace departmental solutions. CDDO uses landscape views for digital spend oversight. They are essential for Legacy IT risk assessments and the government's commitment to reducing technical debt across departments.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Related Artifacts</h2>
+          <ul>
+            <li><a href="context-diagram.html">Context Diagram</a></li>
+            <li><a href="target-state-architecture.html">Target State Architecture</a></li>
+            <li><a href="technology-roadmap.html">Technology Roadmap</a></li>
+            <li><a href="integration-architecture.html">Integration Architecture Document</a></li>
+          </ul>
+        </section>
+
+        <div class="lesson-nav">
+          <a href="../artifacts.html" class="btn btn--secondary">&larr; Back to Artifacts</a>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../library.html">Architect's Library</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="../cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="../guardrails.html">AI Guardrails</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

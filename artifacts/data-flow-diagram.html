@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Data Flow Diagram — A diagram showing how data moves through a system, from input sources through processing steps to output destinations, including data stores and transformations along the way.">
+  <meta property="og:title" content="Data Flow Diagram — The Solution Architect">
+  <meta property="og:description" content="A diagram showing how data moves through a system, from input sources through processing steps to output destinations, including data stores and transformations along the way.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Data Flow Diagram — The Solution Architect</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
+          <li><a href="../blog.html" class="nav__link">Blog</a></li>
+          <li><a href="../about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Data Flow Diagram</h1>
+        <p class="page-header__subtitle">A diagram showing how data moves through a system, from input sources through processing steps to output destinations, including data stores and transformations along the way.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lesson-content">
+        <section class="lesson-section">
+          <h2>Purpose</h2>
+          <p>Data flow diagrams make data movement visible, helping identify where data is created, transformed, stored, and consumed. They are essential for security analysis, privacy impact assessments, and understanding system behaviour.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>When to Use</h2>
+          <p>Create during alpha when designing the data architecture. Essential for Data Protection Impact Assessments (DPIAs) and security threat modelling. Update when data flows change.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>How to Build</h2>
+          <p>Identify all data sources — where does data enter the system? This includes user input, API calls from external systems, file uploads, and scheduled data feeds.</p>
+          <p>Trace each data item through the system: where is it processed, transformed, enriched, or validated? Show each processing step as a bubble or process box.</p>
+          <p>Identify all data stores — databases, caches, file systems, message queues. Show which processes read from and write to each store.</p>
+          <p>Show data outputs — where does data leave the system? Reports, API responses, notifications, file exports, downstream system feeds.</p>
+          <p>Use consistent notation: external entities as rectangles, processes as circles/rounded rectangles, data stores as open-ended rectangles, and data flows as labelled arrows.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Tips</h2>
+          <ul>
+            <li>Start with a Level 0 (context) DFD showing the system as a single process, then decompose.</li>
+            <li>Label every data flow with what data it carries, not just that data flows.</li>
+            <li>Show data at rest (stores) and data in motion (flows) — both matter for security.</li>
+            <li>Highlight personal data flows for GDPR compliance and DPIA purposes.</li>
+            <li>Use levels of decomposition — Level 0, Level 1, Level 2 — to manage complexity.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Common Mistakes</h2>
+          <ul>
+            <li>Not labelling data flows, making it impossible to understand what data moves where.</li>
+            <li>Mixing control flow with data flow — DFDs show data movement, not program logic.</li>
+            <li>Forgetting data stores, showing data flowing between processes without persistence.</li>
+            <li>Not decomposing complex processes into sub-levels, resulting in cluttered diagrams.</li>
+            <li>Omitting error and exception data flows.</li>
+          </ul>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Government Context</h2>
+          <p>In UK government, data flow diagrams are mandatory for Data Protection Impact Assessments (DPIAs) under UK GDPR. They help demonstrate compliance with data minimisation principles and identify where personal data crosses organisational boundaries. The ICO expects clear documentation of data flows for any service processing personal data. They also support the cross-government data ethics framework.</p>
+        </section>
+
+        <section class="lesson-section">
+          <h2>Related Artifacts</h2>
+          <ul>
+            <li><a href="context-diagram.html">Context Diagram</a></li>
+          </ul>
+        </section>
+
+        <div class="lesson-nav">
+          <a href="../artifacts.html" class="btn btn--secondary">&larr; Back to Artifacts</a>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../library.html">Architect's Library</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="../cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="../guardrails.html">AI Guardrails</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="../about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
