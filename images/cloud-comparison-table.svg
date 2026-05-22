@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 920" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <!-- Background -->
+  <rect width="1200" height="920" fill="#ffffff"/>
+
+  <!-- Title block -->
+  <text x="60" y="48" font-size="26" font-weight="700" fill="#0b1d3a">Cloud services at a glance</text>
+  <text x="60" y="74" font-size="14" fill="#5a6b85">A Solution Architect's translation table for AWS, Azure, and GCP</text>
+
+  <!-- Column header bar -->
+  <rect x="0" y="100" width="1200" height="54" fill="#f4f6fa"/>
+  <text x="40" y="133" font-size="11" font-weight="700" fill="#5a6b85" letter-spacing="2">CATEGORY</text>
+
+  <!-- AWS header -->
+  <rect x="300" y="100" width="6" height="54" fill="#FF9900"/>
+  <text x="320" y="133" font-size="15" font-weight="700" fill="#0b1d3a">AWS</text>
+
+  <!-- Azure header -->
+  <rect x="600" y="100" width="6" height="54" fill="#0078D4"/>
+  <text x="620" y="133" font-size="15" font-weight="700" fill="#0b1d3a">Microsoft Azure</text>
+
+  <!-- GCP header -->
+  <rect x="900" y="100" width="6" height="54" fill="#34A853"/>
+  <text x="920" y="133" font-size="15" font-weight="700" fill="#0b1d3a">Google Cloud</text>
+
+  <!-- ============ COMPUTE SECTION ============ -->
+  <rect x="0" y="154" width="1200" height="28" fill="#fafbfd"/>
+  <text x="40" y="173" font-size="10" font-weight="700" fill="#8593a8" letter-spacing="2.5">COMPUTE</text>
+
+  <!-- Row: VMs (y=182) -->
+  <text x="40" y="206" font-size="14" font-weight="500" fill="#0b1d3a">Virtual machines</text>
+  <text x="320" y="206" font-size="14" fill="#3a4a63">EC2</text>
+  <text x="620" y="206" font-size="14" fill="#3a4a63">Virtual Machines</text>
+  <text x="920" y="206" font-size="14" fill="#3a4a63">Compute Engine</text>
+
+  <!-- Row: Serverless (y=218) -->
+  <rect x="0" y="218" width="1200" height="36" fill="#fafbfd"/>
+  <text x="40" y="242" font-size="14" font-weight="500" fill="#0b1d3a">Serverless functions</text>
+  <text x="320" y="242" font-size="14" fill="#3a4a63">Lambda</text>
+  <text x="620" y="242" font-size="14" fill="#3a4a63">Azure Functions</text>
+  <text x="920" y="242" font-size="14" fill="#3a4a63">Cloud Functions</text>
+
+  <!-- Row: Containers (y=254) -->
+  <text x="40" y="278" font-size="14" font-weight="500" fill="#0b1d3a">Managed containers</text>
+  <text x="320" y="278" font-size="14" fill="#3a4a63">ECS / Fargate</text>
+  <text x="620" y="278" font-size="14" fill="#3a4a63">Container Apps</text>
+  <text x="920" y="278" font-size="14" fill="#3a4a63">Cloud Run</text>
+
+  <!-- Row: Kubernetes (y=290) -->
+  <rect x="0" y="290" width="1200" height="36" fill="#fafbfd"/>
+  <text x="40" y="314" font-size="14" font-weight="500" fill="#0b1d3a">Kubernetes</text>
+  <text x="320" y="314" font-size="14" fill="#3a4a63">EKS</text>
+  <text x="620" y="314" font-size="14" fill="#3a4a63">AKS</text>
+  <text x="920" y="314" font-size="14" fill="#3a4a63">GKE</text>
+
+  <!-- ============ STORAGE SECTION ============ -->
+  <rect x="0" y="326" width="1200" height="28" fill="#f4f6fa"/>
+  <text x="40" y="345" font-size="10" font-weight="700" fill="#8593a8" letter-spacing="2.5">STORAGE</text>
+
+  <!-- Row: Object storage (y=354) -->
+  <text x="40" y="378" font-size="14" font-weight="500" fill="#0b1d3a">Object storage</text>
+  <text x="320" y="378" font-size="14" fill="#3a4a63">S3</text>
+  <text x="620" y="378" font-size="14" fill="#3a4a63">Blob Storage</text>
+  <text x="920" y="378" font-size="14" fill="#3a4a63">Cloud Storage</text>
+
+  <!-- Row: Block storage (y=390) -->
+  <rect x="0" y="390" width="1200" height="36" fill="#fafbfd"/>
+  <text x="40" y="414" font-size="14" font-weight="500" fill="#0b1d3a">Block storage</text>
+  <text x="320" y="414" font-size="14" fill="#3a4a63">EBS</text>
+  <text x="620" y="414" font-size="14" fill="#3a4a63">Managed Disks</text>
+  <text x="920" y="414" font-size="14" fill="#3a4a63">Persistent Disk</text>
+
+  <!-- Row: File storage (y=426) -->
+  <text x="40" y="450" font-size="14" font-weight="500" fill="#0b1d3a">Shared file storage</text>
+  <text x="320" y="450" font-size="14" fill="#3a4a63">EFS</text>
+  <text x="620" y="450" font-size="14" fill="#3a4a63">Azure Files</text>
+  <text x="920" y="450" font-size="14" fill="#3a4a63">Filestore</text>
+
+  <!-- ============ DATA SECTION ============ -->
+  <rect x="0" y="462" width="1200" height="28" fill="#f4f6fa"/>
+  <text x="40" y="481" font-size="10" font-weight="700" fill="#8593a8" letter-spacing="2.5">DATA</text>
+
+  <!-- Row: Managed SQL (y=490) -->
+  <text x="40" y="514" font-size="14" font-weight="500" fill="#0b1d3a">Managed relational DB</text>
+  <text x="320" y="514" font-size="14" fill="#3a4a63">RDS / Aurora</text>
+  <text x="620" y="514" font-size="14" fill="#3a4a63">Azure SQL Database</text>
+  <text x="920" y="514" font-size="14" fill="#3a4a63">Cloud SQL / Spanner</text>
+
+  <!-- Row: Managed NoSQL (y=526) -->
+  <rect x="0" y="526" width="1200" height="36" fill="#fafbfd"/>
+  <text x="40" y="550" font-size="14" font-weight="500" fill="#0b1d3a">Managed NoSQL</text>
+  <text x="320" y="550" font-size="14" fill="#3a4a63">DynamoDB</text>
+  <text x="620" y="550" font-size="14" fill="#3a4a63">Cosmos DB</text>
+  <text x="920" y="550" font-size="14" fill="#3a4a63">Firestore / Bigtable</text>
+
+  <!-- Row: Data warehouse (y=562) -->
+  <text x="40" y="586" font-size="14" font-weight="500" fill="#0b1d3a">Data warehouse</text>
+  <text x="320" y="586" font-size="14" fill="#3a4a63">Redshift</text>
+  <text x="620" y="586" font-size="14" fill="#3a4a63">Synapse Analytics</text>
+  <text x="920" y="586" font-size="14" fill="#3a4a63">BigQuery</text>
+
+  <!-- ============ NETWORKING SECTION ============ -->
+  <rect x="0" y="598" width="1200" height="28" fill="#f4f6fa"/>
+  <text x="40" y="617" font-size="10" font-weight="700" fill="#8593a8" letter-spacing="2.5">NETWORKING</text>
+
+  <!-- Row: Virtual network (y=626) -->
+  <text x="40" y="650" font-size="14" font-weight="500" fill="#0b1d3a">Virtual network</text>
+  <text x="320" y="650" font-size="14" fill="#3a4a63">VPC</text>
+  <text x="620" y="650" font-size="14" fill="#3a4a63">VNet</text>
+  <text x="920" y="650" font-size="14" fill="#3a4a63">VPC (global)</text>
+
+  <!-- Row: CDN (y=662) -->
+  <rect x="0" y="662" width="1200" height="36" fill="#fafbfd"/>
+  <text x="40" y="686" font-size="14" font-weight="500" fill="#0b1d3a">Content delivery</text>
+  <text x="320" y="686" font-size="14" fill="#3a4a63">CloudFront</text>
+  <text x="620" y="686" font-size="14" fill="#3a4a63">Front Door</text>
+  <text x="920" y="686" font-size="14" fill="#3a4a63">Cloud CDN</text>
+
+  <!-- Row: DNS (y=698) -->
+  <text x="40" y="722" font-size="14" font-weight="500" fill="#0b1d3a">DNS</text>
+  <text x="320" y="722" font-size="14" fill="#3a4a63">Route 53</text>
+  <text x="620" y="722" font-size="14" fill="#3a4a63">Azure DNS</text>
+  <text x="920" y="722" font-size="14" fill="#3a4a63">Cloud DNS</text>
+
+  <!-- ============ SECURITY SECTION ============ -->
+  <rect x="0" y="734" width="1200" height="28" fill="#f4f6fa"/>
+  <text x="40" y="753" font-size="10" font-weight="700" fill="#8593a8" letter-spacing="2.5">SECURITY &amp; IDENTITY</text>
+
+  <!-- Row: Identity (y=762) -->
+  <text x="40" y="786" font-size="14" font-weight="500" fill="#0b1d3a">Identity &amp; access</text>
+  <text x="320" y="786" font-size="14" fill="#3a4a63">IAM</text>
+  <text x="620" y="786" font-size="14" fill="#3a4a63">Entra ID</text>
+  <text x="920" y="786" font-size="14" fill="#3a4a63">Cloud IAM</text>
+
+  <!-- Row: Key management (y=798) -->
+  <rect x="0" y="798" width="1200" height="36" fill="#fafbfd"/>
+  <text x="40" y="822" font-size="14" font-weight="500" fill="#0b1d3a">Key management</text>
+  <text x="320" y="822" font-size="14" fill="#3a4a63">KMS</text>
+  <text x="620" y="822" font-size="14" fill="#3a4a63">Key Vault</text>
+  <text x="920" y="822" font-size="14" fill="#3a4a63">Cloud KMS</text>
+
+  <!-- Row: WAF (y=834) -->
+  <text x="40" y="858" font-size="14" font-weight="500" fill="#0b1d3a">Web app firewall</text>
+  <text x="320" y="858" font-size="14" fill="#3a4a63">AWS WAF</text>
+  <text x="620" y="858" font-size="14" fill="#3a4a63">App Gateway WAF</text>
+  <text x="920" y="858" font-size="14" fill="#3a4a63">Cloud Armor</text>
+
+  <!-- Row: Threat detection (y=870) -->
+  <rect x="0" y="870" width="1200" height="36" fill="#fafbfd"/>
+  <text x="40" y="894" font-size="14" font-weight="500" fill="#0b1d3a">Threat detection</text>
+  <text x="320" y="894" font-size="14" fill="#3a4a63">GuardDuty</text>
+  <text x="620" y="894" font-size="14" fill="#3a4a63">Defender for Cloud</text>
+  <text x="920" y="894" font-size="14" fill="#3a4a63">Security Command Center</text>
+
+  <!-- Bottom border -->
+  <line x1="0" y1="906" x2="1200" y2="906" stroke="#e5e9f0" stroke-width="1"/>
+</svg>
