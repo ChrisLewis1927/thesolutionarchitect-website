@@ -155,7 +155,6 @@ function buildBlog() {
             <div class="blog-card__body">
               <div class="blog-card__meta">
                 <span class="badge badge--category">${category}</span>
-                <time datetime="${post.date}">${formatDate(post.date)}</time>
                 <span>${post.readingTime} min read</span>
               </div>
               <h2 class="blog-card__title">${title}</h2>
