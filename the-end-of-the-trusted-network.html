@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="For decades, network security worked like a castle: thick walls, a guarded gate, and the assumption that anyone inside belonged there. That model is finished. Applications have left the data centre, users have left the office, and attackers have learned to walk through the front door. Here&#39;s what Zero Trust actually means, why the perimeter died, and why UK government architects can no longer treat it as optional.">
+  <meta property="og:title" content="The end of the trusted network — The Solution Architect">
+  <meta property="og:description" content="For decades, network security worked like a castle: thick walls, a guarded gate, and the assumption that anyone inside belonged there. That model is finished. Applications have left the data centre, users have left the office, and attackers have learned to walk through the front door. Here&#39;s what Zero Trust actually means, why the perimeter died, and why UK government architects can no longer treat it as optional.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="the-end-of-the-trusted-network.html">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>The end of the trusted network — The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Architecture</span>
+        <h1 class="article__title">The end of the trusted network</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <time datetime="2026-06-04">4 June 2026</time>
+          <span>5 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>For decades, network security looked something like a medieval castle. You built thick walls (firewalls, VPNs, network segregation), and once someone made it past the gate you mostly trusted them. The crown jewels sat in the middle, protected by the assumption that anyone close enough to touch them must belong there.</p>
+<p>That model is finished. It has been for years, but the past decade made it impossible to pretend otherwise.</p>
+<h4>Why the walls came down</h4>
+<p>Three things broke the perimeter, and none of them are reversing.</p>
+<p>Your applications left the data centre. They&#39;re in AWS, Azure, three different SaaS platforms, and a vendor&#39;s environment you don&#39;t even have a contract with. The perimeter you spent years hardening now wraps around an empty building.</p>
+<p>Your users left the office. They work from kitchens and trains and hotel lobbies, on devices you may or may not own. Routing everything through the corporate VPN turned out to be both a bottleneck and a single point of failure, and it did very little to stop a determined attacker anyway.</p>
+<p>And attackers got better. Phishing a credential, compromising a contractor, slipping malware into a software update: every modern breach story features an attacker who got inside the perimeter and then moved sideways with almost no friction. Once they were in, the castle worked against the defender.</p>
+<p>The uncomfortable conclusion: &quot;inside the network&quot; was never a meaningful safety property. It was just a guess that happened to hold for a while.</p>
+<h4>What Zero Trust actually means</h4>
+<p>Zero Trust, a term Forrester coined back in 2010, is the response to all of this. The shorthand is &quot;never trust, always verify,&quot; which sounds glib until you sit with what it implies. Every request, whether internal or external, human or machine, on a corporate laptop or a personal phone, gets authenticated and authorised on its own merits. Network location stops being a trust signal. Identity becomes one.</p>
+<h4>A few principles do most of the work.</h4>
+<p>Assume breach. Design as though the attacker is already on your network. This isn&#39;t paranoia; it&#39;s planning for the world you actually live in. Once you assume breach, things like internal traffic encryption and microsegmentation stop feeling excessive and start feeling obvious.</p>
+<p>Verify explicitly. Make access decisions on everything you know: who the user is, whether their device is healthy, where they&#39;re coming from, what they&#39;re trying to reach, whether the request looks anything like their normal behaviour. No single factor is enough.</p>
+<p>Least privilege. Give the minimum access required, for the shortest sensible duration. When something does go wrong, and it eventually will, you want the damage to stay small.</p>
+<h4>What this looks like in practice</h4>
+<p>A Zero Trust architecture isn&#39;t a product you buy. It&#39;s a set of capabilities you assemble, usually over years.</p>
+<p>Identity sits at the centre. Strong multi-factor authentication for everyone, not just admins. Single sign-on through an identity provider. Conditional access policies that consider context (user, device, location, risk) before letting a request through. Increasingly, passwordless authentication using FIDO2 keys or certificates, because passwords remain the weakest link in almost every breach you read about.</p>
+<p>Devices become a trust signal. A managed laptop with full-disk encryption, current patches, and working endpoint protection is treated differently from a random tablet on a hotel Wi-Fi. BYOD doesn&#39;t have to mean unrestricted access; it usually means web-only access, virtual desktops, or some other form of containment.</p>
+<p>The network itself becomes untrusted by default. Traffic between services is encrypted even inside your own environment. Microsegmentation limits what any compromised host can reach. A software-defined perimeter can make resources literally invisible to anyone not authorised to see them, which is a useful thing when reconnaissance is half of any serious attack.</p>
+<p>Applications and APIs participate too. Every service authenticates the caller. Service-to-service traffic uses mutual TLS or signed tokens. The days of &quot;the call came from inside the cluster, so it must be fine&quot; are over.</p>
+<p>And underneath all of this sits data: classified by sensitivity, encrypted at rest and in transit, monitored for unusual access patterns, with every read and write logged somewhere a security team can actually use.</p>
+<h4>The UK government angle</h4>
+<p>For anyone building services in UK government, this is no longer optional thinking. The National Cyber Security Centre publishes specific Zero Trust guidance, and it has become the expected starting point for new services. Existing services are increasingly being asked to show a credible path towards it. The US federal government has gone further and mandated adoption across agencies.</p>
+<p>The practical implication for architects is that Zero Trust questions will be asked at design review, at assurance, at procurement. Showing up with a VPN diagram and a perimeter firewall and calling it a day no longer holds up.</p>
+<h4>Where to start</h4>
+<p>The biggest mistake is treating Zero Trust as a single project with a launch date. Nobody flips a switch and arrives. The teams making real progress pick their highest-risk areas, usually privileged access, admin tooling, or sensitive data stores, and apply Zero Trust thinking there first. They get identity, device posture, and least privilege right in one place, prove the model works, then expand outwards.</p>
+<p>The castle is gone. What replaces it, done properly, is genuinely more secure and more workable than what came before. Getting there is years of patient work, not a weekend&#39;s worth of new firewall rules.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
