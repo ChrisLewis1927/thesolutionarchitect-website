@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How architecture thinking differs from technical thinking — the mindset shift from solving technical problems to making architecture decisions.">
+  <meta property="og:title" content="How architecture thinking differs from technical thinking — Architect's Library">
+  <meta property="og:description" content="The mindset shift from solving technical problems to making architecture decisions in UK government.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>How architecture thinking differs from technical thinking — Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">How architecture thinking differs from technical thinking</h1>
+        <p class="lesson-hero__description">In the previous guide we looked at what a Solution Architect actually does. This one is about the harder shift — how the way you think needs to change to do that job well.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>A clear distinction between solving a technical problem and making an architecture decision</li>
+          <li>The systems, trade-off and pattern recognition habits that good architects rely on</li>
+          <li>Awareness of the organisational, political, commercial and delivery context every decision lives in</li>
+          <li>A practical sense of the danger of technology-first thinking — and how to avoid it</li>
+        </ul>
+      </div>
+
+      <p>The single biggest transition a technologist makes when becoming a Solution Architect is the move from technical thinking to architecture thinking. They're not the same, and confusing them is the root cause of most architecture failures in government.</p>
+
+      <!-- Section 1: Technical problems vs architecture decisions -->
+      <h2>The difference between technical problems and architecture decisions</h2>
+
+      <img src="images/2.1-technical-vs-architecture.webp" alt="The difference between technical problems and architecture decisions" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/2.1-technical-vs-architecture.webp" data-title="Technical Problems vs Architecture Decisions" tabindex="0" role="button" aria-label="Click to enlarge: The difference between technical problems and architecture decisions">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How to recognise when you've crossed the line from a technical problem into an architecture decision.</p>
+
+      <p>Most architecture failures don't start as bad architecture decisions. They start as technical decisions that should have been architecture decisions, made by people who didn't realise the difference. A senior developer picks a database engine in a sprint planning meeting; two years later, it's the reason a service can't scale. The choice wasn't wrong because of the technology — it was wrong because nobody asked who else would be affected, how reversible it was, or what trade-offs they were accepting. In government the blast radius makes this worse: an architecture decision can ripple across procurement, operations, security, skills and potentially multiple departments. The discipline is to slow down, notice when a question is crossing that line, and treat the moment with the weight it deserves.</p>
+
+      <blockquote>Treat architecture decisions like technical problems and you'll keep looking for the 'right' answer. The job is to understand the trade-offs and make a defensible choice.</blockquote>
+
+      <!-- Section 2: Systems thinking -->
+      <h2>Systems thinking: seeing the whole, not just the parts</h2>
+
+      <img src="images/2.2-systems-thinking.webp" alt="Systems thinking: seeing the whole, not just the parts" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/2.2-systems-thinking.webp" data-title="Systems Thinking" tabindex="0" role="button" aria-label="Click to enlarge: Systems thinking — seeing the whole, not just the parts">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why architecture lives in the interactions between parts, not just the parts themselves.</p>
+
+      <p>Technical thinking is reductionist for good reason — you can't write code without breaking the problem into pieces small enough to hold in your head. That habit is brilliant for building and dangerous for architecting. A government service isn't just software; it's a socio-technical system of users, caseworkers, operations teams, policy intent, legacy integrations and live operational practice. A technically perfect solution that doesn't fit how the operations team actually works will fail in service. A beautifully decomposed architecture that ignores a data-sharing agreement with another department will fail at legal review. The practical discipline is to zoom out before you zoom in: understand the whole system, see the connections, then dive into the detail with that context in mind.</p>
+
+      <blockquote>A system's behaviour emerges from the interactions between its parts, not just from the parts themselves.</blockquote>
+
+      <!-- Section 3: Context awareness -->
+      <h2>Context awareness: the architect's superpower</h2>
+
+      <img src="images/2.3-context-awareness.webp" alt="Context awareness: the architect's superpower" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/2.3-context-awareness.webp" data-title="Context Awareness" tabindex="0" role="button" aria-label="Click to enlarge: Context awareness — the architect's superpower">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The organisational, political, commercial and delivery context that shapes every real architecture decision.</p>
+
+      <p>A developer can write excellent code without knowing who the minister is. An architect cannot design an excellent solution without understanding the environment around the work. In government this isn't optional colouring-in — it's the thing that determines whether your design ever sees daylight. A ministerial announcement at a conference can create an immovable deadline. An existing G-Cloud contract can rule out half your technology shortlist before you've written a line. A team's lack of Kubernetes experience can turn a clever design into an operational risk. Architects who ignore context produce solutions that are technically elegant but organisationally impossible. Architects who read the environment first produce solutions that actually get approved, funded, built and used.</p>
+
+      <blockquote>Context awareness turns technically good ideas into solutions that can actually be delivered.</blockquote>
+
+      <!-- Section 4: Architectural judgement -->
+      <h2>Architectural judgement: choosing the right trade-offs</h2>
+
+      <img src="images/2.4-architectural-judgement.webp" alt="Architectural judgement: choosing the right trade-offs" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/2.4-architectural-judgement.webp" data-title="Architectural Judgement" tabindex="0" role="button" aria-label="Click to enlarge: Architectural judgement — choosing the right trade-offs">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Good architecture isn't about perfect choices; it's about balancing benefits, risks, constraints and outcomes.</p>
+
+      <p>Technical thinking searches for optimal solutions. Architecture thinking accepts that there isn't one — only trade-offs. Simplicity costs flexibility. Speed costs quality. Resilience costs money. Stronger security degrades usability. Custom builds give you control but eat time; off-the-shelf gives you speed but limits your options. Every architecture decision improves some things and constrains others, and the job is to make those trade-offs consciously, explicitly, and with the right people in the room. In government the consequences of poor trade-offs are borne by the public — trade away accessibility for speed and real people can't use the service; trade away security for cost and real people's data is at risk. A useful test: for every significant decision, write down what you're gaining and what you're giving up. If you can't articulate the trade-off, you don't understand the decision well enough to make it.</p>
+
+      <blockquote>Good architects don't chase perfect solutions. They make the best decisions for the context they're in.</blockquote>
+
+      <!-- Section 5: Abstraction -->
+      <h2>Abstraction: knowing what level of detail matters when</h2>
+
+      <img src="images/2.5-abstraction.webp" alt="Abstraction: knowing what level of detail matters when" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/2.5-abstraction.webp" data-title="Abstraction" tabindex="0" role="button" aria-label="Click to enlarge: Abstraction — knowing what level of detail matters when">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Moving deliberately between strategic, solution and component levels — and knowing which one each conversation needs.</p>
+
+      <p>Technical people love detail. Specific frameworks, exact configurations, precise versions — the more specificity the better. That instinct is valuable on a development team and counterproductive in a programme board. A deputy director doesn't need to know you've chosen PostgreSQL; they need to know the data is stored securely, the service is resilient and the costs are predictable. A developer doesn't need to know about ministerial priority; they need the API contract and the deployment pipeline. The mistake new architects make is jumping to the component level too early — talking about Kubernetes before anyone's agreed what the service even does. It's like choosing the paint colour before deciding how many rooms the house needs. The discipline is to match your level of abstraction to your audience and the decision being made, and go deeper only when the decision genuinely requires it.</p>
+
+      <blockquote>The mistake isn't using detail. It's using the wrong level of detail at the wrong time.</blockquote>
+
+      <!-- Section 6: Time horizon -->
+      <h2>Time horizon: designing for now, next and later</h2>
+
+      <img src="images/2.6-time-horizon.webp" alt="Time horizon: designing for now, next and later" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/2.6-time-horizon.webp" data-title="Time Horizon" tabindex="0" role="button" aria-label="Click to enlarge: Time horizon — designing for now, next and later">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Balancing immediate delivery pressure with medium-term adaptability and long-term strategic direction.</p>
+
+      <p>Political cycles create pressure to deliver Now. But government services often run for decades — the tax system, the benefits system, the immigration system. An architecture decision made under delivery pressure today will be lived with for years, by teams who weren't in the room when you made it. The challenge is balancing three horizons at once: deliver enough for Now (0–6 months), design enough flexibility for Next (6–18 months), and keep enough options open for Later (18+ months). Design only for Now and you'll build something that works today but can't evolve. Design only for Later and you'll over-engineer something that never gets delivered. The practical approach is to design for the current phase's requirements but make your decisions reversible where possible — use interfaces and abstractions that let you swap components later, and document the assumptions that underpin today's design so future architects know what might need to change.</p>
+
+      <blockquote>Good architects don't design only for today. They deliver for Now, design for Next and keep options open for Later.</blockquote>
+
+      <!-- Section 7: Constraint awareness -->
+      <h2>Constraint awareness: working within real boundaries</h2>
+
+      <img src="images/2.7-constraint-awareness.webp" alt="Constraint awareness: working within real boundaries" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/2.7-constraint-awareness.webp" data-title="Constraint Awareness" tabindex="0" role="button" aria-label="Click to enlarge: Constraint awareness — working within real boundaries">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The budget, skills, legacy, policy, procurement and time constraints that make government architecture real.</p>
+
+      <p>Technical thinking starts with 'what's possible?' Architecture thinking starts with 'what's possible within these constraints?' In government the constraints are real and largely non-negotiable. Budgets are fixed and often annual. The team you have is the team you have. Legacy systems can't be wished away. Policy obligations like data residency, accessibility and Welsh language are legal requirements, not preferences. Procurement frameworks determine what you can buy and how quickly. Delivery timelines are often politically driven and immovable. The architect who ignores these constraints designs fantasy architectures that are beautiful on paper and impossible in practice. The architect who embraces them designs solutions that actually get built. Constraints aren't the enemy of good architecture — if there were no constraints, you wouldn't need an architect.</p>
+
+      <blockquote>Constraints are the context that makes architecture necessary.</blockquote>
+
+      <!-- Section 8: Pattern recognition -->
+      <h2>Pattern recognition and the danger of technology-first thinking</h2>
+
+      <img src="images/2.8-pattern-recognition.webp" alt="Pattern recognition and the danger of technology-first thinking" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/2.8-pattern-recognition.webp" data-title="Pattern Recognition" tabindex="0" role="button" aria-label="Click to enlarge: Pattern recognition and the danger of technology-first thinking">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why experienced architects start with the problem, not with their favourite technology.</p>
+
+      <p>Experienced architects develop pattern recognition — the ability to spot a recurring problem and match it to a proven approach. It's valuable, and it's also the thing most likely to lead you astray. The trap is technology-first thinking: starting with a technology or pattern you like and finding a problem to apply it to. 'We should use microservices' is technology-first. 'We have a large team that needs to deploy components independently, so a decomposed architecture makes sense' is architecture thinking. The first sentence sounds productive but isn't. The second is harder to arrive at, and it's the one that produces good systems. A useful test: can you justify your decision without naming a specific product? If you can say 'we need an asynchronous integration pattern because the upstream system has unpredictable response times,' you're thinking architecturally. If all you can say is 'we should use Kafka,' you're not. In government this discipline ties directly to the Technology Code of Practice — share and reuse before you build new — and to the simple fact that public money pays for every line of unnecessary complexity.</p>
+
+      <blockquote>Good architects don't start with their favourite technology. They start with the problem and choose the simplest pattern that fits.</blockquote>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">← Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-what-a-solution-architect-does.html">What a Solution Architect actually does</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="lifecycle.html">Government project lifecycle</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="artifacts.html">Architecture artifacts</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="">
+      <p class="lightbox__title"></p>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
