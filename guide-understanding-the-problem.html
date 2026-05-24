@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Understanding the problem before designing the solution - why the most expensive mistake in solution architecture is solving the wrong problem.">
+  <meta property="og:title" content="Understanding the problem before designing the solution - Architect's Library">
+  <meta property="og:description" content="The discipline of understanding the problem properly before you let yourself design anything.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <title>Understanding the problem before designing the solution - Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <span class="header__logo-icon">SA</span>
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Understanding the problem before designing the solution</h1>
+        <p class="lesson-hero__description">The single most expensive mistake in solution architecture is solving the wrong problem. It happens constantly in government. A policy team asks for a database when what they actually need is a reporting capability. A programme board approves a platform rebuild when the real issue is a broken process. A delivery team builds a workflow engine when a spreadsheet would have done. This guide is about the discipline that prevents it, which is understanding the problem properly before you let yourself design anything.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How to recognise premature solutioning in yourself and in the people who brief you</li>
+          <li>Practical framing techniques that work on real government briefs</li>
+          <li>What discovery actually involves, and how to engage with it as an architect</li>
+          <li>How policy intent shapes technical decisions in ways that aren't always obvious</li>
+          <li>How to tell the stated problem apart from the real one</li>
+          <li>The questions that tell you when you're ready to start designing</li>
+        </ul>
+      </div>
+
+      <!-- Section 1: The danger of premature solutioning -->
+      <h2>The danger of premature solutioning</h2>
+
+      <img src="images/3.1 - The Danger of Premature Solutioning.webp" alt="The danger of premature solutioning" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.1 - The Danger of Premature Solutioning.webp" data-title="The Danger of Premature Solutioning" tabindex="0" role="button" aria-label="Click to enlarge: The danger of premature solutioning">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why architects jump to design before they understand the problem, and what disciplined thinking looks like instead.</p>
+
+      <p>Premature solutioning is the occupational hazard of technically capable people. You hear a problem and your brain immediately starts designing. It feels productive. It feels like expertise. But it's often the moment where the most expensive mistakes get locked in. In government, the consequences are amplified: a solution designed for the wrong problem doesn't just waste a sprint, it wastes months of procurement, governance approvals, and delivery effort. The pattern is predictable. Someone describes a symptom. The architect hears a technology. Within minutes there's a whiteboard sketch of a system that solves something nobody actually asked for. The discipline is to notice that impulse, pause, and ask: do I actually understand what's going wrong here, or am I just pattern-matching to something I already know how to build?</p>
+
+      <blockquote>The most valuable thing you bring as an architect is the discipline to hold the space for problem understanding when everyone around you wants to start building.</blockquote>
+
+      <!-- Section 2: Problem framing techniques that actually work -->
+      <h2>Problem framing techniques that actually work</h2>
+
+      <img src="images/3.2 - Problem Framing Techniques That Actually Work.webp" alt="Problem framing techniques that actually work" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.2 - Problem Framing Techniques That Actually Work.webp" data-title="Problem Framing Techniques That Actually Work" tabindex="0" role="button" aria-label="Click to enlarge: Problem framing techniques that actually work">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Repeatable methods for clarifying the real need before any solution is chosen.</p>
+
+      <p>Problem framing is the practice of defining what you're actually trying to solve before you let yourself think about how to solve it. It sounds obvious, but in practice it's the step most often skipped. A good problem frame answers three questions: who is affected, what is going wrong for them, and what would better look like? It deliberately excludes technology. The techniques that work in government are simple and repeatable. Problem statements force you to articulate the issue in one or two sentences without mentioning a solution. "How might we" questions open the solution space rather than narrowing it prematurely. Context maps show you who else is involved and what constraints exist. The value isn't in the artefact you produce; it's in the thinking the technique forces you to do. A well-framed problem makes the architecture work easier because you know what success looks like before you start designing.</p>
+
+      <blockquote>A good problem statement shifts the conversation from 'build us this' to 'help us achieve this'. The solution space gets wider, and that's exactly what you want.</blockquote>
+
+      <!-- Section 3: Discovery in government -->
+      <h2>Discovery in government: what it is and why architects must engage</h2>
+
+      <img src="images/3.3 - Discovery in Government.webp" alt="Discovery in government: what it is and why architects must engage" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.3 - Discovery in Government.webp" data-title="Discovery in Government" tabindex="0" role="button" aria-label="Click to enlarge: Discovery in government">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">What discovery looks like in practice, and how the architect contributes without designing too soon.</p>
+
+      <p>Discovery is the phase where you learn about the problem space before committing to a solution. In government, it's a formal part of the service design process, but architects often treat it as something that happens before they get involved. That's a mistake. Discovery is where you learn the things that will constrain and shape your architecture: who the users are, what the existing landscape looks like, what policy obligations apply, what's been tried before and why it failed. The architect's role in discovery isn't to design. It's to listen, ask questions, map the technical landscape, identify constraints, and start forming a mental model of the problem that will eventually inform the architecture. If you skip discovery, or join only at the end, you'll design based on assumptions rather than evidence. And assumptions in government architecture tend to be expensive when they turn out to be wrong.</p>
+
+      <blockquote>Discovery is where you earn the right to design well. Skip it, and you'll pay for it later in rework and regret.</blockquote>
+
+      <!-- Section 4: Understanding policy intent -->
+      <h2>Understanding policy intent: the hidden driver</h2>
+
+      <img src="images/3.4 - Understanding Policy Intent.webp" alt="Understanding policy intent: the hidden driver" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.4 - Understanding Policy Intent.webp" data-title="Understanding Policy Intent" tabindex="0" role="button" aria-label="Click to enlarge: Understanding policy intent">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How policy purpose shapes architecture decisions, and how architects translate between policy and technical worlds.</p>
+
+      <p>Every government service exists to deliver a policy outcome. The policy intent is the reason the service exists, and it shapes architecture decisions in ways that aren't always visible. A policy that requires discretionary decision-making needs different architecture from one that applies fixed rules. A policy that's likely to change annually needs a system that can be reconfigured without rebuilding. A policy with strict eligibility criteria needs robust data validation; one with flexible criteria needs human judgement supported by good information. The architect who understands policy intent can design systems that serve it well and adapt as it evolves. The architect who ignores it builds systems that work technically but fight the policy at every turn. The practical skill is translation: understanding what the policy is trying to achieve, and working out what that means for data, workflow, integration, and user experience. You don't need to become a policy expert, but you do need to ask the right questions and listen carefully to the answers.</p>
+
+      <blockquote>Architecture that fits today's policy but can't survive tomorrow's is architecture you'll be replacing before it's paid for itself.</blockquote>
+
+      <!-- Section 5: The real problem vs the stated problem -->
+      <h2>The real problem vs the stated problem</h2>
+
+      <img src="images/3.5 - The Real Problem.webp" alt="The real problem vs the stated problem" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.5 - The Real Problem.webp" data-title="The Real Problem vs The Stated Problem" tabindex="0" role="button" aria-label="Click to enlarge: The real problem vs the stated problem">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why the stated request is rarely the real issue, and how good architects find what actually needs fixing.</p>
+
+      <p>The problem you're asked to solve is almost never the actual problem. A team says they need a new database; the real problem is that reporting takes three days because data is scattered across five systems. A programme board says they need a platform migration; the real problem is that the support contract expires in six months and nobody renewed it. A product owner says they need an API; the real problem is that two teams can't share data because of an organisational boundary. The stated problem is usually a symptom, or a solution someone has already decided on. The architect's job is to keep asking "why" until you reach the thing that actually needs fixing. This isn't about being difficult or contrarian. It's about making sure the organisation spends its money and effort on the right thing. The technique is simple: when someone tells you what they want built, ask what problem it solves. Then ask what causes that problem. Keep going until you find something that, if fixed, would make the original request unnecessary.</p>
+
+      <blockquote>The best architects save their organisation from expensive solutions to cheap problems. Nobody thanks you for it, but it's the work.</blockquote>
+
+      <!-- Section 6: Structured approaches to problem analysis -->
+      <h2>Structured approaches to problem analysis</h2>
+
+      <img src="images/3.6 - Structured Approaches.webp" alt="Structured approaches to problem analysis" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.6 - Structured Approaches.webp" data-title="Structured Approaches to Problem Analysis" tabindex="0" role="button" aria-label="Click to enlarge: Structured approaches to problem analysis">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Four thinking frameworks that help you analyse problems systematically without producing bureaucratic documents.</p>
+
+      <p>Structured problem analysis doesn't mean producing heavyweight documents. It means thinking systematically rather than jumping to the first idea that feels right. Four approaches work well in practice. Root cause analysis helps you trace symptoms back to their source, so you solve the cause rather than treating the effect. Stakeholder impact mapping shows you who is affected and how, so your solution addresses the right needs. Constraint identification surfaces the boundaries you'll have to work within, before you design something that ignores them. And assumption testing forces you to name the things you're taking for granted, so you can validate them before they become expensive mistakes. None of these need to produce formal deliverables. They're thinking tools, not documentation exercises. Use them in a conversation, on a whiteboard, or in your own notes. The value is in the rigour of thought, not the polish of the output.</p>
+
+      <blockquote>Use these to structure your thinking and challenge your assumptions, not to produce impressive looking documents.</blockquote>
+
+      <!-- Section 7: When discovery goes wrong -->
+      <h2>When discovery goes wrong: patterns of failure</h2>
+
+      <img src="images/3.7 - When Discovery Goes Wrong.webp" alt="When discovery goes wrong: patterns of failure" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.7 - When Discovery Goes Wrong.webp" data-title="When Discovery Goes Wrong" tabindex="0" role="button" aria-label="Click to enlarge: When discovery goes wrong">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The traps that distort discovery, and how mature architects spot them and reset course early.</p>
+
+      <p>Discovery fails in predictable ways. Confirmation bias is the most common: the team enters discovery having already decided what they want to build, and unconsciously filters evidence to support that conclusion. Scope creep is another: discovery expands endlessly because nobody defined what "enough understanding" looks like. Authority bias distorts findings when a senior stakeholder's opinion carries more weight than user research. And theatre discovery produces the right artefacts without doing the real thinking, ticking boxes for governance without generating genuine insight. The architect's role is to notice these patterns and name them. You don't need to run discovery yourself, but you do need to be honest about whether the discovery that's been done is actually good enough to design from. If the problem statement is vague, if the user needs are assumed rather than researched, if the constraints haven't been tested, then you're not ready to design, regardless of what the project plan says.</p>
+
+      <blockquote>Every architect falls into these traps occasionally. The good ones notice quickly and reset.</blockquote>
+
+      <!-- Section 8: From problem understanding to architecture readiness -->
+      <h2>From problem understanding to architecture readiness</h2>
+
+      <img src="images/3.8 - From Problem Understanding.webp" alt="From problem understanding to architecture readiness" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.8 - From Problem Understanding.webp" data-title="From Problem Understanding to Architecture Readiness" tabindex="0" role="button" aria-label="Click to enlarge: From problem understanding to architecture readiness">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The bridge between discovery and design, and the questions that tell you when you're ready to start designing.</p>
+
+      <p>There's a moment between understanding the problem and starting to design where you need to make a judgement call: do I know enough? The answer is never "everything," but it needs to be "enough." Enough means you can articulate the problem clearly without referencing a solution. You know who the users are and what they need. You understand the policy intent and how it might change. You've mapped the existing landscape and know what you're integrating with. You've identified the hard constraints and validated your key assumptions. You know what success looks like and how it will be measured. If you can answer these questions with confidence, you're ready to design. If you can't, you need more discovery, not more architecture. The bridge between problem understanding and design isn't a formal gate or a sign-off meeting. It's a professional judgement that you, as the architect, are responsible for making honestly.</p>
+
+      <blockquote>Good architecture doesn't start when all uncertainty disappears. It starts when uncertainty has been reduced enough to make reasonable decisions, and to adapt as you learn more.</blockquote>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-what-a-solution-architect-does.html">What a Solution Architect actually does</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-how-architecture-thinking-differs.html">How architecture thinking differs from technical thinking</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="">
+      <p class="lightbox__title"></p>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
