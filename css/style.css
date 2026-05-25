@@ -230,7 +230,7 @@ h4 { font-size: var(--font-size-xl); }
 }
 
 /* Tighten nav at medium widths before mobile menu kicks in */
-@media (min-width: 769px) and (max-width: 1100px) {
+@media (min-width: 1024px) and (max-width: 1200px) {
   .nav__list {
     gap: var(--spacing-xs);
   }
@@ -1192,7 +1192,9 @@ h4 { font-size: var(--font-size-xl); }
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
 
   .hero__title { font-size: var(--font-size-5xl); }
+}
 
+@media (min-width: 1024px) {
   .nav__toggle { display: none; }
 }
 
@@ -1206,8 +1208,8 @@ h4 { font-size: var(--font-size-xl); }
   .footer__grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
 }
 
-/* Mobile (below 768px) */
-@media (max-width: 767px) {
+/* Mobile (below 1024px) */
+@media (max-width: 1023px) {
   :root {
     --font-size-5xl: 2.25rem;
     --font-size-4xl: 1.875rem;
