@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How architecture decisions actually get made - principles, frameworks, ADRs, and the messy reality of choosing between options.">
+  <meta property="og:title" content="How architecture decisions actually get made - Architect's Library">
+  <meta property="og:description" content="Principles, frameworks, ADRs, and the messy reality of choosing between options.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>How architecture decisions actually get made - Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">How architecture decisions actually get made</h1>
+        <p class="lesson-hero__description">Most architecture training tells you what a good principle looks like. The harder bit, the bit that never quite fits on a slide, is what happens when projects are real, principles disagree with each other, and somebody has to write the decision down at the end. This guide is about that part.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>A practical view of how architecture principles actually work in UK government delivery</li>
+          <li>How to use the Technology Code of Practice as a lens rather than a checklist</li>
+          <li>When to write project level principles, and what they should actually say</li>
+          <li>Frameworks for making and documenting defensible architecture choices</li>
+          <li>How to handle principle conflicts honestly when they show up</li>
+          <li>What architecture decisions actually look like when they're documented well</li>
+        </ul>
+      </div>
+
+      <!-- Section 1: What architecture principles are (and aren't) -->
+      <h2>What architecture principles are (and aren't)</h2>
+
+      <img src="images/6.1 - What Architecture Principles Are.webp" alt="What architecture principles are and aren't" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/6.1 - What Architecture Principles Are.webp" data-title="What Architecture Principles Are" tabindex="0" role="button" aria-label="Click to enlarge: What architecture principles are and aren't">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How to tell a principle from a rule, a goal, or a technology decision dressed up in fancier clothes.</p>
+
+      <p>Most teams have something they call principles. Half the time those are actually rules ("all data must be encrypted at rest"), goals ("reduce processing time by 50%"), or technology choices ("we use AWS"). None of those help you choose between two architectures when you're sat in a workshop on a Wednesday afternoon. A real principle points in a direction without specifying the destination. "Prefer open standards over proprietary protocols" tells you something useful. "Be excellent in everything we do" tells you nothing. The honest test isn't whether the principle sounds noble. It's whether you've ever used it to make a decision you wouldn't otherwise have made. If the answer is no, what you have is wallpaper.</p>
+
+      <blockquote>A principle that never rules anything out isn't a principle. It's a slogan.</blockquote>
+
+      <!-- Section 2: The Technology Code of Practice as architecture principles -->
+      <h2>The Technology Code of Practice as architecture principles</h2>
+
+      <img src="images/6.2 - The Technology Code of Practice.webp" alt="The Technology Code of Practice as architecture principles" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/6.2 - The Technology Code of Practice.webp" data-title="The Technology Code of Practice" tabindex="0" role="button" aria-label="Click to enlarge: The Technology Code of Practice as architecture principles">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How to use the TCoP as a working tool, not just something to satisfy at service assessment.</p>
+
+      <p>Architects usually meet the TCoP twice in their careers. Once when they join the civil service and somebody hands them the link. Once at service assessment, when the panel asks how their design aligns with it. Both encounters miss the point. The TCoP earns its keep when you apply it during decisions, not after them. The principles will sometimes be inconvenient. Cloud first can pull hard against an existing on premises estate. Share and reuse sounds great until you find that the existing component does eighty percent of what you need, and the remaining twenty percent would cost more to retrofit than it would to build fresh. Those tensions are the point of having principles in the first place. They force you to make a conscious choice rather than drifting into one.</p>
+
+      <blockquote>The TCoP is most useful before assessment day, not on it.</blockquote>
+
+      <!-- Section 3: Creating project level principles -->
+      <h2>Creating project level principles</h2>
+
+      <img src="images/6.3 - Creating Project-Level Principles.webp" alt="Creating project level principles" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/6.3 - Creating Project-Level Principles.webp" data-title="Creating Project-Level Principles" tabindex="0" role="button" aria-label="Click to enlarge: Creating project level principles">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Where the TCoP and departmental strategy stop, and your project's own design rules begin.</p>
+
+      <p>The TCoP and your departmental strategy give you the wide guardrails. They don't tell you whether to use serverless or containers, whether reference data should live in code or in configuration, or how to handle the legacy integration that nobody on the team wants to touch. That's what project principles are for. The mistake most teams make is writing them like a corporate values poster: seven or eight worthy statements, none of them specific enough to actually use. A good set of project principles answers questions that will come up during delivery, and each one rules something out. If your principles don't make at least a couple of plausible options harder to justify, they're decorative.</p>
+
+      <blockquote>Good project principles answer questions that will come up during delivery. If they don't rule anything out, they're decorative.</blockquote>
+
+      <!-- Section 4: Frameworks for making architecture decisions -->
+      <h2>Frameworks for making architecture decisions</h2>
+
+      <img src="images/6.4 - Decision-Making Frameworks.webp" alt="Frameworks for making architecture decisions" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/6.4 - Decision-Making Frameworks.webp" data-title="Decision-Making Frameworks" tabindex="0" role="button" aria-label="Click to enlarge: Frameworks for making architecture decisions">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Practical methods for getting from 'we should probably decide this' to a documented choice.</p>
+
+      <p>The framework you reach for says something about the decision you're facing. Weighted scoring is useful when you have several real options and need to defend the choice to people who weren't in the room. Cost, benefit and risk is the language programme boards already speak, so it's the right format when the audience holds the budget. The reversibility test is the most underused of the lot, because architects tend to apply the same depth of analysis to every decision regardless of how much it actually matters. Three days spent picking a logging library is wasted work. Three hours choosing your data persistence strategy probably isn't enough. Match the depth of analysis to the cost of being wrong.</p>
+
+      <blockquote>Reversible decisions deserve quick judgement. Irreversible ones deserve careful thought. The skill is knowing which is which before you start.</blockquote>
+
+      <!-- Section 5: Architecture Decision Records -->
+      <h2>Architecture Decision Records</h2>
+
+      <img src="images/6.5 - Architecture Decision Records.webp" alt="Architecture Decision Records" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/6.5 - Architecture Decision Records.webp" data-title="Architecture Decision Records" tabindex="0" role="button" aria-label="Click to enlarge: Architecture Decision Records">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">A simple format for capturing why a decision was made, while the reasoning is still fresh.</p>
+
+      <p>Architects often start writing ADRs with enthusiasm and stop after the third one. The pattern is almost always the same. They start writing them retrospectively, the writing feels like homework, and then they stop. The fix is to write the ADR at the point of decision, while the alternatives are still live in your head and you can still remember why you ruled them out. The "alternatives considered" section is where the real value sits. It shows the decision was made consciously, and it gives whoever inherits the system a path back if circumstances change. The decision itself is often the least interesting part of the document. The thinking behind it is what matters.</p>
+
+      <blockquote>The decision itself is often the least interesting part of an ADR. The thinking behind it is what matters.</blockquote>
+
+      <!-- Section 6: Documenting decisions in government context -->
+      <h2>Documenting decisions in government context</h2>
+
+      <img src="images/6.6 - Documenting Decisions in Government Context.webp" alt="Documenting decisions in government context" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/6.6 - Documenting Decisions in Government Context.webp" data-title="Documenting Decisions in Government Context" tabindex="0" role="button" aria-label="Click to enlarge: Documenting decisions in government context">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why decision documentation in government has a slightly different job to do.</p>
+
+      <p>In a private sector team, decision documents mostly serve the people writing the code. In government, they also serve service assessors, the National Audit Office, departmental finance teams, and on occasion a select committee. That sounds like it raises the bar. In practice it lowers it. The audiences outside your delivery team don't want elegance or depth. They want clarity, honesty, and a clean line from principle to decision. A short ADR written in plain English will satisfy a service assessor faster than a solution design document that runs to a hundred pages and that nobody actually reads. Write for the person who joined the team last week and needs to understand why you did what you did.</p>
+
+      <blockquote>If a programme board member can't follow your decision document, the document isn't finished.</blockquote>
+
+      <!-- Section 7: When principles conflict -->
+      <h2>When principles conflict</h2>
+
+      <img src="images/6.7 - When Principles Conflict.webp" alt="When principles conflict" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/6.7 - When Principles Conflict.webp" data-title="When Principles Conflict" tabindex="0" role="button" aria-label="Click to enlarge: When principles conflict">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How to handle a tradeoff honestly when two good principles pull in different directions.</p>
+
+      <p>This is the part of the job that no training course really prepares you for. Principles in tension is the normal case. The situations where every principle points the same way are the easy ones, and they're rare. What makes a conflict feel difficult is usually the pressure to pretend it doesn't exist. A team will quietly compromise on simplicity to chase reusability, or quietly trade off security to ship faster, and nobody says so out loud. The fix is to name the tension. State which principles are pulling against each other, decide which one carries more weight in this particular situation, and write down why. The act of naming the conflict is what turns a quiet compromise into a defensible choice.</p>
+
+      <blockquote>A documented tradeoff is a decision. An undocumented one is just a problem nobody noticed yet.</blockquote>
+
+      <!-- Section 8: Building a culture around decisions -->
+      <h2>Building a culture around decisions</h2>
+
+      <img src="images/6.8 - Building a Decision-Making Culture.webp" alt="Building a culture around decisions" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/6.8 - Building a Decision-Making Culture.webp" data-title="Building a Decision-Making Culture" tabindex="0" role="button" aria-label="Click to enlarge: Building a culture around decisions">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How individual good decisions become consistent good decisions across a team and a delivery.</p>
+
+      <p>One architect making good decisions matters less than a team where good decisions are the default. Most of what goes wrong in architecture practice isn't a single bad call. It's a slow accumulation of small decisions that nobody quite owned, nobody quite documented, and nobody can now explain. The cultural failures look mundane. Decisions get delayed because nobody wants to be wrong on the record. Defaults set in because the absence of a decision becomes the decision. Challenge gets read as criticism, so the people who notice problems stop raising them. An architect's job runs beyond making the right calls. You also have to set the tempo, make documentation routine, and make it safe for people to disagree out loud.</p>
+
+      <blockquote>A strong culture around decisions is what makes good architecture survive a change of team.</blockquote>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-what-a-solution-architect-does.html">What a Solution Architect actually does</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-how-architecture-thinking-differs.html">How architecture thinking differs from technical thinking</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem before designing the solution</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-stakeholders-and-landscape.html">Users, stakeholders and the landscape around your design</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-functional-and-nonfunctional-requirements.html">Functional and non-functional requirements</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="">
+      <p class="lightbox__title"></p>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
