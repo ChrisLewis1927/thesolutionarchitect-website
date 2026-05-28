@@ -185,11 +185,42 @@
     });
   }
 
+  // --- Library Guide Filtering ---
+  function initLibraryFilters() {
+    var filterBar = document.querySelector('.filter-bar');
+    var grid = document.getElementById('library-grid');
+    if (!filterBar || !grid) return;
+
+    var filterBtns = filterBar.querySelectorAll('.filter-btn');
+    var cards = grid.querySelectorAll('.lesson-card');
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var filter = this.getAttribute('data-filter');
+
+        filterBtns.forEach(function (b) {
+          b.classList.remove('filter-btn--active');
+        });
+        this.classList.add('filter-btn--active');
+
+        cards.forEach(function (card) {
+          var category = card.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            card.classList.remove('lesson-card--hidden');
+          } else {
+            card.classList.add('lesson-card--hidden');
+          }
+        });
+      });
+    });
+  }
+
   // --- Initialize Everything ---
   function init() {
     initMobileMenu();
     initScrollAnimations();
     initGalleryFilters();
+    initLibraryFilters();
     initLightbox();
     initSmoothScroll();
     initActiveNav();

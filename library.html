@@ -55,46 +55,53 @@
     <section class="section">
       <div class="container">
         <div class="info-box mb-2xl">
-          <p><strong>How this works:</strong> The guides below are designed to be read in order, each one building on the last. They cover the foundations of solution architecture in UK government, from understanding the role through to the practical skills you'll use every day. More guides are on the way.</p>
+          <p><strong>How this works:</strong> The guides below are designed to be read in order, each one building on the last. They cover the foundations of solution architecture in UK government, from understanding the role through to the practical skills you'll use every day. Use the filters to browse by topic.</p>
         </div>
 
-        <div class="grid grid--2 mt-xl">
-          <a href="guide-what-a-solution-architect-does.html" class="lesson-card fade-in">
+        <div class="filter-bar mb-xl" role="toolbar" aria-label="Filter guides by topic">
+          <button class="filter-btn filter-btn--active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="role">The Role</button>
+          <button class="filter-btn" data-filter="discovery">Discovery and Framing</button>
+          <button class="filter-btn" data-filter="decisions">Requirements and Decisions</button>
+        </div>
+
+        <div class="grid grid--2 mt-xl" id="library-grid">
+          <a href="guide-what-a-solution-architect-does.html" class="lesson-card fade-in" data-category="role">
             <span class="lesson-card__number">1</span>
             <div class="lesson-card__content">
               <h3 class="lesson-card__title">What a Solution Architect Actually Does</h3>
               <p class="lesson-card__meta">The real role, responsibilities, and value of a Solution Architect in UK government.</p>
             </div>
           </a>
-          <a href="guide-how-architecture-thinking-differs.html" class="lesson-card fade-in">
+          <a href="guide-how-architecture-thinking-differs.html" class="lesson-card fade-in" data-category="role">
             <span class="lesson-card__number">2</span>
             <div class="lesson-card__content">
               <h3 class="lesson-card__title">How Architecture Thinking Differs from Technical Thinking</h3>
               <p class="lesson-card__meta">The mindset shift from solving technical problems to making architecture decisions.</p>
             </div>
           </a>
-          <a href="guide-understanding-the-problem.html" class="lesson-card fade-in">
+          <a href="guide-understanding-the-problem.html" class="lesson-card fade-in" data-category="discovery">
             <span class="lesson-card__number">3</span>
             <div class="lesson-card__content">
               <h3 class="lesson-card__title">Understanding the Problem Before Designing the Solution</h3>
               <p class="lesson-card__meta">The discipline of problem framing, discovery, and knowing when you're ready to design.</p>
             </div>
           </a>
-          <a href="guide-stakeholders-and-landscape.html" class="lesson-card fade-in">
+          <a href="guide-stakeholders-and-landscape.html" class="lesson-card fade-in" data-category="discovery">
             <span class="lesson-card__number">4</span>
             <div class="lesson-card__content">
               <h3 class="lesson-card__title">Users, Stakeholders and the Landscape Around Your Design</h3>
               <p class="lesson-card__meta">Mapping the people who shape your architecture and navigating competing demands.</p>
             </div>
           </a>
-          <a href="guide-functional-and-nonfunctional-requirements.html" class="lesson-card fade-in">
+          <a href="guide-functional-and-nonfunctional-requirements.html" class="lesson-card fade-in" data-category="decisions">
             <span class="lesson-card__number">5</span>
             <div class="lesson-card__content">
               <h3 class="lesson-card__title">Functional and Non-Functional Requirements</h3>
               <p class="lesson-card__meta">The requirements that actually drive architecture, and how to capture them properly.</p>
             </div>
           </a>
-          <a href="guide-architecture-decisions.html" class="lesson-card fade-in">
+          <a href="guide-architecture-decisions.html" class="lesson-card fade-in" data-category="decisions">
             <span class="lesson-card__number">6</span>
             <div class="lesson-card__content">
               <h3 class="lesson-card__title">How Architecture Decisions Actually Get Made</h3>
