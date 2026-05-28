@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Asking better discovery questions - the question types, stakeholder techniques, and methods that surface the real constraints and requirements.">
+  <meta property="og:title" content="Asking better discovery questions - Architect's Library">
+  <meta property="og:description" content="The question types, stakeholder techniques, and methods that surface the real constraints and requirements.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Asking better discovery questions - Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Asking better discovery questions</h1>
+        <p class="lesson-hero__description">Architecture is fundamentally about decisions, and good decisions come from good questions. Discovery is where you ask them.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>The main question types and the moment each one earns its place</li>
+          <li>How to tailor your questions to policy, operations, security, technical and leadership stakeholders</li>
+          <li>Ways to surface the constraints that nobody thinks to mention</li>
+          <li>How the Five Whys works in a government setting, and where it parts company with the textbook version</li>
+          <li>A method for telling real requirements apart from assumed ones</li>
+        </ul>
+      </div>
+
+      <!-- Section 1: Question types and when to use them -->
+      <h2>Question types and when to use them</h2>
+
+      <img src="images/7.1 - Question Types and When to Use Them.webp" alt="The six discovery question types and how they work together across a conversation" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/7.1 - Question Types and When to Use Them.webp" data-title="Question Types and When to Use Them" tabindex="0" role="button" aria-label="Click to enlarge: The six discovery question types and how they work together across a conversation">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The six question types and how they fit together across a discovery conversation.</p>
+
+      <p>Not every question does the same job. Open questions invite a wide answer and belong early, when you are still working out how things fit together. "Tell me how the current process works" or "What happens when an application is rejected" give people room to tell you things you did not know to ask about. Probing questions go after something specific the person has already said: you mentioned the process takes six weeks, so where does most of that time actually go. That is usually where the real insight sits. Clarifying questions protect you from the most dangerous assumption of all, which is believing you understood when you did not. When someone says real time, do they mean inside a second or the same day. When they say all users, how many people is that.</p>
+
+      <p>Challenging questions test the thinking, and they take a little courage: is that a legal requirement or a preference. Frame them as curiosity rather than criticism and they land far better. Hypothetical questions like "what if the deadline moved by a month" and scaling questions like "on a scale of 1 to 10, how stable are these requirements" pull out priorities and risk tolerance that direct questions tend to miss. The strongest conversations move through all of these in turn: open to explore, probing to go deeper, clarifying to confirm, challenging to test, then hypothetical and scaling to push on the edges.</p>
+
+      <blockquote>The right question at the right time reveals what really matters. Everything downstream depends on it.</blockquote>
+
+      <!-- Section 2: Questions for different stakeholders -->
+      <h2>Questions for different stakeholders</h2>
+
+      <img src="images/7.2 - Questions for Different Stakeholders.webp" alt="Each stakeholder group holds a different piece of the puzzle" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/7.2 - Questions for Different Stakeholders.webp" data-title="Questions for Different Stakeholders" tabindex="0" role="button" aria-label="Click to enlarge: Each stakeholder group holds a different piece of the puzzle">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Each group you talk to holds a different piece of the picture.</p>
+
+      <p>No single person sees the whole service, so your questions have to change with who is in the room. Policy teams hold the intent and the legal context. Ask what outcome the policy is chasing, how it might shift over the next two or three years, what legislation sits underneath it, and what happens when someone fails to comply. Operational teams hold the reality of delivery. Walk me through a typical day, what causes the most frustration, what workarounds have you built and why did you need them. Those workarounds usually describe the real problem better than any official process map.</p>
+
+      <p>Security teams hold the limits: the data classification, the threats you have to design against, the approved patterns, and the route to sign off. Technical teams hold the current estate, the technical debt, the interfaces you can integrate with, and the skills the team actually has. Senior leaders hold the priorities and the risk appetite. Ask what success looks like for them personally, where the political sensitivities are, whether the timeline is the announced one or the achievable one, and whether they would rather deliver late or deliver the wrong thing. Then do the part that matters most, which is comparing the answers and looking hard at the gaps between them.</p>
+
+      <blockquote>Policy explains why. Operations show how it really works. Security and technical teams set the limits. Leaders set the priorities. Your job is to connect all four.</blockquote>
+
+      <!-- Section 3: Uncovering hidden constraints -->
+      <h2>Uncovering hidden constraints</h2>
+
+      <img src="images/7.3 - Uncovering Hidden Constraints.webp" alt="The constraints most likely to derail a project are the ones nobody mentions" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/7.3 - Uncovering Hidden Constraints.webp" data-title="Uncovering Hidden Constraints" tabindex="0" role="button" aria-label="Click to enlarge: The constraints most likely to derail a project are the ones nobody mentions">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The constraints most likely to derail you are the ones nobody mentions.</p>
+
+      <p>The constraints that hurt are rarely the ones in the brief. They are the ones so baked into how the organisation works that nobody thinks to say them out loud. Procurement is a common one: we can only use suppliers on a particular framework, or there is an existing contract that ties us to a platform for the next three years, or anything over a certain value triggers a fresh procurement exercise. Any of those can quietly remove half your options. Organisational constraints shape how you build and run things: the operations team works Monday to Friday only, nobody knows Kubernetes, the change board meets once a month and wants two weeks notice.</p>
+
+      <p>Political constraints shape your appetite for risk: the minister has already announced the date, the last attempt failed in public, another department tried something similar and got criticised by the NAO. Data constraints are among the most frequent blockers of all: the data you need is owned by another department that will not share it, or it sits in a format that will not migrate, or three systems hold three different versions of the same thing. The technique for finding all of these is simple and takes discipline. For every assumption in your design, ask what could stop this from being true, then go and find out rather than guess.</p>
+
+      <blockquote>Ignore your constraints and you can build the wrong thing brilliantly, then still fail.</blockquote>
+
+      <!-- Section 4: The Five Whys in a government context -->
+      <h2>The Five Whys in a government context</h2>
+
+      <img src="images/7.4 - The Five Whys in Government Context.webp" alt="Asking why repeatedly to trace a problem to its root, then following the answer wherever it leads" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/7.4 - The Five Whys in Government Context.webp" data-title="The Five Whys in Government Context" tabindex="0" role="button" aria-label="Click to enlarge: Asking why repeatedly to trace a problem to its root">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Asking why repeatedly, then following the answer wherever it leads.</p>
+
+      <p>The Five Whys is the habit of asking why several times in a row to trace a problem back to its root. The textbook version stays close to the process. The report is late because the data was not ready, which was because it arrived in the wrong format, which was because submitters used different templates, which was because the guidance was ambiguous, which was because the person who wrote it did not understand the data requirements. The root cause is that the data team and the guidance team were not talking to each other.</p>
+
+      <p>In government the chain usually runs somewhere less technical. Ask why often enough and you tend to land on something organisational, political or historical: a system that cannot produce the reports a minister now wants, because it was never designed for analytical queries, because that need did not exist when it was procured, because the procurement locked in a fixed set of features with no room to change. The fix may be technical, but the lesson is about designing for change and steering clear of contracts that freeze the requirements.</p>
+
+      <p>A few adaptations help. Be careful with blame, and ask what led to this rather than who decided this. Follow the chain across team and department boundaries even when it leaves your scope. Accept that some root causes sit outside your control, in which case the value is understanding the constraint so you can design around it. And remember that five is a guideline. Sometimes two whys are enough and sometimes you need seven.</p>
+
+      <blockquote>The first problem you hear is rarely the real one. Keep asking until you reach the thing that actually shapes the design.</blockquote>
+
+      <!-- Section 5: Real requirements versus assumed ones -->
+      <h2>Real requirements versus assumed ones</h2>
+
+      <img src="images/7.5 - Questions That Reveal Real Requirements vs Assumed Ones.webp" alt="Six quick tests for separating a genuine need from a belief" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/7.5 - Questions That Reveal Real Requirements vs Assumed Ones.webp" data-title="Questions That Reveal Real Requirements vs Assumed Ones" tabindex="0" role="button" aria-label="Click to enlarge: Six quick tests for separating a genuine need from a belief">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Six quick tests for separating a genuine need from a belief.</p>
+
+      <p>A surprising share of what arrives labelled as a requirement is really an assumption that nobody has checked. Six questions sort one from the other. Origin: where did this come from. If the honest answer is that someone mentioned it in a meeting, treat it as an assumption. If it comes from legislation or user research, it is more likely real. Consequence: what happens if we leave it out. If the service breaks or you are in breach of the law, it is real. If the answer is that it would be nice to have, it is not. Evidence: what proof do we have that this is needed. Research, usage data and operational experience beat opinion and precedent every time.</p>
+
+      <p>Specificity: can you be more precise. "User friendly" is almost always an assumption, while "users can complete the form in under fifteen minutes" is something you can design and test against. Priority: if we could only deliver five of these twenty, which five. Forced to choose, people drop the things they merely wanted. Stability: how likely is this to change in the next year, because anything volatile is often a guess about the future dressed up as a fact.</p>
+
+      <p>A real example makes it concrete. A policy team asks for real time validation against the Companies House register. Walk it through the tests and the origin is a kick off meeting, the consequence of not doing it is manual checking of around twenty applications a day, which is perfectly manageable, and the evidence is an assumption that it would be more efficient. The real requirement is to confirm the company exists and is active before processing. The real time part was never needed. That distinction matters, because a nightly batch check is simple and resilient, while a live integration is complex and creates a dependency you then have to manage forever.</p>
+
+      <blockquote>Question the requirements early and validate them. Then build the right thing, not just any thing that happens to work.</blockquote>
+
+      <!-- Section 6: Questioning techniques for difficult conversations -->
+      <h2>Questioning techniques for difficult conversations</h2>
+
+      <img src="images/7.6 - Questioning Techniques for Difficult Conversations.webp" alt="Ways to ask the hard questions without starting a fight" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/7.6 - Questioning Techniques for Difficult Conversations.webp" data-title="Questioning Techniques for Difficult Conversations" tabindex="0" role="button" aria-label="Click to enlarge: Ways to ask the hard questions without starting a fight">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Ways to ask the hard questions without starting a fight.</p>
+
+      <p>Some of the questions that matter most are the ones that feel awkward to ask, because they challenge an assumption or expose a risk. A few framings let you ask them honestly without putting people on the defensive. Instead of "why are you doing it that way", which sounds like an accusation, try "help me understand the thinking behind this". Instead of "this will not work", try "what would happen if", and let the other person find the problem for themselves. Instead of "you are making a mistake", try "I saw something similar on another project where it went badly, how do we avoid that here".</p>
+
+      <p>The devil's advocate framing gives everyone permission to raise concerns without owning them: if someone wanted to attack this approach, what would they say. The premortem is even better at it. Imagine it is a year from now and the project has failed, what went wrong. People will tell you things in that frame that they would never volunteer otherwise. Two more habits are worth building. After you ask a question, stay quiet and let the silence do its work, because the most useful thing a person says often comes after the pause. And every so often, play back what you have heard and check it: so the main issue is X, caused by Y, with an impact of Z, have I got that right.</p>
+
+      <blockquote>Ask better questions, listen more than you talk, and challenge with respect. You reach the real issues without the conflict.</blockquote>
+
+      <!-- Section 7: Building a discovery question bank -->
+      <h2>Building a discovery question bank</h2>
+
+      <img src="images/7.7 - Building a Discovery Question Bank.webp" alt="A starter library of questions, grouped by what you are trying to understand" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/7.7 - Building a Discovery Question Bank.webp" data-title="Building a Discovery Question Bank" tabindex="0" role="button" aria-label="Click to enlarge: A starter library of questions, grouped by what you are trying to understand">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">A starter library, grouped by what you are trying to understand.</p>
+
+      <p>Experienced architects keep a personal stock of questions that have earned their place over time. It helps to organise them by theme. To understand the problem, ask what we are actually trying to solve rather than what we are building, who feels the problem, how it is being handled today, and how we will know once it is fixed. To understand the users, ask who they really are rather than who we imagine, what range of digital confidence they have, what devices and connectivity they use, and what state of mind they are in when they reach the service.</p>
+
+      <p>To understand the constraints, ask about the real deadline and what is driving it, the budget and how firm it is, the systems you have to integrate with, and the team that will run the thing in production. To understand the risks, ask what the worst outcome looks like, what has failed before on similar work, what you are most uncertain about, and what would make a minister start asking questions. To understand the future, ask how the policy might move over the next few years, whether the user base is set to grow or shrink, and how long this service is expected to last.</p>
+
+      <p>You will not ask all of these every time. Pick the ones that fit the situation, but read the whole list before you start so you do not skip a whole area by accident. The question you fail to ask is the constraint you fail to discover, right up until it is too late to do anything about it.</p>
+
+      <blockquote>Build your bank, use it with judgement, and never stop being curious. The questions you ask today become the insights you design from tomorrow.</blockquote>
+
+      <!-- Section 8: From questions to architecture insights -->
+      <h2>From questions to architecture insights</h2>
+
+      <img src="images/7.8 - From Questions to Architecture Insights.webp" alt="Turning what you hear into design decisions you can defend" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/7.8 - From Questions to Architecture Insights.webp" data-title="From Questions to Architecture Insights" tabindex="0" role="button" aria-label="Click to enlarge: Turning what you hear into design decisions you can defend">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Turning what you hear into decisions you can defend.</p>
+
+      <p>Asking well is only half the skill. The other half is turning the answers into something your design can use. Start by listening for the signals. When someone says the data arrives in different formats, that points to a transformation layer. When they say usage spikes every March, that points to scaling that can flex. When they say the team is three people, that points to an architecture simple enough for three people to run.</p>
+
+      <p>Capture every constraint you find and mark it as hard or soft. A hard constraint is one you cannot move, and it draws the edges of your solution space. A soft one you can move if you have a good reason, and it shapes the choices you make inside those edges. Write down the assumptions too, yours and everyone else's, and decide how each one will be tested. "We assume the Companies House API can handle our volume" is something you can check, not something you should quietly hope holds.</p>
+
+      <p>Map the dependencies early, because that is where projects come apart. A dependency on another team's system is a risk, a dependency on a system with no API is a bigger one, and a dependency on a system that is being switched off is a problem you need to raise now rather than later. Then step back after each session and pull it together: what is the problem, who is affected, what constrains us, what risks are surfacing, what is still open. The best architects do not just gather information. They connect it, so they can see how the reporting need shapes the data model, how the size of the team shapes the deployment, and how the security classification flows through to hosting, then cost, then the business case.</p>
+
+      <blockquote>Good architecture starts with good discovery. Connect what you learn, test what you assume, and turn the insights into decisions that solve the real problem.</blockquote>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem before designing the solution</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-stakeholders-and-landscape.html">Users, stakeholders and the landscape around your design</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-functional-and-nonfunctional-requirements.html">Functional and non-functional requirements</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decisions.html">How architecture decisions actually get made</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="">
+      <p class="lightbox__title"></p>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

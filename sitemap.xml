@@ -43,6 +43,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://thesolutionarchitect.uk/guide-architecture-decisions.html</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://thesolutionarchitect.uk/guide-asking-better-discovery-questions.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://thesolutionarchitect.uk/lifecycle.html</loc>
     <lastmod>2026-05-25</lastmod>
     <changefreq>monthly</changefreq>
