@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Solution options and option appraisal — how to generate genuine options, evaluate them fairly, and present them honestly to decision-makers in UK government.">
+  <meta property="og:title" content="Solution options and option appraisal — Architect's Library">
+  <meta property="og:description" content="How to generate genuine options, evaluate them fairly, and present them honestly to decision-makers in UK government.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Solution options and option appraisal — Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <div class="lesson-hero__meta">
+          <span class="badge badge--foundation">Foundation</span>
+          <span style="color: var(--color-light-grey); font-size: 0.875rem;">Decisions &amp; Options</span>
+        </div>
+        <h1 class="lesson-hero__title">Solution options and option appraisal</h1>
+        <p class="lesson-hero__description">Option appraisal is where architecture meets accountability. You're spending public money, so every significant technology decision has to stand up to a fair comparison of the alternatives. This guide is about doing that comparison honestly, in a way that survives scrutiny from a programme board, GDS spend control, and occasionally the National Audit Office.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How to generate genuinely different options rather than strawmen built to flatter a decision you've already made</li>
+          <li>A way to set fair evaluation criteria and agree their weighting before any scoring starts</li>
+          <li>Scoring approaches that support honest comparison without inventing precision the evidence can't carry</li>
+          <li>How to handle buy, build, and configure decisions through a government lens</li>
+          <li>Why the 'do nothing' option deserves real analysis instead of a token mention</li>
+          <li>How to present options to decision-makers with integrity, including the downsides of the one you recommend</li>
+        </ul>
+      </div>
+
+      <!-- Section 1: Generating genuine options -->
+      <h2>Generating genuine options</h2>
+
+      <img src="images/9.1 - Generating Genuine Options.webp" alt="Generating genuine options in solution architecture" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/9.1 - Generating Genuine Options.webp" data-title="Generating Genuine Options" tabindex="0" role="button" aria-label="Click to enlarge: Generating genuine options in solution architecture">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The first step in appraisal: a diverse, genuinely viable set of options that protects you from confirmation bias.</p>
+
+      <p>The hardest part of option appraisal isn't the scoring or the cost modelling. It's generating options that are actually different from one another and genuinely worth considering. Everyone has preferences, and those preferences shape which options you bring before you've consciously decided anything.</p>
+
+      <p>The classic failure is the strawman: a modern cloud-native build, sat next to "keep the fifteen-year-old system exactly as it is" and "rewrite everything in assembly", so the answer you wanted all along looks inevitable. A seasoned board member or a GDS assessor spots that pattern in seconds, and once they do, they stop trusting the rest of your analysis.</p>
+
+      <p>The discipline that protects you is starting from the problem rather than the solution, and forcing yourself to develop at least one option you don't instinctively like. Research it properly, find its real strengths, and you'll occasionally discover it was the better answer all along.</p>
+
+      <blockquote>A strawman doesn't just waste a slot in your appraisal. It tells the board you'd rather win the argument than find the right answer.</blockquote>
+
+      <!-- Section 2: Defining evaluation criteria -->
+      <h2>Defining evaluation criteria</h2>
+
+      <img src="images/9.2 - Defining Evaluation Criteria.webp" alt="Defining fair and relevant evaluation criteria" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/9.2 - Defining Evaluation Criteria.webp" data-title="Defining Evaluation Criteria" tabindex="0" role="button" aria-label="Click to enlarge: Defining fair and relevant evaluation criteria">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Fair, relevant criteria chosen before comparison begins, so the appraisal stays balanced and transparent.</p>
+
+      <p>Criteria are the dimensions you compare options against, and the single most important thing about them is timing. Agree them, and their weightings, before anyone scores anything. Criteria chosen after the fact, tuned to favour the option you prefer, are one of the easiest forms of dishonesty to commit and one of the easiest to detect.</p>
+
+      <p>Standard government criteria cover strategic alignment with the Technology Code of Practice, user needs, total cost of ownership, delivery risk, operational sustainability, security and compliance, flexibility, and vendor or technology risk. Not all of them matter equally. A service with a fixed ministerial deadline weights delivery risk heavily; one handling sensitive data lets security dominate; a service with a three-person operations team can't afford to ignore operational sustainability.</p>
+
+      <p>When stakeholders disagree about the weights, resist the urge to smooth it over. That disagreement is telling you something real about competing priorities, and it's far better surfaced now than discovered at assessment.</p>
+
+      <blockquote>If you can't agree the weighting before you score, you don't yet agree on what the decision is for.</blockquote>
+
+      <!-- Section 3: Scoring and comparing options -->
+      <h2>Scoring and comparing options</h2>
+
+      <img src="images/9.3 - Scoring and Comparing Options.webp" alt="Scoring and comparing options fairly" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/9.3 - Scoring and Comparing Options.webp" data-title="Scoring and Comparing Options" tabindex="0" role="button" aria-label="Click to enlarge: Scoring and comparing options fairly">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Scoring as a decision aid, not a substitute for judgment, with the common biases made visible.</p>
+
+      <p>Scoring is where appraisal feels objective and quietly stops being so. A weighted numerical model that produces a total of 3.7 against 3.5 looks decisive, but that gap is almost always noise dressed up as signal. For most government decisions, traffic light scoring is more honest: red, amber, green tells a board exactly where an option fails rather than burying the failure inside an average.</p>
+
+      <p>Reserve numbers for the things that genuinely quantify, like cost and performance targets, and use narrative to explain the rest. Whatever method you choose, the biases are predictable. You'll anchor on the first option you assessed, inflate the scores of the one you secretly prefer, let a single strong result spread across unrelated criteria, and favour whatever builds on money already spent.</p>
+
+      <p>The cheapest defence against all of this is a second pair of eyes: have someone score independently, then compare where you diverge and talk through why.</p>
+
+      <blockquote>Score every option honestly enough that your recommended one still shows its weaknesses. If it doesn't, you haven't finished.</blockquote>
+
+      <!-- Section 4: Buy, build, or configure -->
+      <h2>Buy, build, or configure in government</h2>
+
+      <img src="images/9.4 - Buy vs Build vs Configure.webp" alt="Buy versus build versus configure in government" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/9.4 - Buy vs Build vs Configure.webp" data-title="Buy vs Build vs Configure" tabindex="0" role="button" aria-label="Click to enlarge: Buy versus build versus configure in government">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Choosing a delivery approach by weighing fit, control, cost, and long service life through a government lens.</p>
+
+      <p>Whether to buy a commercial product, build something custom, or configure an existing platform is one of the most consequential calls you'll make, and in government it carries dimensions the private sector never has to think about. The Technology Code of Practice says share and reuse before you buy, and buy before you build, so a decision to build custom when a suitable product already exists is hard to defend at spend control.</p>
+
+      <p>The useful first question is whether the capability is commodity or differentiating. Authentication, notifications, and payments are commodities; you should be reaching for GOV.UK One Login or an existing pattern, not writing your own. A capability that implements unique policy is a different matter, and that's often where custom build earns its place.</p>
+
+      <p>Watch low-code especially carefully. It deploys fast and demos well, but the long-term questions about data portability, maintainability, and lock-in are the ones that decide whether you've made a good choice or just a quick one.</p>
+
+      <blockquote>The right answer here isn't ideological. It depends on the capability, the fit of what's available, your team, and how you'd get out if it went wrong.</blockquote>
+
+      <!-- Section 5: The 'do nothing' option -->
+      <h2>The 'do nothing' option</h2>
+
+      <img src="images/9.5 - The Do Nothing Option.webp" alt="The do nothing and do minimum baseline option" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/9.5 - The Do Nothing Option.webp" data-title="The Do Nothing Option" tabindex="0" role="button" aria-label="Click to enlarge: The do nothing and do minimum baseline option">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The baseline treated as a real option, because the cost of inaction is rarely zero.</p>
+
+      <p>Every appraisal needs a 'do nothing' or 'do minimum' option, and it isn't there as a courtesy. It's the baseline that every other option is measured against, and sometimes it's the honest answer. Including it forces you to articulate the case for change, and if you can't explain clearly why standing still is inadequate, you don't yet have a strong enough case to spend public money. "The current system works but could be better" will not carry a £5m programme.</p>
+
+      <p>The cost of doing nothing is almost never zero either: there's ongoing maintenance, support, licensing, and the hidden cost of every workaround people have built to cope. It's worth separating 'do nothing', which means genuinely no change, from 'do minimum', which means the smallest set of changes that addresses the most pressing risks. Do minimum is frequently the most proportionate option on the table, and a board will respect you more for putting it there honestly than for pretending the only choice is a large new build.</p>
+
+      <blockquote>If 'do nothing' looks acceptable in your appraisal, that's not a problem with the option. It's a signal your case for change needs more work.</blockquote>
+
+      <!-- Section 6: Presenting options honestly -->
+      <h2>Presenting options honestly</h2>
+
+      <img src="images/9.6 - Presenting Options Honestly.webp" alt="Presenting options honestly to decision-makers" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/9.6 - Presenting Options Honestly.webp" data-title="Presenting Options Honestly" tabindex="0" role="button" aria-label="Click to enlarge: Presenting options honestly to decision-makers">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">A presentation that helps a board decide well, rather than steering it toward a preferred answer.</p>
+
+      <p>How you present options matters as much as how you evaluated them, because a board can only make a good decision from what you actually show them. Set the context first, give them the whole landscape before the detail, then work through each option with its strengths, its weaknesses, and a cost expressed as a range rather than a falsely precise single figure.</p>
+
+      <p>When you reach your recommendation, state it plainly and explain the trade-off you're accepting: "we recommend Option B because it balances cost and delivery risk best, knowing it scores lower on flexibility than Option C". Then do the thing most architects are tempted to skip, and set out the risks of the option you're recommending alongside the mitigations you propose. Boards that discover those risks later, on their own, stop trusting your judgment.</p>
+
+      <p>Your job is to inform the decision, not to make it, and if the board chooses differently you support that choice professionally while documenting any risk you flagged.</p>
+
+      <blockquote>A good presentation makes the decision clearer, not narrower. Show the downsides of what you recommend, not just the upsides.</blockquote>
+
+      <!-- Section 7: Cost, benefit and risk analysis -->
+      <h2>Cost, benefit and risk analysis</h2>
+
+      <img src="images/9.7 - Cost-Benefit-Risk Analysis.webp" alt="Cost, benefit and risk analysis for option appraisal" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/9.7 - Cost-Benefit-Risk Analysis.webp" data-title="Cost-Benefit-Risk Analysis" tabindex="0" role="button" aria-label="Click to enlarge: Cost, benefit and risk analysis for option appraisal">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Cost, benefit, and risk brought together so decision-makers can judge value, not just price.</p>
+
+      <p>Cost-benefit-risk analysis is the standard frame for appraisal in government, and it sits directly alongside HM Treasury's Green Book, so programme boards and spend control teams will expect to see it. Cost means total cost of ownership across the service's life, typically five to ten years, taking in implementation, migration, ongoing operation, the cost of likely changes, and decommissioning at the end. Present it as a range, and be explicit about what's in and what's out; an early estimate carrying 50% uncertainty is more honest stated that way than disguised as a precise number.</p>
+
+      <p>Benefits won't all reduce to cash, and you shouldn't force them to. Cash savings get the most scrutiny, efficiency gains can usually be expressed as time saved, but risk reduction and strategic value often have to be made qualitatively, with as much specificity as you can manage. Then pair every risk with a credible mitigation, because a risk on its own is a problem, while a risk with a plan attached is a managed concern a board can accept.</p>
+
+      <blockquote>Tell a story about value, not a spreadsheet. What it costs, what it delivers, and what it puts at risk.</blockquote>
+
+      <!-- Section 8: Common pitfalls -->
+      <h2>Common pitfalls in option appraisal</h2>
+
+      <img src="images/9.8 - Common Pitfalls in Option Appraisal.webp" alt="Common pitfalls and biases in option appraisal" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/9.8 - Common Pitfalls in Option Appraisal.webp" data-title="Common Pitfalls in Option Appraisal" tabindex="0" role="button" aria-label="Click to enlarge: Common pitfalls and biases in option appraisal">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The biases and omissions that quietly undermine appraisals, and the habits that keep them honest.</p>
+
+      <p>Most appraisals don't fail because the arithmetic was wrong. They fail because of bias, omission, and weak challenge. The most damaging trap is the predetermined conclusion, where you've already decided what to recommend and reverse-engineer the criteria, the scoring, and the alternatives to support it. Close behind is the missing option, the genuinely good approach that never made the page because it was unfamiliar, politically awkward, or needed cooperation from another department.</p>
+
+      <p>Then there's the asymmetry that creeps in around your favourite: you estimate its cost more generously, identify fewer of its risks, and let sunk investment flatter it because "we've already spent the money", when that money is gone whatever you decide. You can't reliably see these biases in your own work, which is exactly why peer review is the strongest safeguard you have. Hand the appraisal to another architect before it reaches the board and ask them to find the bias you can't.</p>
+
+      <blockquote>Assume bias is present, invite the challenge early, and treat peer review as part of the work rather than a check at the end.</blockquote>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">← Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decisions.html">How architecture decisions actually get made</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-assessing-current-state.html">Assessing the current state</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="artifacts.html">Architecture artifacts</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="">
+      <p class="lightbox__title"></p>
+    </div>
+  </div>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
