@@ -172,24 +172,24 @@
             .hl-bg { fill: #f7f5ef; }
             .hl-title { font: 600 16px "Inter", system-ui, sans-serif; fill: #1a2332; }
             .hl-box { fill: #ffffff; stroke: #2f4e6b; stroke-width: 1.5; }
-            .hl-box-human { fill: #ebd6bc; stroke: #9a5424; stroke-width: 1.8; }
+            .hl-box-human { fill: #fef3c7; stroke: #d97706; stroke-width: 1.8; }
             .hl-box-auto { fill: #dce8df; stroke: #2d5c3d; stroke-width: 1.5; }
             .hl-box-outcome { fill: #1a2332; stroke: #1a2332; }
             .hl-box-audit { fill: #ece9e0; stroke: #4a5468; stroke-width: 1; }
             .hl-box-fallback { fill: #f7f5ef; stroke: #8c2424; stroke-width: 1.5; stroke-dasharray: 5 3; }
             .hl-label { font: 600 13px "Inter", system-ui, sans-serif; fill: #1a2332; }
             .hl-label-outcome { font: 600 13px "Inter", system-ui, sans-serif; fill: #f7f5ef; }
-            .hl-label-human { font: 600 13px "Inter", system-ui, sans-serif; fill: #5c2f10; }
+            .hl-label-human { font: 600 13px "Inter", system-ui, sans-serif; fill: #92400e; }
             .hl-label-auto { font: 600 13px "Inter", system-ui, sans-serif; fill: #1b3a26; }
             .hl-sub { font: 11px "Inter", system-ui, sans-serif; fill: #4a5468; }
-            .hl-sub-human { font: 11px "Inter", system-ui, sans-serif; fill: #5c2f10; }
+            .hl-sub-human { font: 11px "Inter", system-ui, sans-serif; fill: #92400e; }
             .hl-sub-auto { font: 11px "Inter", system-ui, sans-serif; fill: #1b3a26; }
             .hl-arrow { stroke: #2f4e6b; stroke-width: 1.5; fill: none; }
-            .hl-arrow-human { stroke: #9a5424; stroke-width: 1.8; fill: none; }
+            .hl-arrow-human { stroke: #d97706; stroke-width: 1.8; fill: none; }
             .hl-arrow-auto { stroke: #2d5c3d; stroke-width: 1.5; fill: none; }
             .hl-arrow-fallback { stroke: #8c2424; stroke-width: 1.5; stroke-dasharray: 5 3; fill: none; }
             .hl-arrow-label { font: 600 11px "Inter", system-ui, sans-serif; fill: #4a5468; }
-            .hl-arrow-label-human { font: 600 11px "Inter", system-ui, sans-serif; fill: #9a5424; }
+            .hl-arrow-label-human { font: 600 11px "Inter", system-ui, sans-serif; fill: #d97706; }
             .hl-arrow-label-auto { font: 600 11px "Inter", system-ui, sans-serif; fill: #2d5c3d; }
             .hl-arrow-label-fallback { font: 600 11px "Inter", system-ui, sans-serif; fill: #8c2424; }
             .hl-monitor { fill: #ece9e0; stroke: #4a5468; stroke-width: 1; stroke-dasharray: 2 2; }
@@ -199,7 +199,7 @@
           <text class="hl-title" x="40" y="32">Human-in-the-loop reference architecture</text>
           <defs>
             <marker id="arr-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f4e6b"/></marker>
-            <marker id="arr-human" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9a5424"/></marker>
+            <marker id="arr-human" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
             <marker id="arr-auto" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2d5c3d"/></marker>
             <marker id="arr-fallback" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8c2424"/></marker>
           </defs>
@@ -215,9 +215,9 @@
           <rect class="hl-box" x="380" y="150" width="150" height="60" rx="4"/>
           <text class="hl-label" x="455" y="178" text-anchor="middle">Model inference</text>
           <text class="hl-sub" x="455" y="200" text-anchor="middle">versioned, logged</text>
-          <rect class="hl-box" x="560" y="150" width="160" height="60" rx="4"/>
-          <text class="hl-label" x="640" y="178" text-anchor="middle">Confidence &amp;</text>
-          <text class="hl-label" x="640" y="194" text-anchor="middle">decision threshold</text>
+          <rect class="hl-box-human" x="560" y="150" width="160" height="60" rx="4"/>
+          <text class="hl-label-human" x="640" y="178" text-anchor="middle">Confidence &amp;</text>
+          <text class="hl-label-human" x="640" y="194" text-anchor="middle">decision threshold</text>
           <line class="hl-arrow" x1="170" y1="180" x2="198" y2="180" marker-end="url(#arr-ink)"/>
           <line class="hl-arrow" x1="350" y1="180" x2="378" y2="180" marker-end="url(#arr-ink)"/>
           <line class="hl-arrow" x1="530" y1="180" x2="558" y2="180" marker-end="url(#arr-ink)"/>
