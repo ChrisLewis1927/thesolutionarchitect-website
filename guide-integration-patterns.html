@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Integration patterns for government services — how to choose integration patterns, manage trade-offs, and handle legacy systems in UK government architecture.">
+  <meta property="og:title" content="Integration patterns for government services — Architect's Library">
+  <meta property="og:description" content="How to choose integration patterns, manage trade-offs, and handle legacy systems in UK government architecture.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Integration patterns for government services — Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <div class="lesson-hero__meta">
+          <span class="badge badge--foundation">Foundation</span>
+          <span style="color: var(--color-light-grey); font-size: 0.875rem;">Integration &amp; APIs</span>
+        </div>
+        <h1 class="lesson-hero__title">Integration patterns for government services</h1>
+        <p class="lesson-hero__description">Integration is where government architecture quietly comes undone, usually because the cost of connecting systems gets underestimated right up to the point where it bites. This guide walks through the patterns, the trade offs, and the failure modes you will actually meet.</p>
+      </div>
+    </section>
+
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How to choose an integration pattern that fits the context rather than the fashion</li>
+          <li>The trade offs between point to point, hub, API, messaging, and event driven approaches</li>
+          <li>When synchronous integration helps and when it quietly makes your service fragile</li>
+          <li>How to deal with the legacy systems that government integration always seems to involve</li>
+          <li>How to handle data transformation and error management so failures stay contained</li>
+        </ul>
+      </div>
+
+      <!-- Section 1: Integration patterns: an overview -->
+      <h2>Integration patterns: an overview</h2>
+
+      <img src="images/11.1 - Integration Patterns Overview.webp" alt="Integration patterns across traditional tighter coupling and modern loosely coupled approaches, with guidance on how to choose" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.1 - Integration Patterns Overview.webp" data-title="Integration Patterns Overview" tabindex="0" role="button" aria-label="Click to enlarge: Integration patterns across traditional tighter coupling and modern loosely coupled approaches, with guidance on how to choose">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The main integration patterns, what they suit, and the questions that point you towards one.</p>
+
+      <p>The patterns themselves are not complicated. What trips people up is choosing one out of habit rather than on the evidence in front of them. Point to point feels sensible when you have two systems to join, and it stays sensible right up until you have eight, at which point the wiring diagram looks like a plate of spaghetti and nobody can change anything without breaking something else. A hub tidies that up by giving everything a single place to connect, but it comes with a quieter cost that rarely makes it into the design document: whoever owns the hub owns everyone else's ability to integrate, which in government is a political fact as much as a technical one. APIs, messaging and events loosen the coupling further, and they earn their keep as the estate grows, but each one adds infrastructure you then have to run. Start with the interaction you actually need, not the pattern you would most like to put on your CV.</p>
+
+      <blockquote>Start with the interaction you need and the coupling you can afford. The right pattern falls out of that, not the other way round.</blockquote>
+
+      <!-- Section 2: Synchronous and asynchronous: choosing the model -->
+      <h2>Synchronous and asynchronous: choosing the model</h2>
+
+      <img src="images/11.2 - Synchronous vs Asynchronous.webp" alt="Synchronous integration where the caller waits compared with asynchronous integration where work is processed later, plus a decision guide" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.2 - Synchronous vs Asynchronous.webp" data-title="Synchronous vs Asynchronous" tabindex="0" role="button" aria-label="Click to enlarge: Synchronous integration where the caller waits compared with asynchronous integration where work is processed later, plus a decision guide">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Whether the caller waits for an answer shapes user experience, resilience, and how much operational complexity you take on.</p>
+
+      <p>This is the decision people get wrong most often, usually because synchronous feels simpler and simpler feels safer. It is simpler, right until the system you are calling slows down or falls over, at which point your service inherits its problems. Call a thirty year old back office system synchronously and let it have a bad morning, and now your users are having one too. Asynchronous breaks that chain. You accept the request, hand back a reference number, and do the awkward work out of sight. The price is real, because you now have to think about messages that fail to arrive, arrive twice, or turn up in the wrong order, and you have to design the screen that says we will update you shortly without making anyone anxious. Most government services that work well are quietly hybrid. They are synchronous at the front door, where someone is waiting for an answer, and asynchronous in the back office, where the slow and unreliable integrations live.</p>
+
+      <blockquote>Synchronous integration ties your availability to theirs. Sometimes that is fine. Often it is the reason your service goes down when something else does.</blockquote>
+
+      <!-- Section 3: Government integration platforms and common components -->
+      <h2>Government integration platforms and common components</h2>
+
+      <img src="images/11.3 - Government Integration Platforms and Common Components.webp" alt="Reusable government common components such as Notify, Pay and One Login alongside integration platforms, with checks before adopting them" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.3 - Government Integration Platforms and Common Components.webp" data-title="Government Integration Platforms and Common Components" tabindex="0" role="button" aria-label="Click to enlarge: Reusable government common components such as Notify, Pay and One Login alongside integration platforms, with checks before adopting them">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Common components speed up delivery, and they also hand you dependencies and boundaries you need to design around.</p>
+
+      <p>Reaching for a common component before building your own is the right instinct, and it is also what the Technology Code of Practice expects of you. Notify, Pay, One Login and Forms exist precisely so that you are not rebuilding email delivery or card payments for the hundredth time across government. Use them. What the adoption pages tend to skip over is that every component you reuse becomes a dependency you now carry. If Notify has an outage, your service cannot send notifications, and no amount of clever code on your side changes that, so treat these as external systems with their own availability, their own rate limits, and their own edges. Pay handles the common payment flows well and then stops short of the unusual ones. You want to find those limits during design, when changing your mind is cheap, rather than at a service assessment, when it is not.</p>
+
+      <blockquote>Reuse what fits. Just remember that anything you reuse becomes something you depend on and cannot control.</blockquote>
+
+      <!-- Section 4: Legacy integration challenges -->
+      <h2>Legacy integration challenges</h2>
+
+      <img src="images/11.4 - Legacy Integration Challenges.webp" alt="Common legacy integration challenges like no API and batch only processing, with pragmatic responses such as adapters and the strangler fig pattern" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.4 - Legacy Integration Challenges.webp" data-title="Legacy Integration Challenges" tabindex="0" role="button" aria-label="Click to enlarge: Common legacy integration challenges like no API and batch only processing, with pragmatic responses such as adapters and the strangler fig pattern">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Older systems rarely behave like modern platforms, so the work is isolating their quirks and designing around their constraints.</p>
+
+      <p>In government, integrating with something old is not the exception, it is most of the job. There will be a system that predates your team, has no API, sends a file once a night, and behaves in ways nobody still employed can fully explain. You will not find those behaviours in the documentation, because there isn't any worth the name. You will find them in integration testing, three weeks before go live, in the shape of an error code that means one thing on Tuesdays and something else on Wednesdays. The practical move is to stop fighting this and contain it. Put an adapter between your service and the old world so all the strangeness lives in one place you control, and your new service only ever sees clean, modern data. Whether you call it a wrapper, an anti corruption layer, or scheduled synchronisation matters less than the principle behind it: the old system's quirks are a design input, and your job is to stop them leaking into everything else.</p>
+
+      <blockquote>Treat the old system's quirks as a design input, not a nasty surprise, and keep them behind the adapter where they belong.</blockquote>
+
+      <!-- Section 5: Data transformation and mapping -->
+      <h2>Data transformation and mapping</h2>
+
+      <img src="images/11.5 - Data Transformation and Mapping.webp" alt="Data transformation challenges such as semantic and structural differences, with good design practices like a canonical model and transforming at the boundary" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.5 - Data Transformation and Mapping.webp" data-title="Data Transformation and Mapping" tabindex="0" role="button" aria-label="Click to enlarge: Data transformation challenges such as semantic and structural differences, with good design practices like a canonical model and transforming at the boundary">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Connecting systems is the easy half. Getting them to agree on what the data means is the half that eats the timeline.</p>
+
+      <p>Connecting two systems is the straightforward part. Getting them to agree on what the data means is the part that quietly consumes your schedule. One system calls a person an applicant, the next calls them a claimant, a third calls them a customer, and somewhere a fourth has decided gender is recorded as one or two with no surviving note of which is which. Dates are the classic trap. They look trivial, then a time zone or a daylight saving boundary corrupts a batch and you lose a day working out why. The discipline that saves you is to keep all this mapping in one place at the boundary of your service rather than smeared through the code, and to translate everything to a single internal model so each external system needs only one set of mappings. Then test it with real data, including the ugly records, because transformation logic that sails through tidy samples tends to fall over the moment it meets production.</p>
+
+      <blockquote>The connection is only half the work. The data still has to mean the same thing on both sides, and that is where the real effort hides.</blockquote>
+
+      <!-- Section 6: Error handling in integrations -->
+      <h2>Error handling in integrations</h2>
+
+      <img src="images/11.6 - Error Handling in Integrations.webp" alt="Types of integration error from transient to partial failures, with resilient patterns like retry with backoff, circuit breakers and dead letter queues" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.6 - Error Handling in Integrations.webp" data-title="Error Handling in Integrations" tabindex="0" role="button" aria-label="Click to enlarge: Types of integration error from transient to partial failures, with resilient patterns like retry with backoff, circuit breakers and dead letter queues">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Failures are inevitable, so resilience comes down to how deliberately you detect, contain, and recover from them.</p>
+
+      <p>Everything you integrate with will fail at some point, so the useful question is not whether but how you respond when it does. A momentary network blip and a permanently rejected record need completely different treatment. A service that retries a genuinely broken request forever causes as much trouble as one that gives up on a request that would have worked on the second attempt. The rules that matter most in government are the ones with a citizen on the other end. Never drop data silently, because a swallowed payment is someone who did not receive money they were owed, and that turns into a complaint and then a headline. Never show a user the words something went wrong and walk away from it. Tell them what happened and what to do about it. And make your retries safe to repeat, so a message handled twice does not become a duplicate application or a second payment landing in someone's account.</p>
+
+      <blockquote>Failure is normal. The quality of your error handling is usually what decides how reliable your service actually feels to the people using it.</blockquote>
+
+      <!-- Section 7: Designing integration architecture for government -->
+      <h2>Designing integration architecture for government</h2>
+
+      <img src="images/11.7 - Designing Integration Architecture for Government.webp" alt="A systematic approach to integration architecture covering mapping the estate, classifying integrations, a dedicated integration layer, designing for failure, and planning for change" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.7 - Designing Integration Architecture for Government.webp" data-title="Designing Integration Architecture for Government" tabindex="0" role="button" aria-label="Click to enlarge: A systematic approach to integration architecture covering mapping the estate, classifying integrations, a dedicated integration layer, designing for failure, and planning for change">
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Good integration architecture is methodical: map the estate, choose patterns on evidence, design for failure, and plan for change.</p>
+
+      <p>Put all of this together and a method appears, and it is reassuringly dull. Map the estate first, because the integration you forget is the one that derails you in month four. Write down every system you exchange data with, what flows, in which direction, how often, through what interface, and who owns it. Classify each one, because the right pattern falls out of the classification rather than out of preference. Then give the whole lot somewhere to live, a dedicated integration layer that handles connection, authentication, transformation, retries, logging and monitoring in one place, so the messiness of the outside world stays out of your core service. Assume each integration will fail and decide now how that failure is spotted, explained and put right. Assume each one will change, because external APIs and data formats always do. None of this removes the difficulty of integrating in government, but it means you meet that difficulty on purpose, with a plan, rather than discovering it live in production with users watching.</p>
+
+      <blockquote>Connecting systems is the easy part to picture. Keeping those connections working while the estate around them keeps shifting is the part that actually defines the architecture.</blockquote>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">← Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-designing-end-to-end-services.html">Designing the whole service</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-assessing-current-state.html">Assessing the current state</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="artifacts.html">Architecture artifacts</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="">
+      <p class="lightbox__title"></p>
+    </div>
+  </div>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
