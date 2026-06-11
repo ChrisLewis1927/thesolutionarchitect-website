@@ -1,0 +1,125 @@
+{
+  "id": "azure-serverless-api",
+  "platformId": "azure",
+  "name": "Serverless API",
+  "description": "Event-driven serverless API using API Management, Azure Functions, Cosmos DB, and Service Bus for asynchronous messaging with Entra ID authentication.",
+  "thumbnailUrl": "images/diagram-templates/azure-serverless-api-thumb.png",
+  "definition": {
+    "components": [
+      {
+        "id": "entra-id-1",
+        "serviceId": "entra-id",
+        "position": { "x": 100, "y": 80 }
+      },
+      {
+        "id": "apim-1",
+        "serviceId": "api-management",
+        "position": { "x": 300, "y": 80 }
+      },
+      {
+        "id": "function-auth",
+        "serviceId": "functions",
+        "position": { "x": 300, "y": 270 },
+        "parentContainerId": "rg-compute"
+      },
+      {
+        "id": "function-api",
+        "serviceId": "functions",
+        "position": { "x": 500, "y": 270 },
+        "parentContainerId": "rg-compute"
+      },
+      {
+        "id": "function-worker",
+        "serviceId": "functions",
+        "position": { "x": 700, "y": 270 },
+        "parentContainerId": "rg-compute"
+      },
+      {
+        "id": "cosmos-db-1",
+        "serviceId": "cosmos-db",
+        "position": { "x": 500, "y": 470 }
+      },
+      {
+        "id": "service-bus-1",
+        "serviceId": "service-bus",
+        "position": { "x": 700, "y": 470 }
+      },
+      {
+        "id": "blob-1",
+        "serviceId": "blob-storage",
+        "position": { "x": 900, "y": 270 }
+      },
+      {
+        "id": "event-grid-1",
+        "serviceId": "event-grid",
+        "position": { "x": 900, "y": 470 }
+      }
+    ],
+    "containers": [
+      {
+        "id": "rg-compute",
+        "type": "resource-group",
+        "label": "Resource Group: Compute",
+        "children": ["function-auth", "function-api", "function-worker"]
+      }
+    ],
+    "connectors": [
+      {
+        "id": "conn-entra-apim",
+        "sourceId": "entra-id-1",
+        "targetId": "apim-1",
+        "label": "OAuth token",
+        "directed": true
+      },
+      {
+        "id": "conn-apim-func-auth",
+        "sourceId": "apim-1",
+        "targetId": "function-auth",
+        "label": "Validate",
+        "directed": true
+      },
+      {
+        "id": "conn-apim-func-api",
+        "sourceId": "apim-1",
+        "targetId": "function-api",
+        "label": "API request",
+        "directed": true
+      },
+      {
+        "id": "conn-func-api-cosmos",
+        "sourceId": "function-api",
+        "targetId": "cosmos-db-1",
+        "label": "Read/Write",
+        "directed": true
+      },
+      {
+        "id": "conn-func-api-bus",
+        "sourceId": "function-api",
+        "targetId": "service-bus-1",
+        "label": "Queue message",
+        "directed": true
+      },
+      {
+        "id": "conn-bus-func-worker",
+        "sourceId": "service-bus-1",
+        "targetId": "function-worker",
+        "label": "Trigger",
+        "directed": true
+      },
+      {
+        "id": "conn-func-worker-blob",
+        "sourceId": "function-worker",
+        "targetId": "blob-1",
+        "label": "Store output",
+        "directed": true
+      },
+      {
+        "id": "conn-func-worker-eventgrid",
+        "sourceId": "function-worker",
+        "targetId": "event-grid-1",
+        "label": "Publish event",
+        "directed": true
+      }
+    ]
+  }
+}

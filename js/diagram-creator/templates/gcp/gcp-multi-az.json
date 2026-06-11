@@ -1,0 +1,231 @@
+{
+  "id": "gcp-multi-az",
+  "platformId": "gcp",
+  "name": "Multi-AZ Production Deployment",
+  "description": "Highly available production deployment spanning three zones with GKE clusters, Cloud Spanner for globally distributed data, Memorystore, and Cloud DNS failover.",
+  "thumbnailUrl": "images/diagram-templates/gcp-multi-az-thumb.png",
+  "definition": {
+    "components": [
+      {
+        "id": "cloud-dns-1",
+        "serviceId": "cloud-dns",
+        "position": { "x": 100, "y": 50 }
+      },
+      {
+        "id": "cloud-cdn-1",
+        "serviceId": "cloud-cdn",
+        "position": { "x": 300, "y": 50 }
+      },
+      {
+        "id": "lb-1",
+        "serviceId": "cloud-load-balancing",
+        "position": { "x": 500, "y": 50 },
+        "parentContainerId": "vpc-1"
+      },
+      {
+        "id": "gke-1",
+        "serviceId": "gke",
+        "position": { "x": 200, "y": 300 },
+        "parentContainerId": "subnet-app-1"
+      },
+      {
+        "id": "gke-2",
+        "serviceId": "gke",
+        "position": { "x": 500, "y": 300 },
+        "parentContainerId": "subnet-app-2"
+      },
+      {
+        "id": "gke-3",
+        "serviceId": "gke",
+        "position": { "x": 800, "y": 300 },
+        "parentContainerId": "subnet-app-3"
+      },
+      {
+        "id": "spanner-1",
+        "serviceId": "cloud-spanner",
+        "position": { "x": 200, "y": 550 },
+        "parentContainerId": "subnet-data-1"
+      },
+      {
+        "id": "spanner-2",
+        "serviceId": "cloud-spanner",
+        "position": { "x": 500, "y": 550 },
+        "parentContainerId": "subnet-data-2"
+      },
+      {
+        "id": "spanner-3",
+        "serviceId": "cloud-spanner",
+        "position": { "x": 800, "y": 550 },
+        "parentContainerId": "subnet-data-3"
+      },
+      {
+        "id": "memorystore-1",
+        "serviceId": "memorystore",
+        "position": { "x": 350, "y": 420 },
+        "parentContainerId": "subnet-app-2"
+      },
+      {
+        "id": "gcs-1",
+        "serviceId": "cloud-storage",
+        "position": { "x": 1000, "y": 300 }
+      }
+    ],
+    "containers": [
+      {
+        "id": "vpc-1",
+        "type": "vpc",
+        "label": "Production VPC Network",
+        "children": ["zone-1", "zone-2", "zone-3", "lb-1"]
+      },
+      {
+        "id": "zone-1",
+        "type": "az",
+        "label": "Zone A (europe-west2-a)",
+        "parentContainerId": "vpc-1",
+        "children": ["subnet-app-1", "subnet-data-1"]
+      },
+      {
+        "id": "zone-2",
+        "type": "az",
+        "label": "Zone B (europe-west2-b)",
+        "parentContainerId": "vpc-1",
+        "children": ["subnet-app-2", "subnet-data-2"]
+      },
+      {
+        "id": "zone-3",
+        "type": "az",
+        "label": "Zone C (europe-west2-c)",
+        "parentContainerId": "vpc-1",
+        "children": ["subnet-app-3", "subnet-data-3"]
+      },
+      {
+        "id": "subnet-app-1",
+        "type": "subnet",
+        "label": "Application Subnet",
+        "parentContainerId": "zone-1",
+        "children": ["gke-1"]
+      },
+      {
+        "id": "subnet-app-2",
+        "type": "subnet",
+        "label": "Application Subnet",
+        "parentContainerId": "zone-2",
+        "children": ["gke-2", "memorystore-1"]
+      },
+      {
+        "id": "subnet-app-3",
+        "type": "subnet",
+        "label": "Application Subnet",
+        "parentContainerId": "zone-3",
+        "children": ["gke-3"]
+      },
+      {
+        "id": "subnet-data-1",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "zone-1",
+        "children": ["spanner-1"]
+      },
+      {
+        "id": "subnet-data-2",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "zone-2",
+        "children": ["spanner-2"]
+      },
+      {
+        "id": "subnet-data-3",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "zone-3",
+        "children": ["spanner-3"]
+      }
+    ],
+    "connectors": [
+      {
+        "id": "conn-dns-cdn",
+        "sourceId": "cloud-dns-1",
+        "targetId": "cloud-cdn-1",
+        "label": "DNS",
+        "directed": true
+      },
+      {
+        "id": "conn-cdn-lb",
+        "sourceId": "cloud-cdn-1",
+        "targetId": "lb-1",
+        "label": "HTTPS",
+        "directed": true
+      },
+      {
+        "id": "conn-lb-gke-1",
+        "sourceId": "lb-1",
+        "targetId": "gke-1",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-lb-gke-2",
+        "sourceId": "lb-1",
+        "targetId": "gke-2",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-lb-gke-3",
+        "sourceId": "lb-1",
+        "targetId": "gke-3",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-gke-1-spanner-1",
+        "sourceId": "gke-1",
+        "targetId": "spanner-1",
+        "label": "gRPC",
+        "directed": true
+      },
+      {
+        "id": "conn-gke-2-spanner-2",
+        "sourceId": "gke-2",
+        "targetId": "spanner-2",
+        "label": "gRPC",
+        "directed": true
+      },
+      {
+        "id": "conn-gke-3-spanner-3",
+        "sourceId": "gke-3",
+        "targetId": "spanner-3",
+        "label": "gRPC",
+        "directed": true
+      },
+      {
+        "id": "conn-spanner-1-spanner-2",
+        "sourceId": "spanner-1",
+        "targetId": "spanner-2",
+        "label": "Replication",
+        "directed": true
+      },
+      {
+        "id": "conn-spanner-2-spanner-3",
+        "sourceId": "spanner-2",
+        "targetId": "spanner-3",
+        "label": "Replication",
+        "directed": true
+      },
+      {
+        "id": "conn-gke-2-memorystore",
+        "sourceId": "gke-2",
+        "targetId": "memorystore-1",
+        "label": "Cache",
+        "directed": true
+      },
+      {
+        "id": "conn-gke-1-gcs",
+        "sourceId": "gke-1",
+        "targetId": "gcs-1",
+        "label": "Assets",
+        "directed": true
+      }
+    ]
+  }
+}

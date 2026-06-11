@@ -1,0 +1,164 @@
+{
+  "id": "aws-web-service",
+  "platformId": "aws",
+  "name": "Public-Facing Web Service",
+  "description": "Classic multi-AZ web application with CloudFront CDN, Application Load Balancer, EC2 compute instances, and RDS managed database with read replica.",
+  "thumbnailUrl": "images/diagram-templates/aws-web-service-thumb.png",
+  "definition": {
+    "components": [
+      {
+        "id": "cloudfront-1",
+        "serviceId": "cloudfront",
+        "position": { "x": 100, "y": 80 }
+      },
+      {
+        "id": "waf-1",
+        "serviceId": "waf",
+        "position": { "x": 100, "y": 180 }
+      },
+      {
+        "id": "elb-1",
+        "serviceId": "elb",
+        "position": { "x": 400, "y": 130 },
+        "parentContainerId": "vpc-1"
+      },
+      {
+        "id": "ec2-1",
+        "serviceId": "ec2",
+        "position": { "x": 300, "y": 350 },
+        "parentContainerId": "subnet-public-1"
+      },
+      {
+        "id": "ec2-2",
+        "serviceId": "ec2",
+        "position": { "x": 700, "y": 350 },
+        "parentContainerId": "subnet-public-2"
+      },
+      {
+        "id": "rds-1",
+        "serviceId": "rds",
+        "position": { "x": 300, "y": 550 },
+        "parentContainerId": "subnet-private-1"
+      },
+      {
+        "id": "rds-2",
+        "serviceId": "rds",
+        "position": { "x": 700, "y": 550 },
+        "parentContainerId": "subnet-private-2"
+      },
+      {
+        "id": "s3-1",
+        "serviceId": "s3",
+        "position": { "x": 900, "y": 80 }
+      }
+    ],
+    "containers": [
+      {
+        "id": "vpc-1",
+        "type": "vpc",
+        "label": "VPC",
+        "children": ["az-1", "az-2", "elb-1"]
+      },
+      {
+        "id": "az-1",
+        "type": "az",
+        "label": "Availability Zone A",
+        "parentContainerId": "vpc-1",
+        "children": ["subnet-public-1", "subnet-private-1"]
+      },
+      {
+        "id": "az-2",
+        "type": "az",
+        "label": "Availability Zone B",
+        "parentContainerId": "vpc-1",
+        "children": ["subnet-public-2", "subnet-private-2"]
+      },
+      {
+        "id": "subnet-public-1",
+        "type": "subnet",
+        "label": "Public Subnet",
+        "parentContainerId": "az-1",
+        "children": ["ec2-1"]
+      },
+      {
+        "id": "subnet-public-2",
+        "type": "subnet",
+        "label": "Public Subnet",
+        "parentContainerId": "az-2",
+        "children": ["ec2-2"]
+      },
+      {
+        "id": "subnet-private-1",
+        "type": "subnet",
+        "label": "Private Subnet",
+        "parentContainerId": "az-1",
+        "children": ["rds-1"]
+      },
+      {
+        "id": "subnet-private-2",
+        "type": "subnet",
+        "label": "Private Subnet",
+        "parentContainerId": "az-2",
+        "children": ["rds-2"]
+      }
+    ],
+    "connectors": [
+      {
+        "id": "conn-cf-waf",
+        "sourceId": "cloudfront-1",
+        "targetId": "waf-1",
+        "label": "HTTPS",
+        "directed": true
+      },
+      {
+        "id": "conn-waf-elb",
+        "sourceId": "waf-1",
+        "targetId": "elb-1",
+        "label": "Filtered traffic",
+        "directed": true
+      },
+      {
+        "id": "conn-elb-ec2-1",
+        "sourceId": "elb-1",
+        "targetId": "ec2-1",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-elb-ec2-2",
+        "sourceId": "elb-1",
+        "targetId": "ec2-2",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-ec2-1-rds-1",
+        "sourceId": "ec2-1",
+        "targetId": "rds-1",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-ec2-2-rds-2",
+        "sourceId": "ec2-2",
+        "targetId": "rds-2",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-rds-1-rds-2",
+        "sourceId": "rds-1",
+        "targetId": "rds-2",
+        "label": "Replication",
+        "directed": true
+      },
+      {
+        "id": "conn-cf-s3",
+        "sourceId": "cloudfront-1",
+        "targetId": "s3-1",
+        "label": "Static assets",
+        "directed": true
+      }
+    ]
+  }
+}

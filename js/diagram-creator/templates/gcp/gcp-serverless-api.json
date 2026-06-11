@@ -1,0 +1,125 @@
+{
+  "id": "gcp-serverless-api",
+  "platformId": "gcp",
+  "name": "Serverless API",
+  "description": "Event-driven serverless API using Apigee API gateway, Cloud Functions, Firestore, and Pub/Sub for asynchronous messaging with Cloud IAM authentication.",
+  "thumbnailUrl": "images/diagram-templates/gcp-serverless-api-thumb.png",
+  "definition": {
+    "components": [
+      {
+        "id": "iam-1",
+        "serviceId": "cloud-iam",
+        "position": { "x": 100, "y": 80 }
+      },
+      {
+        "id": "apigee-1",
+        "serviceId": "apigee",
+        "position": { "x": 300, "y": 80 }
+      },
+      {
+        "id": "func-auth",
+        "serviceId": "cloud-functions",
+        "position": { "x": 300, "y": 270 },
+        "parentContainerId": "vpc-1"
+      },
+      {
+        "id": "func-api",
+        "serviceId": "cloud-functions",
+        "position": { "x": 500, "y": 270 },
+        "parentContainerId": "vpc-1"
+      },
+      {
+        "id": "func-worker",
+        "serviceId": "cloud-functions",
+        "position": { "x": 700, "y": 270 },
+        "parentContainerId": "vpc-1"
+      },
+      {
+        "id": "firestore-1",
+        "serviceId": "firestore",
+        "position": { "x": 500, "y": 470 }
+      },
+      {
+        "id": "pubsub-1",
+        "serviceId": "pub-sub",
+        "position": { "x": 700, "y": 470 }
+      },
+      {
+        "id": "gcs-1",
+        "serviceId": "cloud-storage",
+        "position": { "x": 900, "y": 270 }
+      },
+      {
+        "id": "workflows-1",
+        "serviceId": "workflows",
+        "position": { "x": 900, "y": 470 }
+      }
+    ],
+    "containers": [
+      {
+        "id": "vpc-1",
+        "type": "vpc",
+        "label": "VPC Network",
+        "children": ["func-auth", "func-api", "func-worker"]
+      }
+    ],
+    "connectors": [
+      {
+        "id": "conn-iam-apigee",
+        "sourceId": "iam-1",
+        "targetId": "apigee-1",
+        "label": "Auth token",
+        "directed": true
+      },
+      {
+        "id": "conn-apigee-func-auth",
+        "sourceId": "apigee-1",
+        "targetId": "func-auth",
+        "label": "Validate",
+        "directed": true
+      },
+      {
+        "id": "conn-apigee-func-api",
+        "sourceId": "apigee-1",
+        "targetId": "func-api",
+        "label": "API request",
+        "directed": true
+      },
+      {
+        "id": "conn-func-api-firestore",
+        "sourceId": "func-api",
+        "targetId": "firestore-1",
+        "label": "Read/Write",
+        "directed": true
+      },
+      {
+        "id": "conn-func-api-pubsub",
+        "sourceId": "func-api",
+        "targetId": "pubsub-1",
+        "label": "Publish message",
+        "directed": true
+      },
+      {
+        "id": "conn-pubsub-func-worker",
+        "sourceId": "pubsub-1",
+        "targetId": "func-worker",
+        "label": "Trigger",
+        "directed": true
+      },
+      {
+        "id": "conn-func-worker-gcs",
+        "sourceId": "func-worker",
+        "targetId": "gcs-1",
+        "label": "Store output",
+        "directed": true
+      },
+      {
+        "id": "conn-func-worker-workflows",
+        "sourceId": "func-worker",
+        "targetId": "workflows-1",
+        "label": "Orchestrate",
+        "directed": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "platformId": "aws",
+  "categories": [
+    {
+      "id": "compute",
+      "name": "Compute",
+      "services": [
+        {
+          "id": "ec2",
+          "name": "EC2",
+          "iconPath": "images/diagram-icons/aws/compute/ec2.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "lambda",
+          "name": "Lambda",
+          "iconPath": "images/diagram-icons/aws/compute/lambda.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "ecs",
+          "name": "ECS",
+          "iconPath": "images/diagram-icons/aws/compute/ecs.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "eks",
+          "name": "EKS",
+          "iconPath": "images/diagram-icons/aws/compute/eks.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "fargate",
+          "name": "Fargate",
+          "iconPath": "images/diagram-icons/aws/compute/fargate.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "storage",
+      "name": "Storage",
+      "services": [
+        {
+          "id": "s3",
+          "name": "S3",
+          "iconPath": "images/diagram-icons/aws/storage/s3.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "ebs",
+          "name": "EBS",
+          "iconPath": "images/diagram-icons/aws/storage/ebs.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "efs",
+          "name": "EFS",
+          "iconPath": "images/diagram-icons/aws/storage/efs.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "glacier",
+          "name": "S3 Glacier",
+          "iconPath": "images/diagram-icons/aws/storage/glacier.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "networking",
+      "name": "Networking",
+      "services": [
+        {
+          "id": "vpc",
+          "name": "VPC",
+          "iconPath": "images/diagram-icons/aws/networking/vpc.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloudfront",
+          "name": "CloudFront",
+          "iconPath": "images/diagram-icons/aws/networking/cloudfront.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "route53",
+          "name": "Route 53",
+          "iconPath": "images/diagram-icons/aws/networking/route53.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "elb",
+          "name": "Elastic Load Balancing",
+          "iconPath": "images/diagram-icons/aws/networking/elb.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "api-gateway",
+          "name": "API Gateway",
+          "iconPath": "images/diagram-icons/aws/networking/api-gateway.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "database",
+      "name": "Database",
+      "services": [
+        {
+          "id": "rds",
+          "name": "RDS",
+          "iconPath": "images/diagram-icons/aws/database/rds.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "dynamodb",
+          "name": "DynamoDB",
+          "iconPath": "images/diagram-icons/aws/database/dynamodb.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "elasticache",
+          "name": "ElastiCache",
+          "iconPath": "images/diagram-icons/aws/database/elasticache.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "aurora",
+          "name": "Aurora",
+          "iconPath": "images/diagram-icons/aws/database/aurora.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "name": "Security",
+      "services": [
+        {
+          "id": "iam",
+          "name": "IAM",
+          "iconPath": "images/diagram-icons/aws/security/iam.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cognito",
+          "name": "Cognito",
+          "iconPath": "images/diagram-icons/aws/security/cognito.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "waf",
+          "name": "WAF",
+          "iconPath": "images/diagram-icons/aws/security/waf.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "kms",
+          "name": "KMS",
+          "iconPath": "images/diagram-icons/aws/security/kms.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "application-integration",
+      "name": "Application Integration",
+      "services": [
+        {
+          "id": "sqs",
+          "name": "SQS",
+          "iconPath": "images/diagram-icons/aws/application-integration/sqs.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "sns",
+          "name": "SNS",
+          "iconPath": "images/diagram-icons/aws/application-integration/sns.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "eventbridge",
+          "name": "EventBridge",
+          "iconPath": "images/diagram-icons/aws/application-integration/eventbridge.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "step-functions",
+          "name": "Step Functions",
+          "iconPath": "images/diagram-icons/aws/application-integration/step-functions.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    }
+  ]
+}

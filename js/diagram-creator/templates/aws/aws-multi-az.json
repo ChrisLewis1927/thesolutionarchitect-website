@@ -1,0 +1,231 @@
+{
+  "id": "aws-multi-az",
+  "platformId": "aws",
+  "name": "Multi-AZ Production Deployment",
+  "description": "Highly available production deployment spanning three Availability Zones with auto-scaling ECS containers, Aurora database cluster, ElastiCache, and Route 53 DNS failover.",
+  "thumbnailUrl": "images/diagram-templates/aws-multi-az-thumb.png",
+  "definition": {
+    "components": [
+      {
+        "id": "route53-1",
+        "serviceId": "route53",
+        "position": { "x": 100, "y": 50 }
+      },
+      {
+        "id": "cloudfront-1",
+        "serviceId": "cloudfront",
+        "position": { "x": 300, "y": 50 }
+      },
+      {
+        "id": "elb-1",
+        "serviceId": "elb",
+        "position": { "x": 500, "y": 50 },
+        "parentContainerId": "vpc-1"
+      },
+      {
+        "id": "ecs-1",
+        "serviceId": "ecs",
+        "position": { "x": 200, "y": 300 },
+        "parentContainerId": "subnet-app-1"
+      },
+      {
+        "id": "ecs-2",
+        "serviceId": "ecs",
+        "position": { "x": 500, "y": 300 },
+        "parentContainerId": "subnet-app-2"
+      },
+      {
+        "id": "ecs-3",
+        "serviceId": "ecs",
+        "position": { "x": 800, "y": 300 },
+        "parentContainerId": "subnet-app-3"
+      },
+      {
+        "id": "aurora-1",
+        "serviceId": "aurora",
+        "position": { "x": 200, "y": 550 },
+        "parentContainerId": "subnet-data-1"
+      },
+      {
+        "id": "aurora-2",
+        "serviceId": "aurora",
+        "position": { "x": 500, "y": 550 },
+        "parentContainerId": "subnet-data-2"
+      },
+      {
+        "id": "aurora-3",
+        "serviceId": "aurora",
+        "position": { "x": 800, "y": 550 },
+        "parentContainerId": "subnet-data-3"
+      },
+      {
+        "id": "elasticache-1",
+        "serviceId": "elasticache",
+        "position": { "x": 350, "y": 420 },
+        "parentContainerId": "subnet-app-2"
+      },
+      {
+        "id": "s3-1",
+        "serviceId": "s3",
+        "position": { "x": 1000, "y": 300 }
+      }
+    ],
+    "containers": [
+      {
+        "id": "vpc-1",
+        "type": "vpc",
+        "label": "Production VPC",
+        "children": ["az-1", "az-2", "az-3", "elb-1"]
+      },
+      {
+        "id": "az-1",
+        "type": "az",
+        "label": "AZ-1 (eu-west-2a)",
+        "parentContainerId": "vpc-1",
+        "children": ["subnet-app-1", "subnet-data-1"]
+      },
+      {
+        "id": "az-2",
+        "type": "az",
+        "label": "AZ-2 (eu-west-2b)",
+        "parentContainerId": "vpc-1",
+        "children": ["subnet-app-2", "subnet-data-2"]
+      },
+      {
+        "id": "az-3",
+        "type": "az",
+        "label": "AZ-3 (eu-west-2c)",
+        "parentContainerId": "vpc-1",
+        "children": ["subnet-app-3", "subnet-data-3"]
+      },
+      {
+        "id": "subnet-app-1",
+        "type": "subnet",
+        "label": "Application Subnet",
+        "parentContainerId": "az-1",
+        "children": ["ecs-1"]
+      },
+      {
+        "id": "subnet-app-2",
+        "type": "subnet",
+        "label": "Application Subnet",
+        "parentContainerId": "az-2",
+        "children": ["ecs-2", "elasticache-1"]
+      },
+      {
+        "id": "subnet-app-3",
+        "type": "subnet",
+        "label": "Application Subnet",
+        "parentContainerId": "az-3",
+        "children": ["ecs-3"]
+      },
+      {
+        "id": "subnet-data-1",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "az-1",
+        "children": ["aurora-1"]
+      },
+      {
+        "id": "subnet-data-2",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "az-2",
+        "children": ["aurora-2"]
+      },
+      {
+        "id": "subnet-data-3",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "az-3",
+        "children": ["aurora-3"]
+      }
+    ],
+    "connectors": [
+      {
+        "id": "conn-route53-cf",
+        "sourceId": "route53-1",
+        "targetId": "cloudfront-1",
+        "label": "DNS",
+        "directed": true
+      },
+      {
+        "id": "conn-cf-elb",
+        "sourceId": "cloudfront-1",
+        "targetId": "elb-1",
+        "label": "HTTPS",
+        "directed": true
+      },
+      {
+        "id": "conn-elb-ecs-1",
+        "sourceId": "elb-1",
+        "targetId": "ecs-1",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-elb-ecs-2",
+        "sourceId": "elb-1",
+        "targetId": "ecs-2",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-elb-ecs-3",
+        "sourceId": "elb-1",
+        "targetId": "ecs-3",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-ecs-1-aurora-1",
+        "sourceId": "ecs-1",
+        "targetId": "aurora-1",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-ecs-2-aurora-2",
+        "sourceId": "ecs-2",
+        "targetId": "aurora-2",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-ecs-3-aurora-3",
+        "sourceId": "ecs-3",
+        "targetId": "aurora-3",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-aurora-1-aurora-2",
+        "sourceId": "aurora-1",
+        "targetId": "aurora-2",
+        "label": "Replication",
+        "directed": true
+      },
+      {
+        "id": "conn-aurora-2-aurora-3",
+        "sourceId": "aurora-2",
+        "targetId": "aurora-3",
+        "label": "Replication",
+        "directed": true
+      },
+      {
+        "id": "conn-ecs-2-elasticache",
+        "sourceId": "ecs-2",
+        "targetId": "elasticache-1",
+        "label": "Cache",
+        "directed": true
+      },
+      {
+        "id": "conn-ecs-1-s3",
+        "sourceId": "ecs-1",
+        "targetId": "s3-1",
+        "label": "Assets",
+        "directed": true
+      }
+    ]
+  }
+}

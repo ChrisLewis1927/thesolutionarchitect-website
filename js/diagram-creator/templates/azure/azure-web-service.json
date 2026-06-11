@@ -1,0 +1,163 @@
+{
+  "id": "azure-web-service",
+  "platformId": "azure",
+  "name": "Public-Facing Web Service",
+  "description": "Multi-region web application with Front Door, Application Gateway, App Service instances, and Azure SQL Database with geo-replication.",
+  "thumbnailUrl": "images/diagram-templates/azure-web-service-thumb.png",
+  "definition": {
+    "components": [
+      {
+        "id": "front-door-1",
+        "serviceId": "front-door",
+        "position": { "x": 100, "y": 80 }
+      },
+      {
+        "id": "waf-1",
+        "serviceId": "waf",
+        "position": { "x": 100, "y": 200 }
+      },
+      {
+        "id": "app-gw-1",
+        "serviceId": "application-gateway",
+        "position": { "x": 400, "y": 140 },
+        "parentContainerId": "vnet-1"
+      },
+      {
+        "id": "app-service-1",
+        "serviceId": "app-service",
+        "position": { "x": 300, "y": 350 },
+        "parentContainerId": "subnet-web-1"
+      },
+      {
+        "id": "app-service-2",
+        "serviceId": "app-service",
+        "position": { "x": 700, "y": 350 },
+        "parentContainerId": "subnet-web-2"
+      },
+      {
+        "id": "sql-db-1",
+        "serviceId": "sql-database",
+        "position": { "x": 300, "y": 550 },
+        "parentContainerId": "subnet-data-1"
+      },
+      {
+        "id": "sql-db-2",
+        "serviceId": "sql-database",
+        "position": { "x": 700, "y": 550 },
+        "parentContainerId": "subnet-data-2"
+      },
+      {
+        "id": "redis-1",
+        "serviceId": "cache-for-redis",
+        "position": { "x": 500, "y": 420 },
+        "parentContainerId": "vnet-1"
+      },
+      {
+        "id": "blob-1",
+        "serviceId": "blob-storage",
+        "position": { "x": 900, "y": 80 }
+      }
+    ],
+    "containers": [
+      {
+        "id": "vnet-1",
+        "type": "vpc",
+        "label": "Virtual Network",
+        "children": ["subnet-web-1", "subnet-web-2", "subnet-data-1", "subnet-data-2", "app-gw-1", "redis-1"]
+      },
+      {
+        "id": "subnet-web-1",
+        "type": "subnet",
+        "label": "Web Subnet (Zone 1)",
+        "parentContainerId": "vnet-1",
+        "children": ["app-service-1"]
+      },
+      {
+        "id": "subnet-web-2",
+        "type": "subnet",
+        "label": "Web Subnet (Zone 2)",
+        "parentContainerId": "vnet-1",
+        "children": ["app-service-2"]
+      },
+      {
+        "id": "subnet-data-1",
+        "type": "subnet",
+        "label": "Data Subnet (Zone 1)",
+        "parentContainerId": "vnet-1",
+        "children": ["sql-db-1"]
+      },
+      {
+        "id": "subnet-data-2",
+        "type": "subnet",
+        "label": "Data Subnet (Zone 2)",
+        "parentContainerId": "vnet-1",
+        "children": ["sql-db-2"]
+      }
+    ],
+    "connectors": [
+      {
+        "id": "conn-fd-waf",
+        "sourceId": "front-door-1",
+        "targetId": "waf-1",
+        "label": "HTTPS",
+        "directed": true
+      },
+      {
+        "id": "conn-waf-appgw",
+        "sourceId": "waf-1",
+        "targetId": "app-gw-1",
+        "label": "Filtered traffic",
+        "directed": true
+      },
+      {
+        "id": "conn-appgw-app-1",
+        "sourceId": "app-gw-1",
+        "targetId": "app-service-1",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-appgw-app-2",
+        "sourceId": "app-gw-1",
+        "targetId": "app-service-2",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-app-1-sql-1",
+        "sourceId": "app-service-1",
+        "targetId": "sql-db-1",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-app-2-sql-2",
+        "sourceId": "app-service-2",
+        "targetId": "sql-db-2",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-sql-1-sql-2",
+        "sourceId": "sql-db-1",
+        "targetId": "sql-db-2",
+        "label": "Geo-replication",
+        "directed": true
+      },
+      {
+        "id": "conn-app-1-redis",
+        "sourceId": "app-service-1",
+        "targetId": "redis-1",
+        "label": "Cache",
+        "directed": true
+      },
+      {
+        "id": "conn-fd-blob",
+        "sourceId": "front-door-1",
+        "targetId": "blob-1",
+        "label": "Static assets",
+        "directed": true
+      }
+    ]
+  }
+}

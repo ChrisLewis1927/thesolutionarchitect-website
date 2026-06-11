@@ -1,0 +1,223 @@
+{
+  "platformId": "gcp",
+  "categories": [
+    {
+      "id": "compute",
+      "name": "Compute",
+      "services": [
+        {
+          "id": "compute-engine",
+          "name": "Compute Engine",
+          "iconPath": "images/diagram-icons/gcp/compute/compute-engine.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-functions",
+          "name": "Cloud Functions",
+          "iconPath": "images/diagram-icons/gcp/compute/cloud-functions.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-run",
+          "name": "Cloud Run",
+          "iconPath": "images/diagram-icons/gcp/compute/cloud-run.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "gke",
+          "name": "Google Kubernetes Engine",
+          "iconPath": "images/diagram-icons/gcp/compute/gke.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "app-engine",
+          "name": "App Engine",
+          "iconPath": "images/diagram-icons/gcp/compute/app-engine.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "storage",
+      "name": "Storage",
+      "services": [
+        {
+          "id": "cloud-storage",
+          "name": "Cloud Storage",
+          "iconPath": "images/diagram-icons/gcp/storage/cloud-storage.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "persistent-disk",
+          "name": "Persistent Disk",
+          "iconPath": "images/diagram-icons/gcp/storage/persistent-disk.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "filestore",
+          "name": "Filestore",
+          "iconPath": "images/diagram-icons/gcp/storage/filestore.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-storage-archive",
+          "name": "Cloud Storage Archive",
+          "iconPath": "images/diagram-icons/gcp/storage/cloud-storage-archive.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "networking",
+      "name": "Networking",
+      "services": [
+        {
+          "id": "vpc-network",
+          "name": "VPC Network",
+          "iconPath": "images/diagram-icons/gcp/networking/vpc-network.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-load-balancing",
+          "name": "Cloud Load Balancing",
+          "iconPath": "images/diagram-icons/gcp/networking/cloud-load-balancing.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-cdn",
+          "name": "Cloud CDN",
+          "iconPath": "images/diagram-icons/gcp/networking/cloud-cdn.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-dns",
+          "name": "Cloud DNS",
+          "iconPath": "images/diagram-icons/gcp/networking/cloud-dns.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-armor",
+          "name": "Cloud Armor",
+          "iconPath": "images/diagram-icons/gcp/networking/cloud-armor.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "database",
+      "name": "Database",
+      "services": [
+        {
+          "id": "cloud-sql",
+          "name": "Cloud SQL",
+          "iconPath": "images/diagram-icons/gcp/database/cloud-sql.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "firestore",
+          "name": "Firestore",
+          "iconPath": "images/diagram-icons/gcp/database/firestore.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "memorystore",
+          "name": "Memorystore",
+          "iconPath": "images/diagram-icons/gcp/database/memorystore.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-spanner",
+          "name": "Cloud Spanner",
+          "iconPath": "images/diagram-icons/gcp/database/cloud-spanner.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "name": "Security",
+      "services": [
+        {
+          "id": "cloud-iam",
+          "name": "Cloud IAM",
+          "iconPath": "images/diagram-icons/gcp/security/cloud-iam.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "secret-manager",
+          "name": "Secret Manager",
+          "iconPath": "images/diagram-icons/gcp/security/secret-manager.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-kms",
+          "name": "Cloud KMS",
+          "iconPath": "images/diagram-icons/gcp/security/cloud-kms.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "security-command-center",
+          "name": "Security Command Center",
+          "iconPath": "images/diagram-icons/gcp/security/security-command-center.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "application-integration",
+      "name": "Application Integration",
+      "services": [
+        {
+          "id": "pub-sub",
+          "name": "Pub/Sub",
+          "iconPath": "images/diagram-icons/gcp/application-integration/pub-sub.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cloud-tasks",
+          "name": "Cloud Tasks",
+          "iconPath": "images/diagram-icons/gcp/application-integration/cloud-tasks.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "workflows",
+          "name": "Workflows",
+          "iconPath": "images/diagram-icons/gcp/application-integration/workflows.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "apigee",
+          "name": "Apigee",
+          "iconPath": "images/diagram-icons/gcp/application-integration/apigee.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    }
+  ]
+}

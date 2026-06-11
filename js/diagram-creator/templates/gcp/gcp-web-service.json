@@ -1,0 +1,163 @@
+{
+  "id": "gcp-web-service",
+  "platformId": "gcp",
+  "name": "Public-Facing Web Service",
+  "description": "Multi-zone web application with Cloud CDN, Cloud Load Balancing, Compute Engine instances in managed instance groups, and Cloud SQL with read replicas.",
+  "thumbnailUrl": "images/diagram-templates/gcp-web-service-thumb.png",
+  "definition": {
+    "components": [
+      {
+        "id": "cloud-cdn-1",
+        "serviceId": "cloud-cdn",
+        "position": { "x": 100, "y": 80 }
+      },
+      {
+        "id": "cloud-armor-1",
+        "serviceId": "cloud-armor",
+        "position": { "x": 100, "y": 200 }
+      },
+      {
+        "id": "lb-1",
+        "serviceId": "cloud-load-balancing",
+        "position": { "x": 400, "y": 140 },
+        "parentContainerId": "vpc-1"
+      },
+      {
+        "id": "gce-1",
+        "serviceId": "compute-engine",
+        "position": { "x": 300, "y": 350 },
+        "parentContainerId": "subnet-web-1"
+      },
+      {
+        "id": "gce-2",
+        "serviceId": "compute-engine",
+        "position": { "x": 700, "y": 350 },
+        "parentContainerId": "subnet-web-2"
+      },
+      {
+        "id": "sql-1",
+        "serviceId": "cloud-sql",
+        "position": { "x": 300, "y": 550 },
+        "parentContainerId": "subnet-data-1"
+      },
+      {
+        "id": "sql-2",
+        "serviceId": "cloud-sql",
+        "position": { "x": 700, "y": 550 },
+        "parentContainerId": "subnet-data-2"
+      },
+      {
+        "id": "memorystore-1",
+        "serviceId": "memorystore",
+        "position": { "x": 500, "y": 420 },
+        "parentContainerId": "vpc-1"
+      },
+      {
+        "id": "gcs-1",
+        "serviceId": "cloud-storage",
+        "position": { "x": 900, "y": 80 }
+      }
+    ],
+    "containers": [
+      {
+        "id": "vpc-1",
+        "type": "vpc",
+        "label": "VPC Network",
+        "children": ["subnet-web-1", "subnet-web-2", "subnet-data-1", "subnet-data-2", "lb-1", "memorystore-1"]
+      },
+      {
+        "id": "subnet-web-1",
+        "type": "subnet",
+        "label": "Web Subnet (Zone A)",
+        "parentContainerId": "vpc-1",
+        "children": ["gce-1"]
+      },
+      {
+        "id": "subnet-web-2",
+        "type": "subnet",
+        "label": "Web Subnet (Zone B)",
+        "parentContainerId": "vpc-1",
+        "children": ["gce-2"]
+      },
+      {
+        "id": "subnet-data-1",
+        "type": "subnet",
+        "label": "Data Subnet (Zone A)",
+        "parentContainerId": "vpc-1",
+        "children": ["sql-1"]
+      },
+      {
+        "id": "subnet-data-2",
+        "type": "subnet",
+        "label": "Data Subnet (Zone B)",
+        "parentContainerId": "vpc-1",
+        "children": ["sql-2"]
+      }
+    ],
+    "connectors": [
+      {
+        "id": "conn-cdn-armor",
+        "sourceId": "cloud-cdn-1",
+        "targetId": "cloud-armor-1",
+        "label": "HTTPS",
+        "directed": true
+      },
+      {
+        "id": "conn-armor-lb",
+        "sourceId": "cloud-armor-1",
+        "targetId": "lb-1",
+        "label": "Filtered traffic",
+        "directed": true
+      },
+      {
+        "id": "conn-lb-gce-1",
+        "sourceId": "lb-1",
+        "targetId": "gce-1",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-lb-gce-2",
+        "sourceId": "lb-1",
+        "targetId": "gce-2",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-gce-1-sql-1",
+        "sourceId": "gce-1",
+        "targetId": "sql-1",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-gce-2-sql-2",
+        "sourceId": "gce-2",
+        "targetId": "sql-2",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-sql-1-sql-2",
+        "sourceId": "sql-1",
+        "targetId": "sql-2",
+        "label": "Read replica",
+        "directed": true
+      },
+      {
+        "id": "conn-gce-1-memorystore",
+        "sourceId": "gce-1",
+        "targetId": "memorystore-1",
+        "label": "Cache",
+        "directed": true
+      },
+      {
+        "id": "conn-cdn-gcs",
+        "sourceId": "cloud-cdn-1",
+        "targetId": "gcs-1",
+        "label": "Static assets",
+        "directed": true
+      }
+    ]
+  }
+}

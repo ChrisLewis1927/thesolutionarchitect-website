@@ -1,0 +1,231 @@
+{
+  "id": "azure-multi-az",
+  "platformId": "azure",
+  "name": "Multi-AZ Production Deployment",
+  "description": "Highly available production deployment using Azure Availability Zones with AKS, Azure SQL Database failover group, and Azure Cache for Redis across three zones.",
+  "thumbnailUrl": "images/diagram-templates/azure-multi-az-thumb.png",
+  "definition": {
+    "components": [
+      {
+        "id": "dns-zone-1",
+        "serviceId": "dns-zone",
+        "position": { "x": 100, "y": 50 }
+      },
+      {
+        "id": "front-door-1",
+        "serviceId": "front-door",
+        "position": { "x": 300, "y": 50 }
+      },
+      {
+        "id": "lb-1",
+        "serviceId": "load-balancer",
+        "position": { "x": 500, "y": 50 },
+        "parentContainerId": "vnet-1"
+      },
+      {
+        "id": "aks-1",
+        "serviceId": "aks",
+        "position": { "x": 200, "y": 300 },
+        "parentContainerId": "subnet-app-1"
+      },
+      {
+        "id": "aks-2",
+        "serviceId": "aks",
+        "position": { "x": 500, "y": 300 },
+        "parentContainerId": "subnet-app-2"
+      },
+      {
+        "id": "aks-3",
+        "serviceId": "aks",
+        "position": { "x": 800, "y": 300 },
+        "parentContainerId": "subnet-app-3"
+      },
+      {
+        "id": "sql-1",
+        "serviceId": "sql-database",
+        "position": { "x": 200, "y": 550 },
+        "parentContainerId": "subnet-data-1"
+      },
+      {
+        "id": "sql-2",
+        "serviceId": "sql-database",
+        "position": { "x": 500, "y": 550 },
+        "parentContainerId": "subnet-data-2"
+      },
+      {
+        "id": "sql-3",
+        "serviceId": "sql-database",
+        "position": { "x": 800, "y": 550 },
+        "parentContainerId": "subnet-data-3"
+      },
+      {
+        "id": "redis-1",
+        "serviceId": "cache-for-redis",
+        "position": { "x": 350, "y": 420 },
+        "parentContainerId": "subnet-app-2"
+      },
+      {
+        "id": "blob-1",
+        "serviceId": "blob-storage",
+        "position": { "x": 1000, "y": 300 }
+      }
+    ],
+    "containers": [
+      {
+        "id": "vnet-1",
+        "type": "vpc",
+        "label": "Production Virtual Network",
+        "children": ["az-1", "az-2", "az-3", "lb-1"]
+      },
+      {
+        "id": "az-1",
+        "type": "az",
+        "label": "Availability Zone 1",
+        "parentContainerId": "vnet-1",
+        "children": ["subnet-app-1", "subnet-data-1"]
+      },
+      {
+        "id": "az-2",
+        "type": "az",
+        "label": "Availability Zone 2",
+        "parentContainerId": "vnet-1",
+        "children": ["subnet-app-2", "subnet-data-2"]
+      },
+      {
+        "id": "az-3",
+        "type": "az",
+        "label": "Availability Zone 3",
+        "parentContainerId": "vnet-1",
+        "children": ["subnet-app-3", "subnet-data-3"]
+      },
+      {
+        "id": "subnet-app-1",
+        "type": "subnet",
+        "label": "App Subnet",
+        "parentContainerId": "az-1",
+        "children": ["aks-1"]
+      },
+      {
+        "id": "subnet-app-2",
+        "type": "subnet",
+        "label": "App Subnet",
+        "parentContainerId": "az-2",
+        "children": ["aks-2", "redis-1"]
+      },
+      {
+        "id": "subnet-app-3",
+        "type": "subnet",
+        "label": "App Subnet",
+        "parentContainerId": "az-3",
+        "children": ["aks-3"]
+      },
+      {
+        "id": "subnet-data-1",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "az-1",
+        "children": ["sql-1"]
+      },
+      {
+        "id": "subnet-data-2",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "az-2",
+        "children": ["sql-2"]
+      },
+      {
+        "id": "subnet-data-3",
+        "type": "subnet",
+        "label": "Data Subnet",
+        "parentContainerId": "az-3",
+        "children": ["sql-3"]
+      }
+    ],
+    "connectors": [
+      {
+        "id": "conn-dns-fd",
+        "sourceId": "dns-zone-1",
+        "targetId": "front-door-1",
+        "label": "DNS",
+        "directed": true
+      },
+      {
+        "id": "conn-fd-lb",
+        "sourceId": "front-door-1",
+        "targetId": "lb-1",
+        "label": "HTTPS",
+        "directed": true
+      },
+      {
+        "id": "conn-lb-aks-1",
+        "sourceId": "lb-1",
+        "targetId": "aks-1",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-lb-aks-2",
+        "sourceId": "lb-1",
+        "targetId": "aks-2",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-lb-aks-3",
+        "sourceId": "lb-1",
+        "targetId": "aks-3",
+        "label": "HTTP",
+        "directed": true
+      },
+      {
+        "id": "conn-aks-1-sql-1",
+        "sourceId": "aks-1",
+        "targetId": "sql-1",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-aks-2-sql-2",
+        "sourceId": "aks-2",
+        "targetId": "sql-2",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-aks-3-sql-3",
+        "sourceId": "aks-3",
+        "targetId": "sql-3",
+        "label": "SQL",
+        "directed": true
+      },
+      {
+        "id": "conn-sql-1-sql-2",
+        "sourceId": "sql-1",
+        "targetId": "sql-2",
+        "label": "Failover group",
+        "directed": true
+      },
+      {
+        "id": "conn-sql-2-sql-3",
+        "sourceId": "sql-2",
+        "targetId": "sql-3",
+        "label": "Failover group",
+        "directed": true
+      },
+      {
+        "id": "conn-aks-2-redis",
+        "sourceId": "aks-2",
+        "targetId": "redis-1",
+        "label": "Cache",
+        "directed": true
+      },
+      {
+        "id": "conn-aks-1-blob",
+        "sourceId": "aks-1",
+        "targetId": "blob-1",
+        "label": "Assets",
+        "directed": true
+      }
+    ]
+  }
+}

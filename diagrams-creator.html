@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Architecture Diagram Creator — Create professional cloud architecture diagrams for AWS, Azure, and GCP using drag-and-drop with official platform icons.">
+  <meta property="og:title" content="Architecture Diagram Creator — The Solution Architect">
+  <meta property="og:description" content="Create professional cloud architecture diagrams for AWS, Azure, and GCP. Drag-and-drop components, smart containers, auto-layout, and export to PNG or SVG.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thesolutionarchitect.uk/diagrams-creator.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Architecture Diagram Creator — The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* --- Diagram Creator Layout --- */
+    .diagram-creator {
+      display: flex;
+      height: calc(100vh - var(--header-height));
+      overflow: hidden;
+    }
+
+    .diagram-creator__sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      overflow-y: auto;
+      background-color: var(--color-light-bg);
+      border-right: 1px solid var(--color-border);
+      padding: var(--spacing-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xl);
+    }
+
+    .diagram-creator__sidebar--right {
+      border-right: none;
+      border-left: 1px solid var(--color-border);
+    }
+
+    .diagram-creator__canvas-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f2f5;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #diagram-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* --- Panel Styling --- */
+    .dc-panel {
+      background: var(--color-card-bg);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--color-border);
+      padding: var(--spacing-lg);
+    }
+
+    .dc-panel__title {
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-body);
+      margin-bottom: var(--spacing-md);
+    }
+
+    /* --- Platform Selector --- */
+    .platform-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-sm);
+    }
+
+    .platform-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-md) var(--spacing-sm);
+      border: 2px solid var(--color-border);
+      border-radius: var(--border-radius);
+      background: var(--color-card-bg);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .platform-card:hover {
+      border-color: var(--color-accent-blue);
+      box-shadow: 0 2px 8px var(--color-shadow-hover);
+    }
+
+    .platform-card--active {
+      border-color: var(--color-accent-blue);
+      background: rgba(74, 108, 247, 0.05);
+    }
+
+    .platform-card__logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .platform-card__name {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+    }
+
+    /* --- Template Gallery --- */
+    .template-gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-sm);
+    }
+
+    .template-card {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      background: var(--color-card-bg);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .template-card:hover {
+      border-color: var(--color-accent-blue);
+      background: rgba(74, 108, 247, 0.03);
+    }
+
+    .template-card--active {
+      border-color: var(--color-accent-blue);
+      background: rgba(74, 108, 247, 0.05);
+    }
+
+    .template-card__thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background: var(--color-secondary-bg);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: var(--color-light-grey);
+    }
+
+    .template-card__info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .template-card__name {
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-text-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .template-card__desc {
+      font-size: 0.75rem;
+      color: var(--color-text-body);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* --- Component Palette --- */
+    .palette-search {
+      width: 100%;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      font-size: var(--font-size-sm);
+      font-family: var(--font-family);
+      background: var(--color-card-bg);
+      transition: var(--transition);
+    }
+
+    .palette-search:focus {
+      outline: none;
+      border-color: var(--color-accent-blue);
+      box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+    }
+
+    .palette-categories {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+
+    .palette-category__title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-accent-blue);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .palette-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xs);
+    }
+
+    .palette-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: 4px;
+      cursor: grab;
+      transition: var(--transition);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-body);
+    }
+
+    .palette-item:hover {
+      background: rgba(74, 108, 247, 0.08);
+    }
+
+    .palette-item__icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .palette-item__name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* --- Export Controls --- */
+    .export-controls {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+
+    .export-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      background: var(--color-card-bg);
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      font-family: var(--font-family);
+      color: var(--color-text-dark);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .export-btn:hover {
+      border-color: var(--color-accent-blue);
+      color: var(--color-accent-blue);
+      background: rgba(74, 108, 247, 0.05);
+    }
+
+    .export-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .export-btn:disabled:hover {
+      border-color: var(--color-border);
+      color: var(--color-text-dark);
+      background: var(--color-card-bg);
+    }
+
+    .connect-btn--active {
+      border-color: var(--color-accent-blue);
+      color: #ffffff;
+      background: var(--color-accent-blue) !important;
+    }
+
+    .connect-btn--active:hover {
+      background: #3a5ce0 !important;
+      border-color: #3a5ce0;
+    }
+
+    .dc-toolbar {
+      display: flex;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+    }
+
+    /* --- Empty state message on canvas --- */
+    .canvas-empty-state {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: var(--color-text-body);
+      pointer-events: none;
+    }
+
+    .canvas-empty-state__icon {
+      font-size: 3rem;
+      margin-bottom: var(--spacing-md);
+      opacity: 0.4;
+    }
+
+    .canvas-empty-state__text {
+      font-size: var(--font-size-lg);
+      font-weight: 500;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .canvas-empty-state__hint {
+      font-size: var(--font-size-sm);
+      opacity: 0.7;
+    }
+
+    /* --- Responsive: hide sidebars on small screens --- */
+    @media (max-width: 1023px) {
+      .diagram-creator {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .diagram-creator__sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        max-height: 300px;
+      }
+
+      .diagram-creator__sidebar--right {
+        border-left: none;
+        border-top: 1px solid var(--color-border);
+        border-bottom: none;
+      }
+
+      .diagram-creator__canvas-area {
+        min-height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="diagrams-creator.html" class="nav__link nav__link--active">Diagrams</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="diagram-creator">
+      <!-- Left Sidebar: Platform Selector + Template Gallery -->
+      <aside class="diagram-creator__sidebar" aria-label="Platform and template selection">
+        <!-- Platform Selector Panel -->
+        <div class="dc-panel" id="platform-selector-panel">
+          <h2 class="dc-panel__title">Platform</h2>
+          <div class="platform-selector" role="radiogroup" aria-label="Select cloud platform">
+            <button class="platform-card" data-platform="aws" role="radio" aria-checked="false" aria-label="Amazon Web Services">
+              <img src="images/diagram-icons/aws/aws-logo.svg" alt="" class="platform-card__logo" aria-hidden="true">
+              <span class="platform-card__name">AWS</span>
+            </button>
+            <button class="platform-card" data-platform="azure" role="radio" aria-checked="false" aria-label="Microsoft Azure">
+              <img src="images/diagram-icons/azure/azure-logo.svg" alt="" class="platform-card__logo" aria-hidden="true">
+              <span class="platform-card__name">Azure</span>
+            </button>
+            <button class="platform-card" data-platform="gcp" role="radio" aria-checked="false" aria-label="Google Cloud Platform">
+              <img src="images/diagram-icons/gcp/gcp-logo.svg" alt="" class="platform-card__logo" aria-hidden="true">
+              <span class="platform-card__name">GCP</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Template Gallery Panel -->
+        <div class="dc-panel" id="template-gallery-panel">
+          <h2 class="dc-panel__title">Templates</h2>
+          <div class="template-gallery" id="template-gallery" role="list" aria-label="Architecture pattern templates">
+            <p class="template-gallery__empty" style="font-size: var(--font-size-sm); color: var(--color-text-body); opacity: 0.7;">Select a platform to see available templates.</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Centre: Diagram Canvas -->
+      <div class="diagram-creator__canvas-area">
+        <div id="diagram-canvas"></div>
+        <div class="canvas-empty-state" id="canvas-empty-state">
+          <div class="canvas-empty-state__icon">📐</div>
+          <p class="canvas-empty-state__text">Select a platform to get started</p>
+          <p class="canvas-empty-state__hint">Choose a cloud platform, then pick a template or drag components from the palette.</p>
+        </div>
+      </div>
+
+      <!-- Right Sidebar: Component Palette + Export Controls -->
+      <aside class="diagram-creator__sidebar diagram-creator__sidebar--right" aria-label="Component palette and export">
+        <!-- Component Palette Panel -->
+        <div class="dc-panel" id="component-palette-panel" style="flex: 1; overflow-y: auto;">
+          <h2 class="dc-panel__title">Components</h2>
+          <input
+            type="search"
+            class="palette-search"
+            id="palette-search"
+            placeholder="Search components…"
+            aria-label="Search components by name"
+          >
+          <div class="palette-categories" id="palette-categories">
+            <p style="font-size: var(--font-size-sm); color: var(--color-text-body); opacity: 0.7;">Select a platform to load components.</p>
+          </div>
+        </div>
+
+        <!-- Export Controls Panel -->
+        <div class="dc-panel" id="export-controls-panel">
+          <h2 class="dc-panel__title">Export</h2>
+          <div class="export-controls">
+            <button class="export-btn" id="export-png-btn" disabled title="Add components before exporting">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 11l2.5-3 2 2 3-4 1.5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              PNG
+            </button>
+            <button class="export-btn" id="export-svg-btn" disabled title="Add components before exporting">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 8h8M8 4v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              SVG
+            </button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="diagrams-creator.html">Diagram Creator</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Konva.js for canvas rendering -->
+  <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+
+  <!-- Browser compatibility fallback -->
+  <script nomodule>
+    document.querySelector('.diagram-creator').innerHTML =
+      '<div style="padding: 3rem; text-align: center;">' +
+      '<h2>Browser Not Supported</h2>' +
+      '<p>Your browser does not support this tool. Please use a modern browser (Chrome, Firefox, Edge, Safari).</p>' +
+      '</div>';
+  </script>
+
+  <!-- Canvas API detection -->
+  <script>
+    (function() {
+      if (!document.createElement('canvas').getContext) {
+        document.querySelector('.diagram-creator').innerHTML =
+          '<div style="padding: 3rem; text-align: center;">' +
+          '<h2>Browser Not Supported</h2>' +
+          '<p>Your browser does not support the HTML5 Canvas API required by this tool. Please use a modern browser (Chrome, Firefox, Edge, Safari).</p>' +
+          '</div>';
+      }
+    })();
+  </script>
+
+  <!-- Module entry point -->
+  <script type="module" src="/js/diagram-creator/app.js"></script>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

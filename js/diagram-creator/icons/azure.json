@@ -1,0 +1,223 @@
+{
+  "platformId": "azure",
+  "categories": [
+    {
+      "id": "compute",
+      "name": "Compute",
+      "services": [
+        {
+          "id": "virtual-machines",
+          "name": "Virtual Machines",
+          "iconPath": "images/diagram-icons/azure/compute/virtual-machines.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "functions",
+          "name": "Functions",
+          "iconPath": "images/diagram-icons/azure/compute/functions.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "app-service",
+          "name": "App Service",
+          "iconPath": "images/diagram-icons/azure/compute/app-service.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "aks",
+          "name": "Azure Kubernetes Service",
+          "iconPath": "images/diagram-icons/azure/compute/aks.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "container-instances",
+          "name": "Container Instances",
+          "iconPath": "images/diagram-icons/azure/compute/container-instances.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "storage",
+      "name": "Storage",
+      "services": [
+        {
+          "id": "blob-storage",
+          "name": "Blob Storage",
+          "iconPath": "images/diagram-icons/azure/storage/blob-storage.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "file-storage",
+          "name": "File Storage",
+          "iconPath": "images/diagram-icons/azure/storage/file-storage.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "queue-storage",
+          "name": "Queue Storage",
+          "iconPath": "images/diagram-icons/azure/storage/queue-storage.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "managed-disks",
+          "name": "Managed Disks",
+          "iconPath": "images/diagram-icons/azure/storage/managed-disks.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "networking",
+      "name": "Networking",
+      "services": [
+        {
+          "id": "virtual-network",
+          "name": "Virtual Network",
+          "iconPath": "images/diagram-icons/azure/networking/virtual-network.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "load-balancer",
+          "name": "Load Balancer",
+          "iconPath": "images/diagram-icons/azure/networking/load-balancer.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "application-gateway",
+          "name": "Application Gateway",
+          "iconPath": "images/diagram-icons/azure/networking/application-gateway.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "front-door",
+          "name": "Front Door",
+          "iconPath": "images/diagram-icons/azure/networking/front-door.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "dns-zone",
+          "name": "DNS Zone",
+          "iconPath": "images/diagram-icons/azure/networking/dns-zone.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "database",
+      "name": "Database",
+      "services": [
+        {
+          "id": "sql-database",
+          "name": "SQL Database",
+          "iconPath": "images/diagram-icons/azure/database/sql-database.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cosmos-db",
+          "name": "Cosmos DB",
+          "iconPath": "images/diagram-icons/azure/database/cosmos-db.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "cache-for-redis",
+          "name": "Azure Cache for Redis",
+          "iconPath": "images/diagram-icons/azure/database/cache-for-redis.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "postgresql",
+          "name": "Database for PostgreSQL",
+          "iconPath": "images/diagram-icons/azure/database/postgresql.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "name": "Security",
+      "services": [
+        {
+          "id": "entra-id",
+          "name": "Microsoft Entra ID",
+          "iconPath": "images/diagram-icons/azure/security/entra-id.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "key-vault",
+          "name": "Key Vault",
+          "iconPath": "images/diagram-icons/azure/security/key-vault.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "waf",
+          "name": "Web Application Firewall",
+          "iconPath": "images/diagram-icons/azure/security/waf.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "defender-for-cloud",
+          "name": "Defender for Cloud",
+          "iconPath": "images/diagram-icons/azure/security/defender-for-cloud.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    },
+    {
+      "id": "application-integration",
+      "name": "Application Integration",
+      "services": [
+        {
+          "id": "service-bus",
+          "name": "Service Bus",
+          "iconPath": "images/diagram-icons/azure/application-integration/service-bus.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "event-grid",
+          "name": "Event Grid",
+          "iconPath": "images/diagram-icons/azure/application-integration/event-grid.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "logic-apps",
+          "name": "Logic Apps",
+          "iconPath": "images/diagram-icons/azure/application-integration/logic-apps.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "api-management",
+          "name": "API Management",
+          "iconPath": "images/diagram-icons/azure/application-integration/api-management.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
+    }
+  ]
+}
