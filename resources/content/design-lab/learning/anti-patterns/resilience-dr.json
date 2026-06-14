@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Untested Disaster Recovery Plan",
+    "description": "Having a documented DR plan that has never been exercised end-to-end, with assumptions about recovery procedures that have not been validated.",
+    "whyProblematic": "DR plans that haven't been tested invariably fail when needed. Recovery procedures contain undocumented dependencies, missing steps, or incorrect assumptions. Staff may not know their roles during an incident. RTO and RPO targets are aspirational rather than demonstrated. Government service assessments require evidence of tested DR.",
+    "betterApproach": "Conduct regular DR exercises (at minimum annually, quarterly for critical services). Start with tabletop exercises and progress to full failover tests. Document lessons learned and update procedures. Measure actual recovery times against targets. Ensure multiple team members can execute recovery procedures."
+  },
+  {
+    "name": "Single Region Deployment for Critical Services",
+    "description": "Deploying services classified as critical or high-availability in a single cloud region without cross-region failover capability.",
+    "whyProblematic": "Cloud regions can experience extended outages (hours to days). Single-region deployment means a regional outage takes the entire service offline. For government services with defined availability targets (99.9%+), single-region deployment cannot meet SLA requirements. Citizens lose access to essential services during regional incidents.",
+    "betterApproach": "Deploy critical services across multiple availability zones as a minimum. For services requiring 99.95%+ availability, implement multi-region active-passive or active-active architectures. Define clear failover triggers and procedures. Accept the additional cost and complexity as justified by the availability requirement."
+  },
+  {
+    "name": "No Circuit Breaker Pattern for Dependencies",
+    "description": "Allowing failures in downstream dependencies to cascade through the system without any fault isolation mechanism.",
+    "whyProblematic": "A single failing dependency can exhaust connection pools, consume all threads, and bring down the entire service. Retry storms amplify the problem. Users experience complete service failure rather than graceful degradation. Recovery requires manual intervention to break the cascade.",
+    "betterApproach": "Implement circuit breaker patterns for all external dependencies. Define fallback behaviours (cached responses, degraded functionality, informative error messages). Set appropriate timeouts and retry limits. Monitor circuit breaker state and alert when circuits open. Design for graceful degradation rather than total failure."
+  },
+  {
+    "name": "Conflating High Availability with Disaster Recovery",
+    "description": "Treating HA (multi-AZ deployment) as sufficient for DR, without considering scenarios where an entire region or platform becomes unavailable.",
+    "whyProblematic": "HA protects against individual component or availability zone failures but not against regional outages, platform-wide issues, or data corruption that replicates across zones. DR requires fundamentally different mechanisms (cross-region replication, offline backups, alternative platforms). Governance boards distinguish between HA and DR capabilities.",
+    "betterApproach": "Treat HA and DR as complementary but distinct capabilities. HA addresses component failures within a region. DR addresses regional failures, platform failures, and data corruption. Define separate RTO/RPO targets for each scenario. Implement and test both independently. Document the distinction clearly for governance."
+  }
+]

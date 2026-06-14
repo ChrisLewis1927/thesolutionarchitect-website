@@ -1,0 +1,191 @@
+{
+  "id": "data-lake-analytics",
+  "name": "Data Lake and Analytics",
+  "description": "A pattern for centralising data from multiple sources into a scalable data lake for analytics, reporting, and data science workloads. Supports structured, semi-structured, and unstructured data with governance controls appropriate for government data handling requirements.",
+  "whenToUse": [
+    "Centralising data from multiple departmental systems for cross-cutting analytics",
+    "Building management information and performance reporting capabilities",
+    "Enabling data science and machine learning workloads on organisational data",
+    "Creating a single source of truth for operational and strategic reporting",
+    "Supporting open data publication requirements with appropriate governance"
+  ],
+  "whenNotToUse": [
+    "Simple reporting needs that can be met by existing BI tools connected to source systems",
+    "Real-time operational dashboards requiring sub-second data freshness",
+    "Small datasets that fit comfortably in a single relational database",
+    "Scenarios where data governance and cataloguing overhead is disproportionate",
+    "Transactional workloads requiring ACID guarantees across the dataset"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Data Lake Storage",
+      "purpose": "Store raw and processed data at scale in open formats",
+      "technology": "S3, Azure Data Lake Storage Gen2, or Cloud Storage",
+      "platform": "Cloud object storage"
+    },
+    {
+      "name": "Data Catalogue",
+      "purpose": "Discover, classify, and govern data assets across the lake",
+      "technology": "AWS Glue Data Catalog, Azure Purview, or Dataplex",
+      "platform": "Cloud data governance"
+    },
+    {
+      "name": "ETL/ELT Engine",
+      "purpose": "Extract, transform, and load data from source systems into the lake",
+      "technology": "AWS Glue, Azure Data Factory, or Dataflow",
+      "platform": "Cloud data processing"
+    },
+    {
+      "name": "Query Engine",
+      "purpose": "Run SQL queries against data lake files without loading into a database",
+      "technology": "Amazon Athena, Azure Synapse, or BigQuery",
+      "platform": "Cloud analytics"
+    },
+    {
+      "name": "BI and Visualisation",
+      "purpose": "Create dashboards and reports for business users",
+      "technology": "QuickSight, Power BI, or Looker",
+      "platform": "Cloud BI service"
+    },
+    {
+      "name": "Data Quality Framework",
+      "purpose": "Validate data quality rules and flag anomalies",
+      "technology": "AWS Glue DataBrew, Azure Data Quality, or Great Expectations",
+      "platform": "Cloud or open-source"
+    }
+  ],
+  "securityControls": [
+    "Implement column-level and row-level security for sensitive data access",
+    "Encrypt all data at rest using platform-managed or customer-managed keys",
+    "Implement data classification tagging aligned to government security classifications",
+    "Apply lake-level access policies with IAM roles per data zone (raw, curated, published)",
+    "Implement data masking and tokenisation for PII in analytics environments",
+    "Audit log all data access queries and export operations"
+  ],
+  "resilienceConsiderations": [
+    "Object storage provides inherent durability (11 nines) without additional configuration",
+    "ETL pipelines should be idempotent and restartable from the last checkpoint",
+    "Implement data versioning to enable rollback of incorrect transformations",
+    "Query engines are stateless and can be restarted without data loss",
+    "Cross-region replication for disaster recovery of critical datasets"
+  ],
+  "costConsiderations": [
+    "Storage costs scale with data volume — implement lifecycle policies for cold data",
+    "Query costs depend on data scanned — partition and compress data to reduce costs",
+    "ETL compute costs incurred during processing windows only",
+    "BI tool licensing costs per user or per capacity unit",
+    "Consider the cost of data governance tooling and catalogue maintenance",
+    "Implement cost allocation tags to charge back to data-owning teams"
+  ],
+  "operationalConsiderations": [
+    "Data governance framework must be established before ingesting data",
+    "Data stewardship roles needed for each data domain",
+    "ETL pipeline monitoring for failures, data quality issues, and SLA breaches",
+    "Capacity planning for query concurrency during peak reporting periods",
+    "Data retention policies must comply with departmental and legal requirements",
+    "Training needed for analysts and data scientists on lake tools and governance"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon S3",
+          "purpose": "Scalable data lake storage with lifecycle management"
+        },
+        {
+          "name": "AWS Glue",
+          "purpose": "Serverless ETL and data cataloguing"
+        },
+        {
+          "name": "Amazon Athena",
+          "purpose": "Serverless SQL queries on S3 data"
+        },
+        {
+          "name": "Amazon QuickSight",
+          "purpose": "Business intelligence and dashboarding"
+        },
+        {
+          "name": "AWS Lake Formation",
+          "purpose": "Data lake governance and access control"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure Data Lake Storage Gen2",
+          "purpose": "Hierarchical data lake storage"
+        },
+        {
+          "name": "Azure Data Factory",
+          "purpose": "Data integration and ETL orchestration"
+        },
+        {
+          "name": "Azure Synapse Analytics",
+          "purpose": "Unified analytics with SQL and Spark"
+        },
+        {
+          "name": "Power BI",
+          "purpose": "Business intelligence and reporting"
+        },
+        {
+          "name": "Microsoft Purview",
+          "purpose": "Data governance and cataloguing"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Storage",
+          "purpose": "Data lake storage with object lifecycle"
+        },
+        {
+          "name": "Dataflow",
+          "purpose": "Stream and batch data processing"
+        },
+        {
+          "name": "BigQuery",
+          "purpose": "Serverless data warehouse and analytics"
+        },
+        {
+          "name": "Looker",
+          "purpose": "Business intelligence and data exploration"
+        },
+        {
+          "name": "Dataplex",
+          "purpose": "Data governance and lake management"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What data sources need to be ingested and what are their formats and volumes?",
+    "Who are the primary consumers of analytics outputs (executives, analysts, data scientists)?",
+    "What data governance framework exists or needs to be established?",
+    "Are there data residency requirements constraining where data can be stored?",
+    "What is the required data freshness — real-time, hourly, daily, or weekly?",
+    "Are there existing BI tools or reporting platforms that must be supported?"
+  ],
+  "commonMistakes": [
+    "Building a data lake without establishing data governance first, creating a data swamp",
+    "Ingesting all available data without clear use cases, wasting storage and processing costs",
+    "Not implementing data quality checks, propagating errors into downstream reports",
+    "Granting overly broad access to the lake without column-level security for sensitive data",
+    "Underestimating the ongoing operational cost of maintaining ETL pipelines and data quality"
+  ],
+  "workloadTypes": [
+    "analytics",
+    "data-platform",
+    "reporting",
+    "data-science"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "id": "event-driven",
+  "name": "Event-Driven Integration",
+  "description": "A pattern for loosely-coupled systems that communicate through asynchronous events rather than direct synchronous calls. Producers publish events to a broker or stream, and consumers process them independently. Ideal for workflows where eventual consistency is acceptable and systems need to evolve independently.",
+  "whenToUse": [
+    "Systems that need to react to state changes in other systems without tight coupling",
+    "Workflows where eventual consistency is acceptable and immediate response is not required",
+    "Scenarios requiring fan-out — one event triggers processing in multiple downstream systems",
+    "High-throughput data ingestion where producers should not wait for consumer processing",
+    "Decoupling legacy systems from modern services during phased modernisation"
+  ],
+  "whenNotToUse": [
+    "Scenarios requiring immediate synchronous responses to user actions",
+    "Simple request-response interactions between two well-known services",
+    "Workflows requiring strict ordering guarantees across all consumers",
+    "Small-scale integrations where the complexity of event infrastructure is disproportionate",
+    "Scenarios where strong transactional consistency across systems is mandatory"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Event Broker",
+      "purpose": "Receive, store, and distribute events to subscribed consumers",
+      "technology": "Amazon SNS/SQS, Azure Service Bus, or Google Pub/Sub",
+      "platform": "Cloud managed messaging"
+    },
+    {
+      "name": "Event Stream",
+      "purpose": "Provide ordered, replayable event log for stream processing",
+      "technology": "Amazon Kinesis, Azure Event Hubs, or Apache Kafka",
+      "platform": "Cloud managed streaming"
+    },
+    {
+      "name": "Event Producers",
+      "purpose": "Publish domain events when state changes occur",
+      "technology": "Application services with event publishing SDK",
+      "platform": "Cloud compute"
+    },
+    {
+      "name": "Event Consumers",
+      "purpose": "Subscribe to events and execute business logic asynchronously",
+      "technology": "Lambda functions, Azure Functions, or Cloud Functions",
+      "platform": "Cloud serverless or containers"
+    },
+    {
+      "name": "Dead Letter Queue",
+      "purpose": "Capture failed events for investigation and reprocessing",
+      "technology": "SQS DLQ, Azure Service Bus DLQ, or Pub/Sub DLQ",
+      "platform": "Cloud messaging"
+    },
+    {
+      "name": "Schema Registry",
+      "purpose": "Manage event schemas and enforce compatibility between versions",
+      "technology": "AWS Glue Schema Registry, Azure Schema Registry, or Confluent",
+      "platform": "Cloud or self-managed"
+    }
+  ],
+  "securityControls": [
+    "Encrypt events at rest and in transit using platform-managed encryption",
+    "Implement topic-level access policies restricting who can publish and subscribe",
+    "Validate event payloads against registered schemas before processing",
+    "Implement message signing to verify event authenticity and integrity",
+    "Audit log all subscription changes and access policy modifications",
+    "Apply principle of least privilege for consumer service roles"
+  ],
+  "resilienceConsiderations": [
+    "Events are inherently durable when stored in managed broker services",
+    "Dead letter queues prevent poison messages from blocking processing",
+    "Consumer failures do not impact producers — natural decoupling provides isolation",
+    "Implement idempotent consumers to handle duplicate event delivery safely",
+    "Design for at-least-once delivery semantics with deduplication where needed",
+    "Implement event replay capability for disaster recovery scenarios"
+  ],
+  "costConsiderations": [
+    "Messaging costs scale with event volume and retention period",
+    "Serverless consumers only incur costs when processing events",
+    "Stream processing costs depend on shard/partition count and throughput",
+    "Dead letter queue storage costs are minimal but should be monitored",
+    "Consider the operational cost of managing event schemas and versioning"
+  ],
+  "operationalConsiderations": [
+    "Monitoring must cover event lag, consumer processing rates, and DLQ depth",
+    "Event schema evolution requires careful versioning to avoid breaking consumers",
+    "Debugging distributed event flows requires correlation IDs and distributed tracing",
+    "Capacity planning needed for event broker throughput and retention",
+    "Runbooks needed for DLQ investigation and event reprocessing",
+    "Team must understand eventual consistency implications for user experience"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon EventBridge",
+          "purpose": "Serverless event bus for application integration"
+        },
+        {
+          "name": "Amazon SNS",
+          "purpose": "Pub/sub messaging for fan-out event distribution"
+        },
+        {
+          "name": "Amazon SQS",
+          "purpose": "Message queuing for reliable consumer processing"
+        },
+        {
+          "name": "Amazon Kinesis",
+          "purpose": "Real-time event streaming for high-throughput scenarios"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure Event Grid",
+          "purpose": "Reactive event routing with filtering"
+        },
+        {
+          "name": "Azure Service Bus",
+          "purpose": "Enterprise messaging with topics and subscriptions"
+        },
+        {
+          "name": "Azure Event Hubs",
+          "purpose": "High-throughput event streaming"
+        },
+        {
+          "name": "Azure Functions",
+          "purpose": "Serverless event processing"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Google Pub/Sub",
+          "purpose": "Global messaging with at-least-once delivery"
+        },
+        {
+          "name": "Eventarc",
+          "purpose": "Event routing from Google Cloud services"
+        },
+        {
+          "name": "Cloud Functions",
+          "purpose": "Serverless event-triggered processing"
+        },
+        {
+          "name": "Dataflow",
+          "purpose": "Stream processing for complex event transformations"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What are the acceptable latency bounds for event processing (seconds, minutes, hours)?",
+    "Is strict event ordering required or can consumers handle out-of-order delivery?",
+    "How will the team debug issues in distributed event flows?",
+    "What happens if a consumer fails — is data loss acceptable or must events be replayable?",
+    "Are there existing event schemas or standards within the organisation?",
+    "How many downstream consumers are expected for each event type?"
+  ],
+  "commonMistakes": [
+    "Using event-driven patterns for simple synchronous request-response scenarios",
+    "Not implementing dead letter queues, causing failed events to be silently lost",
+    "Assuming exactly-once delivery when the platform provides at-least-once semantics",
+    "Creating overly fine-grained events that generate excessive traffic and complexity",
+    "Not implementing correlation IDs, making distributed debugging nearly impossible"
+  ],
+  "workloadTypes": [
+    "integration",
+    "event-processing",
+    "async-workflows",
+    "data-ingestion"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

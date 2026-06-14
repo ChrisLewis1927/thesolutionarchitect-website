@@ -1,0 +1,10 @@
+{
+  "id": "accessibility",
+  "name": "Accessibility Requirements",
+  "category": "accessibility",
+  "description": "Public sector organisations must meet WCAG 2.2 AA accessibility standards under the Public Sector Bodies Accessibility Regulations 2018. Services must be perceivable, operable, understandable, and robust for all users including those using assistive technologies.",
+  "url": "https://www.gov.uk/guidance/accessibility-requirements-for-public-sector-websites-and-apps",
+  "applicableDomains": [
+    "compliance-assurance"
+  ]
+}

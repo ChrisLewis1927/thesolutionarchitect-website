@@ -1,0 +1,8 @@
+[
+  "Network architecture diagram showing segmentation, trust zones, and traffic flows between components and external systems.",
+  "Evidence of DDoS protection and WAF configuration for all public-facing endpoints, with documented rule sets and testing evidence.",
+  "Justification for network topology decisions including VPC design, subnet allocation, and connectivity to on-premises networks.",
+  "Confirmation that egress traffic is controlled and monitored, with documented justification for any internet-facing egress points.",
+  "Evidence that DNS architecture supports the availability and disaster recovery requirements (failover, health checks, routing policies).",
+  "Documentation of all network security controls (security groups, NACLs, firewall rules) with least-privilege justification."
+]

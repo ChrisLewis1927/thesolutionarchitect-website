@@ -1,0 +1,175 @@
+{
+  "id": "edge-protected-public",
+  "name": "Edge-Protected Public Service",
+  "description": "A pattern for public-facing services that require robust edge protection including DDoS mitigation, web application firewall, bot management, and CDN caching. Designed for high-profile government services that are frequent targets for cyber attacks and must maintain availability under adversarial conditions.",
+  "whenToUse": [
+    "High-profile public services that are likely targets for DDoS or application-layer attacks",
+    "Services handling sensitive citizen data that require defence-in-depth at the network edge",
+    "Public APIs exposed to the internet requiring rate limiting and abuse prevention",
+    "Services where availability must be maintained during active cyber attacks",
+    "Government services following NCSC Secure by Design principles for internet-facing systems"
+  ],
+  "whenNotToUse": [
+    "Internal-only services not exposed to the public internet",
+    "Low-profile services with minimal attack surface and low risk profile",
+    "Services behind VPN or corporate network that are not internet-accessible",
+    "Development and testing environments where edge protection adds unnecessary cost",
+    "Simple static websites with no dynamic content or user data"
+  ],
+  "typicalComponents": [
+    {
+      "name": "DDoS Protection",
+      "purpose": "Absorb and mitigate volumetric and protocol-level DDoS attacks",
+      "technology": "AWS Shield Advanced, Azure DDoS Protection, or Cloud Armor",
+      "platform": "Cloud edge security"
+    },
+    {
+      "name": "Web Application Firewall",
+      "purpose": "Inspect and filter HTTP traffic for application-layer attacks",
+      "technology": "AWS WAF, Azure WAF, or Cloud Armor WAF",
+      "platform": "Cloud edge security"
+    },
+    {
+      "name": "CDN with Edge Caching",
+      "purpose": "Cache content at edge locations to reduce origin load and improve performance",
+      "technology": "CloudFront, Azure Front Door, or Cloud CDN",
+      "platform": "Cloud CDN"
+    },
+    {
+      "name": "Bot Management",
+      "purpose": "Detect and block automated bot traffic while allowing legitimate crawlers",
+      "technology": "AWS WAF Bot Control, Azure Bot Protection, or reCAPTCHA Enterprise",
+      "platform": "Cloud security"
+    },
+    {
+      "name": "Origin Protection",
+      "purpose": "Ensure origin servers only accept traffic from the CDN/WAF layer",
+      "technology": "Origin Access Identity, Private Link, or IAP",
+      "platform": "Cloud networking"
+    }
+  ],
+  "securityControls": [
+    "Implement layered DDoS protection at network (L3/L4) and application (L7) layers",
+    "Configure WAF rules for OWASP Top 10 protection with custom rules for application-specific threats",
+    "Implement rate limiting per IP and per authenticated user to prevent abuse",
+    "Use geo-blocking to restrict access from countries where the service has no legitimate users",
+    "Implement TLS 1.2+ with strong cipher suites and certificate pinning where appropriate",
+    "Enable real-time security event logging and integrate with SIEM for threat detection",
+    "Implement CAPTCHA or proof-of-work challenges for suspicious traffic patterns"
+  ],
+  "resilienceConsiderations": [
+    "Edge protection services are globally distributed and inherently resilient",
+    "CDN caching can serve content even if origin is temporarily unavailable",
+    "DDoS protection absorbs attack traffic before it reaches application infrastructure",
+    "Implement origin failover for scenarios where primary origin becomes unreachable",
+    "Design rate limiting to protect the service without blocking legitimate users during peaks",
+    "Regular testing of WAF rules to ensure they don't block legitimate traffic"
+  ],
+  "costConsiderations": [
+    "DDoS protection services have fixed monthly costs plus per-incident charges",
+    "WAF costs scale with request volume and number of rules evaluated",
+    "CDN costs based on data transfer and request volume",
+    "Advanced bot management features carry premium pricing",
+    "Consider the cost of a successful attack (downtime, data breach) versus protection costs",
+    "Shield Advanced (AWS) includes DDoS cost protection for scaling during attacks"
+  ],
+  "operationalConsiderations": [
+    "WAF rules require ongoing tuning to balance security with false positive rates",
+    "Security operations team must monitor and respond to edge security alerts",
+    "Regular review of blocked traffic to identify false positives and legitimate users affected",
+    "Incident response procedures for active DDoS attacks",
+    "Coordination with NCSC for threat intelligence and attack response",
+    "Regular penetration testing to validate edge protection effectiveness"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "AWS Shield Advanced",
+          "purpose": "Managed DDoS protection with 24/7 response team"
+        },
+        {
+          "name": "AWS WAF",
+          "purpose": "Web application firewall with managed rule groups"
+        },
+        {
+          "name": "Amazon CloudFront",
+          "purpose": "CDN with integrated WAF and DDoS protection"
+        },
+        {
+          "name": "AWS Firewall Manager",
+          "purpose": "Centralised security policy management"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure DDoS Protection",
+          "purpose": "Network-level DDoS mitigation"
+        },
+        {
+          "name": "Azure Web Application Firewall",
+          "purpose": "Application-layer protection"
+        },
+        {
+          "name": "Azure Front Door",
+          "purpose": "Global CDN with integrated WAF"
+        },
+        {
+          "name": "Azure Sentinel",
+          "purpose": "SIEM for security event correlation"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Armor",
+          "purpose": "DDoS protection and WAF policies"
+        },
+        {
+          "name": "Cloud CDN",
+          "purpose": "Edge caching with security integration"
+        },
+        {
+          "name": "reCAPTCHA Enterprise",
+          "purpose": "Bot detection and challenge service"
+        },
+        {
+          "name": "Security Command Center",
+          "purpose": "Centralised security monitoring"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What is the threat profile for this service — is it a likely target for state-sponsored or hacktivist attacks?",
+    "What is the acceptable false positive rate for WAF rules blocking legitimate users?",
+    "Is there an existing relationship with NCSC for threat intelligence sharing?",
+    "What is the expected legitimate traffic volume and how does it differ from attack patterns?",
+    "Are there geographic restrictions on where the service should be accessible?",
+    "What is the incident response process for active cyber attacks?"
+  ],
+  "commonMistakes": [
+    "Deploying WAF with default rules only and never tuning for the specific application",
+    "Not testing WAF rules against legitimate traffic, causing false positives that block real users",
+    "Exposing origin servers directly, allowing attackers to bypass edge protection",
+    "Not implementing rate limiting, allowing application-layer attacks to exhaust resources",
+    "Treating edge protection as set-and-forget rather than continuously monitoring and tuning"
+  ],
+  "workloadTypes": [
+    "public-facing",
+    "high-security",
+    "internet-exposed",
+    "government-service"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

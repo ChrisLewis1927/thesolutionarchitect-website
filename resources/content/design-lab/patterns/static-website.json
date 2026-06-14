@@ -1,0 +1,171 @@
+{
+  "id": "static-website",
+  "name": "Static Website",
+  "description": "A pattern for delivering informational content through pre-rendered static pages served from a CDN or object storage. Suitable for public-facing informational services, campaign sites, and documentation portals where content changes infrequently and no server-side processing is required.",
+  "whenToUse": [
+    "Public informational services with no user authentication or personalisation",
+    "Campaign or promotional microsites with a defined lifespan",
+    "Documentation portals or knowledge bases with infrequent content updates",
+    "Services where maximum availability and minimal operational overhead are priorities",
+    "Content-heavy sites where page load performance is critical for accessibility"
+  ],
+  "whenNotToUse": [
+    "Services requiring user authentication or session management",
+    "Applications needing real-time data or dynamic content generation",
+    "Transactional services where users submit forms or make payments",
+    "Services requiring server-side business logic or database queries",
+    "Platforms needing personalised content based on user roles or preferences"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Static Site Generator",
+      "purpose": "Compile content into pre-rendered HTML pages at build time",
+      "technology": "Hugo, Eleventy, or Jekyll",
+      "platform": "Build pipeline"
+    },
+    {
+      "name": "Content Delivery Network",
+      "purpose": "Distribute static assets globally with low-latency edge caching",
+      "technology": "CloudFront, Azure CDN, or Cloud CDN",
+      "platform": "Cloud"
+    },
+    {
+      "name": "Object Storage",
+      "purpose": "Store and serve static HTML, CSS, JavaScript, and media files",
+      "technology": "S3, Azure Blob Storage, or Cloud Storage",
+      "platform": "Cloud"
+    },
+    {
+      "name": "DNS Management",
+      "purpose": "Route traffic to CDN distribution with health checks",
+      "technology": "Route 53, Azure DNS, or Cloud DNS",
+      "platform": "Cloud"
+    },
+    {
+      "name": "CI/CD Pipeline",
+      "purpose": "Automate build and deployment of static content on commit",
+      "technology": "GitHub Actions, Azure DevOps, or Cloud Build",
+      "platform": "Build pipeline"
+    }
+  ],
+  "securityControls": [
+    "Enforce HTTPS with TLS 1.2+ and HSTS headers on all responses",
+    "Implement Content Security Policy headers to prevent XSS and injection attacks",
+    "Configure WAF rules to block common attack patterns and bot traffic",
+    "Use signed URLs or origin access identity to prevent direct bucket access",
+    "Enable access logging on CDN and storage for audit trail",
+    "Implement Subresource Integrity for third-party scripts"
+  ],
+  "resilienceConsiderations": [
+    "CDN provides inherent multi-region redundancy through edge caching",
+    "Object storage offers 99.999999999% durability with cross-region replication",
+    "No server-side components means no single point of failure for compute",
+    "Implement cache invalidation strategy for content updates",
+    "Configure custom error pages for graceful degradation"
+  ],
+  "costConsiderations": [
+    "Extremely low running costs — primarily storage and data transfer charges",
+    "No compute costs as there are no servers to maintain",
+    "CDN costs scale linearly with traffic but remain low for typical government sites",
+    "Build pipeline costs are minimal and only incurred during deployments",
+    "Cost-effective for high-traffic sites due to edge caching reducing origin requests"
+  ],
+  "operationalConsiderations": [
+    "Minimal operational overhead — no servers to patch or scale",
+    "Content updates require a build and deploy cycle rather than direct editing",
+    "Monitoring focuses on CDN metrics, cache hit ratios, and availability",
+    "No on-call requirements for compute infrastructure",
+    "Content authors may need training on static site generator workflows"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon S3",
+          "purpose": "Static file hosting and origin storage"
+        },
+        {
+          "name": "Amazon CloudFront",
+          "purpose": "Global CDN distribution with edge caching"
+        },
+        {
+          "name": "AWS Certificate Manager",
+          "purpose": "TLS certificate provisioning and renewal"
+        },
+        {
+          "name": "AWS WAF",
+          "purpose": "Web application firewall for CDN protection"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure Blob Storage",
+          "purpose": "Static website hosting with custom domains"
+        },
+        {
+          "name": "Azure CDN",
+          "purpose": "Global content delivery with edge caching"
+        },
+        {
+          "name": "Azure Front Door",
+          "purpose": "Global load balancing with WAF integration"
+        },
+        {
+          "name": "Azure DNS",
+          "purpose": "DNS management with health probes"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Storage",
+          "purpose": "Static website hosting with object lifecycle management"
+        },
+        {
+          "name": "Cloud CDN",
+          "purpose": "Edge caching integrated with load balancing"
+        },
+        {
+          "name": "Cloud Armor",
+          "purpose": "DDoS protection and WAF policies"
+        },
+        {
+          "name": "Cloud DNS",
+          "purpose": "Managed DNS with DNSSEC support"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "How frequently will content be updated and who will be responsible for updates?",
+    "Is there a requirement for content preview or staging before publication?",
+    "Are there accessibility requirements beyond WCAG 2.1 AA compliance?",
+    "Will the site need to support multiple languages or locales?",
+    "What is the expected traffic volume and are there known peak periods?",
+    "Is there a requirement for search functionality within the static content?"
+  ],
+  "commonMistakes": [
+    "Using a static site pattern when the service actually requires user interaction or form submissions",
+    "Not implementing proper cache invalidation leading to stale content after updates",
+    "Exposing the origin storage bucket directly without CDN protection",
+    "Neglecting to set appropriate security headers on CDN responses",
+    "Over-engineering the build pipeline for what should be a simple content deployment"
+  ],
+  "workloadTypes": [
+    "informational",
+    "content-delivery",
+    "documentation",
+    "campaign"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

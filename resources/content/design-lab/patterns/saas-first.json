@@ -1,0 +1,162 @@
+{
+  "id": "saas-first",
+  "name": "SaaS-First",
+  "description": "A pattern that prioritises adopting Software-as-a-Service products over building custom solutions. Aligned with the UK Government Cloud First policy and Technology Code of Practice, this approach reduces operational burden by leveraging commercially available platforms for common business capabilities.",
+  "whenToUse": [
+    "Common business capabilities where mature SaaS products exist (CRM, HR, finance, collaboration)",
+    "Scenarios where speed to delivery is prioritised over customisation",
+    "Small teams without capacity to build and operate custom infrastructure",
+    "Non-differentiating capabilities that do not provide competitive advantage",
+    "Organisations seeking to reduce operational burden and technical debt"
+  ],
+  "whenNotToUse": [
+    "Unique business processes that cannot be supported by available SaaS products",
+    "Services handling SECRET or TOP SECRET data where SaaS hosting is not accredited",
+    "Scenarios requiring deep customisation that would fight against the SaaS product's design",
+    "Workloads with strict data residency requirements that SaaS providers cannot meet",
+    "Core differentiating capabilities where vendor lock-in would be strategically risky"
+  ],
+  "typicalComponents": [
+    {
+      "name": "SaaS Platform",
+      "purpose": "Provide the core business capability as a managed service",
+      "technology": "ServiceNow, Salesforce, Microsoft 365, or domain-specific SaaS",
+      "platform": "Vendor-hosted SaaS"
+    },
+    {
+      "name": "Identity Federation",
+      "purpose": "Integrate SaaS authentication with corporate identity provider",
+      "technology": "SAML 2.0 or OIDC federation with Azure AD or Okta",
+      "platform": "Identity platform"
+    },
+    {
+      "name": "Integration Layer",
+      "purpose": "Connect SaaS platform with internal systems via APIs",
+      "technology": "MuleSoft, Azure Logic Apps, or custom middleware",
+      "platform": "Cloud or on-premises"
+    },
+    {
+      "name": "Data Export/Backup",
+      "purpose": "Extract data from SaaS for backup, reporting, or migration purposes",
+      "technology": "Platform APIs with scheduled extraction jobs",
+      "platform": "Cloud compute"
+    },
+    {
+      "name": "Governance Dashboard",
+      "purpose": "Monitor SaaS usage, compliance, and cost across the organisation",
+      "technology": "Cloud Access Security Broker (CASB) or custom reporting",
+      "platform": "Cloud security"
+    }
+  ],
+  "securityControls": [
+    "Federate authentication through corporate identity provider — no separate credentials",
+    "Implement conditional access policies (device compliance, location, MFA)",
+    "Review SaaS provider's security certifications (ISO 27001, SOC 2, Cyber Essentials Plus)",
+    "Implement data loss prevention policies for sensitive data in SaaS platforms",
+    "Conduct supply chain risk assessment per NCSC guidance",
+    "Ensure contractual data processing agreements comply with UK GDPR"
+  ],
+  "resilienceConsiderations": [
+    "SaaS provider manages infrastructure resilience — review their SLA commitments",
+    "Implement data export strategy to avoid vendor lock-in and enable migration",
+    "Understand the provider's disaster recovery and business continuity capabilities",
+    "Plan for provider outages — identify manual workarounds for critical processes",
+    "Maintain awareness of provider's change management and deprecation policies"
+  ],
+  "costConsiderations": [
+    "Subscription licensing costs per user or per feature tier",
+    "Integration development costs to connect SaaS with internal systems",
+    "Potential cost savings from eliminating custom development and operations",
+    "Consider total cost of ownership including training, customisation, and data migration",
+    "Factor in contract exit costs and data extraction effort for future migration",
+    "Volume licensing discounts through Crown Commercial Service frameworks"
+  ],
+  "operationalConsiderations": [
+    "Reduced operational burden — vendor manages patching, scaling, and availability",
+    "Vendor relationship management and contract governance required",
+    "Change management for SaaS updates that may affect user workflows",
+    "User training and adoption support for new SaaS platforms",
+    "Data governance must extend to SaaS-hosted data",
+    "Exit strategy must be documented in case of vendor failure or contract end"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon WorkSpaces",
+          "purpose": "Virtual desktop as a service"
+        },
+        {
+          "name": "Amazon Connect",
+          "purpose": "Cloud contact centre service"
+        },
+        {
+          "name": "AWS Marketplace",
+          "purpose": "Procurement of third-party SaaS solutions"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Microsoft 365",
+          "purpose": "Productivity and collaboration suite"
+        },
+        {
+          "name": "Dynamics 365",
+          "purpose": "CRM and ERP as a service"
+        },
+        {
+          "name": "Power Platform",
+          "purpose": "Low-code application development"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Google Workspace",
+          "purpose": "Productivity and collaboration suite"
+        },
+        {
+          "name": "Looker",
+          "purpose": "Business intelligence as a service"
+        },
+        {
+          "name": "AppSheet",
+          "purpose": "No-code application development"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "Has a market assessment been conducted to identify suitable SaaS products?",
+    "What are the data residency and sovereignty requirements for this workload?",
+    "What is the exit strategy if the SaaS provider fails or the contract ends?",
+    "Can the SaaS product meet the required security classification without customisation?",
+    "What integrations are needed between the SaaS platform and internal systems?",
+    "Is the SaaS product available through Crown Commercial Service frameworks?"
+  ],
+  "commonMistakes": [
+    "Heavily customising a SaaS product to the point where upgrades become impossible",
+    "Not conducting a proper supply chain risk assessment before procurement",
+    "Failing to plan an exit strategy, creating unacceptable vendor lock-in",
+    "Choosing SaaS for a capability that requires deep customisation unique to the organisation",
+    "Not federating identity, creating credential sprawl and security gaps"
+  ],
+  "workloadTypes": [
+    "saas",
+    "cots",
+    "productivity",
+    "crm",
+    "collaboration"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

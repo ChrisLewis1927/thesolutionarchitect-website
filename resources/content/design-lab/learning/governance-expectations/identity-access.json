@@ -1,0 +1,8 @@
+[
+  "Identity architecture showing authentication flows for all user types (citizens, internal staff, administrators, service accounts).",
+  "Evidence that least-privilege access is applied with regular access reviews and automated removal of unused permissions.",
+  "MFA implementation for all administrative access and sensitive operations, with documented MFA policy and enforcement mechanism.",
+  "Privileged access management approach including just-in-time access, session recording, and break-glass procedures.",
+  "Integration with approved identity providers (GOV.UK One Login for citizens, departmental directory services for staff).",
+  "Documented approach to service-to-service authentication using short-lived credentials and workload identity where possible."
+]

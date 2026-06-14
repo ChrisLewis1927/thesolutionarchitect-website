@@ -1,0 +1,223 @@
+{
+  "domain": "networking-edge",
+  "description": "Assesses the appropriate networking and edge protection strategy based on service type, data sensitivity, user base, and availability requirements.",
+  "rules": [
+    {
+      "id": "ne-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "public-facing" },
+          { "field": "userBase.expectedUsers", "operator": "in", "values": ["10000-100000", "over-100000"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "CDN with WAF and DDoS Protection",
+        "rationale": "Public-facing services with large user bases require edge protection including a Content Delivery Network for performance, a Web Application Firewall for security, and DDoS mitigation. This layered approach protects the origin while improving user experience through caching and geographic distribution.",
+        "candidateTechnologies": [
+          { "name": "AWS CloudFront + WAF + Shield", "platform": "aws", "category": "edge-protection" },
+          { "name": "Azure Front Door + WAF", "platform": "azure", "category": "edge-protection" },
+          { "name": "Google Cloud Armor + Cloud CDN", "platform": "gcp", "category": "edge-protection" },
+          { "name": "Cloudflare", "platform": "saas", "category": "edge-protection" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires security team involvement for WAF rule management; CDN configuration needs performance engineering input",
+          "skillsRequired": ["cdn-configuration", "waf-rule-management", "dns-management", "tls-certificate-management"],
+          "toolingRequired": ["waf-rule-testing", "cdn-analytics", "real-user-monitoring", "security-event-alerting"],
+          "ongoingMaintenance": "WAF rule updates, certificate rotation, cache invalidation strategy, and DDoS response procedures"
+        },
+        "costConsiderations": {
+          "runningCosts": "CDN costs based on data transfer and requests; WAF costs based on rules and requests; DDoS protection may have fixed monthly cost",
+          "transitionCosts": "DNS migration; CDN configuration; WAF rule development and testing",
+          "costDrivers": ["data-transfer-volume", "request-count", "waf-rule-count", "ddos-protection-tier"],
+          "optimisationOpportunities": ["cache-hit-ratio-optimisation", "origin-shield", "request-collapsing", "tiered-caching"]
+        }
+      }
+    },
+    {
+      "id": "ne-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "internal" },
+          { "field": "dataSensitivity.classification", "operator": "in", "values": ["official-sensitive", "secret"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Private Network with Zero Trust Access",
+        "rationale": "Internal services handling sensitive data should use private networking with zero trust principles. This means no implicit trust based on network location; every request is authenticated and authorised regardless of source. Private endpoints eliminate public internet exposure.",
+        "candidateTechnologies": [
+          { "name": "AWS PrivateLink", "platform": "aws", "category": "private-networking" },
+          { "name": "AWS VPC", "platform": "aws", "category": "virtual-network" },
+          { "name": "Azure Private Link", "platform": "azure", "category": "private-networking" },
+          { "name": "Azure Virtual Network", "platform": "azure", "category": "virtual-network" },
+          { "name": "Google VPC", "platform": "gcp", "category": "virtual-network" },
+          { "name": "Zscaler", "platform": "saas", "category": "zero-trust-access" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires network engineering expertise; zero trust implementation needs security architecture input",
+          "skillsRequired": ["network-architecture", "zero-trust-design", "private-endpoint-configuration", "network-security-groups"],
+          "toolingRequired": ["network-monitoring", "flow-logs", "identity-aware-proxy", "network-policy-management"],
+          "ongoingMaintenance": "Network policy reviews, access rule updates, connectivity monitoring, and security posture assessment"
+        },
+        "costConsiderations": {
+          "runningCosts": "Private endpoint costs; VPN/ExpressRoute costs; zero trust platform licensing",
+          "transitionCosts": "Network redesign; zero trust implementation; application changes for private endpoints",
+          "costDrivers": ["private-endpoint-count", "data-processing", "vpn-bandwidth", "zero-trust-licensing"],
+          "optimisationOpportunities": ["consolidate-private-endpoints", "hub-spoke-network-topology", "shared-transit-gateway"]
+        }
+      }
+    },
+    {
+      "id": "ne-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "api-service" },
+          { "field": "integrations.systems", "operator": "hasExternal", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "API Gateway with Network Segmentation",
+        "rationale": "API services with external integrations require network segmentation to isolate external-facing components from internal systems. An API gateway at the network boundary provides a controlled entry point with rate limiting, authentication, and request validation.",
+        "candidateTechnologies": [
+          { "name": "AWS API Gateway (private)", "platform": "aws", "category": "api-gateway" },
+          { "name": "AWS Network Load Balancer", "platform": "aws", "category": "load-balancer" },
+          { "name": "Azure Application Gateway", "platform": "azure", "category": "load-balancer" },
+          { "name": "Azure API Management (internal VNet)", "platform": "azure", "category": "api-gateway" },
+          { "name": "Google Cloud Load Balancing", "platform": "gcp", "category": "load-balancer" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires network and security team collaboration; API gateway configuration needs developer input",
+          "skillsRequired": ["network-segmentation", "api-gateway-configuration", "tls-termination", "ip-whitelisting"],
+          "toolingRequired": ["network-flow-monitoring", "api-analytics", "security-group-auditing", "certificate-management"],
+          "ongoingMaintenance": "Certificate rotation, IP whitelist updates, security group reviews, and gateway scaling"
+        },
+        "costConsiderations": {
+          "runningCosts": "Load balancer and gateway costs; data processing charges; certificate management",
+          "transitionCosts": "Network architecture design; security group configuration; testing with external partners",
+          "costDrivers": ["data-processing", "connection-count", "certificate-count", "availability-zones"],
+          "optimisationOpportunities": ["consolidate-load-balancers", "use-gateway-caching", "optimise-health-checks"]
+        }
+      }
+    },
+    {
+      "id": "ne-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "availability.targetAvailability", "operator": "in", "values": ["99.95", "99.99"] },
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": false }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Multi-AZ Network Architecture with Redundant Connectivity",
+        "rationale": "Services requiring very high availability need network architecture spanning multiple availability zones with redundant connectivity paths. This eliminates single points of failure at the network layer and ensures service continuity during zone-level failures.",
+        "candidateTechnologies": [
+          { "name": "AWS Transit Gateway", "platform": "aws", "category": "network-connectivity" },
+          { "name": "AWS Global Accelerator", "platform": "aws", "category": "global-networking" },
+          { "name": "Azure Virtual WAN", "platform": "azure", "category": "network-connectivity" },
+          { "name": "Azure Traffic Manager", "platform": "azure", "category": "global-networking" },
+          { "name": "Google Cloud Interconnect", "platform": "gcp", "category": "network-connectivity" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires senior network engineer; multi-AZ architecture adds complexity to troubleshooting",
+          "skillsRequired": ["multi-az-networking", "routing-protocols", "failover-design", "network-troubleshooting"],
+          "toolingRequired": ["network-path-monitoring", "failover-testing-tools", "traffic-flow-analysis", "latency-monitoring"],
+          "ongoingMaintenance": "Failover testing, routing table management, connectivity monitoring, and capacity planning across zones"
+        },
+        "costConsiderations": {
+          "runningCosts": "Cross-AZ data transfer costs; redundant connectivity charges; global accelerator fees",
+          "transitionCosts": "Network architecture redesign; multi-AZ deployment; failover testing",
+          "costDrivers": ["cross-az-data-transfer", "redundant-connections", "global-accelerator", "monitoring"],
+          "optimisationOpportunities": ["minimise-cross-az-traffic", "use-vpc-endpoints", "optimise-routing"]
+        }
+      }
+    },
+    {
+      "id": "ne-005",
+      "priority": 8,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises Network with Perimeter Security",
+        "rationale": "Without cloud access, networking relies on traditional on-premises infrastructure with perimeter-based security. While zero trust principles should still be applied where possible, the implementation will use physical and virtual network segmentation with firewalls and intrusion detection.",
+        "candidateTechnologies": [
+          { "name": "Palo Alto Networks", "platform": "on-premises", "category": "firewall" },
+          { "name": "F5 BIG-IP", "platform": "on-premises", "category": "load-balancer" },
+          { "name": "Cisco ACI", "platform": "on-premises", "category": "network-fabric" },
+          { "name": "VMware NSX", "platform": "on-premises", "category": "network-virtualisation" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated network operations team; physical infrastructure management",
+          "skillsRequired": ["network-engineering", "firewall-management", "load-balancer-configuration", "physical-networking"],
+          "toolingRequired": ["network-monitoring", "firewall-management-console", "intrusion-detection", "vulnerability-scanning"],
+          "ongoingMaintenance": "Firmware updates, firewall rule management, certificate management, and capacity planning"
+        },
+        "costConsiderations": {
+          "runningCosts": "Hardware maintenance contracts; licensing; staffing; power and cooling",
+          "transitionCosts": "Hardware procurement; installation; configuration; testing",
+          "costDrivers": ["hardware-refresh", "licensing", "staffing", "data-centre-costs"],
+          "optimisationOpportunities": ["consolidate-firewalls", "virtualise-network-functions", "consider-hybrid-connectivity"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Managed Load Balancer with WAF",
+    "rationale": "When no specific conditions strongly favour an alternative, a managed load balancer with WAF provides basic edge protection suitable for most government services. This handles TLS termination, basic DDoS protection, and request routing without complex configuration.",
+    "candidateTechnologies": [
+      { "name": "AWS Application Load Balancer + WAF", "platform": "aws", "category": "load-balancer" },
+      { "name": "Azure Application Gateway + WAF", "platform": "azure", "category": "load-balancer" },
+      { "name": "Google Cloud Load Balancing + Cloud Armor", "platform": "gcp", "category": "load-balancer" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Standard development team can manage basic configuration",
+      "skillsRequired": ["load-balancer-basics", "tls-configuration", "dns-management"],
+      "toolingRequired": ["health-check-monitoring", "certificate-management"],
+      "ongoingMaintenance": "Certificate rotation and health check configuration"
+    },
+    "costConsiderations": {
+      "runningCosts": "Moderate; based on data processed and connection count",
+      "transitionCosts": "DNS configuration and TLS certificate setup",
+      "costDrivers": ["data-processed", "connection-count"],
+      "optimisationOpportunities": ["connection-reuse", "health-check-optimisation"]
+    }
+  },
+  "relevantStandards": [
+    "ncsc-cloud-security",
+    "secure-by-design",
+    "tcop"
+  ],
+  "commonQuestions": [
+    "Is the service internet-facing or internal only?",
+    "What DDoS protection level is required?",
+    "Are there specific IP whitelisting requirements?",
+    "Is there existing network infrastructure to integrate with?",
+    "What are the latency requirements for end users?",
+    "Is there a requirement for geographic distribution?"
+  ],
+  "evidenceNeeded": [
+    "Network architecture diagram showing connectivity requirements",
+    "Traffic flow analysis including expected bandwidth",
+    "Security requirements for network segmentation",
+    "Latency requirements and user geographic distribution",
+    "Existing network infrastructure inventory"
+  ],
+  "artefactsToProduce": [
+    "Network architecture decision record (ADR)",
+    "Network topology diagram",
+    "Firewall and security group rules specification",
+    "DNS and certificate management plan",
+    "DDoS response procedure"
+  ]
+}

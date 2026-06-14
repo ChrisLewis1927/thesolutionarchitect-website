@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Flat Network with No Segmentation",
+    "description": "Deploying all workloads into a single network segment without separation between tiers, environments, or trust levels.",
+    "whyProblematic": "Allows lateral movement if any single component is compromised. Violates zero-trust principles and NCSC network security guidance. Makes it impossible to apply different security controls to different data classifications. Audit and compliance teams will reject designs without network segmentation. Blast radius of any incident encompasses the entire estate.",
+    "betterApproach": "Implement network segmentation by tier (web, application, data), by environment (production, staging, development), and by data classification. Use security groups, NACLs, and firewall rules to enforce least-privilege network access. Apply micro-segmentation for sensitive workloads."
+  },
+  {
+    "name": "No DDoS Protection for Public-Facing Services",
+    "description": "Exposing government services directly to the internet without DDoS mitigation, WAF, or rate limiting.",
+    "whyProblematic": "Government services are frequent targets for DDoS attacks. Without protection, even modest attacks can render services unavailable to citizens. Violates NCSC guidance on protecting public-facing services. Recovery from unmitigated attacks is slow and manual. Reputational damage from service outages is significant.",
+    "betterApproach": "Deploy a CDN with DDoS protection (CloudFront + Shield, Azure Front Door, Cloud Armor) in front of all public-facing services. Implement WAF rules for common attack patterns. Apply rate limiting at the edge. Use geo-blocking where appropriate. Have a DDoS response runbook tested and ready."
+  },
+  {
+    "name": "Hardcoded IP Addresses and DNS Bypass",
+    "description": "Configuring integrations using IP addresses rather than DNS names, or bypassing DNS resolution for service discovery.",
+    "whyProblematic": "Makes infrastructure changes (migration, failover, scaling) require application changes. Prevents use of DNS-based traffic management for blue-green deployments or disaster recovery. Creates hidden dependencies that are difficult to discover during change impact analysis. Breaks when cloud infrastructure assigns new IPs after maintenance.",
+    "betterApproach": "Always use DNS names for service discovery. Implement service discovery patterns appropriate to the platform (Route 53, Azure DNS, Cloud DNS). Use private hosted zones for internal services. Set appropriate TTLs to balance caching with failover speed. Document all DNS dependencies."
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Point-to-Point Integration Sprawl",
+    "description": "Connecting every system directly to every other system it needs to communicate with, creating a web of bilateral integrations without a coherent integration strategy.",
+    "whyProblematic": "Creates exponential complexity as systems grow (n systems = n×(n-1)/2 connections). Makes change impact analysis nearly impossible. Each integration is bespoke with different error handling, retry logic, and monitoring. Replacing any single system requires updating all its integration partners. Common in legacy government estates.",
+    "betterApproach": "Adopt an integration pattern appropriate to the context: API gateway for synchronous request/response, message broker for asynchronous event-driven communication, or integration platform for complex orchestration. Standardise on common protocols, data formats, and error handling patterns."
+  },
+  {
+    "name": "Synchronous Calls for Everything",
+    "description": "Making all inter-service communication synchronous REST calls, even for operations that don't require an immediate response.",
+    "whyProblematic": "Creates tight temporal coupling — if any downstream service is slow or unavailable, the entire chain fails. Increases latency as calls are sequential. Makes the system brittle under load. Long-running operations block threads and exhaust connection pools. Users experience timeouts for operations that could complete asynchronously.",
+    "betterApproach": "Use asynchronous messaging for operations that don't need immediate responses (notifications, batch processing, data synchronisation). Apply the async request-reply pattern for long-running operations. Reserve synchronous calls for queries and operations where the user genuinely needs an immediate answer."
+  },
+  {
+    "name": "No API Versioning Strategy",
+    "description": "Publishing APIs without version management, making breaking changes directly to existing endpoints.",
+    "whyProblematic": "Breaking changes force all consumers to update simultaneously, which is impractical in government where multiple departments and suppliers consume shared APIs. Creates deployment coupling between independent teams. Violates the GOV.UK API technical standards which require backwards compatibility and deprecation notices.",
+    "betterApproach": "Implement API versioning from day one (URL path versioning or header-based). Maintain backwards compatibility within a version. Provide deprecation notices with migration timelines. Support at least two concurrent versions during transition periods. Document breaking vs non-breaking change policies."
+  },
+  {
+    "name": "Exposing Internal Data Models as API Contracts",
+    "description": "Directly serialising internal database entities or domain objects as API responses without a dedicated API contract layer.",
+    "whyProblematic": "Couples API consumers to internal implementation details. Any database schema change becomes a breaking API change. Exposes more data than consumers need, increasing security risk. Makes it impossible to evolve the internal model independently of the API contract. Violates information hiding principles.",
+    "betterApproach": "Define explicit API contracts (OpenAPI/Swagger) independent of internal models. Use DTOs or view models to map between internal and external representations. Apply the principle of least privilege — only expose data that consumers need. Version API contracts independently of internal releases."
+  }
+]

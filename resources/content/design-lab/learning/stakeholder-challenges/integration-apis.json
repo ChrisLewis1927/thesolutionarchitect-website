@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "How are API consumers authenticated and authorised, and how are tokens managed?",
+      "What input validation is applied to prevent injection attacks through integration points?",
+      "How is sensitive data protected in transit between systems, including within the internal network?",
+      "What rate limiting and throttling prevents abuse of exposed APIs?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "How will you monitor the health of all integration points and detect failures quickly?",
+      "What happens when a downstream dependency becomes unavailable — does the service degrade gracefully?",
+      "How are integration errors investigated and resolved across organisational boundaries?",
+      "What is the on-call burden for maintaining integrations with external systems?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How will you test integrations when dependent systems are not available in lower environments?",
+      "What is the API versioning strategy and how will breaking changes be communicated to consumers?",
+      "How are integration contracts defined and validated (contract testing, schema validation)?",
+      "What is the lead time for establishing new integrations with external parties?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What are the per-transaction costs for third-party API calls at projected volumes?",
+      "Are there licensing costs for integration middleware or API management platforms?",
+      "What is the cost of maintaining bespoke integrations versus using standard platforms?",
+      "How do integration costs scale if transaction volumes increase significantly?"
+    ]
+  }
+]

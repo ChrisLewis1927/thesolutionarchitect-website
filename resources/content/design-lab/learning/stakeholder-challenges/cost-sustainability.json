@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "Are cost optimisation measures (shared tenancy, reduced redundancy) compromising security controls?",
+      "Does the cost model account for security tooling, monitoring, and incident response capabilities?",
+      "Are cheaper alternatives being considered that would not meet security classification requirements?",
+      "How are security costs justified in terms of risk reduction and compliance obligations?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "Does the cost model account for operational staffing, on-call, and incident management?",
+      "Are cost savings from automation being reinvested in operational capability?",
+      "How will you balance cost optimisation with operational resilience (e.g., reducing redundancy to save money)?",
+      "What is the operational cost of managing cost optimisation itself (tagging, reporting, reviews)?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "Does the budget allow for sufficient development and testing environments?",
+      "Are cost constraints limiting technology choices that would improve delivery speed?",
+      "How are cloud costs allocated between development activities and production running costs?",
+      "What is the cost of technical debt and is it factored into the total cost model?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What is the total cost of ownership over 3-5 years including all direct and indirect costs?",
+      "How predictable are the costs and what is the variance between forecast and actual?",
+      "What cost governance is in place to prevent budget overruns?",
+      "How does this compare to alternative approaches (build vs buy, cloud vs on-premises)?"
+    ]
+  }
+]

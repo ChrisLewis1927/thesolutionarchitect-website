@@ -1,0 +1,8 @@
+[
+  "Documented integration architecture showing all system connections, data flows, protocols, and trust boundaries.",
+  "API versioning strategy with backwards compatibility policy and consumer migration approach for breaking changes.",
+  "Evidence that integration patterns (synchronous, asynchronous, event-driven) are chosen based on coupling requirements and failure tolerance.",
+  "Security controls for all integration points including authentication, authorisation, input validation, and rate limiting.",
+  "Monitoring and alerting for integration health including latency, error rates, and availability of dependent systems.",
+  "Documented fallback behaviour when dependent systems are unavailable, with evidence of graceful degradation testing."
+]

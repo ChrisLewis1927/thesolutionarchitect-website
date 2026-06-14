@@ -1,0 +1,106 @@
+{
+  "id": "hybrid-cloud",
+  "name": "Hybrid Cloud",
+  "description": "A pattern for workloads that span both on-premises infrastructure and cloud services, connected through secure networking. Common in government where legacy systems cannot be migrated immediately, data sovereignty requires on-premises hosting, or a phased cloud migration strategy is in progress.",
+  "whenToUse": [
+    "Phased cloud migration where some workloads remain on-premises during transition",
+    "Data sovereignty requirements mandating certain data remains on-premises",
+    "Legacy systems that cannot be migrated but need to integrate with cloud services",
+    "Workloads requiring burst capacity in cloud while maintaining on-premises baseline",
+    "Organisations with existing on-premises investment that cannot be immediately decommissioned"
+  ],
+  "whenNotToUse": [
+    "New greenfield services with no on-premises dependency — use cloud-native instead",
+    "Workloads that can be fully migrated to cloud without hybrid complexity",
+    "Scenarios where the cost and complexity of hybrid networking is disproportionate",
+    "Small-scale services where maintaining two environments is operationally burdensome",
+    "Services where latency between on-premises and cloud would degrade user experience"
+  ],
+  "typicalComponents": [
+    { "name": "Hybrid Network Connectivity", "purpose": "Provide secure, reliable connectivity between on-premises and cloud environments", "technology": "AWS Direct Connect, Azure ExpressRoute, or Cloud Interconnect", "platform": "Network connectivity" },
+    { "name": "VPN Backup", "purpose": "Provide encrypted backup connectivity if dedicated links fail", "technology": "Site-to-Site VPN with IPsec", "platform": "Cloud networking" },
+    { "name": "Identity Federation", "purpose": "Extend on-premises identity to cloud services for seamless authentication", "technology": "AD Federation, Azure AD Connect, or Cloud Identity Federation", "platform": "Identity platform" },
+    { "name": "Hybrid DNS", "purpose": "Resolve names across on-premises and cloud environments", "technology": "Route 53 Resolver, Azure Private DNS, or Cloud DNS forwarding", "platform": "Cloud DNS" },
+    { "name": "Integration Middleware", "purpose": "Bridge communication between on-premises and cloud-hosted services", "technology": "API Gateway with VPN backend, Service Bus, or MQ", "platform": "Cloud or on-premises middleware" },
+    { "name": "Unified Monitoring", "purpose": "Provide single-pane visibility across on-premises and cloud infrastructure", "technology": "Datadog, Dynatrace, or cloud-native with on-premises agents", "platform": "Monitoring platform" }
+  ],
+  "securityControls": [
+    "Encrypt all traffic between on-premises and cloud using IPsec or MACsec",
+    "Implement network segmentation with firewall rules at the hybrid boundary",
+    "Extend identity and access management consistently across both environments",
+    "Implement consistent security monitoring and SIEM across hybrid estate",
+    "Apply zero-trust principles — do not assume trust based on network location",
+    "Regularly audit hybrid network connectivity for unauthorised access paths",
+    "Implement data classification to determine which data can traverse the hybrid boundary"
+  ],
+  "resilienceConsiderations": [
+    "Dedicated connectivity (Direct Connect/ExpressRoute) with VPN failover for redundancy",
+    "Design for graceful degradation if connectivity between environments is lost",
+    "Implement health checks that detect cross-environment connectivity failures",
+    "Consider data replication strategy for services spanning both environments",
+    "Plan for scenarios where cloud services are available but on-premises is not, and vice versa",
+    "Test failover between primary and backup connectivity regularly"
+  ],
+  "costConsiderations": [
+    "Dedicated connectivity has significant monthly port and data transfer costs",
+    "Running infrastructure in two environments increases overall operational costs",
+    "On-premises hardware refresh cycles continue alongside cloud consumption costs",
+    "Hybrid networking equipment and configuration management adds complexity costs",
+    "Factor in the cost of maintaining skills for both on-premises and cloud operations",
+    "Plan for eventual full migration to reduce long-term hybrid overhead"
+  ],
+  "operationalConsiderations": [
+    "Team must maintain expertise in both on-premises and cloud operations",
+    "Change management must coordinate across both environments",
+    "Monitoring must provide unified visibility across the hybrid estate",
+    "Incident response procedures must cover cross-environment failure scenarios",
+    "Capacity planning needed for both on-premises hardware and cloud resources",
+    "Migration roadmap should define timeline for reducing hybrid complexity"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        { "name": "AWS Direct Connect", "purpose": "Dedicated network connectivity to on-premises" },
+        { "name": "AWS Site-to-Site VPN", "purpose": "Encrypted backup connectivity" },
+        { "name": "AWS Outposts", "purpose": "AWS infrastructure running on-premises" },
+        { "name": "Amazon Route 53 Resolver", "purpose": "Hybrid DNS resolution" }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        { "name": "Azure ExpressRoute", "purpose": "Dedicated network connectivity to on-premises" },
+        { "name": "Azure VPN Gateway", "purpose": "Encrypted site-to-site connectivity" },
+        { "name": "Azure Arc", "purpose": "Manage on-premises resources through Azure control plane" },
+        { "name": "Azure AD Connect", "purpose": "Identity synchronisation between on-premises and cloud" }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        { "name": "Cloud Interconnect", "purpose": "Dedicated connectivity to on-premises" },
+        { "name": "Cloud VPN", "purpose": "Encrypted site-to-site connectivity" },
+        { "name": "Anthos", "purpose": "Manage workloads across on-premises and cloud" },
+        { "name": "Cloud DNS", "purpose": "Hybrid DNS with forwarding zones" }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What workloads must remain on-premises and why (technical, regulatory, or commercial)?",
+    "Is there a migration roadmap to reduce hybrid complexity over time?",
+    "What bandwidth and latency requirements exist between on-premises and cloud?",
+    "Is dedicated connectivity (Direct Connect/ExpressRoute) already provisioned?",
+    "How will identity and access management work across both environments?",
+    "What is the disaster recovery strategy for the hybrid connectivity itself?"
+  ],
+  "commonMistakes": [
+    "Treating hybrid as a permanent architecture rather than a transitional state with a migration plan",
+    "Not implementing redundant connectivity, creating a single point of failure at the network boundary",
+    "Assuming on-premises security controls automatically extend to cloud resources",
+    "Underestimating the operational complexity of managing two distinct environments",
+    "Not implementing unified monitoring, creating blind spots at the hybrid boundary"
+  ],
+  "workloadTypes": ["hybrid", "migration", "on-premises-integration", "legacy-modernisation"],
+  "securityClassifications": ["official", "official-sensitive", "secret"]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "govuk-service-standard",
+  "name": "GOV.UK Service Standard",
+  "category": "government-policy",
+  "description": "A set of 14 criteria that government digital services must meet. It covers understanding users, solving whole problems, providing a joined-up experience, making the service simple to use, ensuring reliability, and operating a secure service.",
+  "url": "https://www.gov.uk/service-manual/service-standard",
+  "applicableDomains": [
+    "hosting-compute",
+    "integration-apis",
+    "identity-access",
+    "security-controls",
+    "resilience-dr",
+    "observability-operations",
+    "compliance-assurance"
+  ]
+}

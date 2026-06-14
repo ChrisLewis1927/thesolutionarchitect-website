@@ -1,0 +1,222 @@
+{
+  "domain": "deployment-release",
+  "description": "Assesses the appropriate deployment and release strategy based on deployment preference, team capability, availability requirements, and service type.",
+  "rules": [
+    {
+      "id": "dr-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "deployment.preference", "operator": "in", "values": ["containerised", "cloud-native"] },
+          { "field": "teamCapability.cloudExperience", "operator": "in", "values": ["intermediate", "advanced"] },
+          { "field": "availability.targetAvailability", "operator": "in", "values": ["99.9", "99.95", "99.99"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "GitOps with Progressive Delivery",
+        "rationale": "High-availability containerised services with experienced teams benefit from GitOps-based deployment with progressive delivery (canary or blue-green). This provides automated, auditable deployments with the ability to detect and roll back problematic releases before they affect all users.",
+        "candidateTechnologies": [
+          { "name": "AWS CodePipeline + CodeDeploy", "platform": "aws", "category": "ci-cd" },
+          { "name": "ArgoCD", "platform": "multi-cloud", "category": "gitops" },
+          { "name": "Flux", "platform": "multi-cloud", "category": "gitops" },
+          { "name": "Azure DevOps Pipelines", "platform": "azure", "category": "ci-cd" },
+          { "name": "Google Cloud Deploy", "platform": "gcp", "category": "ci-cd" },
+          { "name": "GitHub Actions", "platform": "multi-cloud", "category": "ci-cd" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires platform engineering capability; GitOps tooling needs initial setup investment but reduces ongoing deployment risk",
+          "skillsRequired": ["gitops", "progressive-delivery", "canary-analysis", "infrastructure-as-code", "container-orchestration"],
+          "toolingRequired": ["gitops-controller", "ci-cd-pipeline", "canary-analysis-tools", "deployment-monitoring", "rollback-automation"],
+          "ongoingMaintenance": "Pipeline maintenance, canary threshold tuning, GitOps repository management, and deployment monitoring"
+        },
+        "costConsiderations": {
+          "runningCosts": "CI/CD pipeline execution costs; GitOps controller infrastructure; canary infrastructure during deployments",
+          "transitionCosts": "GitOps tooling setup; pipeline development; team training on progressive delivery",
+          "costDrivers": ["pipeline-execution-minutes", "gitops-infrastructure", "canary-replica-costs", "artifact-storage"],
+          "optimisationOpportunities": ["cache-build-artifacts", "parallel-pipeline-stages", "spot-instances-for-ci"]
+        }
+      }
+    },
+    {
+      "id": "dr-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "deployment.preference", "operator": "equals", "value": "serverless" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Serverless Deployment with Traffic Shifting",
+        "rationale": "Serverless deployments benefit from built-in traffic shifting capabilities that allow gradual rollout of new function versions. This provides safe deployments without managing deployment infrastructure, with automatic rollback on error rate increases.",
+        "candidateTechnologies": [
+          { "name": "AWS SAM/CloudFormation", "platform": "aws", "category": "serverless-deployment" },
+          { "name": "AWS Lambda Aliases (traffic shifting)", "platform": "aws", "category": "progressive-delivery" },
+          { "name": "Azure Functions Deployment Slots", "platform": "azure", "category": "progressive-delivery" },
+          { "name": "Google Cloud Functions (traffic splitting)", "platform": "gcp", "category": "progressive-delivery" },
+          { "name": "Serverless Framework", "platform": "multi-cloud", "category": "serverless-deployment" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Standard development team can manage; serverless deployment tooling handles most complexity",
+          "skillsRequired": ["serverless-deployment", "infrastructure-as-code", "traffic-shifting-configuration", "rollback-procedures"],
+          "toolingRequired": ["serverless-deployment-framework", "ci-cd-pipeline", "deployment-monitoring", "error-rate-alerting"],
+          "ongoingMaintenance": "Pipeline updates, deployment configuration reviews, and rollback procedure testing"
+        },
+        "costConsiderations": {
+          "runningCosts": "Minimal; serverless deployment costs are negligible compared to runtime costs",
+          "transitionCosts": "Deployment framework setup; CI/CD pipeline configuration",
+          "costDrivers": ["ci-cd-pipeline-minutes", "artifact-storage"],
+          "optimisationOpportunities": ["cache-dependencies", "parallel-deployments", "reduce-package-size"]
+        }
+      }
+    },
+    {
+      "id": "dr-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "teamCapability.cloudExperience", "operator": "in", "values": ["none", "basic"] },
+          { "field": "teamCapability.teamSize", "operator": "in", "values": ["solo", "small-2-5"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Simple CI/CD Pipeline with Rolling Deployment",
+        "rationale": "Small teams with limited cloud experience benefit from simple CI/CD pipelines with rolling deployments. This provides automated, repeatable deployments without the complexity of progressive delivery, while still supporting rollback through version management.",
+        "candidateTechnologies": [
+          { "name": "GitHub Actions", "platform": "multi-cloud", "category": "ci-cd" },
+          { "name": "AWS CodePipeline", "platform": "aws", "category": "ci-cd" },
+          { "name": "Azure DevOps Pipelines", "platform": "azure", "category": "ci-cd" },
+          { "name": "Google Cloud Build", "platform": "gcp", "category": "ci-cd" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Any developer can trigger and monitor deployments; no specialist DevOps role required",
+          "skillsRequired": ["basic-ci-cd", "version-control", "deployment-scripting", "basic-monitoring"],
+          "toolingRequired": ["ci-cd-platform", "artifact-storage", "deployment-notifications", "basic-health-checks"],
+          "ongoingMaintenance": "Pipeline dependency updates, deployment script maintenance, and periodic review of deployment success rates"
+        },
+        "costConsiderations": {
+          "runningCosts": "Low; most CI/CD platforms offer generous free tiers for small teams",
+          "transitionCosts": "Pipeline setup; deployment script development; team familiarisation",
+          "costDrivers": ["pipeline-minutes", "artifact-storage", "concurrent-builds"],
+          "optimisationOpportunities": ["cache-dependencies", "trigger-only-on-relevant-changes", "use-free-tier"]
+        }
+      }
+    },
+    {
+      "id": "dr-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "deployment.preference", "operator": "equals", "value": "vm-based" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Immutable Infrastructure with AMI/Image Pipeline",
+        "rationale": "VM-based deployments benefit from immutable infrastructure patterns where new deployments create new VM images rather than updating existing instances. This provides consistent environments, easy rollback (revert to previous image), and eliminates configuration drift.",
+        "candidateTechnologies": [
+          { "name": "HashiCorp Packer", "platform": "multi-cloud", "category": "image-building" },
+          { "name": "AWS AMI Pipeline", "platform": "aws", "category": "image-building" },
+          { "name": "Azure Image Builder", "platform": "azure", "category": "image-building" },
+          { "name": "Ansible", "platform": "multi-cloud", "category": "configuration-management" },
+          { "name": "Terraform", "platform": "multi-cloud", "category": "infrastructure-as-code" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires infrastructure-as-code skills; image pipeline needs maintenance",
+          "skillsRequired": ["infrastructure-as-code", "image-building", "configuration-management", "deployment-orchestration"],
+          "toolingRequired": ["image-builder", "iac-tooling", "deployment-orchestration", "image-registry", "testing-framework"],
+          "ongoingMaintenance": "Base image updates, security patching pipeline, image testing, and deployment orchestration maintenance"
+        },
+        "costConsiderations": {
+          "runningCosts": "Image storage costs; build pipeline compute; temporary duplicate infrastructure during deployments",
+          "transitionCosts": "Image pipeline development; IaC migration; team training",
+          "costDrivers": ["image-storage", "build-compute", "deployment-overlap-period", "testing-infrastructure"],
+          "optimisationOpportunities": ["image-lifecycle-policies", "shared-base-images", "spot-instances-for-builds"]
+        }
+      }
+    },
+    {
+      "id": "dr-005",
+      "priority": 8,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises CI/CD with Configuration Management",
+        "rationale": "Without cloud access, deployment relies on on-premises CI/CD servers and configuration management tools. This requires more infrastructure but provides automated, repeatable deployments within the constraints of on-premises environments.",
+        "candidateTechnologies": [
+          { "name": "Jenkins", "platform": "on-premises", "category": "ci-cd" },
+          { "name": "GitLab CI (self-hosted)", "platform": "on-premises", "category": "ci-cd" },
+          { "name": "Ansible", "platform": "on-premises", "category": "configuration-management" },
+          { "name": "Octopus Deploy", "platform": "on-premises", "category": "deployment" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires CI/CD infrastructure management; Jenkins/GitLab administration is a dedicated responsibility",
+          "skillsRequired": ["ci-cd-administration", "configuration-management", "deployment-scripting", "infrastructure-management"],
+          "toolingRequired": ["ci-cd-server", "artifact-repository", "configuration-management-tool", "deployment-orchestration"],
+          "ongoingMaintenance": "CI/CD server patching, plugin updates, agent management, and pipeline maintenance"
+        },
+        "costConsiderations": {
+          "runningCosts": "Hardware for CI/CD infrastructure; licensing (if applicable); staffing",
+          "transitionCosts": "CI/CD server setup; pipeline development; team training",
+          "costDrivers": ["hardware", "licensing", "staffing", "build-agent-count"],
+          "optimisationOpportunities": ["shared-ci-cd-infrastructure", "containerised-build-agents", "pipeline-optimisation"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Managed CI/CD with Blue-Green Deployment",
+    "rationale": "When no specific conditions strongly favour an alternative, a managed CI/CD service with blue-green deployment provides safe, automated releases with easy rollback. This balances deployment safety with operational simplicity.",
+    "candidateTechnologies": [
+      { "name": "AWS CodePipeline + CodeDeploy", "platform": "aws", "category": "ci-cd" },
+      { "name": "Azure DevOps Pipelines", "platform": "azure", "category": "ci-cd" },
+      { "name": "Google Cloud Deploy", "platform": "gcp", "category": "ci-cd" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Standard development team can manage",
+      "skillsRequired": ["ci-cd-basics", "deployment-configuration"],
+      "toolingRequired": ["managed-ci-cd", "artifact-storage", "deployment-monitoring"],
+      "ongoingMaintenance": "Pipeline updates and deployment monitoring"
+    },
+    "costConsiderations": {
+      "runningCosts": "Low; managed CI/CD pricing based on build minutes",
+      "transitionCosts": "Pipeline setup and configuration",
+      "costDrivers": ["build-minutes", "artifact-storage"],
+      "optimisationOpportunities": ["cache-dependencies", "optimise-build-steps"]
+    }
+  },
+  "relevantStandards": [
+    "tcop",
+    "govuk-service-standard",
+    "secure-by-design"
+  ],
+  "commonQuestions": [
+    "What is the target deployment frequency?",
+    "Is there an existing CI/CD platform?",
+    "What is the acceptable deployment downtime?",
+    "How quickly must rollbacks be executed?",
+    "Are there change management or approval requirements?",
+    "What environments are needed (dev, test, staging, production)?"
+  ],
+  "evidenceNeeded": [
+    "Current deployment frequency and target",
+    "Existing CI/CD infrastructure and pipelines",
+    "Change management and approval processes",
+    "Environment strategy (number and purpose of environments)",
+    "Team familiarity with deployment tooling"
+  ],
+  "artefactsToProduce": [
+    "Deployment strategy decision record (ADR)",
+    "CI/CD pipeline design document",
+    "Environment strategy and promotion process",
+    "Rollback procedures",
+    "Release management process"
+  ]
+}

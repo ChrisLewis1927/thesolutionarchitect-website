@@ -1,0 +1,224 @@
+{
+  "domain": "resilience-dr",
+  "description": "Assesses the appropriate resilience and disaster recovery strategy based on availability targets, recovery objectives, data sensitivity, and budget constraints.",
+  "rules": [
+    {
+      "id": "rd-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "availability.targetAvailability", "operator": "in", "values": ["99.95", "99.99"] },
+          { "field": "recovery.drStrategy", "operator": "equals", "value": "active-active" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Multi-Region Active-Active with Automated Failover",
+        "rationale": "Services requiring 99.95%+ availability with active-active DR need multi-region deployment with automated failover. This eliminates single-region failure as a risk and provides near-zero downtime during regional outages, though at significantly higher cost and complexity.",
+        "candidateTechnologies": [
+          { "name": "AWS Route 53 (failover routing)", "platform": "aws", "category": "dns-failover" },
+          { "name": "AWS Global Accelerator", "platform": "aws", "category": "global-load-balancing" },
+          { "name": "AWS Aurora Global Database", "platform": "aws", "category": "multi-region-database" },
+          { "name": "Azure Traffic Manager", "platform": "azure", "category": "dns-failover" },
+          { "name": "Azure Cosmos DB (multi-region)", "platform": "azure", "category": "multi-region-database" },
+          { "name": "Google Cloud Spanner", "platform": "gcp", "category": "multi-region-database" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires senior platform engineering; multi-region operations significantly increase complexity of deployments, debugging, and data consistency",
+          "skillsRequired": ["multi-region-architecture", "data-replication", "conflict-resolution", "global-load-balancing", "chaos-engineering"],
+          "toolingRequired": ["multi-region-monitoring", "automated-failover-orchestration", "data-consistency-checking", "chaos-testing-tools"],
+          "ongoingMaintenance": "Regular failover testing, data consistency verification, cross-region latency monitoring, and deployment coordination across regions"
+        },
+        "costConsiderations": {
+          "runningCosts": "Approximately double the single-region cost; cross-region data transfer adds significant expense",
+          "transitionCosts": "Architecture redesign for multi-region; data replication setup; failover automation development",
+          "costDrivers": ["duplicate-infrastructure", "cross-region-data-transfer", "multi-region-database-replication", "global-load-balancing"],
+          "optimisationOpportunities": ["active-passive-for-less-critical-components", "regional-read-replicas", "cache-at-edge"]
+        }
+      }
+    },
+    {
+      "id": "rd-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "availability.targetAvailability", "operator": "in", "values": ["99.9", "99.95"] },
+          { "field": "recovery.drStrategy", "operator": "in", "values": ["active-passive", "pilot-light"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Multi-AZ with Warm Standby DR",
+        "rationale": "Services requiring high availability with active-passive or pilot-light DR benefit from multi-AZ deployment in the primary region with a warm standby in a secondary region. This provides automatic failover within a region and rapid recovery (minutes to hours) for regional failures.",
+        "candidateTechnologies": [
+          { "name": "AWS Multi-AZ RDS", "platform": "aws", "category": "database-ha" },
+          { "name": "AWS CloudFormation StackSets", "platform": "aws", "category": "multi-region-deployment" },
+          { "name": "Azure Availability Zones", "platform": "azure", "category": "compute-ha" },
+          { "name": "Azure Site Recovery", "platform": "azure", "category": "disaster-recovery" },
+          { "name": "Google Regional Managed Instance Groups", "platform": "gcp", "category": "compute-ha" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires understanding of multi-AZ patterns; DR testing needs coordination but is less complex than active-active",
+          "skillsRequired": ["multi-az-deployment", "database-replication", "failover-procedures", "backup-restore-testing"],
+          "toolingRequired": ["health-monitoring", "automated-failover", "backup-verification", "dr-runbook-automation"],
+          "ongoingMaintenance": "Quarterly DR testing, backup verification, failover procedure updates, and standby environment maintenance"
+        },
+        "costConsiderations": {
+          "runningCosts": "30-50% premium over single-AZ for warm standby; less than active-active",
+          "transitionCosts": "Multi-AZ configuration; DR environment setup; runbook development",
+          "costDrivers": ["standby-infrastructure", "data-replication", "backup-storage", "dr-testing-compute"],
+          "optimisationOpportunities": ["pilot-light-for-cost-sensitive", "use-standby-for-non-production", "automate-dr-testing"]
+        }
+      }
+    },
+    {
+      "id": "rd-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "availability.targetAvailability", "operator": "in", "values": ["99", "99.5"] },
+          { "field": "recovery.drStrategy", "operator": "equals", "value": "backup-restore" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Single-Region Multi-AZ with Backup and Restore DR",
+        "rationale": "Services with moderate availability requirements and backup-restore DR strategy can use multi-AZ deployment for local resilience with cross-region backups for disaster recovery. Recovery time will be hours rather than minutes, but costs are significantly lower.",
+        "candidateTechnologies": [
+          { "name": "AWS S3 Cross-Region Replication", "platform": "aws", "category": "backup-replication" },
+          { "name": "AWS Backup", "platform": "aws", "category": "backup-service" },
+          { "name": "Azure Backup", "platform": "azure", "category": "backup-service" },
+          { "name": "Azure Geo-Redundant Storage", "platform": "azure", "category": "backup-replication" },
+          { "name": "Google Cloud Backup and DR", "platform": "gcp", "category": "backup-service" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Standard operations team can manage; backup verification should be automated",
+          "skillsRequired": ["backup-strategy", "restore-procedures", "rpo-rto-planning", "backup-testing"],
+          "toolingRequired": ["backup-service", "backup-monitoring", "restore-testing-automation", "alerting"],
+          "ongoingMaintenance": "Backup monitoring, periodic restore testing, retention policy management, and backup cost review"
+        },
+        "costConsiderations": {
+          "runningCosts": "Low; primarily backup storage and occasional restore testing compute",
+          "transitionCosts": "Backup configuration; restore procedure documentation; initial testing",
+          "costDrivers": ["backup-storage-volume", "backup-frequency", "retention-period", "restore-testing-frequency"],
+          "optimisationOpportunities": ["lifecycle-policies-for-old-backups", "incremental-backups", "tiered-backup-storage"]
+        }
+      }
+    },
+    {
+      "id": "rd-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "batch-processing" },
+          { "field": "availability.maintenanceWindow", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Resilient Batch Processing with Retry and Checkpoint",
+        "rationale": "Batch processing workloads with maintenance windows benefit from resilience patterns focused on idempotent processing, checkpointing, and automatic retry rather than high-availability infrastructure. If a batch fails, it can be restarted from the last checkpoint without data loss.",
+        "candidateTechnologies": [
+          { "name": "AWS Step Functions (with retry)", "platform": "aws", "category": "workflow-resilience" },
+          { "name": "AWS SQS (dead letter queues)", "platform": "aws", "category": "message-resilience" },
+          { "name": "Azure Durable Functions", "platform": "azure", "category": "workflow-resilience" },
+          { "name": "Azure Service Bus (dead letter)", "platform": "azure", "category": "message-resilience" },
+          { "name": "Google Cloud Tasks", "platform": "gcp", "category": "task-resilience" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Development team manages retry logic and checkpointing; no dedicated resilience engineering needed",
+          "skillsRequired": ["idempotent-processing", "checkpoint-design", "dead-letter-queue-handling", "retry-strategies"],
+          "toolingRequired": ["job-monitoring", "dead-letter-queue-alerting", "checkpoint-storage", "batch-scheduling"],
+          "ongoingMaintenance": "Dead letter queue monitoring, checkpoint cleanup, retry policy tuning, and failure investigation"
+        },
+        "costConsiderations": {
+          "runningCosts": "Minimal additional cost; retry and checkpoint add small overhead to processing",
+          "transitionCosts": "Application refactoring for idempotency; checkpoint implementation",
+          "costDrivers": ["checkpoint-storage", "retry-compute", "dead-letter-storage"],
+          "optimisationOpportunities": ["exponential-backoff", "batch-size-tuning", "checkpoint-frequency-optimisation"]
+        }
+      }
+    },
+    {
+      "id": "rd-005",
+      "priority": 8,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises HA Cluster with Off-Site Backup",
+        "rationale": "Without cloud access, resilience relies on on-premises high-availability clustering with off-site backup storage. This requires more hardware investment and manual procedures but provides resilience within the constraints of on-premises infrastructure.",
+        "candidateTechnologies": [
+          { "name": "VMware vSphere HA", "platform": "on-premises", "category": "compute-ha" },
+          { "name": "Microsoft Failover Clustering", "platform": "on-premises", "category": "compute-ha" },
+          { "name": "Veeam Backup", "platform": "on-premises", "category": "backup" },
+          { "name": "NetApp SnapMirror", "platform": "on-premises", "category": "storage-replication" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated infrastructure team; DR testing involves physical infrastructure coordination",
+          "skillsRequired": ["clustering", "storage-replication", "backup-administration", "dr-planning", "hardware-management"],
+          "toolingRequired": ["cluster-management", "backup-software", "replication-monitoring", "dr-orchestration"],
+          "ongoingMaintenance": "Hardware maintenance, cluster health monitoring, backup tape rotation, DR testing, and capacity planning"
+        },
+        "costConsiderations": {
+          "runningCosts": "Hardware maintenance; licensing; off-site storage; staffing",
+          "transitionCosts": "Hardware procurement; cluster configuration; backup infrastructure; DR site setup",
+          "costDrivers": ["hardware", "licensing", "off-site-storage", "staffing", "dr-site-costs"],
+          "optimisationOpportunities": ["virtualisation-consolidation", "deduplication", "consider-cloud-for-dr-target"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Multi-AZ Deployment with Automated Backup",
+    "rationale": "When no specific conditions strongly favour an alternative, multi-AZ deployment with automated backups provides a good balance of resilience and cost. This handles most common failure scenarios (single server, single AZ) while keeping operational complexity manageable.",
+    "candidateTechnologies": [
+      { "name": "AWS Multi-AZ services", "platform": "aws", "category": "high-availability" },
+      { "name": "Azure Availability Zones", "platform": "azure", "category": "high-availability" },
+      { "name": "Google Regional services", "platform": "gcp", "category": "high-availability" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Standard team can manage; most cloud services offer multi-AZ as configuration option",
+      "skillsRequired": ["cloud-ha-configuration", "backup-strategy"],
+      "toolingRequired": ["health-monitoring", "backup-service", "alerting"],
+      "ongoingMaintenance": "Backup verification and periodic failover testing"
+    },
+    "costConsiderations": {
+      "runningCosts": "Small premium over single-AZ; typically 10-20% additional",
+      "transitionCosts": "Configuration change; minimal application changes",
+      "costDrivers": ["cross-az-data-transfer", "multi-az-pricing"],
+      "optimisationOpportunities": ["use-managed-services-with-built-in-ha"]
+    }
+  },
+  "relevantStandards": [
+    "ncsc-cloud-security",
+    "secure-by-design",
+    "tcop"
+  ],
+  "commonQuestions": [
+    "What is the acceptable downtime (RTO) and data loss (RPO)?",
+    "Is there a DR strategy already defined by the organisation?",
+    "What is the budget for resilience infrastructure?",
+    "Are there regulatory requirements for business continuity?",
+    "How often will DR be tested?",
+    "What are the dependencies that could cause cascading failures?"
+  ],
+  "evidenceNeeded": [
+    "Recovery Time Objective (RTO) and Recovery Point Objective (RPO)",
+    "Business impact analysis for service unavailability",
+    "Budget allocation for resilience and DR",
+    "Existing DR infrastructure and procedures",
+    "Dependency map for cascading failure analysis"
+  ],
+  "artefactsToProduce": [
+    "Resilience and DR decision record (ADR)",
+    "Business continuity plan",
+    "DR runbook with step-by-step procedures",
+    "Failover testing schedule and procedures",
+    "Recovery architecture diagram"
+  ]
+}

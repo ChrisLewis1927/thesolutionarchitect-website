@@ -1,0 +1,18 @@
+{
+  "id": "azure-well-architected",
+  "name": "Azure Well-Architected Framework",
+  "category": "cloud",
+  "description": "A set of guiding tenets from Microsoft for improving the quality of workloads on Azure. Covers five pillars: reliability, security, cost optimisation, operational excellence, and performance efficiency. Provides assessments, recommendations, and design principles for each pillar.",
+  "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+  "applicableDomains": [
+    "hosting-compute",
+    "data-persistence",
+    "networking-edge",
+    "identity-access",
+    "security-controls",
+    "resilience-dr",
+    "observability-operations",
+    "deployment-release",
+    "cost-sustainability"
+  ]
+}

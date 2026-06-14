@@ -1,0 +1,105 @@
+{
+  "id": "vm-legacy",
+  "name": "VM-Based Legacy",
+  "description": "A pattern for hosting applications on virtual machines when containerisation or serverless is not feasible. Common for legacy applications that require specific OS configurations, commercial software with licensing constraints, or workloads being lifted-and-shifted to cloud as a first migration step.",
+  "whenToUse": [
+    "Legacy applications that cannot be containerised without significant refactoring",
+    "Commercial software with licensing models tied to specific OS or VM configurations",
+    "Lift-and-shift cloud migration as a first step before modernisation",
+    "Applications requiring specific OS-level configurations or kernel modules",
+    "Workloads with regulatory requirements mandating dedicated compute instances"
+  ],
+  "whenNotToUse": [
+    "New application development where containers or serverless would be more appropriate",
+    "Stateless web applications that could benefit from managed platform services",
+    "Workloads with highly variable traffic that need rapid auto-scaling",
+    "Applications where the team has container expertise and the app is container-ready",
+    "Simple workloads where the operational overhead of VM management is disproportionate"
+  ],
+  "typicalComponents": [
+    { "name": "Virtual Machines", "purpose": "Host application workloads on dedicated compute instances", "technology": "EC2, Azure VMs, or Compute Engine", "platform": "Cloud IaaS" },
+    { "name": "Load Balancer", "purpose": "Distribute traffic across multiple VM instances for availability", "technology": "ALB/NLB, Azure Load Balancer, or Cloud Load Balancing", "platform": "Cloud networking" },
+    { "name": "Configuration Management", "purpose": "Automate OS configuration, patching, and software installation", "technology": "Ansible, Puppet, Chef, or AWS Systems Manager", "platform": "Configuration management" },
+    { "name": "Backup Service", "purpose": "Automated VM snapshots and data backup with retention policies", "technology": "AWS Backup, Azure Backup, or Cloud Backup", "platform": "Cloud backup service" },
+    { "name": "Monitoring Agent", "purpose": "Collect OS and application metrics from VM instances", "technology": "CloudWatch Agent, Azure Monitor Agent, or Ops Agent", "platform": "Cloud monitoring" }
+  ],
+  "securityControls": [
+    "Implement automated OS patching on a defined schedule with compliance reporting",
+    "Harden VM images using CIS benchmarks or NCSC guidance",
+    "Restrict network access using security groups and network ACLs",
+    "Implement endpoint detection and response (EDR) agents on all VMs",
+    "Disable unnecessary services and ports on VM instances",
+    "Implement privileged access management for SSH/RDP access to VMs",
+    "Encrypt VM disks at rest using platform-managed or customer-managed keys"
+  ],
+  "resilienceConsiderations": [
+    "Deploy VMs across multiple availability zones with load balancing",
+    "Implement auto-scaling groups to replace failed instances automatically",
+    "Regular automated backups with tested restore procedures",
+    "Implement health checks to detect and replace unhealthy instances",
+    "Plan for instance type retirement and migration to newer generations",
+    "Consider reserved instances for cost optimisation of steady-state workloads"
+  ],
+  "costConsiderations": [
+    "VM costs are incurred 24/7 regardless of utilisation — right-size instances",
+    "Reserved instances or savings plans reduce costs for predictable workloads",
+    "OS licensing costs (Windows Server) add significant per-instance expense",
+    "Operational costs for patching, monitoring, and incident response are higher than managed services",
+    "Storage costs for VM disks, snapshots, and backups",
+    "Consider the total cost of ownership including staff time for VM management"
+  ],
+  "operationalConsiderations": [
+    "Regular OS patching cycles required — plan maintenance windows",
+    "Capacity planning needed for VM instance sizing and scaling",
+    "Incident response procedures for VM-level failures and security events",
+    "Configuration drift management using infrastructure-as-code",
+    "Log collection and centralisation from multiple VM instances",
+    "End-of-life planning for OS versions and commercial software support"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        { "name": "Amazon EC2", "purpose": "Virtual machine instances with multiple instance types" },
+        { "name": "AWS Systems Manager", "purpose": "Patch management and configuration automation" },
+        { "name": "Amazon EBS", "purpose": "Block storage volumes for VM instances" },
+        { "name": "AWS Backup", "purpose": "Centralised backup management with retention policies" }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        { "name": "Azure Virtual Machines", "purpose": "IaaS compute with Windows and Linux support" },
+        { "name": "Azure Update Management", "purpose": "Automated OS patching and compliance" },
+        { "name": "Azure Managed Disks", "purpose": "Block storage with replication options" },
+        { "name": "Azure Backup", "purpose": "VM backup with instant restore capability" }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        { "name": "Compute Engine", "purpose": "Virtual machine instances with custom machine types" },
+        { "name": "OS Patch Management", "purpose": "Automated patching with compliance reporting" },
+        { "name": "Persistent Disk", "purpose": "Block storage with snapshot capability" },
+        { "name": "Cloud Backup and DR", "purpose": "Backup and disaster recovery for VMs" }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "Why can't this workload be containerised or run on a managed platform service?",
+    "What OS and software licensing constraints exist?",
+    "Is this a temporary lift-and-shift or a long-term hosting model?",
+    "What is the patching and maintenance window strategy?",
+    "Who will be responsible for ongoing VM management and security hardening?",
+    "Is there a modernisation roadmap to move away from VM-based hosting?"
+  ],
+  "commonMistakes": [
+    "Treating cloud VMs like on-premises servers — not leveraging cloud-native features",
+    "Not implementing automated patching, leaving VMs vulnerable to known exploits",
+    "Over-sizing VM instances without monitoring actual resource utilisation",
+    "Not planning a modernisation path, perpetuating legacy patterns indefinitely",
+    "Managing VMs manually instead of using infrastructure-as-code and automation"
+  ],
+  "workloadTypes": ["legacy", "lift-and-shift", "vm-based", "commercial-software"],
+  "securityClassifications": ["official", "official-sensitive", "secret"]
+}

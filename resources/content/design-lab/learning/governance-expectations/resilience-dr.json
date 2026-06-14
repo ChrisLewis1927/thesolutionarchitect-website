@@ -1,0 +1,8 @@
+[
+  "Defined and justified RTO and RPO targets for each service tier, with evidence that the architecture can achieve them.",
+  "Disaster recovery plan that has been tested within the last 12 months, with documented results and lessons learned.",
+  "Evidence of failure mode analysis showing how the system behaves when individual components fail (single points of failure eliminated).",
+  "Business continuity plan covering scenarios beyond technical failure (supplier failure, key person unavailability, facility loss).",
+  "Documented and tested failover procedures with clear triggers, decision criteria, and responsible individuals identified.",
+  "Evidence that resilience patterns (circuit breakers, retries, bulkheads, timeouts) are implemented and monitored."
+]

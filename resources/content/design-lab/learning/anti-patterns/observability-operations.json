@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Monitoring Only Infrastructure Metrics",
+    "description": "Collecting CPU, memory, and disk metrics from infrastructure but not implementing application-level observability (request rates, error rates, latency, business metrics).",
+    "whyProblematic": "Infrastructure metrics tell you a server is busy but not why. Application issues (slow queries, failed integrations, business logic errors) may not manifest as infrastructure problems until it's too late. You cannot measure user experience from infrastructure metrics alone. SLOs should be defined in terms users care about, not server utilisation.",
+    "betterApproach": "Implement the three pillars of observability: metrics (RED method — rate, errors, duration), logs (structured, correlated), and traces (distributed tracing across services). Define SLIs based on user experience. Alert on symptoms (error rate, latency) not causes (CPU usage). Instrument at the application level."
+  },
+  {
+    "name": "Alert Fatigue from Noisy Monitoring",
+    "description": "Configuring alerts for every possible metric threshold, resulting in hundreds of daily alerts that operations teams learn to ignore.",
+    "whyProblematic": "When everything alerts, nothing alerts effectively. Critical issues are lost in noise. Operations teams become desensitised and miss genuine incidents. Alert fatigue leads to slower incident response times. Resources are wasted investigating false positives rather than improving the service.",
+    "betterApproach": "Alert only on conditions that require human action. Use SLO-based alerting (alert when error budget is being consumed too quickly). Implement alert severity levels with clear response expectations. Regularly review and tune alert thresholds. Suppress known transient conditions. Aim for fewer than 5 actionable alerts per on-call shift."
+  },
+  {
+    "name": "No Runbooks or Operational Documentation",
+    "description": "Operating services without documented procedures for common operational tasks, incident response, or troubleshooting guides.",
+    "whyProblematic": "Knowledge lives only in individuals' heads, creating key-person dependencies. New team members cannot operate the service safely. Incident response is slower and more error-prone without documented procedures. Handovers between shifts or teams lose critical context. Government service assessments require operational documentation.",
+    "betterApproach": "Create runbooks for every alert and common operational procedure. Include: what the alert means, how to diagnose, how to resolve, when to escalate. Store runbooks alongside the service (infrastructure as code repository). Review and update runbooks after every incident. Link alerts directly to relevant runbooks."
+  }
+]

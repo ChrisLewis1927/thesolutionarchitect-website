@@ -1,0 +1,173 @@
+{
+  "id": "batch-file-transfer",
+  "name": "Batch File Transfer",
+  "description": "A pattern for scheduled or triggered bulk data exchange between systems using file-based transfers. Common in government for integrating with legacy systems, partner organisations, and statutory reporting where real-time APIs are not available or appropriate.",
+  "whenToUse": [
+    "Integrating with legacy systems that only support file-based data exchange",
+    "Bulk data transfers to or from partner organisations on scheduled intervals",
+    "Statutory reporting where data must be submitted in prescribed file formats",
+    "ETL processes that extract, transform, and load data between systems in batch",
+    "Scenarios where the source system cannot support real-time API integration"
+  ],
+  "whenNotToUse": [
+    "Real-time data synchronisation requirements where latency must be sub-second",
+    "Interactive user-facing services that need immediate data availability",
+    "Small-volume data exchanges where a simple API call would suffice",
+    "Scenarios where data freshness is critical and batch delays are unacceptable",
+    "Modern system-to-system integrations where APIs are available and preferred"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Secure File Transfer",
+      "purpose": "Transfer files between organisations with encryption and authentication",
+      "technology": "SFTP, MFT (Managed File Transfer), or AWS Transfer Family",
+      "platform": "Cloud or on-premises"
+    },
+    {
+      "name": "File Processing Engine",
+      "purpose": "Parse, validate, transform, and route incoming files",
+      "technology": "AWS Step Functions, Azure Data Factory, or custom batch jobs",
+      "platform": "Cloud compute or serverless"
+    },
+    {
+      "name": "Staging Storage",
+      "purpose": "Temporarily store files during processing with lifecycle policies",
+      "technology": "S3, Azure Blob Storage, or Cloud Storage",
+      "platform": "Cloud object storage"
+    },
+    {
+      "name": "Scheduler",
+      "purpose": "Trigger batch processing at defined intervals or on file arrival",
+      "technology": "EventBridge Scheduler, Azure Logic Apps, or Cloud Scheduler",
+      "platform": "Cloud scheduling service"
+    },
+    {
+      "name": "Error Handling and Alerting",
+      "purpose": "Detect processing failures and alert operations team",
+      "technology": "CloudWatch Alarms, Azure Monitor, or Cloud Monitoring",
+      "platform": "Cloud observability"
+    }
+  ],
+  "securityControls": [
+    "Encrypt files at rest and in transit using AES-256 and TLS/SSH",
+    "Implement IP allowlisting for SFTP connections from known partner addresses",
+    "Use SSH key-based authentication rather than passwords for file transfer",
+    "Scan incoming files for malware before processing",
+    "Implement file integrity checks using checksums or digital signatures",
+    "Apply data classification labels and retention policies to transferred files",
+    "Audit log all file transfers including source, destination, size, and timestamp"
+  ],
+  "resilienceConsiderations": [
+    "Implement retry logic for failed file transfers with exponential backoff",
+    "Design idempotent file processing to handle duplicate deliveries safely",
+    "Store files in durable object storage before processing to prevent data loss",
+    "Implement file-level checkpointing for large batch jobs to enable restart from failure point",
+    "Monitor for missing expected files and alert when scheduled transfers do not arrive"
+  ],
+  "costConsiderations": [
+    "Storage costs for staging files — implement lifecycle policies to manage retention",
+    "Compute costs only incurred during batch processing windows",
+    "Data transfer costs for cross-region or cross-account file movement",
+    "Managed file transfer service licensing may apply for enterprise MFT solutions",
+    "Consider the operational cost of managing partner connectivity and credentials"
+  ],
+  "operationalConsiderations": [
+    "Batch processing windows must be agreed with partner organisations",
+    "File format specifications must be documented and versioned",
+    "Partner onboarding process needed for credential exchange and connectivity testing",
+    "Monitoring must detect late, missing, or malformed files",
+    "Runbooks needed for common failure scenarios (corrupt files, connectivity issues)",
+    "Capacity planning for peak batch volumes (e.g., end-of-month reporting)"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "AWS Transfer Family",
+          "purpose": "Managed SFTP/FTPS service for file exchange"
+        },
+        {
+          "name": "Amazon S3",
+          "purpose": "Durable file staging and archive storage"
+        },
+        {
+          "name": "AWS Step Functions",
+          "purpose": "Orchestrate multi-step file processing workflows"
+        },
+        {
+          "name": "AWS Lambda",
+          "purpose": "Event-driven file processing triggered by S3 uploads"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure Blob Storage",
+          "purpose": "File staging with lifecycle management"
+        },
+        {
+          "name": "Azure Data Factory",
+          "purpose": "ETL orchestration and data movement"
+        },
+        {
+          "name": "Azure Logic Apps",
+          "purpose": "Workflow automation for file processing"
+        },
+        {
+          "name": "Azure Functions",
+          "purpose": "Event-driven processing on file arrival"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Storage",
+          "purpose": "File staging with event notifications"
+        },
+        {
+          "name": "Cloud Composer (Airflow)",
+          "purpose": "Workflow orchestration for batch processing"
+        },
+        {
+          "name": "Dataflow",
+          "purpose": "Batch data processing and transformation"
+        },
+        {
+          "name": "Cloud Functions",
+          "purpose": "Event-triggered file processing"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What file formats are required by the receiving systems (CSV, XML, JSON, fixed-width)?",
+    "What is the expected file size and volume per batch window?",
+    "What are the agreed transfer schedules and SLAs with partner organisations?",
+    "How should processing failures be handled — retry, alert, or quarantine?",
+    "Are there data quality validation rules that must be applied during processing?",
+    "What is the retention requirement for processed and raw files?"
+  ],
+  "commonMistakes": [
+    "Not implementing idempotent processing, causing duplicate records from redelivered files",
+    "Using FTP instead of SFTP, transmitting data unencrypted over the network",
+    "Not scanning incoming files for malware before processing",
+    "Failing to implement monitoring for missing or late file deliveries",
+    "Not versioning file format specifications, causing breakage when partners change formats"
+  ],
+  "workloadTypes": [
+    "batch-processing",
+    "data-exchange",
+    "etl",
+    "reporting"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

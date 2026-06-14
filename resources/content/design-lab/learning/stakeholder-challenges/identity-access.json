@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "How is privileged access managed, monitored, and time-limited?",
+      "What MFA mechanisms are enforced and for which user populations?",
+      "How are service-to-service credentials managed and rotated?",
+      "What is the process for revoking access when staff leave or change roles?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "How are access requests provisioned and how long does the process take?",
+      "What happens if the identity provider becomes unavailable — is there a break-glass procedure?",
+      "How are access reviews conducted and how frequently?",
+      "What tooling is needed to manage identities across multiple systems and providers?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How quickly can new team members get the access they need to be productive?",
+      "Does the identity architecture support automated testing and CI/CD pipelines?",
+      "How will you handle identity in lower environments without exposing production credentials?",
+      "What is the developer experience for implementing authorisation in application code?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What are the per-user licensing costs for the chosen identity provider?",
+      "How do identity costs scale as the user base grows?",
+      "Are there cost implications of MFA token distribution or management?",
+      "What is the cost of identity governance tooling for access reviews and compliance?"
+    ]
+  }
+]

@@ -1,0 +1,173 @@
+{
+  "id": "api-led-integration",
+  "name": "API-Led Integration",
+  "description": "A pattern for connecting systems through well-defined RESTful or GraphQL APIs with an API gateway managing access control, rate limiting, and versioning. Suitable for exposing internal capabilities to partners, other departments, or building microservice architectures with clear service boundaries.",
+  "whenToUse": [
+    "Exposing internal capabilities to external partners or other government departments",
+    "Building a microservices architecture with clear bounded contexts and service contracts",
+    "Creating a platform where multiple consumers need controlled access to shared data or functions",
+    "Modernising legacy systems by wrapping them with API facades",
+    "Implementing an integration layer between disparate systems using standard protocols"
+  ],
+  "whenNotToUse": [
+    "Simple point-to-point integrations between two known systems with stable interfaces",
+    "Real-time streaming scenarios where request-response is inappropriate",
+    "Bulk data transfer scenarios better served by batch file exchange",
+    "Internal-only integrations where direct service-to-service calls are simpler",
+    "Scenarios where the overhead of API management is disproportionate to the integration complexity"
+  ],
+  "typicalComponents": [
+    {
+      "name": "API Gateway",
+      "purpose": "Manage API access, authentication, rate limiting, and request routing",
+      "technology": "Amazon API Gateway, Azure API Management, or Apigee",
+      "platform": "Cloud managed service"
+    },
+    {
+      "name": "Backend Services",
+      "purpose": "Implement business logic behind API endpoints",
+      "technology": "Node.js, .NET, Java, or Python microservices",
+      "platform": "Cloud compute (containers or serverless)"
+    },
+    {
+      "name": "API Documentation Portal",
+      "purpose": "Publish API specifications and developer documentation",
+      "technology": "OpenAPI/Swagger with developer portal",
+      "platform": "Cloud or static hosting"
+    },
+    {
+      "name": "Service Registry",
+      "purpose": "Track available services, versions, and health status",
+      "technology": "AWS Cloud Map, Azure Service Fabric, or Consul",
+      "platform": "Cloud service discovery"
+    },
+    {
+      "name": "Monitoring and Analytics",
+      "purpose": "Track API usage, latency, error rates, and consumer behaviour",
+      "technology": "CloudWatch, Application Insights, or Cloud Monitoring",
+      "platform": "Cloud observability"
+    }
+  ],
+  "securityControls": [
+    "Implement OAuth 2.0 or API key authentication for all API consumers",
+    "Apply rate limiting and throttling per consumer to prevent abuse",
+    "Validate all request payloads against published API schemas",
+    "Implement mutual TLS for service-to-service communication where required",
+    "Use API versioning to manage breaking changes without disrupting consumers",
+    "Log all API access with consumer identity for audit and forensics"
+  ],
+  "resilienceConsiderations": [
+    "Implement circuit breakers to prevent cascade failures across services",
+    "Design APIs to be idempotent for safe retry behaviour",
+    "Use asynchronous patterns for long-running operations with callback or polling",
+    "Implement request queuing for burst traffic handling",
+    "Deploy API gateway across multiple availability zones",
+    "Version APIs to allow graceful deprecation without breaking consumers"
+  ],
+  "costConsiderations": [
+    "API gateway costs scale with request volume — model expected traffic carefully",
+    "Multiple microservices increase compute and operational costs compared to monoliths",
+    "Developer portal and documentation maintenance requires ongoing investment",
+    "Consider the cost of API management platform licensing for enterprise features",
+    "Factor in the cost of consumer onboarding and support"
+  ],
+  "operationalConsiderations": [
+    "API versioning strategy must be defined and communicated to consumers",
+    "Consumer onboarding process needed for API key provisioning and documentation",
+    "SLA definitions required for each API tier (internal vs external consumers)",
+    "Monitoring must cover both API gateway metrics and backend service health",
+    "Deprecation policy needed for retiring old API versions",
+    "Contract testing between services to catch breaking changes early"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon API Gateway",
+          "purpose": "Managed API gateway with throttling and auth"
+        },
+        {
+          "name": "AWS Lambda or ECS",
+          "purpose": "Backend compute for API implementations"
+        },
+        {
+          "name": "Amazon Cognito",
+          "purpose": "OAuth 2.0 token management for API consumers"
+        },
+        {
+          "name": "AWS Cloud Map",
+          "purpose": "Service discovery for microservices"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure API Management",
+          "purpose": "Full-featured API gateway with developer portal"
+        },
+        {
+          "name": "Azure Functions or Container Apps",
+          "purpose": "Backend compute for API implementations"
+        },
+        {
+          "name": "Azure Active Directory B2C",
+          "purpose": "Identity management for external API consumers"
+        },
+        {
+          "name": "Azure Monitor",
+          "purpose": "API analytics and performance monitoring"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Apigee API Management",
+          "purpose": "Enterprise API gateway with analytics"
+        },
+        {
+          "name": "Cloud Run or Cloud Functions",
+          "purpose": "Backend compute for API implementations"
+        },
+        {
+          "name": "Cloud Endpoints",
+          "purpose": "API management for gRPC and REST services"
+        },
+        {
+          "name": "Cloud Monitoring",
+          "purpose": "API metrics and alerting"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "Who are the API consumers and what are their authentication requirements?",
+    "What SLA commitments are needed for API availability and response times?",
+    "Is there a requirement for a public developer portal or is access restricted?",
+    "What API versioning strategy will be used (URL path, header, or query parameter)?",
+    "Are there existing API standards or design guidelines within the organisation?",
+    "What is the expected request volume and growth trajectory?"
+  ],
+  "commonMistakes": [
+    "Designing chatty APIs that require multiple round-trips for common operations",
+    "Not implementing proper API versioning from the start, making future changes painful",
+    "Exposing internal data models directly through APIs without proper abstraction",
+    "Neglecting to implement rate limiting, allowing a single consumer to overwhelm the service",
+    "Building a microservices architecture when a well-structured monolith would be simpler and cheaper"
+  ],
+  "workloadTypes": [
+    "integration",
+    "api-platform",
+    "microservices",
+    "partner-facing"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

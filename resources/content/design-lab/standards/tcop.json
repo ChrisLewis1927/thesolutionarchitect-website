@@ -1,0 +1,20 @@
+{
+  "id": "tcop",
+  "name": "Technology Code of Practice",
+  "category": "government-policy",
+  "description": "A set of criteria to help government design, build, and buy technology. It provides guidance on how to make good technology decisions, including using open standards, cloud hosting, and common platforms where appropriate.",
+  "url": "https://www.gov.uk/guidance/the-technology-code-of-practice",
+  "applicableDomains": [
+    "hosting-compute",
+    "data-persistence",
+    "integration-apis",
+    "networking-edge",
+    "identity-access",
+    "security-controls",
+    "resilience-dr",
+    "observability-operations",
+    "deployment-release",
+    "cost-sustainability",
+    "compliance-assurance"
+  ]
+}

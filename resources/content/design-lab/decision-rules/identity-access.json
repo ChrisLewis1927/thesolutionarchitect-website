@@ -1,0 +1,217 @@
+{
+  "domain": "identity-access",
+  "description": "Assesses the appropriate identity and access management strategy based on service type, user base, data sensitivity, and integration requirements.",
+  "rules": [
+    {
+      "id": "id-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "public-facing" },
+          { "field": "userBase.expectedUsers", "operator": "in", "values": ["10000-100000", "over-100000"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Managed Identity Service with Federated Authentication",
+        "rationale": "Public-facing services with large user bases require a scalable identity solution that supports self-service registration, password reset, and multi-factor authentication. Managed identity services handle the complexity of secure credential storage, brute-force protection, and compliance with accessibility standards.",
+        "candidateTechnologies": [
+          { "name": "AWS Cognito", "platform": "aws", "category": "identity-service" },
+          { "name": "Azure AD B2C", "platform": "azure", "category": "identity-service" },
+          { "name": "Google Identity Platform", "platform": "gcp", "category": "identity-service" },
+          { "name": "GOV.UK One Login", "platform": "saas", "category": "government-identity" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires understanding of OAuth2/OIDC flows; managed service handles credential storage and MFA infrastructure",
+          "skillsRequired": ["oauth2-oidc", "identity-federation", "mfa-configuration", "user-journey-design"],
+          "toolingRequired": ["identity-monitoring", "suspicious-activity-detection", "user-migration-tools", "compliance-reporting"],
+          "ongoingMaintenance": "MFA policy updates, federation trust management, user lifecycle management, and security event monitoring"
+        },
+        "costConsiderations": {
+          "runningCosts": "Per-active-user pricing; MFA adds per-authentication cost; scales with user base",
+          "transitionCosts": "User migration; application integration; MFA rollout; user communication",
+          "costDrivers": ["monthly-active-users", "mfa-authentications", "sms-costs-for-otp", "advanced-security-features"],
+          "optimisationOpportunities": ["reduce-inactive-accounts", "use-authenticator-apps-over-sms", "federate-with-existing-idp"]
+        }
+      }
+    },
+    {
+      "id": "id-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "internal" },
+          { "field": "dataSensitivity.classification", "operator": "in", "values": ["official-sensitive", "secret"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Enterprise Directory with Conditional Access",
+        "rationale": "Internal services handling sensitive data should integrate with the organisation's enterprise directory (typically Active Directory or Azure AD) and enforce conditional access policies. This ensures consistent identity governance, device compliance checks, and risk-based authentication.",
+        "candidateTechnologies": [
+          { "name": "Azure Active Directory", "platform": "azure", "category": "enterprise-directory" },
+          { "name": "AWS IAM Identity Center", "platform": "aws", "category": "enterprise-sso" },
+          { "name": "Google Workspace Identity", "platform": "gcp", "category": "enterprise-directory" },
+          { "name": "Okta", "platform": "saas", "category": "identity-platform" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires identity team collaboration; conditional access policies need security team input",
+          "skillsRequired": ["active-directory", "conditional-access-policies", "saml-oidc", "rbac-design", "privileged-access-management"],
+          "toolingRequired": ["identity-governance", "access-reviews", "privileged-access-workstation", "sign-in-risk-monitoring"],
+          "ongoingMaintenance": "Access reviews, conditional access policy updates, group membership management, and privileged access monitoring"
+        },
+        "costConsiderations": {
+          "runningCosts": "Enterprise directory licensing (often already in place); conditional access features may require premium tier",
+          "transitionCosts": "Application integration with enterprise SSO; conditional access policy design; user training",
+          "costDrivers": ["directory-licensing-tier", "premium-security-features", "mfa-hardware-tokens"],
+          "optimisationOpportunities": ["leverage-existing-directory-investment", "consolidate-identity-providers", "automate-access-reviews"]
+        }
+      }
+    },
+    {
+      "id": "id-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "api-service" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "OAuth2 with API Key Management",
+        "rationale": "API services require machine-to-machine authentication using OAuth2 client credentials or API keys with proper lifecycle management. This provides secure, auditable access control for service-to-service communication without user interaction.",
+        "candidateTechnologies": [
+          { "name": "AWS Cognito (machine-to-machine)", "platform": "aws", "category": "oauth2-provider" },
+          { "name": "AWS API Gateway API Keys", "platform": "aws", "category": "api-key-management" },
+          { "name": "Azure AD App Registrations", "platform": "azure", "category": "oauth2-provider" },
+          { "name": "Google Service Accounts", "platform": "gcp", "category": "service-identity" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Standard development team can manage OAuth2 flows; API key rotation needs automation",
+          "skillsRequired": ["oauth2-client-credentials", "api-key-management", "token-validation", "scope-design"],
+          "toolingRequired": ["secret-rotation-automation", "api-usage-monitoring", "token-introspection", "key-lifecycle-management"],
+          "ongoingMaintenance": "Key rotation, scope reviews, client credential lifecycle management, and usage monitoring"
+        },
+        "costConsiderations": {
+          "runningCosts": "Minimal additional cost; typically included in API gateway or identity service pricing",
+          "transitionCosts": "OAuth2 implementation; client onboarding process; documentation",
+          "costDrivers": ["token-issuance-volume", "api-gateway-authoriser-invocations"],
+          "optimisationOpportunities": ["cache-token-validation", "use-jwt-for-stateless-validation", "batch-client-onboarding"]
+        }
+      }
+    },
+    {
+      "id": "id-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "dataSensitivity.classification", "operator": "in", "values": ["secret", "top-secret"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Privileged Access Management with Hardware MFA",
+        "rationale": "Systems handling SECRET or TOP SECRET data require privileged access management with hardware-based multi-factor authentication, just-in-time access provisioning, and comprehensive audit trails. Access must be time-limited and require explicit approval workflows.",
+        "candidateTechnologies": [
+          { "name": "CyberArk", "platform": "saas", "category": "privileged-access-management" },
+          { "name": "Azure AD Privileged Identity Management", "platform": "azure", "category": "privileged-access-management" },
+          { "name": "AWS IAM with hardware MFA", "platform": "aws", "category": "privileged-access" },
+          { "name": "HashiCorp Vault", "platform": "multi-cloud", "category": "secrets-management" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated security operations team; approval workflows need management oversight",
+          "skillsRequired": ["privileged-access-management", "hardware-mfa-deployment", "approval-workflow-design", "audit-trail-analysis"],
+          "toolingRequired": ["pam-platform", "hardware-token-management", "session-recording", "access-certification"],
+          "ongoingMaintenance": "Hardware token lifecycle, access certification campaigns, session recording review, and policy updates"
+        },
+        "costConsiderations": {
+          "runningCosts": "PAM platform licensing; hardware token costs; security operations staffing",
+          "transitionCosts": "PAM platform deployment; hardware token procurement and distribution; process design",
+          "costDrivers": ["pam-licensing", "hardware-tokens", "security-operations-staffing", "session-recording-storage"],
+          "optimisationOpportunities": ["consolidate-privileged-accounts", "automate-access-certification", "just-in-time-provisioning"]
+        }
+      }
+    },
+    {
+      "id": "id-005",
+      "priority": 9,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises Active Directory with ADFS",
+        "rationale": "Without cloud access, identity management relies on on-premises Active Directory with Active Directory Federation Services for SSO. This provides enterprise authentication but requires more infrastructure management than cloud-based alternatives.",
+        "candidateTechnologies": [
+          { "name": "Microsoft Active Directory", "platform": "on-premises", "category": "directory-service" },
+          { "name": "Active Directory Federation Services", "platform": "on-premises", "category": "federation" },
+          { "name": "Red Hat Identity Management", "platform": "on-premises", "category": "directory-service" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated Active Directory administrators; domain controller management",
+          "skillsRequired": ["active-directory-administration", "adfs-configuration", "group-policy", "kerberos"],
+          "toolingRequired": ["ad-monitoring", "group-policy-management", "certificate-services", "backup-tools"],
+          "ongoingMaintenance": "Domain controller patching, replication monitoring, certificate renewal, and group policy management"
+        },
+        "costConsiderations": {
+          "runningCosts": "Windows Server licensing; hardware for domain controllers; staffing",
+          "transitionCosts": "AD design and deployment; ADFS configuration; application integration",
+          "costDrivers": ["server-licensing", "hardware", "staffing", "certificate-authority"],
+          "optimisationOpportunities": ["consolidate-domains", "automate-group-management", "plan-cloud-hybrid-identity"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Managed Identity with SSO",
+    "rationale": "When no specific conditions strongly favour an alternative, a managed identity service with single sign-on provides secure, scalable authentication with minimal operational overhead. This supports both user and service authentication with built-in MFA capabilities.",
+    "candidateTechnologies": [
+      { "name": "AWS Cognito", "platform": "aws", "category": "identity-service" },
+      { "name": "Azure AD", "platform": "azure", "category": "identity-service" },
+      { "name": "Google Identity Platform", "platform": "gcp", "category": "identity-service" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Standard development team can integrate; managed service handles infrastructure",
+      "skillsRequired": ["oauth2-oidc", "identity-integration"],
+      "toolingRequired": ["identity-monitoring", "user-management-console"],
+      "ongoingMaintenance": "User lifecycle management and policy reviews"
+    },
+    "costConsiderations": {
+      "runningCosts": "Per-user pricing; predictable and scalable",
+      "transitionCosts": "Application integration effort",
+      "costDrivers": ["active-user-count", "authentication-volume"],
+      "optimisationOpportunities": ["federate-with-existing-idp", "reduce-inactive-accounts"]
+    }
+  },
+  "relevantStandards": [
+    "ncsc-cloud-security",
+    "secure-by-design",
+    "data-protection",
+    "govuk-service-standard"
+  ],
+  "commonQuestions": [
+    "Who are the users and how will they authenticate?",
+    "Is there an existing enterprise directory to integrate with?",
+    "What level of MFA is required for the data classification?",
+    "Are there service-to-service authentication requirements?",
+    "What is the user lifecycle management process?",
+    "Are there requirements for GOV.UK One Login integration?"
+  ],
+  "evidenceNeeded": [
+    "User types and authentication requirements",
+    "Existing identity infrastructure inventory",
+    "Data classification and corresponding access control requirements",
+    "MFA requirements based on risk assessment",
+    "Service-to-service authentication needs"
+  ],
+  "artefactsToProduce": [
+    "Identity and access management decision record (ADR)",
+    "Authentication flow diagrams",
+    "Role-based access control (RBAC) matrix",
+    "MFA policy document",
+    "User lifecycle management process"
+  ]
+}

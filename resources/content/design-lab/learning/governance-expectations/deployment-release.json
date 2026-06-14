@@ -1,0 +1,8 @@
+[
+  "Fully automated CI/CD pipeline with evidence of automated testing, security scanning, and deployment without manual intervention.",
+  "Documented deployment strategy (blue-green, canary, rolling) with tested rollback procedures and defined rollback triggers.",
+  "Environment parity evidence showing that staging accurately represents production configuration and behaviour.",
+  "Change management process showing how deployments are approved, tracked, and audited with clear accountability.",
+  "Evidence that deployments are frequent and small rather than infrequent and large, with deployment frequency metrics.",
+  "Infrastructure as code for all environments with version control, peer review, and automated provisioning."
+]

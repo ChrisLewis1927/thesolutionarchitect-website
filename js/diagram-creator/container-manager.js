@@ -2,6 +2,13 @@ var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 const CONTAINER_PADDING = 20;
+const TYPE_STYLES = {
+  "region": { borderColor: "#545B64", backgroundColor: "rgba(84, 91, 100, 0.03)", borderRadius: 0, padding: 24, dash: [] },
+  "vpc": { borderColor: "#248814", backgroundColor: "rgba(36, 136, 20, 0.04)", borderRadius: 0, padding: 20, dash: [8, 4] },
+  "az": { borderColor: "#147EBA", backgroundColor: "rgba(20, 126, 186, 0.04)", borderRadius: 0, padding: 16, dash: [6, 3] },
+  "subnet": { borderColor: "#248814", backgroundColor: "rgba(36, 136, 20, 0.06)", borderRadius: 0, padding: 12, dash: [4, 2] },
+  "resource-group": { borderColor: "#0078D4", backgroundColor: "rgba(0, 120, 212, 0.04)", borderRadius: 4, padding: 16, dash: [6, 3] }
+};
 const MIN_CONTAINER_WIDTH = 100;
 const MIN_CONTAINER_HEIGHT = 80;
 const MAX_NESTING_DEPTH = 5;
@@ -187,6 +194,28 @@ class ContainerManager {
   getContainerStyle(nestingLevel) {
     const index = nestingLevel % LEVEL_STYLES.length;
     return { ...LEVEL_STYLES[index] };
+  }
+  /**
+   * Returns a type-appropriate visual style for a container type.
+   * Uses AWS/Azure reference diagram colours and dash patterns.
+   * For subnets, differentiates between public (green) and private (orange) by label.
+   *
+   * @param type - The container type.
+   * @param label - Optional label to differentiate subnet styles.
+   */
+  getContainerStyleByType(type, label) {
+    const baseStyle = { ...TYPE_STYLES[type] };
+    if (type === "subnet" && label) {
+      const lowerLabel = label.toLowerCase();
+      if (lowerLabel.includes("public")) {
+        baseStyle.borderColor = "#248814";
+        baseStyle.backgroundColor = "rgba(36, 136, 20, 0.08)";
+      } else if (lowerLabel.includes("private")) {
+        baseStyle.borderColor = "#E8710A";
+        baseStyle.backgroundColor = "rgba(232, 113, 10, 0.08)";
+      }
+    }
+    return baseStyle;
   }
   /**
    * Gets the bounding box of a child element (component or container).

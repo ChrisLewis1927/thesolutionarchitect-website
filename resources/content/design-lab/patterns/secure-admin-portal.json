@@ -1,0 +1,175 @@
+{
+  "id": "secure-admin-portal",
+  "name": "Secure Admin Portal",
+  "description": "A pattern for privileged administrative interfaces that manage critical systems, user accounts, or sensitive data. Requires enhanced security controls including strong authentication, privileged access management, comprehensive audit logging, and network-level restrictions beyond standard application security.",
+  "whenToUse": [
+    "Administrative interfaces for managing production systems and infrastructure",
+    "Portals for managing citizen data, user accounts, or access permissions",
+    "Interfaces for configuring security policies, firewall rules, or encryption keys",
+    "Back-office tools where actions have significant impact if performed incorrectly or maliciously",
+    "Systems requiring separation of duties and four-eyes approval for critical operations"
+  ],
+  "whenNotToUse": [
+    "Standard internal applications without elevated privileges or critical operations",
+    "Self-service portals where users manage only their own data",
+    "Read-only dashboards and reporting interfaces",
+    "Public-facing services where all users have equivalent access levels",
+    "Development and testing tools that do not access production data"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Privileged Access Gateway",
+      "purpose": "Broker and record all privileged sessions with just-in-time access",
+      "technology": "CyberArk, Azure PIM, or AWS SSO with session recording",
+      "platform": "Identity and access management"
+    },
+    {
+      "name": "Admin Web Application",
+      "purpose": "Provide the administrative user interface with role-based views",
+      "technology": "React or Angular with server-side rendering",
+      "platform": "Cloud compute (restricted network)"
+    },
+    {
+      "name": "Audit Log Store",
+      "purpose": "Immutably record all administrative actions for forensic analysis",
+      "technology": "CloudTrail, Azure Activity Log, or Cloud Audit Logs",
+      "platform": "Cloud audit service"
+    },
+    {
+      "name": "Approval Workflow",
+      "purpose": "Enforce multi-person approval for critical or destructive operations",
+      "technology": "Custom workflow engine or ServiceNow integration",
+      "platform": "Workflow platform"
+    },
+    {
+      "name": "Network Restriction Layer",
+      "purpose": "Limit access to admin portal from approved networks only",
+      "technology": "VPN, Private Link, or IP allowlisting",
+      "platform": "Cloud networking"
+    }
+  ],
+  "securityControls": [
+    "Enforce multi-factor authentication with hardware tokens for all admin access",
+    "Implement just-in-time privileged access with time-limited session elevation",
+    "Restrict network access to admin portal from approved corporate networks or VPN only",
+    "Implement comprehensive audit logging of all actions with tamper-proof storage",
+    "Enforce separation of duties — no single user can both request and approve critical changes",
+    "Implement session recording for all privileged access sessions",
+    "Apply break-glass procedures for emergency access with post-incident review",
+    "Implement anomaly detection for unusual admin behaviour patterns"
+  ],
+  "resilienceConsiderations": [
+    "Admin portals typically have lower availability requirements than citizen-facing services",
+    "Implement break-glass procedures for emergency access if primary auth is unavailable",
+    "Ensure audit log storage is independent of the admin portal for forensic integrity",
+    "Design for graceful degradation — read-only mode if approval workflow is unavailable",
+    "Maintain offline runbooks for critical operations if the admin portal is inaccessible"
+  ],
+  "costConsiderations": [
+    "Privileged access management solutions carry significant licensing costs",
+    "Hardware MFA tokens have per-device procurement and replacement costs",
+    "Audit log storage costs for long-term retention (typically 7+ years for compliance)",
+    "Lower user count means compute costs are minimal",
+    "Security assessment and penetration testing costs for privileged interfaces",
+    "Consider the cost of a security breach through an admin portal versus protection investment"
+  ],
+  "operationalConsiderations": [
+    "User onboarding and offboarding procedures for admin access must be rigorous",
+    "Regular access reviews to ensure only current role-holders retain admin privileges",
+    "Incident response procedures specific to compromised admin credentials",
+    "Regular review of audit logs for suspicious activity patterns",
+    "Training for admin users on security procedures and acceptable use",
+    "Periodic penetration testing focused on privilege escalation and access bypass"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "AWS IAM Identity Center",
+          "purpose": "Centralised admin access with MFA enforcement"
+        },
+        {
+          "name": "AWS CloudTrail",
+          "purpose": "Immutable audit logging of all API actions"
+        },
+        {
+          "name": "AWS Systems Manager Session Manager",
+          "purpose": "Audited, keyless access to instances"
+        },
+        {
+          "name": "AWS PrivateLink",
+          "purpose": "Private network access to admin interfaces"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure Privileged Identity Management",
+          "purpose": "Just-in-time privileged access"
+        },
+        {
+          "name": "Azure Monitor Activity Log",
+          "purpose": "Comprehensive admin action auditing"
+        },
+        {
+          "name": "Azure Bastion",
+          "purpose": "Secure admin access without public IP exposure"
+        },
+        {
+          "name": "Conditional Access Policies",
+          "purpose": "Context-aware access control for admins"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud IAM with Conditions",
+          "purpose": "Context-aware privileged access control"
+        },
+        {
+          "name": "Cloud Audit Logs",
+          "purpose": "Immutable admin action audit trail"
+        },
+        {
+          "name": "Identity-Aware Proxy",
+          "purpose": "Zero-trust access to admin applications"
+        },
+        {
+          "name": "Access Approval",
+          "purpose": "Require approval before Google support access"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "How many users require admin access and what are their specific roles?",
+    "What critical operations require multi-person approval?",
+    "What is the audit log retention requirement for compliance?",
+    "Is there an existing privileged access management solution in the organisation?",
+    "What network restrictions can be applied without impacting legitimate admin workflows?",
+    "What is the break-glass procedure for emergency access outside normal channels?"
+  ],
+  "commonMistakes": [
+    "Exposing admin portals to the public internet without network-level restrictions",
+    "Using the same authentication strength for admin access as standard user access",
+    "Not implementing audit logging or storing logs in a location admins can modify",
+    "Granting permanent admin access instead of just-in-time elevation",
+    "Not conducting regular access reviews, leaving stale admin accounts active"
+  ],
+  "workloadTypes": [
+    "admin",
+    "privileged-access",
+    "management-plane",
+    "security-critical"
+  ],
+  "securityClassifications": [
+    "official-sensitive",
+    "secret",
+    "top-secret"
+  ]
+}

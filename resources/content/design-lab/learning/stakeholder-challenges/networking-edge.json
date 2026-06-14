@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "How is the network segmented to limit lateral movement in the event of a breach?",
+      "What DDoS protection is in place and has it been tested against realistic attack scenarios?",
+      "How is egress traffic controlled and monitored to detect data exfiltration?",
+      "What controls prevent unauthorised network access between environments (dev, staging, production)?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "How will network changes be managed without causing service disruption?",
+      "What visibility do you have into network traffic patterns and anomalies?",
+      "How will you troubleshoot connectivity issues across complex network topologies?",
+      "What is the process for managing firewall rules and security groups at scale?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How long does it take to provision network connectivity for new services?",
+      "Can development teams self-serve network configuration or is there a bottleneck?",
+      "How does the network architecture support blue-green or canary deployments?",
+      "What network dependencies exist that could block deployments?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What are the data transfer costs, particularly for cross-region or internet egress traffic?",
+      "How do CDN and edge protection costs scale with traffic volume?",
+      "What are the costs of dedicated network connectivity (Direct Connect, ExpressRoute)?",
+      "Are there more cost-effective network architectures that meet the same security requirements?"
+    ]
+  }
+]

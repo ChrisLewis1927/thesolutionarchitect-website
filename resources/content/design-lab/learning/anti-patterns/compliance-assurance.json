@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Compliance as a Checkbox Exercise",
+    "description": "Treating compliance requirements as a one-time checklist to complete at the end of a project rather than an ongoing operational concern.",
+    "whyProblematic": "Compliance requirements (GDPR, accessibility, security standards) are continuous obligations, not project milestones. Systems drift out of compliance over time as changes are made. Late-stage compliance discovery causes expensive rework. Governance boards expect evidence of ongoing compliance, not just initial assessment.",
+    "betterApproach": "Embed compliance checks into CI/CD pipelines (automated accessibility testing, security scanning, dependency checking). Implement continuous compliance monitoring. Schedule regular compliance reviews. Treat compliance as a quality attribute that is continuously measured and maintained."
+  },
+  {
+    "name": "No Evidence Trail for Architecture Decisions",
+    "description": "Making architecture decisions verbally or in meetings without documenting the context, options considered, rationale, and consequences.",
+    "whyProblematic": "Governance boards require evidence of considered decision-making. Without documentation, decisions cannot be reviewed, challenged, or learned from. New team members cannot understand why the architecture is shaped as it is. Audit findings will flag undocumented decisions. Knowledge is lost when people leave.",
+    "betterApproach": "Document all significant architecture decisions as ADRs (Architecture Decision Records). Include context, options considered, decision made, and consequences. Store ADRs in version control alongside the code. Reference ADRs in governance submissions. Review and update ADRs when circumstances change."
+  },
+  {
+    "name": "Ignoring Accessibility Until Service Assessment",
+    "description": "Building a service without considering WCAG 2.2 AA compliance until forced to address it during a government service assessment.",
+    "whyProblematic": "Retrofitting accessibility is expensive and often results in poor user experience for disabled users. The Public Sector Bodies Accessibility Regulations 2018 make accessibility a legal requirement. Service assessments will fail without demonstrated accessibility compliance. Late accessibility work delays go-live.",
+    "betterApproach": "Include accessibility requirements from the start. Use accessible component libraries. Test with screen readers and keyboard navigation during development. Include disabled users in user research. Conduct regular accessibility audits. Treat accessibility as a core quality attribute, not an add-on."
+  },
+  {
+    "name": "Assuming Cloud Provider Compliance Covers Your Obligations",
+    "description": "Believing that because the cloud provider is certified (ISO 27001, SOC 2, etc.), your application automatically inherits that compliance.",
+    "whyProblematic": "Cloud compliance operates on a shared responsibility model. The provider secures the infrastructure; you secure your application, data, and configuration. Misconfigured S3 buckets, overly permissive IAM policies, and unencrypted data are your responsibility regardless of provider certifications. Governance boards understand this distinction.",
+    "betterApproach": "Understand the shared responsibility model for your specific services. Document which compliance controls are provider-managed vs customer-managed. Implement and evidence your side of the shared responsibility. Use cloud security posture management tools to detect misconfigurations. Map your controls to compliance frameworks explicitly."
+  }
+]

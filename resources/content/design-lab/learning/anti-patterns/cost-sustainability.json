@@ -1,0 +1,26 @@
+[
+  {
+    "name": "No Cost Visibility or Allocation",
+    "description": "Running cloud workloads without tagging resources, setting budgets, or allocating costs to specific services or teams.",
+    "whyProblematic": "Without cost visibility, spending grows unchecked. Cannot identify which services or teams are driving costs. Budget overruns are discovered only at month-end billing. Cannot make informed decisions about cost optimisation. Government spending must be accountable and auditable. Finance teams cannot produce accurate forecasts.",
+    "betterApproach": "Implement mandatory resource tagging (service, team, environment, cost-centre). Set up cost allocation reports and dashboards. Define budget alerts at multiple thresholds (50%, 75%, 90%, 100%). Review costs weekly. Allocate cloud costs to service owners who can take action. Use cloud-native cost management tools."
+  },
+  {
+    "name": "Ignoring Reserved Capacity for Steady-State Workloads",
+    "description": "Running all production workloads on on-demand pricing despite having predictable, steady-state resource requirements.",
+    "whyProblematic": "On-demand pricing is the most expensive option for predictable workloads. Reserved instances or savings plans offer 30-72% discounts for committed usage. Government services with stable baselines are ideal candidates for reservations. Failing to optimise pricing wastes public money that could fund other services.",
+    "betterApproach": "Analyse usage patterns over 3+ months to identify steady-state baselines. Purchase reserved capacity or savings plans for the predictable portion. Use on-demand for variable/burst capacity above the baseline. Review reservations quarterly and adjust. Consider convertible reservations for flexibility."
+  },
+  {
+    "name": "Leaving Non-Production Resources Running 24/7",
+    "description": "Running development, testing, and staging environments continuously, including nights, weekends, and holidays when no one is using them.",
+    "whyProblematic": "Non-production environments typically represent 40-60% of cloud spend. Running them 24/7 when they're used only during business hours wastes 70%+ of that cost. Multiplied across multiple environments and teams, the waste is substantial. Government departments are expected to demonstrate value for money.",
+    "betterApproach": "Implement automated scheduling to stop non-production environments outside business hours. Use infrastructure as code to enable rapid environment recreation. Consider ephemeral environments that are created on demand and destroyed after use. Tag environments with schedules and enforce compliance."
+  },
+  {
+    "name": "Over-Engineering for Scale That Will Never Come",
+    "description": "Designing for millions of users and implementing complex distributed architectures when the actual user base is hundreds or low thousands.",
+    "whyProblematic": "Premature optimisation adds complexity, cost, and operational burden without delivering value. Many government internal services serve hundreds of users and will never need horizontal scaling. Complex architectures require more skilled staff, more tooling, and more maintenance. The additional cost cannot be justified against actual demand.",
+    "betterApproach": "Design for current and near-term projected scale with clear scaling triggers. Start simple and add complexity only when metrics demonstrate the need. A well-designed monolith serving 500 users is better than a microservices architecture serving the same 500 users at 10x the cost and complexity."
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "How is data encrypted at rest and in transit, and who manages the encryption keys?",
+      "What access controls prevent unauthorised data access, and how are they audited?",
+      "How will you detect and respond to data exfiltration attempts?",
+      "Where does the data physically reside and does it meet data sovereignty requirements?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "What is the backup strategy and have restore procedures been tested?",
+      "How will you handle database maintenance (patching, upgrades, schema migrations) without downtime?",
+      "What monitoring is in place for database performance, capacity, and replication lag?",
+      "Who is responsible for database administration and do they have the required skills?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How will schema changes be managed across environments without breaking deployments?",
+      "Can developers provision their own database instances for testing?",
+      "What is the approach to test data management (anonymisation, synthetic data, refresh cycles)?",
+      "How will database migrations be rolled back if a deployment fails?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What are the licensing costs for the chosen database technology?",
+      "How does storage cost scale as data volumes grow over the retention period?",
+      "Have you compared managed database costs against self-managed alternatives?",
+      "What are the costs of cross-region replication for disaster recovery?"
+    ]
+  }
+]

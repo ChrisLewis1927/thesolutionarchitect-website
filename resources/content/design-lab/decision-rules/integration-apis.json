@@ -1,0 +1,223 @@
+{
+  "domain": "integration-apis",
+  "description": "Assesses the appropriate integration and API strategy based on integration targets, protocols, data flow patterns, and team capability.",
+  "rules": [
+    {
+      "id": "ia-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "integrations.protocols", "operator": "contains", "value": "event-stream" },
+          { "field": "serviceType.type", "operator": "in", "values": ["integration-layer", "data-platform"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Event-Driven Integration",
+        "rationale": "Integration layers and data platforms using event streams benefit from an event-driven architecture that decouples producers from consumers. This enables asynchronous processing, replay capability, and independent scaling of integration components.",
+        "candidateTechnologies": [
+          { "name": "AWS EventBridge", "platform": "aws", "category": "event-bus" },
+          { "name": "AWS SNS/SQS", "platform": "aws", "category": "messaging" },
+          { "name": "Amazon MSK (Kafka)", "platform": "aws", "category": "event-streaming" },
+          { "name": "Azure Event Grid", "platform": "azure", "category": "event-bus" },
+          { "name": "Azure Service Bus", "platform": "azure", "category": "messaging" },
+          { "name": "Azure Event Hubs", "platform": "azure", "category": "event-streaming" },
+          { "name": "Google Pub/Sub", "platform": "gcp", "category": "messaging" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires understanding of event-driven patterns; dead letter queue management and event schema evolution need attention",
+          "skillsRequired": ["event-driven-architecture", "message-queue-patterns", "idempotent-consumers", "schema-registry"],
+          "toolingRequired": ["event-monitoring", "dead-letter-queue-alerting", "schema-registry", "distributed-tracing"],
+          "ongoingMaintenance": "Schema evolution management, dead letter queue monitoring, consumer lag tracking, and partition management"
+        },
+        "costConsiderations": {
+          "runningCosts": "Based on message volume and retention; managed services scale cost with throughput",
+          "transitionCosts": "Architecture redesign for event-driven patterns; team upskilling; schema design",
+          "costDrivers": ["message-volume", "retention-period", "partition-count", "consumer-group-count"],
+          "optimisationOpportunities": ["batch-messages", "reduce-retention-where-possible", "filter-at-source"]
+        }
+      }
+    },
+    {
+      "id": "ia-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "integrations.protocols", "operator": "contains", "value": "rest-api" },
+          { "field": "serviceType.type", "operator": "equals", "value": "api-service" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "API-Led Integration with Gateway",
+        "rationale": "API services using REST benefit from a managed API gateway that provides rate limiting, authentication, versioning, and monitoring. This pattern separates API management concerns from business logic and provides a consistent interface for consumers.",
+        "candidateTechnologies": [
+          { "name": "AWS API Gateway", "platform": "aws", "category": "api-gateway" },
+          { "name": "Azure API Management", "platform": "azure", "category": "api-gateway" },
+          { "name": "Google Apigee", "platform": "gcp", "category": "api-gateway" },
+          { "name": "Kong Gateway", "platform": "multi-cloud", "category": "api-gateway" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Standard development team can manage API definitions; managed gateway handles infrastructure",
+          "skillsRequired": ["api-design", "openapi-specification", "oauth2-flows", "rate-limiting-strategy"],
+          "toolingRequired": ["api-documentation-generator", "api-testing-tools", "usage-analytics", "developer-portal"],
+          "ongoingMaintenance": "API versioning, usage monitoring, rate limit tuning, and certificate rotation"
+        },
+        "costConsiderations": {
+          "runningCosts": "Based on API call volume; caching reduces backend costs",
+          "transitionCosts": "API design and documentation; gateway configuration; consumer migration",
+          "costDrivers": ["api-call-volume", "data-transfer", "caching-configuration", "custom-domain-certificates"],
+          "optimisationOpportunities": ["response-caching", "request-throttling", "usage-plans-for-consumers"]
+        }
+      }
+    },
+    {
+      "id": "ia-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "integrations.protocols", "operator": "contains", "value": "file-transfer" },
+          { "field": "serviceType.type", "operator": "equals", "value": "batch-processing" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Managed File Transfer with Processing Pipeline",
+        "rationale": "Batch processing workloads using file transfer benefit from managed file transfer services combined with event-triggered processing pipelines. This provides secure file exchange, automatic processing on arrival, and audit trails for compliance.",
+        "candidateTechnologies": [
+          { "name": "AWS Transfer Family", "platform": "aws", "category": "managed-file-transfer" },
+          { "name": "AWS S3 Event Notifications", "platform": "aws", "category": "event-trigger" },
+          { "name": "Azure Blob Storage", "platform": "azure", "category": "file-storage" },
+          { "name": "Azure Logic Apps", "platform": "azure", "category": "workflow" },
+          { "name": "Google Cloud Storage", "platform": "gcp", "category": "file-storage" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires understanding of file processing patterns; error handling for malformed files needs design",
+          "skillsRequired": ["file-processing-patterns", "error-handling", "data-validation", "sftp-configuration"],
+          "toolingRequired": ["file-monitoring", "processing-pipeline-orchestration", "error-alerting", "audit-logging"],
+          "ongoingMaintenance": "File format change management, processing error investigation, partner connectivity monitoring, and storage lifecycle management"
+        },
+        "costConsiderations": {
+          "runningCosts": "Storage costs for files; compute costs for processing; transfer costs for external partners",
+          "transitionCosts": "Partner onboarding; file format specification; processing pipeline development",
+          "costDrivers": ["file-volume", "file-size", "processing-compute", "storage-retention", "data-transfer"],
+          "optimisationOpportunities": ["lifecycle-policies", "compress-files", "batch-processing-windows", "archive-processed-files"]
+        }
+      }
+    },
+    {
+      "id": "ia-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "integrations.protocols", "operator": "contains", "value": "soap" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Integration Middleware with Protocol Translation",
+        "rationale": "Legacy SOAP integrations require protocol translation to work with modern services. An integration middleware layer provides this translation while adding monitoring, retry logic, and circuit breaking to improve reliability of legacy connections.",
+        "candidateTechnologies": [
+          { "name": "AWS Step Functions", "platform": "aws", "category": "workflow-orchestration" },
+          { "name": "MuleSoft", "platform": "saas", "category": "integration-platform" },
+          { "name": "Azure Logic Apps", "platform": "azure", "category": "integration-platform" },
+          { "name": "Azure API Management (SOAP passthrough)", "platform": "azure", "category": "api-gateway" },
+          { "name": "Google Cloud Endpoints", "platform": "gcp", "category": "api-gateway" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires integration specialist with SOAP/XML experience; legacy system knowledge often concentrated in few individuals",
+          "skillsRequired": ["soap-xml", "wsdl", "protocol-translation", "integration-patterns", "error-handling"],
+          "toolingRequired": ["integration-monitoring", "message-tracing", "soap-testing-tools", "circuit-breaker-configuration"],
+          "ongoingMaintenance": "WSDL change management, certificate renewal, connection monitoring, and legacy system coordination"
+        },
+        "costConsiderations": {
+          "runningCosts": "Middleware licensing or managed service costs; additional compute for translation layer",
+          "transitionCosts": "Integration mapping; testing with legacy systems; specialist consultancy",
+          "costDrivers": ["middleware-licensing", "message-volume", "specialist-skills", "legacy-system-availability"],
+          "optimisationOpportunities": ["consolidate-integrations", "plan-legacy-retirement", "cache-stable-responses"]
+        }
+      }
+    },
+    {
+      "id": "ia-005",
+      "priority": 9,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises Integration Bus",
+        "rationale": "Without cloud access, integration must use on-premises middleware or direct point-to-point connections. An enterprise service bus or message broker provides centralised integration management, though with higher operational overhead.",
+        "candidateTechnologies": [
+          { "name": "RabbitMQ", "platform": "on-premises", "category": "message-broker" },
+          { "name": "Apache Kafka", "platform": "on-premises", "category": "event-streaming" },
+          { "name": "MuleSoft (on-premises)", "platform": "on-premises", "category": "integration-platform" },
+          { "name": "Microsoft BizTalk", "platform": "on-premises", "category": "integration-platform" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated integration team; middleware administration and monitoring",
+          "skillsRequired": ["middleware-administration", "integration-patterns", "message-broker-management", "clustering"],
+          "toolingRequired": ["middleware-monitoring", "message-tracing", "cluster-management", "backup-tools"],
+          "ongoingMaintenance": "Middleware patching, cluster management, queue monitoring, and capacity planning"
+        },
+        "costConsiderations": {
+          "runningCosts": "Middleware licensing; hardware; staffing for administration",
+          "transitionCosts": "Middleware procurement and installation; integration development; team training",
+          "costDrivers": ["licensing", "hardware", "staffing", "message-volume"],
+          "optimisationOpportunities": ["open-source-alternatives", "consolidate-integration-points", "plan-cloud-migration"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "API-Led Integration",
+    "rationale": "When no specific conditions strongly favour an alternative, an API-led integration approach using managed API gateways provides a clean, well-understood integration pattern. REST APIs with OpenAPI specifications enable clear contracts between systems and support both synchronous and asynchronous patterns.",
+    "candidateTechnologies": [
+      { "name": "AWS API Gateway", "platform": "aws", "category": "api-gateway" },
+      { "name": "Azure API Management", "platform": "azure", "category": "api-gateway" },
+      { "name": "Google Cloud Endpoints", "platform": "gcp", "category": "api-gateway" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Standard development team can manage",
+      "skillsRequired": ["api-design", "rest-principles", "openapi"],
+      "toolingRequired": ["api-documentation", "api-testing", "monitoring"],
+      "ongoingMaintenance": "API versioning and usage monitoring"
+    },
+    "costConsiderations": {
+      "runningCosts": "Low to moderate based on call volume",
+      "transitionCosts": "API design and documentation effort",
+      "costDrivers": ["api-call-volume", "data-transfer"],
+      "optimisationOpportunities": ["caching", "request-batching"]
+    }
+  },
+  "relevantStandards": [
+    "tcop",
+    "govuk-service-standard",
+    "secure-by-design"
+  ],
+  "commonQuestions": [
+    "What systems need to integrate and what protocols do they support?",
+    "Is the integration synchronous or asynchronous?",
+    "What is the expected message volume and size?",
+    "Are there existing integration patterns or middleware in the organisation?",
+    "What happens if an integration partner is unavailable?",
+    "Are there data transformation requirements between systems?"
+  ],
+  "evidenceNeeded": [
+    "Integration target inventory with protocols and data formats",
+    "Message volume and frequency estimates",
+    "Data flow diagrams showing integration points",
+    "SLA requirements for integration availability",
+    "Error handling and retry requirements"
+  ],
+  "artefactsToProduce": [
+    "Integration architecture decision record (ADR)",
+    "API specification (OpenAPI/Swagger)",
+    "Integration data flow diagram",
+    "Error handling and retry strategy document",
+    "Integration partner onboarding guide"
+  ]
+}

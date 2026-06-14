@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Security as an Afterthought",
+    "description": "Designing the architecture first and attempting to bolt on security controls afterwards, rather than integrating security from the start.",
+    "whyProblematic": "Retrofitting security is expensive, often incomplete, and creates friction with delivery teams. Architectural decisions made without security consideration may be fundamentally incompatible with required controls. Late-stage security reviews cause delays and rework. Violates the UK Government Secure by Design approach which mandates security consideration from inception.",
+    "betterApproach": "Apply Secure by Design principles from the first architecture discussion. Include security architects in design reviews. Threat model early and iterate. Build security controls into the architecture rather than layering them on top. Use the NCSC design principles as a checklist during design."
+  },
+  {
+    "name": "Perimeter-Only Security",
+    "description": "Relying solely on network perimeter controls (firewalls, WAFs) without implementing defence in depth through the application stack.",
+    "whyProblematic": "Once the perimeter is breached, there are no further controls to prevent lateral movement or data exfiltration. Insider threats bypass perimeter controls entirely. Cloud environments have no traditional perimeter. NCSC zero-trust architecture guidance explicitly moves away from perimeter-based security models.",
+    "betterApproach": "Implement defence in depth: network controls, application-level authentication and authorisation, data encryption at rest and in transit, input validation, output encoding, logging and monitoring at every tier. Assume breach and design controls that limit blast radius. Apply zero-trust principles."
+  },
+  {
+    "name": "Logging Without Monitoring or Alerting",
+    "description": "Generating security logs but not actively monitoring them, setting up alerts, or having incident response procedures.",
+    "whyProblematic": "Logs without monitoring provide forensic value after an incident but do nothing to detect or prevent attacks in progress. Mean time to detect (MTTD) becomes unbounded. Compliance frameworks require active monitoring, not just log generation. Security incidents go unnoticed until external parties report them.",
+    "betterApproach": "Implement a security monitoring pipeline: collect logs centrally, apply detection rules for known attack patterns, set up alerts with defined response procedures, and conduct regular log reviews. Use SIEM or equivalent tooling. Define and test incident response runbooks. Measure MTTD and MTTR."
+  },
+  {
+    "name": "Encryption Key Management Neglect",
+    "description": "Encrypting data but storing encryption keys alongside the encrypted data, using default keys, or having no key rotation strategy.",
+    "whyProblematic": "Encryption without proper key management provides false assurance. Keys stored with data are compromised in the same breach. Default or shared keys mean multiple parties can decrypt data. No rotation means compromised keys remain valid indefinitely. Governance boards will specifically ask about key management.",
+    "betterApproach": "Use cloud-native key management services (KMS). Implement customer-managed keys for sensitive data. Define and automate key rotation schedules. Separate key management permissions from data access permissions. Document the key hierarchy and recovery procedures. Test key rotation in non-production first."
+  }
+]

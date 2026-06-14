@@ -1,0 +1,8 @@
+[
+  "Evidence that compute platform selection was based on workload characteristics (stateless vs stateful, scaling profile, operational maturity) rather than team familiarity alone.",
+  "Justification for the chosen deployment model (serverless, containers, VMs) with reference to cost, operational burden, and team capability.",
+  "Demonstration that auto-scaling policies are defined and tested, with evidence of right-sizing based on actual usage data.",
+  "Confirmation that the compute platform supports the defined availability and disaster recovery requirements.",
+  "Evidence that managed services were considered before self-managed alternatives, with documented rationale if self-managed was chosen.",
+  "Cost projections for the compute estate including baseline, peak, and growth scenarios with comparison against alternative approaches."
+]

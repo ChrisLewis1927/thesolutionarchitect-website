@@ -1,0 +1,191 @@
+{
+  "id": "case-management",
+  "name": "Case Management Platform",
+  "description": "A pattern for systems that manage the lifecycle of cases, applications, or requests through defined workflows. Common in government for processing citizen applications, managing investigations, handling complaints, or tracking service requests through multi-stage approval processes.",
+  "whenToUse": [
+    "Processing citizen applications that move through defined stages (submitted, reviewed, approved/rejected)",
+    "Managing investigations or complaints with evidence gathering and decision workflows",
+    "Tracking service requests through multi-team handoffs and SLA-driven timelines",
+    "Workloads requiring configurable business rules that change with policy updates",
+    "Systems needing comprehensive audit trails for every case action and decision"
+  ],
+  "whenNotToUse": [
+    "Simple CRUD applications without workflow or lifecycle management",
+    "Real-time transactional services where immediate response is required",
+    "Bulk data processing without individual case tracking",
+    "Services where a commercial case management product (ServiceNow, Dynamics) would suffice",
+    "Reporting-only systems that consume case data but don't manage case lifecycle"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Case API Service",
+      "purpose": "Manage case lifecycle, state transitions, and business rule enforcement",
+      "technology": "Node.js, .NET, or Java with workflow engine",
+      "platform": "Cloud compute"
+    },
+    {
+      "name": "Workflow Engine",
+      "purpose": "Define and execute case processing workflows with configurable rules",
+      "technology": "Camunda, AWS Step Functions, or custom state machine",
+      "platform": "Cloud or self-managed"
+    },
+    {
+      "name": "Case Database",
+      "purpose": "Store case records, history, and current state with full audit trail",
+      "technology": "PostgreSQL with temporal tables or event sourcing",
+      "platform": "Cloud managed database"
+    },
+    {
+      "name": "Document Management",
+      "purpose": "Store and retrieve documents, evidence, and attachments associated with cases",
+      "technology": "S3 with metadata, Azure Blob, or SharePoint",
+      "platform": "Cloud storage"
+    },
+    {
+      "name": "Notification Service",
+      "purpose": "Send status updates to citizens and internal users at workflow milestones",
+      "technology": "GOV.UK Notify or Amazon SES",
+      "platform": "Government platform or cloud"
+    },
+    {
+      "name": "Search and Reporting",
+      "purpose": "Enable case search, filtering, and management reporting across the caseload",
+      "technology": "Elasticsearch, Azure Cognitive Search, or PostgreSQL full-text",
+      "platform": "Cloud search service"
+    }
+  ],
+  "securityControls": [
+    "Implement role-based access control with case-level permissions (own cases vs all cases)",
+    "Encrypt case data at rest and in transit, especially for sensitive citizen information",
+    "Implement comprehensive audit logging for every case action, view, and state change",
+    "Apply data retention policies aligned with statutory requirements per case type",
+    "Implement document scanning for malware on all uploaded attachments",
+    "Enforce separation of duties for case decisions (reviewer cannot be the same as approver)"
+  ],
+  "resilienceConsiderations": [
+    "Case data must not be lost — implement durable storage with point-in-time recovery",
+    "Workflow state must be recoverable after system failures without losing progress",
+    "Design for idempotent state transitions to handle retry scenarios safely",
+    "Implement optimistic locking to prevent concurrent case updates causing data corruption",
+    "Queue-based processing for bulk operations to prevent timeout failures"
+  ],
+  "costConsiderations": [
+    "Database costs scale with case volume and retention period",
+    "Document storage costs grow over time — implement lifecycle policies for archived cases",
+    "Commercial workflow engine licensing may apply (Camunda, Pega)",
+    "Search infrastructure costs for large case volumes",
+    "Consider the cost of building custom vs procuring commercial case management",
+    "Factor in ongoing business rule maintenance and configuration costs"
+  ],
+  "operationalConsiderations": [
+    "Business rules and workflows change with policy — design for configurability",
+    "SLA monitoring needed to track cases approaching deadline",
+    "Reporting on case volumes, processing times, and bottlenecks for management",
+    "Data migration planning for cases from legacy systems",
+    "User training for caseworkers on new workflows and system features",
+    "Regular review of workflow efficiency and identification of process improvements"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon ECS or Lambda",
+          "purpose": "Case processing service hosting"
+        },
+        {
+          "name": "Amazon RDS (PostgreSQL)",
+          "purpose": "Case data storage with audit trail"
+        },
+        {
+          "name": "AWS Step Functions",
+          "purpose": "Workflow orchestration for case processing"
+        },
+        {
+          "name": "Amazon S3",
+          "purpose": "Document and evidence storage"
+        },
+        {
+          "name": "Amazon OpenSearch",
+          "purpose": "Case search and analytics"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure App Service or Container Apps",
+          "purpose": "Case processing service hosting"
+        },
+        {
+          "name": "Azure Database for PostgreSQL",
+          "purpose": "Case data storage"
+        },
+        {
+          "name": "Azure Logic Apps",
+          "purpose": "Workflow automation for case routing"
+        },
+        {
+          "name": "Azure Blob Storage",
+          "purpose": "Document and evidence storage"
+        },
+        {
+          "name": "Azure Cognitive Search",
+          "purpose": "Case search and filtering"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Run",
+          "purpose": "Case processing service hosting"
+        },
+        {
+          "name": "Cloud SQL (PostgreSQL)",
+          "purpose": "Case data storage"
+        },
+        {
+          "name": "Cloud Workflows",
+          "purpose": "Case processing workflow orchestration"
+        },
+        {
+          "name": "Cloud Storage",
+          "purpose": "Document and evidence storage"
+        },
+        {
+          "name": "Elasticsearch on GKE",
+          "purpose": "Case search and analytics"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What are the defined case lifecycle stages and transition rules?",
+    "How frequently do business rules and workflows change with policy updates?",
+    "What SLAs apply to case processing times and how are breaches escalated?",
+    "What volume of cases is expected and what is the growth trajectory?",
+    "Are there existing cases in legacy systems that need migrating?",
+    "What reporting and management information is required from the case data?"
+  ],
+  "commonMistakes": [
+    "Hard-coding business rules that change with policy, making updates require code deployments",
+    "Not implementing proper audit trails, failing compliance requirements",
+    "Building custom case management when a commercial product would be more appropriate",
+    "Not planning for data migration from legacy case management systems",
+    "Underestimating the complexity of workflow rules and edge cases in case processing"
+  ],
+  "workloadTypes": [
+    "case-management",
+    "workflow",
+    "applications-processing",
+    "investigations"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

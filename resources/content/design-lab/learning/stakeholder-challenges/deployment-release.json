@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "How are deployment pipelines secured against supply chain attacks and unauthorised modifications?",
+      "What security scanning (SAST, DAST, dependency checks) is integrated into the CI/CD pipeline?",
+      "How are deployment credentials and secrets managed within the pipeline?",
+      "What controls prevent unauthorised deployments to production?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "What is the rollback procedure and how quickly can a failed deployment be reverted?",
+      "How are deployments coordinated with maintenance windows and change management processes?",
+      "What monitoring confirms a deployment is healthy before traffic is fully shifted?",
+      "How will you handle deployments that require database migrations or infrastructure changes?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "What is the current deployment frequency and what is the target?",
+      "How long does the full pipeline take from commit to production?",
+      "Can the team deploy independently or are there dependencies on other teams?",
+      "What is the process for hotfixes that need to bypass the normal release cycle?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What are the costs of CI/CD tooling and build infrastructure?",
+      "How does deployment automation reduce the cost of manual release management?",
+      "What is the cost of deployment failures in terms of team time and service impact?",
+      "Are there licensing costs for deployment tools or artifact repositories?"
+    ]
+  }
+]

@@ -438,8 +438,30 @@ function initApp(): void {
         const containerManager = new ContainerManager(canvasController.getState());
         const containerId = containerManager.getContainerAtPoint(position) ?? undefined;
 
-        // Check if nesting depth would be exceeded
-        if (containerId && !containerManager.canNestIn(containerId)) {
+        // List of service IDs that should create containers instead of components
+        const CONTAINER_SERVICE_IDS: Record<string, string> = {
+          'region': 'region',
+          'az': 'az',
+          'zone': 'az',
+          'vpc': 'vpc',
+          'vpc-network': 'vpc',
+          'vnet': 'vpc',
+          'public-subnet': 'subnet',
+          'private-subnet': 'subnet',
+          'resource-group': 'resource-group',
+        };
+
+        const containerType = CONTAINER_SERVICE_IDS[dragData.serviceId];
+        if (containerType) {
+          // Create a container instead of a component
+          canvasController.addContainer(
+            containerType as any,
+            position,
+            containerId,
+            dragData.serviceName
+          );
+        } else if (containerId && !containerManager.canNestIn(containerId)) {
+          // Check if nesting depth would be exceeded
           showNestingDepthWarning(event.clientX, event.clientY);
           // Still place the component, but without a container
           canvasController.addComponentWithInfo(

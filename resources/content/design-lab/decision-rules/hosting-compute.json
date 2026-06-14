@@ -1,0 +1,290 @@
+{
+  "domain": "hosting-compute",
+  "description": "Assesses the appropriate hosting and compute model for the workload based on service type, traffic profile, team capability, and platform availability.",
+  "rules": [
+    {
+      "id": "hc-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "public-facing" },
+          { "field": "trafficProfile.pattern", "operator": "in", "values": ["spiky", "unpredictable"] },
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": false }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Serverless Application",
+        "rationale": "Public-facing services with spiky or unpredictable traffic benefit from serverless compute which scales to zero and handles burst traffic without pre-provisioning. This reduces cost during quiet periods and eliminates capacity planning risk.",
+        "candidateTechnologies": [
+          { "name": "AWS Lambda", "platform": "aws", "category": "serverless-compute" },
+          { "name": "Azure Functions", "platform": "azure", "category": "serverless-compute" },
+          { "name": "Google Cloud Functions", "platform": "gcp", "category": "serverless-compute" },
+          { "name": "AWS API Gateway", "platform": "aws", "category": "api-gateway" },
+          { "name": "Azure API Management", "platform": "azure", "category": "api-gateway" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "No dedicated infrastructure team required; developers manage function deployments",
+          "skillsRequired": ["serverless-patterns", "event-driven-design", "cloud-native-development"],
+          "toolingRequired": ["serverless-framework-or-sam", "cloud-monitoring", "distributed-tracing"],
+          "ongoingMaintenance": "Minimal infrastructure maintenance; focus on function code, dependency updates, and cold-start optimisation"
+        },
+        "costConsiderations": {
+          "runningCosts": "Pay-per-invocation model; cost scales linearly with usage; zero cost at zero traffic",
+          "transitionCosts": "Application refactoring to event-driven model; team upskilling on serverless patterns",
+          "costDrivers": ["invocation-count", "execution-duration", "memory-allocation", "data-transfer"],
+          "optimisationOpportunities": ["right-size-memory", "reduce-cold-starts", "batch-processing-where-possible"]
+        }
+      }
+    },
+    {
+      "id": "hc-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "public-facing" },
+          { "field": "trafficProfile.pattern", "operator": "in", "values": ["steady", "growing"] },
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": false }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Containerised Application",
+        "rationale": "Public-facing services with steady or growing traffic are well-suited to containerised deployments. Containers provide consistent environments, efficient resource utilisation, and horizontal scaling without the cold-start penalties of serverless.",
+        "candidateTechnologies": [
+          { "name": "AWS ECS Fargate", "platform": "aws", "category": "container-orchestration" },
+          { "name": "AWS EKS", "platform": "aws", "category": "container-orchestration" },
+          { "name": "Azure Container Apps", "platform": "azure", "category": "container-orchestration" },
+          { "name": "Azure Kubernetes Service", "platform": "azure", "category": "container-orchestration" },
+          { "name": "Google Cloud Run", "platform": "gcp", "category": "container-orchestration" },
+          { "name": "Google Kubernetes Engine", "platform": "gcp", "category": "container-orchestration" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires team familiarity with container orchestration; managed services reduce but do not eliminate operational overhead",
+          "skillsRequired": ["container-orchestration", "docker", "kubernetes-or-equivalent", "cloud-networking"],
+          "toolingRequired": ["container-registry", "ci-cd-pipeline", "container-monitoring", "log-aggregation"],
+          "ongoingMaintenance": "Container image updates, security patching, scaling policy tuning, and cluster maintenance (if self-managed)"
+        },
+        "costConsiderations": {
+          "runningCosts": "Predictable monthly costs based on reserved capacity; auto-scaling adds variable component",
+          "transitionCosts": "Containerisation of existing application; CI/CD pipeline setup; team training",
+          "costDrivers": ["compute-hours", "container-count", "data-transfer", "load-balancer"],
+          "optimisationOpportunities": ["right-size-containers", "spot-instances-for-non-critical", "reserved-capacity-discounts"]
+        }
+      }
+    },
+    {
+      "id": "hc-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "internal" },
+          { "field": "teamCapability.cloudExperience", "operator": "in", "values": ["none", "basic"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Platform-as-a-Service Application",
+        "rationale": "Internal services with teams that have limited cloud experience benefit from PaaS offerings that abstract infrastructure complexity. This allows the team to focus on application logic while the platform handles scaling, patching, and availability.",
+        "candidateTechnologies": [
+          { "name": "AWS Elastic Beanstalk", "platform": "aws", "category": "paas" },
+          { "name": "Azure App Service", "platform": "azure", "category": "paas" },
+          { "name": "Google App Engine", "platform": "gcp", "category": "paas" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Standard development team can manage; no specialist infrastructure skills required",
+          "skillsRequired": ["web-application-development", "basic-cloud-concepts", "deployment-pipelines"],
+          "toolingRequired": ["ci-cd-pipeline", "application-monitoring", "log-viewer"],
+          "ongoingMaintenance": "Application code updates and dependency management; platform handles OS patching and scaling"
+        },
+        "costConsiderations": {
+          "runningCosts": "Fixed monthly cost based on tier selection; predictable and easy to budget",
+          "transitionCosts": "Minimal; standard web applications deploy with little modification",
+          "costDrivers": ["instance-tier", "instance-count", "data-transfer"],
+          "optimisationOpportunities": ["scale-down-outside-hours", "use-lower-tier-for-non-production"]
+        }
+      }
+    },
+    {
+      "id": "hc-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "batch-processing" },
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": false }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Serverless Batch Processing",
+        "rationale": "Batch processing workloads are ideal for serverless or managed compute services that provision resources on demand and release them when processing completes. This avoids paying for idle compute between batch runs.",
+        "candidateTechnologies": [
+          { "name": "AWS Step Functions", "platform": "aws", "category": "workflow-orchestration" },
+          { "name": "AWS Batch", "platform": "aws", "category": "batch-compute" },
+          { "name": "Azure Batch", "platform": "azure", "category": "batch-compute" },
+          { "name": "Azure Durable Functions", "platform": "azure", "category": "workflow-orchestration" },
+          { "name": "Google Cloud Workflows", "platform": "gcp", "category": "workflow-orchestration" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Development team manages job definitions and scheduling; no infrastructure team needed",
+          "skillsRequired": ["workflow-design", "idempotent-processing", "error-handling-patterns"],
+          "toolingRequired": ["job-scheduler", "monitoring-and-alerting", "dead-letter-queues"],
+          "ongoingMaintenance": "Job definition updates, monitoring for failed runs, and periodic review of processing times"
+        },
+        "costConsiderations": {
+          "runningCosts": "Pay only for compute time during batch execution; zero cost between runs",
+          "transitionCosts": "Refactoring batch jobs to cloud-native patterns; setting up orchestration",
+          "costDrivers": ["compute-duration", "data-volume-processed", "storage-for-intermediate-results"],
+          "optimisationOpportunities": ["spot-instances-for-fault-tolerant-jobs", "compress-intermediate-data", "parallelise-processing"]
+        }
+      }
+    },
+    {
+      "id": "hc-005",
+      "priority": 5,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "api-service" },
+          { "field": "trafficProfile.pattern", "operator": "equals", "value": "steady" },
+          { "field": "availability.targetAvailability", "operator": "in", "values": ["99.9", "99.95", "99.99"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Containerised API Service",
+        "rationale": "API services with steady traffic and high availability requirements benefit from containerised deployments with auto-scaling and health checks. Containers provide consistent performance without cold-start latency, which is critical for API SLAs.",
+        "candidateTechnologies": [
+          { "name": "AWS ECS Fargate", "platform": "aws", "category": "container-orchestration" },
+          { "name": "Azure Container Apps", "platform": "azure", "category": "container-orchestration" },
+          { "name": "Google Cloud Run", "platform": "gcp", "category": "container-orchestration" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires container expertise; managed services reduce operational load significantly",
+          "skillsRequired": ["container-orchestration", "api-design", "health-check-patterns", "auto-scaling-configuration"],
+          "toolingRequired": ["container-registry", "api-gateway", "distributed-tracing", "sla-monitoring"],
+          "ongoingMaintenance": "Container image updates, API versioning management, performance tuning, and SLA monitoring"
+        },
+        "costConsiderations": {
+          "runningCosts": "Predictable costs based on minimum replica count; auto-scaling adds variable costs during peaks",
+          "transitionCosts": "Containerisation effort; API gateway configuration; monitoring setup",
+          "costDrivers": ["minimum-replicas", "peak-scaling", "api-gateway-requests", "data-transfer"],
+          "optimisationOpportunities": ["right-size-containers", "cache-frequent-responses", "use-reserved-capacity"]
+        }
+      }
+    },
+    {
+      "id": "hc-006",
+      "priority": 6,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "in", "values": ["data-platform", "integration-layer"] },
+          { "field": "teamCapability.cloudExperience", "operator": "in", "values": ["intermediate", "advanced"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Managed Container Orchestration",
+        "rationale": "Data platforms and integration layers with experienced teams benefit from managed Kubernetes or equivalent orchestration. This provides the flexibility to run diverse workloads (APIs, workers, schedulers) in a unified platform with sophisticated scaling and deployment strategies.",
+        "candidateTechnologies": [
+          { "name": "AWS EKS", "platform": "aws", "category": "container-orchestration" },
+          { "name": "Azure Kubernetes Service", "platform": "azure", "category": "container-orchestration" },
+          { "name": "Google Kubernetes Engine", "platform": "gcp", "category": "container-orchestration" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated platform engineering capability; at least one Kubernetes-experienced engineer",
+          "skillsRequired": ["kubernetes", "helm-or-kustomize", "gitops", "service-mesh", "cloud-networking"],
+          "toolingRequired": ["cluster-management", "gitops-tooling", "service-mesh", "observability-stack"],
+          "ongoingMaintenance": "Cluster upgrades, node pool management, security patching, RBAC management, and capacity planning"
+        },
+        "costConsiderations": {
+          "runningCosts": "Control plane costs plus node compute; can be significant for small workloads",
+          "transitionCosts": "Significant team upskilling; platform engineering investment; migration effort",
+          "costDrivers": ["node-count", "node-size", "control-plane", "load-balancers", "persistent-storage"],
+          "optimisationOpportunities": ["cluster-autoscaler", "spot-nodes-for-non-critical", "resource-quotas", "bin-packing"]
+        }
+      }
+    },
+    {
+      "id": "hc-007",
+      "priority": 10,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises or SaaS Hosting",
+        "rationale": "Without cloud platform access, the workload must be hosted on existing on-premises infrastructure or delivered via SaaS products. This limits scalability options but may align with existing organisational constraints and security postures.",
+        "candidateTechnologies": [
+          { "name": "VMware vSphere", "platform": "on-premises", "category": "virtualisation" },
+          { "name": "Red Hat OpenShift", "platform": "on-premises", "category": "container-platform" },
+          { "name": "Microsoft IIS", "platform": "on-premises", "category": "web-server" },
+          { "name": "Docker Compose", "platform": "on-premises", "category": "container-runtime" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated infrastructure team for hardware, networking, patching, and capacity management",
+          "skillsRequired": ["server-administration", "networking", "virtualisation", "backup-and-recovery", "security-hardening"],
+          "toolingRequired": ["configuration-management", "monitoring-stack", "backup-solution", "patch-management"],
+          "ongoingMaintenance": "Hardware lifecycle management, OS patching, capacity planning, physical security, and disaster recovery testing"
+        },
+        "costConsiderations": {
+          "runningCosts": "Capital expenditure for hardware; ongoing costs for power, cooling, licensing, and staff",
+          "transitionCosts": "Hardware procurement lead times; data centre space; network connectivity",
+          "costDrivers": ["hardware-refresh-cycles", "licensing", "staffing", "power-and-cooling", "data-centre-space"],
+          "optimisationOpportunities": ["virtualisation-consolidation", "decommission-unused-servers", "consider-cloud-migration-business-case"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Managed Container Service",
+    "rationale": "When no specific conditions strongly favour an alternative, a managed container service provides a good balance of flexibility, scalability, and operational simplicity. It supports most workload types without requiring deep specialist knowledge.",
+    "candidateTechnologies": [
+      { "name": "AWS ECS Fargate", "platform": "aws", "category": "container-orchestration" },
+      { "name": "Azure Container Apps", "platform": "azure", "category": "container-orchestration" },
+      { "name": "Google Cloud Run", "platform": "gcp", "category": "container-orchestration" }
+    ],
+    "operationalBurden": {
+      "complexity": "medium",
+      "staffingImplications": "Standard development team with basic cloud knowledge can manage",
+      "skillsRequired": ["containers", "cloud-basics", "ci-cd"],
+      "toolingRequired": ["container-registry", "ci-cd-pipeline", "monitoring"],
+      "ongoingMaintenance": "Container image updates, scaling policy reviews, and cost monitoring"
+    },
+    "costConsiderations": {
+      "runningCosts": "Moderate; scales with usage",
+      "transitionCosts": "Containerisation of application; pipeline setup",
+      "costDrivers": ["compute-hours", "container-count", "data-transfer"],
+      "optimisationOpportunities": ["right-size-containers", "scale-to-zero-where-supported"]
+    }
+  },
+  "relevantStandards": [
+    "tcop",
+    "cloud-first",
+    "secure-by-design",
+    "ncsc-cloud-security"
+  ],
+  "commonQuestions": [
+    "What is the expected traffic pattern and peak load?",
+    "Does the team have experience with container orchestration?",
+    "Are there existing hosting contracts or commitments that constrain platform choice?",
+    "What is the acceptable cold-start latency for the service?",
+    "Is there a requirement to run in multiple availability zones?",
+    "What is the deployment frequency expectation?"
+  ],
+  "evidenceNeeded": [
+    "Traffic volume estimates and peak load projections",
+    "Team skills assessment for container and cloud technologies",
+    "Existing infrastructure inventory and contracts",
+    "Performance requirements including response time SLAs",
+    "Budget allocation for compute infrastructure"
+  ],
+  "artefactsToProduce": [
+    "Hosting architecture decision record (ADR)",
+    "Compute sizing and scaling strategy document",
+    "Deployment architecture diagram",
+    "Cost estimate for chosen hosting model",
+    "Capacity planning model"
+  ]
+}

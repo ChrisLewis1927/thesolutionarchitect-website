@@ -1,0 +1,221 @@
+{
+  "domain": "cost-sustainability",
+  "description": "Assesses the appropriate cost management and sustainability strategy based on budget constraints, service type, traffic profile, and deployment model.",
+  "rules": [
+    {
+      "id": "cs-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "trafficProfile.pattern", "operator": "in", "values": ["spiky", "unpredictable"] },
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": false }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Pay-Per-Use with Auto-Scaling",
+        "rationale": "Workloads with spiky or unpredictable traffic benefit from pay-per-use pricing models that scale costs with actual demand. This avoids paying for idle capacity during quiet periods while ensuring resources are available during peaks. Serverless and auto-scaling services align cost directly with value delivered.",
+        "candidateTechnologies": [
+          { "name": "AWS Lambda (pay-per-invocation)", "platform": "aws", "category": "serverless-compute" },
+          { "name": "AWS Fargate (pay-per-task)", "platform": "aws", "category": "container-compute" },
+          { "name": "Azure Functions (consumption plan)", "platform": "azure", "category": "serverless-compute" },
+          { "name": "Azure Container Apps (scale-to-zero)", "platform": "azure", "category": "container-compute" },
+          { "name": "Google Cloud Run (pay-per-request)", "platform": "gcp", "category": "serverless-compute" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "No dedicated FinOps role needed; cost scales automatically with usage",
+          "skillsRequired": ["cost-monitoring", "auto-scaling-configuration", "budget-alerting"],
+          "toolingRequired": ["cost-monitoring-dashboard", "budget-alerts", "usage-analytics"],
+          "ongoingMaintenance": "Cost anomaly monitoring, budget threshold reviews, and periodic optimisation reviews"
+        },
+        "costConsiderations": {
+          "runningCosts": "Highly variable; directly proportional to usage; zero cost at zero traffic",
+          "transitionCosts": "Application architecture changes to support serverless/auto-scaling patterns",
+          "costDrivers": ["invocation-count", "execution-duration", "memory-allocation", "data-transfer"],
+          "optimisationOpportunities": ["right-size-memory", "reduce-execution-duration", "batch-where-possible", "cache-frequent-operations"]
+        }
+      }
+    },
+    {
+      "id": "cs-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "trafficProfile.pattern", "operator": "equals", "value": "steady" },
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": false }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Reserved Capacity with Savings Plans",
+        "rationale": "Workloads with steady, predictable traffic benefit from reserved capacity or savings plans that provide significant discounts (30-70%) in exchange for commitment. The predictable nature of the workload makes commitment-based pricing low-risk and high-value.",
+        "candidateTechnologies": [
+          { "name": "AWS Savings Plans", "platform": "aws", "category": "cost-optimisation" },
+          { "name": "AWS Reserved Instances", "platform": "aws", "category": "cost-optimisation" },
+          { "name": "Azure Reservations", "platform": "azure", "category": "cost-optimisation" },
+          { "name": "Azure Savings Plans", "platform": "azure", "category": "cost-optimisation" },
+          { "name": "Google Committed Use Discounts", "platform": "gcp", "category": "cost-optimisation" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Requires periodic review of commitment utilisation; finance team involvement for budget planning",
+          "skillsRequired": ["cloud-cost-management", "commitment-planning", "utilisation-analysis"],
+          "toolingRequired": ["cost-explorer", "commitment-utilisation-reports", "budget-forecasting"],
+          "ongoingMaintenance": "Quarterly commitment reviews, utilisation monitoring, and renewal planning"
+        },
+        "costConsiderations": {
+          "runningCosts": "30-70% lower than on-demand for committed resources; predictable monthly costs",
+          "transitionCosts": "Upfront commitment (partial or full); analysis effort to right-size commitments",
+          "costDrivers": ["commitment-term-length", "payment-option", "utilisation-rate"],
+          "optimisationOpportunities": ["right-size-before-committing", "use-flexible-savings-plans", "mix-reserved-and-on-demand"]
+        }
+      }
+    },
+    {
+      "id": "cs-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "constraints.budgetConstraints", "operator": "exists", "value": true },
+          { "field": "teamCapability.teamSize", "operator": "in", "values": ["solo", "small-2-5"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Cost-Conscious Architecture with Managed Services",
+        "rationale": "Budget-constrained small teams should prioritise managed services that eliminate infrastructure management overhead. While per-unit costs may be higher, the total cost of ownership is lower when accounting for reduced staffing needs and operational burden.",
+        "candidateTechnologies": [
+          { "name": "AWS Amplify", "platform": "aws", "category": "managed-platform" },
+          { "name": "AWS Lambda + DynamoDB", "platform": "aws", "category": "serverless-stack" },
+          { "name": "Azure Static Web Apps", "platform": "azure", "category": "managed-platform" },
+          { "name": "Azure Functions + Cosmos DB", "platform": "azure", "category": "serverless-stack" },
+          { "name": "Google Firebase", "platform": "gcp", "category": "managed-platform" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Minimal operational overhead; team focuses on application development rather than infrastructure",
+          "skillsRequired": ["managed-service-configuration", "cost-monitoring", "basic-cloud-concepts"],
+          "toolingRequired": ["cost-dashboard", "budget-alerts", "usage-monitoring"],
+          "ongoingMaintenance": "Cost monitoring and periodic service tier reviews"
+        },
+        "costConsiderations": {
+          "runningCosts": "Low for small-scale services; free tiers available for many managed services",
+          "transitionCosts": "Minimal; managed services reduce setup complexity",
+          "costDrivers": ["usage-volume", "storage", "data-transfer"],
+          "optimisationOpportunities": ["leverage-free-tiers", "scale-to-zero", "use-spot-for-non-critical"]
+        }
+      }
+    },
+    {
+      "id": "cs-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "data-platform" },
+          { "field": "trafficProfile.pattern", "operator": "equals", "value": "growing" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Tiered Storage with Lifecycle Policies",
+        "rationale": "Data platforms with growing data volumes require tiered storage strategies that automatically move data to cheaper storage tiers as it ages. This prevents storage costs from growing linearly with data volume while maintaining access to recent data at full performance.",
+        "candidateTechnologies": [
+          { "name": "AWS S3 Intelligent-Tiering", "platform": "aws", "category": "tiered-storage" },
+          { "name": "AWS S3 Glacier", "platform": "aws", "category": "archive-storage" },
+          { "name": "Azure Blob Storage (access tiers)", "platform": "azure", "category": "tiered-storage" },
+          { "name": "Azure Archive Storage", "platform": "azure", "category": "archive-storage" },
+          { "name": "Google Cloud Storage (Nearline/Coldline)", "platform": "gcp", "category": "tiered-storage" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Standard team can configure lifecycle policies; no dedicated storage team needed",
+          "skillsRequired": ["storage-lifecycle-management", "data-classification", "cost-analysis"],
+          "toolingRequired": ["storage-analytics", "lifecycle-policy-configuration", "cost-monitoring"],
+          "ongoingMaintenance": "Lifecycle policy reviews, storage cost monitoring, and data classification updates"
+        },
+        "costConsiderations": {
+          "runningCosts": "Significantly reduced compared to single-tier storage; 60-90% savings on archived data",
+          "transitionCosts": "Lifecycle policy configuration; data classification exercise",
+          "costDrivers": ["total-data-volume", "access-frequency", "retrieval-costs-for-archived-data"],
+          "optimisationOpportunities": ["intelligent-tiering", "delete-unnecessary-data", "compress-before-archiving"]
+        }
+      }
+    },
+    {
+      "id": "cs-005",
+      "priority": 8,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises Cost Management with Consolidation",
+        "rationale": "Without cloud access, cost management focuses on infrastructure consolidation, virtualisation efficiency, and lifecycle planning. The primary optimisation levers are reducing hardware footprint through consolidation and extending useful life through proper maintenance.",
+        "candidateTechnologies": [
+          { "name": "VMware vRealize Operations", "platform": "on-premises", "category": "capacity-management" },
+          { "name": "Microsoft System Center", "platform": "on-premises", "category": "infrastructure-management" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires capacity planning skills; finance team involvement for hardware lifecycle budgeting",
+          "skillsRequired": ["capacity-planning", "virtualisation-optimisation", "hardware-lifecycle-management", "power-efficiency"],
+          "toolingRequired": ["capacity-management-tools", "power-monitoring", "asset-management", "virtualisation-analytics"],
+          "ongoingMaintenance": "Capacity reviews, hardware refresh planning, consolidation opportunities, and power efficiency monitoring"
+        },
+        "costConsiderations": {
+          "runningCosts": "Fixed costs (hardware, power, cooling, licensing); less variable than cloud",
+          "transitionCosts": "Capacity planning tools; consolidation effort; potential hardware refresh",
+          "costDrivers": ["hardware-refresh-cycles", "power-and-cooling", "licensing", "staffing"],
+          "optimisationOpportunities": ["virtualisation-consolidation", "decommission-unused", "power-management", "open-source-alternatives"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Cloud Cost Governance with Tagging and Budgets",
+    "rationale": "When no specific conditions strongly favour an alternative, implementing cloud cost governance with resource tagging, budget alerts, and regular cost reviews provides visibility and control. This foundation enables informed decisions about further optimisation.",
+    "candidateTechnologies": [
+      { "name": "AWS Cost Explorer + Budgets", "platform": "aws", "category": "cost-management" },
+      { "name": "Azure Cost Management", "platform": "azure", "category": "cost-management" },
+      { "name": "Google Cloud Billing", "platform": "gcp", "category": "cost-management" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Any team member can monitor costs; no specialist FinOps role needed initially",
+      "skillsRequired": ["cost-monitoring", "tagging-strategy", "budget-configuration"],
+      "toolingRequired": ["cost-dashboard", "budget-alerts", "tagging-enforcement"],
+      "ongoingMaintenance": "Monthly cost reviews and budget threshold updates"
+    },
+    "costConsiderations": {
+      "runningCosts": "Cost management tools are typically free or low-cost",
+      "transitionCosts": "Tagging strategy development and implementation",
+      "costDrivers": ["resource-count", "tag-compliance"],
+      "optimisationOpportunities": ["identify-unused-resources", "right-sizing", "commitment-planning"]
+    }
+  },
+  "relevantStandards": [
+    "tcop",
+    "cloud-first",
+    "govuk-service-standard"
+  ],
+  "commonQuestions": [
+    "What is the budget for this service?",
+    "Is there a preference for CapEx or OpEx spending?",
+    "What is the expected growth rate of the service?",
+    "Are there existing cloud commitments or enterprise agreements?",
+    "Who is responsible for cost management?",
+    "Are there sustainability targets for the organisation?"
+  ],
+  "evidenceNeeded": [
+    "Budget allocation and constraints",
+    "Expected traffic and data growth projections",
+    "Existing cloud spending and commitments",
+    "Cost responsibility model (who pays)",
+    "Sustainability targets and reporting requirements"
+  ],
+  "artefactsToProduce": [
+    "Cost model and estimate document",
+    "Tagging strategy for cost allocation",
+    "Budget and alerting configuration",
+    "Cost optimisation roadmap",
+    "Sustainability assessment"
+  ]
+}

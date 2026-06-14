@@ -1,0 +1,8 @@
+[
+  "Defined SLIs and SLOs for the service with evidence of measurement and reporting against targets.",
+  "Operational runbooks for all alerts and common operational procedures, stored alongside the service and regularly updated.",
+  "On-call and incident management procedures with defined escalation paths, communication templates, and post-incident review process.",
+  "Evidence that the three pillars of observability (metrics, logs, traces) are implemented with correlation between them.",
+  "Capacity planning approach showing how growth is monitored and when scaling actions are triggered.",
+  "Operational readiness review evidence demonstrating the team can operate the service before go-live (monitoring, alerting, runbooks, on-call)."
+]

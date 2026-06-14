@@ -1,0 +1,8 @@
+[
+  "Threat model documenting identified threats, attack vectors, and corresponding mitigations mapped to the architecture.",
+  "Evidence of Secure by Design principles applied throughout the development lifecycle, not just at architecture review.",
+  "Security testing strategy including SAST, DAST, dependency scanning, and penetration testing with remediation timelines.",
+  "Incident response plan with defined roles, communication procedures, and tested runbooks for common security scenarios.",
+  "Data protection impact assessment (DPIA) where personal data is processed, with documented lawful basis and safeguards.",
+  "Supply chain security assessment for all third-party components, libraries, and services with documented risk acceptance."
+]

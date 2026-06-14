@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "Are security-relevant events (authentication failures, privilege escalation, data access) captured in logs?",
+      "How long are logs retained and are they tamper-proof for forensic purposes?",
+      "Is there correlation between application logs and security monitoring to detect advanced threats?",
+      "How is access to monitoring data itself controlled to prevent information disclosure?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "Are SLIs and SLOs defined and are they being measured and reported?",
+      "What is the on-call burden and are alerts actionable with clear runbooks?",
+      "How will you distinguish between application issues and infrastructure issues during incidents?",
+      "What is the mean time to detect (MTTD) and mean time to resolve (MTTR) for incidents?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How will developers debug issues in production without direct access to production systems?",
+      "Is observability instrumentation part of the definition of done for new features?",
+      "How are deployment-related issues detected and correlated with specific releases?",
+      "What observability tooling is available in development and testing environments?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What are the costs of log storage, metrics collection, and tracing at projected data volumes?",
+      "How do observability costs scale as the service grows and generates more telemetry?",
+      "What is the cost of the monitoring platform versus the cost of undetected incidents?",
+      "Are there opportunities to reduce observability costs through sampling or tiered retention?"
+    ]
+  }
+]

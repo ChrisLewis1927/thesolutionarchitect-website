@@ -1,0 +1,172 @@
+{
+  "id": "internal-lob",
+  "name": "Internal Line-of-Business Application",
+  "description": "A pattern for internal applications used by civil servants and departmental staff to manage business processes, case work, or operational activities. These services typically sit behind corporate identity providers and do not face the public internet directly.",
+  "whenToUse": [
+    "Internal tools used exclusively by authenticated departmental staff",
+    "Case management or workflow systems for civil servants",
+    "Back-office applications supporting operational business processes",
+    "Services where the user base is known, bounded, and authenticated via corporate identity",
+    "Applications requiring integration with internal systems and shared services"
+  ],
+  "whenNotToUse": [
+    "Citizen-facing services that must meet the GOV.UK Service Standard",
+    "Services requiring public internet access without VPN or corporate network",
+    "High-traffic services with unpredictable scaling requirements",
+    "Services handling data above OFFICIAL-SENSITIVE classification",
+    "Simple reporting dashboards that could use existing BI tooling"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Web Application",
+      "purpose": "Provide the user interface for internal business processes and workflows",
+      "technology": "React, Angular, or Blazor with internal design system",
+      "platform": "Cloud or on-premises compute"
+    },
+    {
+      "name": "API Layer",
+      "purpose": "Expose business logic as RESTful services for the frontend and integrations",
+      "technology": "Node.js, .NET, or Java Spring Boot",
+      "platform": "Cloud or on-premises compute"
+    },
+    {
+      "name": "Relational Database",
+      "purpose": "Store structured business data, case records, and workflow state",
+      "technology": "PostgreSQL or SQL Server",
+      "platform": "Cloud managed database or on-premises"
+    },
+    {
+      "name": "Identity Provider",
+      "purpose": "Authenticate users via corporate SSO and enforce role-based access",
+      "technology": "Azure AD, Okta, or on-premises Active Directory",
+      "platform": "Identity platform"
+    },
+    {
+      "name": "Document Store",
+      "purpose": "Store and retrieve documents associated with cases or business processes",
+      "technology": "SharePoint, S3, or Azure Blob Storage",
+      "platform": "Cloud or on-premises storage"
+    }
+  ],
+  "securityControls": [
+    "Enforce authentication via corporate identity provider with MFA",
+    "Implement role-based access control aligned to business roles and data sensitivity",
+    "Restrict network access to corporate network or VPN-connected users",
+    "Encrypt data at rest and in transit with organisation-managed keys",
+    "Implement audit logging for all data access, modifications, and administrative actions",
+    "Apply principle of least privilege for service accounts and API access"
+  ],
+  "resilienceConsiderations": [
+    "Availability requirements typically lower than citizen-facing (99.5% vs 99.9%)",
+    "Maintenance windows acceptable during non-business hours",
+    "Single-region deployment often sufficient for internal services",
+    "Implement database backups with point-in-time recovery",
+    "Design for graceful degradation when upstream internal services are unavailable"
+  ],
+  "costConsiderations": [
+    "Predictable user base allows right-sizing of compute resources",
+    "Licensing costs for commercial software (e.g., SQL Server, SharePoint) may apply",
+    "Lower availability requirements reduce infrastructure redundancy costs",
+    "Consider existing enterprise agreements for platform services",
+    "Factor in corporate identity provider licensing if not already provisioned"
+  ],
+  "operationalConsiderations": [
+    "Business-hours support model typically sufficient",
+    "Align release cycles with departmental change management processes",
+    "User support through internal service desk rather than public channels",
+    "Training and onboarding for new staff users",
+    "Integration with corporate monitoring and alerting platforms",
+    "Compliance with departmental architecture principles and technology standards"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon ECS or Elastic Beanstalk",
+          "purpose": "Application hosting with managed scaling"
+        },
+        {
+          "name": "Amazon RDS (PostgreSQL or SQL Server)",
+          "purpose": "Managed relational database"
+        },
+        {
+          "name": "AWS Directory Service",
+          "purpose": "Managed Active Directory integration"
+        },
+        {
+          "name": "Amazon S3",
+          "purpose": "Document and file storage"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure App Service",
+          "purpose": "Managed web application hosting"
+        },
+        {
+          "name": "Azure SQL Database",
+          "purpose": "Managed SQL Server database"
+        },
+        {
+          "name": "Azure Active Directory",
+          "purpose": "Corporate identity and access management"
+        },
+        {
+          "name": "Azure Blob Storage",
+          "purpose": "Document and file storage"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Run or GKE",
+          "purpose": "Application hosting with managed infrastructure"
+        },
+        {
+          "name": "Cloud SQL (PostgreSQL)",
+          "purpose": "Managed relational database"
+        },
+        {
+          "name": "Cloud Identity",
+          "purpose": "Identity management and SSO"
+        },
+        {
+          "name": "Cloud Storage",
+          "purpose": "Document and file storage"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "How many internal users will access the system and what are their roles?",
+    "Is the corporate identity provider already provisioned or does it need setup?",
+    "What existing internal systems does this need to integrate with?",
+    "Are there departmental technology standards that constrain technology choices?",
+    "What is the acceptable maintenance window for planned downtime?",
+    "Is there an existing internal design system or component library to follow?"
+  ],
+  "commonMistakes": [
+    "Over-engineering availability for an internal service that only operates during business hours",
+    "Not integrating with the corporate identity provider, creating a separate credential silo",
+    "Building custom document management when SharePoint or existing platforms would suffice",
+    "Ignoring departmental architecture principles and creating shadow IT",
+    "Not planning for data migration from legacy systems being replaced"
+  ],
+  "workloadTypes": [
+    "internal",
+    "line-of-business",
+    "case-management",
+    "back-office"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

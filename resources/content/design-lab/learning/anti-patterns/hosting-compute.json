@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Lift-and-Shift Without Modernisation Assessment",
+    "description": "Moving on-premises workloads directly to cloud VMs without evaluating whether managed services or containers would be more appropriate.",
+    "whyProblematic": "Retains all operational burden of self-managed infrastructure while adding cloud costs. Misses the opportunity to reduce toil, improve resilience, and leverage platform capabilities. Often results in higher total cost of ownership than the original on-premises deployment.",
+    "betterApproach": "Conduct a workload assessment using the 6 Rs (rehost, replatform, refactor, repurchase, retire, retain) before migration. Identify quick wins for replatforming to managed services while planning longer-term refactoring where justified."
+  },
+  {
+    "name": "Single Large VM for Everything",
+    "description": "Deploying all application components — web server, application logic, database, background workers — onto a single oversized virtual machine.",
+    "whyProblematic": "Creates a single point of failure with no horizontal scaling capability. Makes patching dangerous as the entire service must be taken offline. Prevents independent scaling of components with different resource profiles. Violates separation of concerns and makes disaster recovery complex.",
+    "betterApproach": "Decompose into separate compute tiers aligned to function: web/API tier, application tier, data tier, and worker tier. Use managed services where possible (e.g., managed database, managed message queue) and deploy stateless components behind load balancers."
+  },
+  {
+    "name": "Ignoring Spot/Preemptible Instances for Non-Critical Workloads",
+    "description": "Running all workloads on on-demand instances regardless of their fault tolerance characteristics, missing significant cost savings.",
+    "whyProblematic": "On-demand pricing is typically 60-90% more expensive than spot/preemptible instances. Batch processing, dev/test environments, and stateless workers can tolerate interruption. Failing to use appropriate pricing models wastes public money.",
+    "betterApproach": "Classify workloads by interruption tolerance. Use spot/preemptible instances for batch jobs, CI/CD runners, and dev/test. Use reserved capacity for steady-state production. Implement graceful shutdown handlers for interruptible workloads."
+  },
+  {
+    "name": "Over-Provisioning Without Auto-Scaling",
+    "description": "Sizing compute resources for peak load and running them continuously, rather than implementing auto-scaling to match demand.",
+    "whyProblematic": "Wastes public funds by paying for unused capacity during off-peak periods. Government services often have predictable usage patterns (business hours, term times) where scaling down is safe. Creates a false sense of capacity planning.",
+    "betterApproach": "Implement auto-scaling policies based on observed metrics (CPU, memory, request count). Use scheduled scaling for predictable patterns. Right-size base capacity for minimum load and scale out for peaks. Monitor and adjust scaling thresholds regularly."
+  }
+]

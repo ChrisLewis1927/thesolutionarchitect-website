@@ -453,9 +453,10 @@ export class CanvasController {
    * @param type - The container type (vpc, subnet, az, resource-group, region).
    * @param position - The top-left canvas position for the container.
    * @param parentId - Optional parent container ID for nesting.
+   * @param label - Optional custom label for the container.
    * @returns The ID of the newly created container.
    */
-  addContainer(type: ContainerType, position: Point, parentId?: string): string {
+  addContainer(type: ContainerType, position: Point, parentId?: string, label?: string): string {
     const id = generateContainerId();
 
     // Determine nesting level
@@ -470,17 +471,29 @@ export class CanvasController {
       nestingLevel = this.containerManager.getNestingLevel(parentId) + 1;
     }
 
-    const style = this.containerManager.getContainerStyle(nestingLevel);
+    // Use type-specific styling
+    const containerLabel = label || this.getContainerLabel(type);
+    const style = this.containerManager.getContainerStyleByType(type, containerLabel);
+
+    // Type-specific default sizes
+    const defaultSizes: Record<ContainerType, { width: number; height: number }> = {
+      'region': { width: 800, height: 600 },
+      'vpc': { width: 600, height: 450 },
+      'az': { width: 350, height: 400 },
+      'subnet': { width: 280, height: 200 },
+      'resource-group': { width: 500, height: 350 },
+    };
+    const size = defaultSizes[type] || { width: 200, height: 150 };
 
     const container: DiagramContainer = {
       id,
       type,
-      label: this.getContainerLabel(type),
+      label: containerLabel,
       bounds: {
         x: position.x,
         y: position.y,
-        width: 200,
-        height: 150,
+        width: size.width,
+        height: size.height,
       },
       parentId: parentId ?? null,
       childIds: [],
@@ -497,7 +510,7 @@ export class CanvasController {
         // This shouldn't happen as we checked canNestIn above, but handle gracefully
         container.parentId = null;
         container.nestingLevel = 0;
-        container.style = this.containerManager.getContainerStyle(0);
+        container.style = this.containerManager.getContainerStyleByType(type, containerLabel);
       } else {
         this.containerManager.recalculateBounds(parentId);
         this.updateContainerNode(parentId);
@@ -832,7 +845,8 @@ export class CanvasController {
   }
 
   /**
-   * Renders a DiagramContainer as a Konva group (styled rect + label).
+   * Renders a DiagramContainer as a Konva group (styled rect + type icon + editable label).
+   * Uses type-specific styling (dash patterns, colours) and supports inline label editing.
    */
   private renderContainer(container: DiagramContainer): void {
     const group = new Konva.Group({
@@ -841,20 +855,44 @@ export class CanvasController {
       id: container.id,
     });
 
-    const rect = new Konva.Rect({
+    // Determine dash pattern from style (default to solid for region)
+    const dashPattern = container.style.dash && container.style.dash.length > 0
+      ? container.style.dash
+      : [];
+
+    const rectConfig: any = {
       width: container.bounds.width,
       height: container.bounds.height,
       fill: container.style.backgroundColor,
       stroke: container.style.borderColor,
       strokeWidth: 1.5,
       cornerRadius: container.style.borderRadius,
-      dash: [4, 2],
-    });
+    };
+
+    // Only apply dash if there's a pattern
+    if (dashPattern.length > 0) {
+      rectConfig.dash = dashPattern;
+    }
+
+    const rect = new Konva.Rect(rectConfig);
     group.add(rect);
 
-    // Container label at the top-left
-    const label = new Konva.Text({
+    // Type-indicator icon (small coloured square) in the top-left corner
+    const iconSize = 10;
+    const typeIcon = new Konva.Rect({
       x: CONTAINER_LABEL_PADDING,
+      y: CONTAINER_LABEL_PADDING + 2,
+      width: iconSize,
+      height: iconSize,
+      fill: container.style.borderColor,
+      cornerRadius: 2,
+      listening: false,
+    });
+    group.add(typeIcon);
+
+    // Container label at the top-left, offset to the right of the icon
+    const label = new Konva.Text({
+      x: CONTAINER_LABEL_PADDING + iconSize + 6,
       y: CONTAINER_LABEL_PADDING,
       text: container.label,
       fontSize: CONTAINER_LABEL_FONT_SIZE,
@@ -863,6 +901,69 @@ export class CanvasController {
       fontStyle: 'bold',
     });
     group.add(label);
+
+    // Double-click to edit label inline
+    label.on('dblclick', () => {
+      // Get the absolute position of the text on the canvas
+      const textPos = label.getAbsolutePosition();
+      const stageBox = this.stage.container().getBoundingClientRect();
+
+      // Create an editable input
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = container.label;
+      input.style.position = 'absolute';
+      input.style.left = (stageBox.left + textPos.x) + 'px';
+      input.style.top = (stageBox.top + textPos.y) + 'px';
+      input.style.fontSize = '13px';
+      input.style.fontFamily = 'Inter, Arial, sans-serif';
+      input.style.fontWeight = 'bold';
+      input.style.border = '1px solid #1a73e8';
+      input.style.borderRadius = '3px';
+      input.style.padding = '2px 4px';
+      input.style.outline = 'none';
+      input.style.minWidth = '100px';
+      input.style.zIndex = '9999';
+      input.style.color = container.style.borderColor;
+
+      document.body.appendChild(input);
+      input.focus();
+      input.select();
+
+      // Hide the Konva text while editing
+      label.hide();
+      this.containerLayer.batchDraw();
+
+      const finishEditing = () => {
+        container.label = input.value || container.label;
+        label.text(container.label);
+        label.show();
+
+        // Update style if subnet label changed (public/private differentiation)
+        if (container.type === 'subnet') {
+          const newStyle = this.containerManager.getContainerStyleByType(container.type, container.label);
+          container.style = newStyle;
+          rect.fill(newStyle.backgroundColor);
+          rect.stroke(newStyle.borderColor);
+          typeIcon.fill(newStyle.borderColor);
+          label.fill(newStyle.borderColor);
+        }
+
+        this.containerLayer.batchDraw();
+        document.body.removeChild(input);
+      };
+
+      input.addEventListener('blur', finishEditing);
+      input.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          input.blur();
+        }
+        if (e.key === 'Escape') {
+          input.value = container.label; // revert
+          input.blur();
+        }
+      });
+    });
 
     this.containerLayer.add(group);
     this.containerNodes.set(container.id, group);

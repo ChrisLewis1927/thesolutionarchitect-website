@@ -261,7 +261,26 @@ function initApp() {
         };
         const containerManager = new ContainerManager(canvasController.getState());
         const containerId = containerManager.getContainerAtPoint(position) ?? void 0;
-        if (containerId && !containerManager.canNestIn(containerId)) {
+        const CONTAINER_SERVICE_IDS = {
+          "region": "region",
+          "az": "az",
+          "zone": "az",
+          "vpc": "vpc",
+          "vpc-network": "vpc",
+          "vnet": "vpc",
+          "public-subnet": "subnet",
+          "private-subnet": "subnet",
+          "resource-group": "resource-group"
+        };
+        const containerType = CONTAINER_SERVICE_IDS[dragData.serviceId];
+        if (containerType) {
+          canvasController.addContainer(
+            containerType,
+            position,
+            containerId,
+            dragData.serviceName
+          );
+        } else if (containerId && !containerManager.canNestIn(containerId)) {
           showNestingDepthWarning(event.clientX, event.clientY);
           canvasController.addComponentWithInfo(
             {

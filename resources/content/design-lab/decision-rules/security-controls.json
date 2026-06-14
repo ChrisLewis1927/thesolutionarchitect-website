@@ -1,0 +1,225 @@
+{
+  "domain": "security-controls",
+  "description": "Assesses the appropriate security controls based on data sensitivity, service type, compliance requirements, and threat landscape.",
+  "rules": [
+    {
+      "id": "sc-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "dataSensitivity.classification", "operator": "in", "values": ["secret", "top-secret"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Defence in Depth with Enhanced Monitoring",
+        "rationale": "Systems handling SECRET or TOP SECRET data require multiple layers of security controls including encryption at rest and in transit, network isolation, intrusion detection, security information and event management (SIEM), and regular penetration testing. The security posture must be continuously monitored and validated.",
+        "candidateTechnologies": [
+          { "name": "AWS GuardDuty", "platform": "aws", "category": "threat-detection" },
+          { "name": "AWS Security Hub", "platform": "aws", "category": "security-posture" },
+          { "name": "AWS KMS", "platform": "aws", "category": "encryption" },
+          { "name": "Azure Sentinel", "platform": "azure", "category": "siem" },
+          { "name": "Azure Key Vault", "platform": "azure", "category": "encryption" },
+          { "name": "Google Security Command Center", "platform": "gcp", "category": "security-posture" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated security operations centre (SOC) or managed security service; security-cleared personnel",
+          "skillsRequired": ["security-operations", "incident-response", "threat-hunting", "cryptography", "penetration-testing"],
+          "toolingRequired": ["siem-platform", "vulnerability-scanner", "intrusion-detection", "encryption-key-management", "security-orchestration"],
+          "ongoingMaintenance": "24/7 security monitoring, regular penetration testing, vulnerability remediation, key rotation, and security posture reviews"
+        },
+        "costConsiderations": {
+          "runningCosts": "Significant; SOC staffing or managed service, SIEM licensing, security tooling, and regular assessments",
+          "transitionCosts": "Security architecture design; tool procurement; SOC establishment; accreditation process",
+          "costDrivers": ["soc-staffing", "siem-data-volume", "penetration-testing-frequency", "security-tooling-licensing"],
+          "optimisationOpportunities": ["managed-security-service", "automate-common-responses", "risk-based-monitoring-focus"]
+        }
+      }
+    },
+    {
+      "id": "sc-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "public-facing" },
+          { "field": "dataSensitivity.containsPII", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "OWASP-Aligned Application Security with Data Protection",
+        "rationale": "Public-facing services handling PII require application-level security controls aligned with OWASP Top 10, combined with data protection measures including encryption, pseudonymisation where appropriate, and data minimisation. Regular security testing and vulnerability management are essential.",
+        "candidateTechnologies": [
+          { "name": "AWS WAF (OWASP rules)", "platform": "aws", "category": "application-security" },
+          { "name": "AWS Macie", "platform": "aws", "category": "data-protection" },
+          { "name": "Azure WAF (OWASP rules)", "platform": "azure", "category": "application-security" },
+          { "name": "Azure Information Protection", "platform": "azure", "category": "data-protection" },
+          { "name": "Google Cloud DLP", "platform": "gcp", "category": "data-protection" },
+          { "name": "Snyk", "platform": "saas", "category": "application-security-testing" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires security champion within development team; periodic security review from specialist",
+          "skillsRequired": ["application-security", "owasp-top-10", "secure-coding", "data-protection-by-design", "vulnerability-management"],
+          "toolingRequired": ["sast-dast-tools", "dependency-scanning", "waf-management", "data-classification-tools", "security-testing-pipeline"],
+          "ongoingMaintenance": "Dependency vulnerability patching, WAF rule updates, security testing in CI/CD, and data protection impact assessments"
+        },
+        "costConsiderations": {
+          "runningCosts": "Security tooling licensing; WAF costs; periodic penetration testing",
+          "transitionCosts": "Security assessment; remediation of existing vulnerabilities; tooling integration",
+          "costDrivers": ["security-tooling-licensing", "penetration-testing", "waf-requests", "data-scanning-volume"],
+          "optimisationOpportunities": ["shift-left-security-testing", "automate-vulnerability-triage", "use-managed-waf-rules"]
+        }
+      }
+    },
+    {
+      "id": "sc-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "dataSensitivity.classification", "operator": "equals", "value": "official-sensitive" },
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": false }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Cloud Security Posture Management with Encryption",
+        "rationale": "OFFICIAL-SENSITIVE workloads in cloud require continuous security posture management to detect misconfigurations, combined with encryption at rest and in transit. Cloud-native security services provide automated compliance checking and drift detection.",
+        "candidateTechnologies": [
+          { "name": "AWS Config + Security Hub", "platform": "aws", "category": "security-posture" },
+          { "name": "AWS CloudTrail", "platform": "aws", "category": "audit-logging" },
+          { "name": "Azure Defender for Cloud", "platform": "azure", "category": "security-posture" },
+          { "name": "Azure Policy", "platform": "azure", "category": "compliance" },
+          { "name": "Google Security Command Center", "platform": "gcp", "category": "security-posture" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires cloud security knowledge; can be managed by development team with security guidance",
+          "skillsRequired": ["cloud-security-configuration", "security-policy-as-code", "encryption-configuration", "audit-log-analysis"],
+          "toolingRequired": ["cspm-platform", "audit-log-aggregation", "compliance-dashboard", "alerting-system"],
+          "ongoingMaintenance": "Security finding remediation, policy updates, compliance reporting, and periodic security reviews"
+        },
+        "costConsiderations": {
+          "runningCosts": "CSPM service costs; audit log storage; alerting infrastructure",
+          "transitionCosts": "Security baseline configuration; policy development; initial remediation",
+          "costDrivers": ["resource-count-monitored", "audit-log-volume", "compliance-check-frequency"],
+          "optimisationOpportunities": ["prioritise-high-risk-findings", "automate-remediation", "consolidate-security-tools"]
+        }
+      }
+    },
+    {
+      "id": "sc-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "dataSensitivity.containsSpecialCategory", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Enhanced Data Protection with Privacy Controls",
+        "rationale": "Systems processing special category data (health, biometric, ethnic origin, etc.) require enhanced privacy controls including data protection impact assessments, purpose limitation enforcement, consent management, and the ability to fulfil data subject rights (access, erasure, portability).",
+        "candidateTechnologies": [
+          { "name": "AWS Macie", "platform": "aws", "category": "data-discovery" },
+          { "name": "AWS Lake Formation", "platform": "aws", "category": "data-governance" },
+          { "name": "Azure Purview", "platform": "azure", "category": "data-governance" },
+          { "name": "Azure Information Protection", "platform": "azure", "category": "data-classification" },
+          { "name": "Google Cloud DLP", "platform": "gcp", "category": "data-protection" },
+          { "name": "OneTrust", "platform": "saas", "category": "privacy-management" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires Data Protection Officer involvement; privacy engineering skills needed",
+          "skillsRequired": ["data-protection-law", "privacy-engineering", "consent-management", "data-subject-rights-implementation"],
+          "toolingRequired": ["data-discovery-tools", "consent-management-platform", "dsar-workflow-tools", "privacy-impact-assessment-tools"],
+          "ongoingMaintenance": "DPIA reviews, consent record management, DSAR processing, data retention enforcement, and privacy audit"
+        },
+        "costConsiderations": {
+          "runningCosts": "Privacy tooling licensing; DPO time allocation; DSAR processing costs",
+          "transitionCosts": "DPIA completion; privacy engineering implementation; consent mechanism development",
+          "costDrivers": ["privacy-tooling", "dpo-allocation", "dsar-volume", "data-discovery-scanning"],
+          "optimisationOpportunities": ["automate-dsar-processing", "data-minimisation", "privacy-by-design-from-start"]
+        }
+      }
+    },
+    {
+      "id": "sc-005",
+      "priority": 8,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises Security Controls with SIEM",
+        "rationale": "Without cloud access, security controls must be implemented using on-premises tooling including firewalls, intrusion detection systems, endpoint protection, and a SIEM for log aggregation and threat detection.",
+        "candidateTechnologies": [
+          { "name": "Splunk", "platform": "on-premises", "category": "siem" },
+          { "name": "CrowdStrike", "platform": "saas", "category": "endpoint-protection" },
+          { "name": "Nessus", "platform": "on-premises", "category": "vulnerability-scanning" },
+          { "name": "HashiCorp Vault", "platform": "on-premises", "category": "secrets-management" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated security operations team; SIEM management is resource-intensive",
+          "skillsRequired": ["siem-administration", "incident-response", "vulnerability-management", "endpoint-security"],
+          "toolingRequired": ["siem-platform", "vulnerability-scanner", "endpoint-protection", "patch-management", "backup-encryption"],
+          "ongoingMaintenance": "SIEM rule tuning, vulnerability remediation, endpoint agent updates, and security incident response"
+        },
+        "costConsiderations": {
+          "runningCosts": "SIEM licensing (often per-GB ingested); security tooling; staffing",
+          "transitionCosts": "Tool procurement; deployment; log source integration; team training",
+          "costDrivers": ["siem-data-volume", "tooling-licensing", "staffing", "hardware"],
+          "optimisationOpportunities": ["log-filtering-at-source", "tiered-storage-for-logs", "automate-common-responses"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Cloud-Native Security Baseline",
+    "rationale": "When no specific conditions strongly favour an alternative, implementing a cloud-native security baseline provides foundational protection. This includes encryption at rest and in transit, security group configuration, audit logging, and basic vulnerability scanning using cloud-native services.",
+    "candidateTechnologies": [
+      { "name": "AWS Security Hub + Config", "platform": "aws", "category": "security-posture" },
+      { "name": "Azure Defender for Cloud", "platform": "azure", "category": "security-posture" },
+      { "name": "Google Security Command Center", "platform": "gcp", "category": "security-posture" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Development team can manage with security guidance",
+      "skillsRequired": ["cloud-security-basics", "encryption-configuration", "audit-logging"],
+      "toolingRequired": ["cloud-native-security-services", "alerting"],
+      "ongoingMaintenance": "Security finding remediation and periodic reviews"
+    },
+    "costConsiderations": {
+      "runningCosts": "Low; cloud-native security services often included or low-cost",
+      "transitionCosts": "Initial configuration and baseline establishment",
+      "costDrivers": ["resource-count", "log-volume"],
+      "optimisationOpportunities": ["use-cloud-native-services", "automate-remediation"]
+    }
+  },
+  "relevantStandards": [
+    "secure-by-design",
+    "ncsc-cloud-security",
+    "data-protection",
+    "tcop"
+  ],
+  "commonQuestions": [
+    "What is the data classification and what security controls does it mandate?",
+    "Is there an existing security operations capability?",
+    "What are the regulatory compliance requirements?",
+    "Does the system process PII or special category data?",
+    "What is the threat model for this service?",
+    "Are there existing security tooling investments to leverage?"
+  ],
+  "evidenceNeeded": [
+    "Data classification and handling requirements",
+    "Threat model or risk assessment",
+    "Regulatory compliance requirements",
+    "Existing security tooling inventory",
+    "Security operations capability assessment"
+  ],
+  "artefactsToProduce": [
+    "Security architecture decision record (ADR)",
+    "Security controls matrix",
+    "Threat model document",
+    "Data protection impact assessment (DPIA)",
+    "Security operations runbook"
+  ]
+}

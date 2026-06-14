@@ -1,0 +1,221 @@
+{
+  "domain": "compliance-assurance",
+  "description": "Assesses the appropriate compliance and assurance strategy based on data sensitivity, regulatory requirements, service type, and organisational constraints.",
+  "rules": [
+    {
+      "id": "ca-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "dataSensitivity.classification", "operator": "in", "values": ["secret", "top-secret"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Formal Accreditation with Continuous Compliance",
+        "rationale": "Systems handling SECRET or TOP SECRET data require formal security accreditation through the organisation's SIRO (Senior Information Risk Owner) and potentially NCSC assessment. Continuous compliance monitoring ensures the security posture does not degrade after initial accreditation.",
+        "candidateTechnologies": [
+          { "name": "AWS Config (compliance rules)", "platform": "aws", "category": "compliance-monitoring" },
+          { "name": "AWS Audit Manager", "platform": "aws", "category": "audit-automation" },
+          { "name": "Azure Policy (compliance)", "platform": "azure", "category": "compliance-monitoring" },
+          { "name": "Azure Compliance Manager", "platform": "azure", "category": "audit-automation" },
+          { "name": "Google Security Command Center (compliance)", "platform": "gcp", "category": "compliance-monitoring" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated information assurance team; SIRO engagement; potentially NCSC liaison",
+          "skillsRequired": ["information-assurance", "risk-management", "security-accreditation", "compliance-frameworks", "audit-preparation"],
+          "toolingRequired": ["compliance-monitoring", "evidence-collection", "risk-register", "audit-trail", "policy-enforcement"],
+          "ongoingMaintenance": "Continuous compliance monitoring, periodic re-accreditation, risk register updates, and audit evidence collection"
+        },
+        "costConsiderations": {
+          "runningCosts": "Compliance tooling; information assurance staffing; periodic assessments and audits",
+          "transitionCosts": "Accreditation process (can take months); security assessment; documentation; remediation",
+          "costDrivers": ["accreditation-process", "compliance-tooling", "ia-staffing", "audit-frequency", "remediation-effort"],
+          "optimisationOpportunities": ["automate-evidence-collection", "continuous-compliance-reduces-audit-effort", "reuse-accreditation-across-similar-systems"]
+        }
+      }
+    },
+    {
+      "id": "ca-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "dataSensitivity.containsPII", "operator": "equals", "value": true },
+          { "field": "dataSensitivity.containsSpecialCategory", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "DPIA-Led Compliance with Privacy by Design",
+        "rationale": "Systems processing special category personal data require a Data Protection Impact Assessment (DPIA) as a legal requirement under UK GDPR. The compliance approach should be led by the DPIA findings, with privacy by design principles embedded throughout the architecture.",
+        "candidateTechnologies": [
+          { "name": "OneTrust", "platform": "saas", "category": "privacy-management" },
+          { "name": "AWS Macie", "platform": "aws", "category": "data-discovery" },
+          { "name": "Azure Purview", "platform": "azure", "category": "data-governance" },
+          { "name": "Google Cloud DLP", "platform": "gcp", "category": "data-protection" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires DPO (Data Protection Officer) involvement; privacy engineering skills; legal counsel for DPIA",
+          "skillsRequired": ["data-protection-law", "dpia-methodology", "privacy-engineering", "data-minimisation", "consent-management"],
+          "toolingRequired": ["dpia-tool", "data-discovery", "consent-management-platform", "dsar-workflow", "retention-enforcement"],
+          "ongoingMaintenance": "DPIA reviews (at least annually or on change), consent record management, DSAR processing, and retention enforcement"
+        },
+        "costConsiderations": {
+          "runningCosts": "Privacy tooling licensing; DPO time allocation; DSAR processing costs; legal advice",
+          "transitionCosts": "DPIA completion; privacy engineering implementation; consent mechanism development; legal review",
+          "costDrivers": ["privacy-tooling", "dpo-allocation", "legal-costs", "dsar-volume", "data-discovery-scanning"],
+          "optimisationOpportunities": ["automate-dsar-processing", "data-minimisation-reduces-scope", "privacy-by-design-from-start"]
+        }
+      }
+    },
+    {
+      "id": "ca-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "public-facing" },
+          { "field": "dataSensitivity.classification", "operator": "in", "values": ["official", "official-sensitive"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Service Standard Compliance with Accessibility",
+        "rationale": "Public-facing government services must comply with the GOV.UK Service Standard and meet WCAG 2.2 AA accessibility requirements. The compliance approach should integrate service assessments, accessibility audits, and continuous monitoring into the delivery lifecycle.",
+        "candidateTechnologies": [
+          { "name": "Pa11y", "platform": "multi-cloud", "category": "accessibility-testing" },
+          { "name": "axe-core", "platform": "multi-cloud", "category": "accessibility-testing" },
+          { "name": "AWS CloudWatch Synthetics", "platform": "aws", "category": "synthetic-monitoring" },
+          { "name": "Azure Monitor (availability tests)", "platform": "azure", "category": "synthetic-monitoring" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires accessibility expertise (internal or contracted); service assessment preparation needs delivery manager coordination",
+          "skillsRequired": ["accessibility-testing", "service-standard-knowledge", "user-research", "performance-testing", "content-design"],
+          "toolingRequired": ["accessibility-scanner", "performance-monitoring", "user-research-tools", "service-assessment-evidence"],
+          "ongoingMaintenance": "Continuous accessibility testing, performance monitoring, user research, and service assessment preparation"
+        },
+        "costConsiderations": {
+          "runningCosts": "Accessibility testing tools; user research; performance monitoring",
+          "transitionCosts": "Accessibility audit and remediation; service assessment preparation; user research",
+          "costDrivers": ["accessibility-audit-costs", "user-research", "remediation-effort", "assessment-preparation"],
+          "optimisationOpportunities": ["automated-accessibility-testing-in-ci", "design-system-with-built-in-accessibility", "reuse-research-findings"]
+        }
+      }
+    },
+    {
+      "id": "ca-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "constraints.regulatoryConstraints", "operator": "exists", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Regulatory Compliance Framework with Audit Trail",
+        "rationale": "Services with specific regulatory constraints require a structured compliance framework that maps regulatory requirements to technical controls, maintains comprehensive audit trails, and provides evidence for regulatory inspections or audits.",
+        "candidateTechnologies": [
+          { "name": "AWS Audit Manager", "platform": "aws", "category": "audit-automation" },
+          { "name": "AWS CloudTrail", "platform": "aws", "category": "audit-logging" },
+          { "name": "Azure Compliance Manager", "platform": "azure", "category": "compliance-management" },
+          { "name": "Azure Activity Log", "platform": "azure", "category": "audit-logging" },
+          { "name": "Google Cloud Audit Logs", "platform": "gcp", "category": "audit-logging" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires compliance officer or governance team involvement; audit preparation needs coordination",
+          "skillsRequired": ["regulatory-compliance", "audit-preparation", "control-mapping", "evidence-management"],
+          "toolingRequired": ["compliance-management-platform", "audit-log-aggregation", "evidence-repository", "control-testing-automation"],
+          "ongoingMaintenance": "Control testing, evidence collection, regulatory change monitoring, and audit preparation"
+        },
+        "costConsiderations": {
+          "runningCosts": "Compliance tooling; audit log storage; periodic audit costs; compliance staffing",
+          "transitionCosts": "Control framework development; initial audit; tooling implementation",
+          "costDrivers": ["compliance-tooling", "audit-frequency", "log-retention-requirements", "staffing"],
+          "optimisationOpportunities": ["automate-control-testing", "continuous-compliance-monitoring", "shared-compliance-infrastructure"]
+        }
+      }
+    },
+    {
+      "id": "ca-005",
+      "priority": 8,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises Compliance with Manual Audit",
+        "rationale": "Without cloud access, compliance relies on manual audit processes, on-premises logging, and traditional governance frameworks. While more labour-intensive, this approach can still meet compliance requirements through structured processes and documentation.",
+        "candidateTechnologies": [
+          { "name": "Splunk (audit logging)", "platform": "on-premises", "category": "audit-logging" },
+          { "name": "ServiceNow GRC", "platform": "saas", "category": "governance-risk-compliance" },
+          { "name": "RSA Archer", "platform": "on-premises", "category": "governance-risk-compliance" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated compliance and governance team; manual evidence collection is labour-intensive",
+          "skillsRequired": ["compliance-management", "audit-methodology", "risk-assessment", "documentation"],
+          "toolingRequired": ["grc-platform", "audit-logging", "evidence-management", "risk-register"],
+          "ongoingMaintenance": "Manual control testing, evidence collection, risk register updates, and audit preparation"
+        },
+        "costConsiderations": {
+          "runningCosts": "GRC platform licensing; staffing; audit costs; log storage",
+          "transitionCosts": "GRC platform implementation; process design; initial risk assessment",
+          "costDrivers": ["grc-licensing", "staffing", "audit-frequency", "log-storage"],
+          "optimisationOpportunities": ["automate-where-possible", "risk-based-audit-focus", "shared-grc-platform"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Cloud Compliance Baseline with Policy-as-Code",
+    "rationale": "When no specific conditions strongly favour an alternative, implementing a cloud compliance baseline using policy-as-code provides automated compliance checking. This catches misconfigurations early and provides continuous assurance without manual audit overhead.",
+    "candidateTechnologies": [
+      { "name": "AWS Config + Security Hub", "platform": "aws", "category": "compliance-monitoring" },
+      { "name": "Azure Policy + Defender for Cloud", "platform": "azure", "category": "compliance-monitoring" },
+      { "name": "Google Organization Policy", "platform": "gcp", "category": "compliance-monitoring" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Development team can manage with governance guidance",
+      "skillsRequired": ["policy-as-code", "compliance-basics", "cloud-configuration"],
+      "toolingRequired": ["policy-engine", "compliance-dashboard", "alerting"],
+      "ongoingMaintenance": "Policy updates and compliance finding remediation"
+    },
+    "costConsiderations": {
+      "runningCosts": "Low; cloud-native compliance tools are often included or low-cost",
+      "transitionCosts": "Policy development and initial compliance baseline",
+      "costDrivers": ["resource-count", "policy-evaluation-frequency"],
+      "optimisationOpportunities": ["preventive-controls-over-detective", "automate-remediation"]
+    }
+  },
+  "relevantStandards": [
+    "tcop",
+    "govuk-service-standard",
+    "secure-by-design",
+    "ncsc-cloud-security",
+    "data-protection",
+    "accessibility"
+  ],
+  "commonQuestions": [
+    "What regulatory frameworks apply to this service?",
+    "Is a DPIA required for the data being processed?",
+    "What is the data classification and handling requirements?",
+    "Are there specific audit or reporting requirements?",
+    "Is the service subject to GOV.UK Service Standard assessment?",
+    "What accessibility standard must be met?"
+  ],
+  "evidenceNeeded": [
+    "Applicable regulatory and compliance requirements",
+    "Data classification and DPIA status",
+    "Existing compliance frameworks and certifications",
+    "Audit requirements and frequency",
+    "Accessibility requirements and current compliance status"
+  ],
+  "artefactsToProduce": [
+    "Compliance requirements matrix",
+    "Data Protection Impact Assessment (if required)",
+    "Control mapping document",
+    "Audit evidence collection plan",
+    "Accessibility compliance statement"
+  ]
+}

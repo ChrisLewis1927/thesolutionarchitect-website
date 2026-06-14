@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Manual Deployment Processes",
+    "description": "Deploying to production through manual steps — SSH into servers, copy files, run scripts by hand — rather than automated pipelines.",
+    "whyProblematic": "Manual deployments are error-prone, unrepeatable, and unauditable. Each deployment is slightly different depending on who performs it. Rollback is difficult or impossible. Deployment frequency decreases because each release is risky. Violates GDS service standard expectations for continuous delivery. Creates key-person dependencies.",
+    "betterApproach": "Implement fully automated CI/CD pipelines. Every deployment should be triggered by a code merge, pass automated tests, and deploy identically every time. Use infrastructure as code for environment configuration. Implement automated rollback on failure detection. Make deployments boring and frequent."
+  },
+  {
+    "name": "No Rollback Strategy",
+    "description": "Deploying changes without a tested mechanism to revert to the previous working version if problems are discovered.",
+    "whyProblematic": "When a deployment causes issues, the only option is to fix forward under pressure. Mean time to recovery (MTTR) increases dramatically. Users experience extended outages while fixes are developed and deployed. Database migrations without rollback scripts can leave data in an inconsistent state.",
+    "betterApproach": "Design every deployment to be reversible. Use blue-green or canary deployment strategies. Ensure database migrations are backwards-compatible (expand-contract pattern). Test rollback procedures regularly. Define clear rollback triggers and decision criteria. Automate rollback execution."
+  },
+  {
+    "name": "Big Bang Releases",
+    "description": "Accumulating weeks or months of changes into a single large release, deploying everything at once.",
+    "whyProblematic": "Large releases have high risk — many changes mean many potential failure points. Root cause analysis is difficult when dozens of changes deploy simultaneously. Rollback reverts all changes, not just the problematic one. Testing large releases is complex and time-consuming. Delivery cadence slows as release coordination overhead grows.",
+    "betterApproach": "Deploy small, frequent changes. Use feature flags to decouple deployment from release. Each change should be independently deployable and reversible. Aim for multiple deployments per day rather than monthly releases. Smaller changes are easier to test, review, debug, and rollback."
+  },
+  {
+    "name": "Environment Drift Between Staging and Production",
+    "description": "Allowing staging and production environments to diverge in configuration, data, or infrastructure, then being surprised when deployments behave differently.",
+    "whyProblematic": "Testing in an environment that doesn't match production provides false confidence. Issues only discovered in production are more expensive and disruptive to fix. Configuration drift accumulates over time as ad-hoc changes are made. Reproducing production issues becomes impossible.",
+    "betterApproach": "Use infrastructure as code to ensure environments are provisioned identically. Parameterise environment-specific values (endpoints, credentials) but keep structure identical. Regularly refresh staging data from production (anonymised). Audit for drift and remediate automatically. Treat environment parity as a first-class concern."
+  }
+]

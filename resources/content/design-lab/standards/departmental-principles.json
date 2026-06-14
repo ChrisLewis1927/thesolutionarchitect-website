@@ -1,0 +1,19 @@
+{
+  "id": "departmental-principles",
+  "name": "Departmental Architecture Principles",
+  "category": "departmental",
+  "description": "Organisation-specific architecture principles that guide technology decisions within a department. Typically cover reuse of existing platforms, preferred technology stacks, integration patterns, data sharing approaches, and alignment with departmental strategy and existing platform patterns.",
+  "applicableDomains": [
+    "hosting-compute",
+    "data-persistence",
+    "integration-apis",
+    "networking-edge",
+    "identity-access",
+    "security-controls",
+    "resilience-dr",
+    "observability-operations",
+    "deployment-release",
+    "cost-sustainability",
+    "compliance-assurance"
+  ]
+}

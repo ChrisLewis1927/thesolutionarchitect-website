@@ -1,0 +1,8 @@
+[
+  "Compliance mapping showing which regulatory and policy requirements apply and how each is addressed in the architecture.",
+  "Evidence of alignment with the UK Government Technology Code of Practice with documented assessment against each criterion.",
+  "Accessibility compliance evidence including WCAG 2.2 AA conformance testing results and remediation plans for any gaps.",
+  "Data protection compliance including DPIA completion, lawful basis documentation, and data processing agreements with suppliers.",
+  "Architecture Decision Records (ADRs) for all significant decisions with context, options considered, and consequences documented.",
+  "Continuous compliance monitoring approach showing how compliance drift is detected and remediated over time."
+]

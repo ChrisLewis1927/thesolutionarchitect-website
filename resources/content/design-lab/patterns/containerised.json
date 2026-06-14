@@ -1,0 +1,175 @@
+{
+  "id": "containerised",
+  "name": "Containerised Application",
+  "description": "A pattern for deploying applications as container images orchestrated by a managed container platform. Provides consistent deployment artefacts, environment parity, and horizontal scaling while abstracting away underlying infrastructure management.",
+  "whenToUse": [
+    "Applications requiring consistent deployment across development, staging, and production",
+    "Microservices architectures where each service has independent scaling requirements",
+    "Teams with container expertise wanting portable deployments across cloud providers",
+    "Workloads requiring fine-grained resource allocation and horizontal auto-scaling",
+    "Applications with complex dependency stacks that benefit from containerised isolation"
+  ],
+  "whenNotToUse": [
+    "Simple applications where serverless would provide lower operational overhead",
+    "Teams without container or Kubernetes expertise and no capacity to learn",
+    "Workloads with very low traffic where container orchestration overhead is unjustified",
+    "Legacy applications that cannot be containerised without significant refactoring",
+    "Scenarios where the organisation lacks CI/CD maturity for container image pipelines"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Container Orchestrator",
+      "purpose": "Schedule, scale, and manage container lifecycle across a cluster",
+      "technology": "Amazon ECS, Azure Container Apps, or Google Kubernetes Engine",
+      "platform": "Cloud managed container service"
+    },
+    {
+      "name": "Container Registry",
+      "purpose": "Store and distribute container images with vulnerability scanning",
+      "technology": "Amazon ECR, Azure Container Registry, or Artifact Registry",
+      "platform": "Cloud container registry"
+    },
+    {
+      "name": "Service Mesh",
+      "purpose": "Manage service-to-service communication, observability, and security",
+      "technology": "AWS App Mesh, Istio, or Linkerd",
+      "platform": "Cloud or self-managed"
+    },
+    {
+      "name": "Ingress Controller",
+      "purpose": "Route external traffic to appropriate container services",
+      "technology": "ALB Ingress, Azure Application Gateway, or GKE Ingress",
+      "platform": "Cloud load balancing"
+    },
+    {
+      "name": "CI/CD Pipeline",
+      "purpose": "Build container images, scan for vulnerabilities, and deploy to clusters",
+      "technology": "GitHub Actions, Azure DevOps, or Cloud Build",
+      "platform": "CI/CD platform"
+    }
+  ],
+  "securityControls": [
+    "Scan container images for vulnerabilities in the CI/CD pipeline before deployment",
+    "Use minimal base images and run containers as non-root users",
+    "Implement network policies to restrict pod-to-pod communication",
+    "Sign container images and enforce signature verification at deployment",
+    "Implement secrets management using platform-native secret stores",
+    "Apply pod security standards to prevent privilege escalation",
+    "Regularly update base images and rebuild containers to patch vulnerabilities"
+  ],
+  "resilienceConsiderations": [
+    "Container orchestrators automatically restart failed containers and reschedule across nodes",
+    "Horizontal pod autoscaling responds to traffic increases automatically",
+    "Deploy across multiple availability zones for infrastructure resilience",
+    "Implement health checks (liveness and readiness probes) for automatic recovery",
+    "Use rolling deployments to achieve zero-downtime releases",
+    "Implement pod disruption budgets to maintain availability during cluster maintenance"
+  ],
+  "costConsiderations": [
+    "Compute costs based on cluster capacity — right-size nodes and use spot/preemptible instances",
+    "Container orchestration management fees (ECS is free, EKS/GKE have control plane costs)",
+    "Container registry storage and data transfer costs",
+    "Operational costs for team training and Kubernetes expertise",
+    "Consider Fargate/serverless containers to avoid cluster management overhead",
+    "Implement resource requests and limits to prevent over-provisioning"
+  ],
+  "operationalConsiderations": [
+    "Team must have container and orchestration expertise or invest in training",
+    "Cluster upgrades and node patching require planned maintenance procedures",
+    "Monitoring must cover cluster health, pod metrics, and application-level observability",
+    "Log aggregation needed across multiple container instances",
+    "Capacity planning for cluster node pools and auto-scaling limits",
+    "Incident response procedures for container-specific failure modes"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon ECS with Fargate",
+          "purpose": "Serverless container orchestration without cluster management"
+        },
+        {
+          "name": "Amazon EKS",
+          "purpose": "Managed Kubernetes for complex container workloads"
+        },
+        {
+          "name": "Amazon ECR",
+          "purpose": "Container image registry with vulnerability scanning"
+        },
+        {
+          "name": "AWS App Mesh",
+          "purpose": "Service mesh for microservice communication"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure Container Apps",
+          "purpose": "Serverless container hosting with auto-scaling"
+        },
+        {
+          "name": "Azure Kubernetes Service",
+          "purpose": "Managed Kubernetes cluster"
+        },
+        {
+          "name": "Azure Container Registry",
+          "purpose": "Container image storage with geo-replication"
+        },
+        {
+          "name": "Azure Monitor for Containers",
+          "purpose": "Container-aware monitoring and diagnostics"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Google Kubernetes Engine",
+          "purpose": "Managed Kubernetes with Autopilot mode"
+        },
+        {
+          "name": "Cloud Run",
+          "purpose": "Serverless container execution"
+        },
+        {
+          "name": "Artifact Registry",
+          "purpose": "Container and package registry"
+        },
+        {
+          "name": "Anthos Service Mesh",
+          "purpose": "Managed service mesh based on Istio"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "Does the team have existing container and Kubernetes expertise?",
+    "Is full Kubernetes needed or would a simpler container service (ECS, Container Apps) suffice?",
+    "What is the expected scaling profile — steady state or highly variable?",
+    "Are there compliance requirements around container image provenance and signing?",
+    "What CI/CD tooling is already in place for building and deploying containers?",
+    "Is multi-cloud portability a genuine requirement or a theoretical concern?"
+  ],
+  "commonMistakes": [
+    "Adopting Kubernetes when a simpler container service would meet requirements with less overhead",
+    "Running containers as root or using bloated base images with unnecessary packages",
+    "Not implementing resource limits, allowing a single container to consume all cluster resources",
+    "Treating containers as VMs — running multiple processes per container instead of one",
+    "Not scanning container images for vulnerabilities before deployment to production"
+  ],
+  "workloadTypes": [
+    "containerised",
+    "microservices",
+    "cloud-native",
+    "scalable"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

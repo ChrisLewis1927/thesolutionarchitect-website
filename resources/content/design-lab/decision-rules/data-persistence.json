@@ -1,0 +1,227 @@
+{
+  "domain": "data-persistence",
+  "description": "Assesses the appropriate data storage and persistence strategy based on data sensitivity, volume, access patterns, and compliance requirements.",
+  "rules": [
+    {
+      "id": "dp-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "dataSensitivity.classification", "operator": "in", "values": ["secret", "top-secret"] },
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": false }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Encrypted Managed Database with Restricted Access",
+        "rationale": "Data classified as SECRET or TOP SECRET requires encryption at rest and in transit, strict access controls, audit logging, and potentially dedicated tenancy. Managed database services with appropriate security configurations reduce the risk of misconfiguration while meeting classification requirements.",
+        "candidateTechnologies": [
+          { "name": "AWS RDS (dedicated)", "platform": "aws", "category": "relational-database" },
+          { "name": "AWS DynamoDB", "platform": "aws", "category": "nosql-database" },
+          { "name": "Azure SQL Database (Hyperscale)", "platform": "azure", "category": "relational-database" },
+          { "name": "Azure Cosmos DB", "platform": "azure", "category": "nosql-database" },
+          { "name": "Google Cloud SQL", "platform": "gcp", "category": "relational-database" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires database administrator with security clearance; dedicated security oversight for access management",
+          "skillsRequired": ["database-administration", "encryption-key-management", "access-control-design", "audit-logging"],
+          "toolingRequired": ["key-management-service", "database-activity-monitoring", "backup-encryption", "access-audit-tools"],
+          "ongoingMaintenance": "Key rotation, access reviews, audit log analysis, backup verification, and compliance reporting"
+        },
+        "costConsiderations": {
+          "runningCosts": "Premium tier pricing for dedicated/isolated instances; additional costs for enhanced security features",
+          "transitionCosts": "Security assessment and accreditation; encryption implementation; access control design",
+          "costDrivers": ["dedicated-instance-tier", "storage-volume", "backup-retention", "encryption-operations", "audit-storage"],
+          "optimisationOpportunities": ["tiered-storage-for-historical-data", "archive-old-records", "optimise-backup-retention"]
+        }
+      }
+    },
+    {
+      "id": "dp-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "data-platform" },
+          { "field": "trafficProfile.pattern", "operator": "in", "values": ["growing", "unpredictable"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Data Lake with Managed Analytics",
+        "rationale": "Data platform workloads with growing or unpredictable data volumes benefit from a data lake architecture that separates storage from compute. This allows cost-effective storage of large volumes while scaling analytics compute independently based on query demand.",
+        "candidateTechnologies": [
+          { "name": "AWS S3 + Athena", "platform": "aws", "category": "data-lake" },
+          { "name": "AWS Glue", "platform": "aws", "category": "etl" },
+          { "name": "Azure Data Lake Storage", "platform": "azure", "category": "data-lake" },
+          { "name": "Azure Synapse Analytics", "platform": "azure", "category": "analytics" },
+          { "name": "Google BigQuery", "platform": "gcp", "category": "analytics" },
+          { "name": "Google Cloud Storage", "platform": "gcp", "category": "data-lake" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires data engineering skills; managed services reduce infrastructure burden but data pipeline design remains complex",
+          "skillsRequired": ["data-engineering", "sql-analytics", "etl-pipeline-design", "data-governance"],
+          "toolingRequired": ["data-catalogue", "etl-orchestration", "data-quality-monitoring", "access-governance"],
+          "ongoingMaintenance": "Pipeline monitoring, data quality checks, schema evolution management, and cost monitoring for query volumes"
+        },
+        "costConsiderations": {
+          "runningCosts": "Storage costs scale with data volume; compute costs scale with query frequency and complexity",
+          "transitionCosts": "Data migration; pipeline development; team upskilling on cloud analytics",
+          "costDrivers": ["storage-volume", "query-frequency", "data-transfer", "etl-compute-hours"],
+          "optimisationOpportunities": ["lifecycle-policies-for-cold-data", "partition-pruning", "materialised-views", "reserved-capacity"]
+        }
+      }
+    },
+    {
+      "id": "dp-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "in", "values": ["public-facing", "internal"] },
+          { "field": "dataSensitivity.classification", "operator": "in", "values": ["official", "official-sensitive"] },
+          { "field": "availability.targetAvailability", "operator": "in", "values": ["99.9", "99.95", "99.99"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Managed Relational Database with Multi-AZ",
+        "rationale": "Transactional services handling OFFICIAL or OFFICIAL-SENSITIVE data with high availability requirements are well-served by managed relational databases with multi-AZ deployment. This provides automatic failover, point-in-time recovery, and automated backups without managing database infrastructure.",
+        "candidateTechnologies": [
+          { "name": "AWS RDS (Multi-AZ)", "platform": "aws", "category": "relational-database" },
+          { "name": "AWS Aurora", "platform": "aws", "category": "relational-database" },
+          { "name": "Azure SQL Database", "platform": "azure", "category": "relational-database" },
+          { "name": "Azure Database for PostgreSQL", "platform": "azure", "category": "relational-database" },
+          { "name": "Google Cloud SQL (HA)", "platform": "gcp", "category": "relational-database" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Standard development team can manage; no dedicated DBA required for managed services",
+          "skillsRequired": ["sql", "database-design", "connection-pooling", "backup-strategy"],
+          "toolingRequired": ["database-monitoring", "query-performance-insights", "backup-verification"],
+          "ongoingMaintenance": "Minor version upgrades, query performance tuning, storage growth monitoring, and periodic backup restore testing"
+        },
+        "costConsiderations": {
+          "runningCosts": "Moderate; Multi-AZ doubles compute cost but provides automatic failover",
+          "transitionCosts": "Schema design; data migration if replacing existing database; connection string updates",
+          "costDrivers": ["instance-size", "storage-volume", "iops", "backup-retention", "multi-az-replication"],
+          "optimisationOpportunities": ["right-size-instance", "reserved-instances", "read-replicas-for-read-heavy", "archive-historical-data"]
+        }
+      }
+    },
+    {
+      "id": "dp-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "api-service" },
+          { "field": "userBase.expectedUsers", "operator": "in", "values": ["10000-100000", "over-100000"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "NoSQL Database with Caching Layer",
+        "rationale": "High-traffic API services benefit from NoSQL databases that provide consistent low-latency reads at scale, combined with a caching layer to reduce database load for frequently accessed data. This pattern handles high concurrency without the connection limits of relational databases.",
+        "candidateTechnologies": [
+          { "name": "AWS DynamoDB", "platform": "aws", "category": "nosql-database" },
+          { "name": "AWS ElastiCache", "platform": "aws", "category": "caching" },
+          { "name": "Azure Cosmos DB", "platform": "azure", "category": "nosql-database" },
+          { "name": "Azure Cache for Redis", "platform": "azure", "category": "caching" },
+          { "name": "Google Firestore", "platform": "gcp", "category": "nosql-database" },
+          { "name": "Google Memorystore", "platform": "gcp", "category": "caching" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires understanding of NoSQL data modelling; cache invalidation strategy needs careful design",
+          "skillsRequired": ["nosql-data-modelling", "cache-strategy-design", "eventual-consistency-patterns", "partition-key-design"],
+          "toolingRequired": ["database-monitoring", "cache-hit-rate-monitoring", "capacity-planning-tools"],
+          "ongoingMaintenance": "Capacity monitoring, partition hot-spot detection, cache eviction policy tuning, and index management"
+        },
+        "costConsiderations": {
+          "runningCosts": "Scales with read/write throughput and storage; caching reduces database costs but adds cache infrastructure cost",
+          "transitionCosts": "Data model redesign for NoSQL; cache strategy implementation; application code changes",
+          "costDrivers": ["read-write-capacity-units", "storage-volume", "cache-node-size", "data-transfer"],
+          "optimisationOpportunities": ["on-demand-capacity-for-variable-loads", "dax-or-accelerator-for-read-heavy", "ttl-for-ephemeral-data"]
+        }
+      }
+    },
+    {
+      "id": "dp-005",
+      "priority": 8,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises Database with Replication",
+        "rationale": "Without cloud access, data must be stored on-premises using self-managed database systems. This requires more operational investment but may align with existing data sovereignty requirements or organisational constraints.",
+        "candidateTechnologies": [
+          { "name": "PostgreSQL", "platform": "on-premises", "category": "relational-database" },
+          { "name": "Microsoft SQL Server", "platform": "on-premises", "category": "relational-database" },
+          { "name": "Oracle Database", "platform": "on-premises", "category": "relational-database" },
+          { "name": "MongoDB", "platform": "on-premises", "category": "nosql-database" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated database administrator; backup and recovery testing is manual responsibility",
+          "skillsRequired": ["database-administration", "replication-configuration", "backup-management", "performance-tuning", "security-hardening"],
+          "toolingRequired": ["backup-solution", "monitoring-stack", "replication-management", "patch-management"],
+          "ongoingMaintenance": "Patching, backup verification, replication monitoring, capacity planning, and hardware lifecycle management"
+        },
+        "costConsiderations": {
+          "runningCosts": "Licensing costs (for commercial databases); hardware; staffing for administration",
+          "transitionCosts": "Hardware procurement; installation and configuration; data migration",
+          "costDrivers": ["licensing", "hardware", "staffing", "storage-expansion", "backup-storage"],
+          "optimisationOpportunities": ["open-source-databases", "consolidate-instances", "archive-to-cheaper-storage"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Managed Relational Database",
+    "rationale": "When no specific conditions strongly favour an alternative, a managed relational database provides a well-understood, ACID-compliant storage solution suitable for most government transactional workloads. Managed services reduce operational burden while providing built-in backup, encryption, and high availability options.",
+    "candidateTechnologies": [
+      { "name": "AWS RDS PostgreSQL", "platform": "aws", "category": "relational-database" },
+      { "name": "Azure Database for PostgreSQL", "platform": "azure", "category": "relational-database" },
+      { "name": "Google Cloud SQL PostgreSQL", "platform": "gcp", "category": "relational-database" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Standard development team can manage",
+      "skillsRequired": ["sql", "database-design"],
+      "toolingRequired": ["database-monitoring", "backup-verification"],
+      "ongoingMaintenance": "Minor version upgrades and performance monitoring"
+    },
+    "costConsiderations": {
+      "runningCosts": "Moderate and predictable",
+      "transitionCosts": "Minimal for standard applications",
+      "costDrivers": ["instance-size", "storage", "backup-retention"],
+      "optimisationOpportunities": ["right-size-instance", "reserved-instances"]
+    }
+  },
+  "relevantStandards": [
+    "data-protection",
+    "ncsc-cloud-security",
+    "secure-by-design",
+    "tcop"
+  ],
+  "commonQuestions": [
+    "What is the data classification and does it require dedicated tenancy?",
+    "What are the data retention requirements?",
+    "Is the data relational or document-oriented?",
+    "What are the read/write ratio and access patterns?",
+    "Are there existing database skills in the team?",
+    "What are the backup and recovery requirements?"
+  ],
+  "evidenceNeeded": [
+    "Data classification assessment",
+    "Data volume estimates and growth projections",
+    "Access pattern analysis (read/write ratio, query complexity)",
+    "Retention and archival requirements",
+    "Recovery point and time objectives"
+  ],
+  "artefactsToProduce": [
+    "Data architecture decision record (ADR)",
+    "Database schema design or data model",
+    "Backup and recovery strategy document",
+    "Data retention and archival policy",
+    "Encryption and access control design"
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "id": "serverless",
+  "name": "Serverless Application",
+  "description": "A pattern for building applications using managed serverless compute services where the cloud provider handles all infrastructure provisioning, scaling, and maintenance. Functions execute in response to events and scale to zero when idle, providing a pay-per-use cost model.",
+  "whenToUse": [
+    "Event-driven workloads with variable or unpredictable traffic patterns",
+    "Applications that benefit from automatic scaling to zero during idle periods",
+    "Small teams wanting to minimise operational overhead and infrastructure management",
+    "API backends, data processing pipelines, and automation tasks",
+    "Prototyping and MVP development where speed to market is prioritised"
+  ],
+  "whenNotToUse": [
+    "Long-running processes exceeding function timeout limits (typically 15 minutes)",
+    "Workloads requiring persistent connections (WebSockets, long-polling) without additional services",
+    "Applications with consistent high-throughput where reserved compute is more cost-effective",
+    "Workloads with strict cold-start latency requirements for every request",
+    "Complex stateful applications that require local filesystem or in-memory state"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Function Compute",
+      "purpose": "Execute business logic in response to events without managing servers",
+      "technology": "AWS Lambda, Azure Functions, or Cloud Functions",
+      "platform": "Cloud serverless"
+    },
+    {
+      "name": "API Gateway",
+      "purpose": "Expose functions as HTTP endpoints with authentication and throttling",
+      "technology": "API Gateway, Azure API Management, or Cloud Endpoints",
+      "platform": "Cloud managed API"
+    },
+    {
+      "name": "Event Sources",
+      "purpose": "Trigger function execution from queues, streams, schedules, or HTTP requests",
+      "technology": "EventBridge, Service Bus, or Pub/Sub",
+      "platform": "Cloud event services"
+    },
+    {
+      "name": "Managed Database",
+      "purpose": "Store application data in a serverless-compatible database",
+      "technology": "DynamoDB, Cosmos DB, or Firestore",
+      "platform": "Cloud managed database"
+    },
+    {
+      "name": "Step Functions/Workflows",
+      "purpose": "Orchestrate multi-step serverless workflows with error handling",
+      "technology": "AWS Step Functions, Azure Durable Functions, or Cloud Workflows",
+      "platform": "Cloud workflow orchestration"
+    }
+  ],
+  "securityControls": [
+    "Apply least-privilege IAM roles to each function with minimal permissions",
+    "Encrypt environment variables and use secrets manager for sensitive configuration",
+    "Validate all input events before processing to prevent injection attacks",
+    "Implement function-level concurrency limits to prevent runaway execution",
+    "Enable VPC integration for functions accessing private resources",
+    "Implement request signing and API key validation at the gateway layer"
+  ],
+  "resilienceConsiderations": [
+    "Serverless platforms provide inherent high availability across multiple AZs",
+    "Automatic retry behaviour for asynchronous invocations with DLQ for failures",
+    "Stateless functions are inherently resilient — failed instances are replaced automatically",
+    "Implement idempotent function logic to handle duplicate invocations safely",
+    "Use step functions for complex workflows to manage state and handle partial failures",
+    "Cold starts may impact latency — use provisioned concurrency for latency-sensitive paths"
+  ],
+  "costConsiderations": [
+    "Pay-per-invocation model — zero cost when idle, scales linearly with usage",
+    "Extremely cost-effective for sporadic or low-traffic workloads",
+    "High-throughput sustained workloads may be cheaper on reserved containers",
+    "Monitor function duration and memory allocation to optimise per-invocation costs",
+    "API Gateway request costs add to overall expense at high volumes",
+    "Factor in the cost of associated services (databases, queues, storage)"
+  ],
+  "operationalConsiderations": [
+    "No server patching or OS maintenance required",
+    "Monitoring focuses on function errors, duration, throttling, and cold starts",
+    "Distributed tracing essential for debugging multi-function workflows",
+    "Deployment automation needed for managing many individual functions",
+    "Local development and testing requires emulation tools or cloud-based testing",
+    "Vendor lock-in considerations — function code is portable but integrations are not"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "AWS Lambda",
+          "purpose": "Serverless function execution with auto-scaling"
+        },
+        {
+          "name": "Amazon API Gateway",
+          "purpose": "Managed REST and WebSocket API endpoints"
+        },
+        {
+          "name": "AWS Step Functions",
+          "purpose": "Visual workflow orchestration for serverless"
+        },
+        {
+          "name": "Amazon DynamoDB",
+          "purpose": "Serverless NoSQL database with on-demand capacity"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure Functions",
+          "purpose": "Event-driven serverless compute"
+        },
+        {
+          "name": "Azure API Management",
+          "purpose": "API gateway with serverless backend integration"
+        },
+        {
+          "name": "Azure Durable Functions",
+          "purpose": "Stateful workflow orchestration"
+        },
+        {
+          "name": "Azure Cosmos DB",
+          "purpose": "Globally distributed serverless database"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Functions",
+          "purpose": "Event-driven serverless compute"
+        },
+        {
+          "name": "Cloud Run",
+          "purpose": "Serverless container execution for longer workloads"
+        },
+        {
+          "name": "Cloud Workflows",
+          "purpose": "Serverless workflow orchestration"
+        },
+        {
+          "name": "Firestore",
+          "purpose": "Serverless document database"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What is the expected invocation frequency and traffic pattern?",
+    "Are there latency requirements that cold starts would violate?",
+    "What is the maximum execution duration for the longest-running operation?",
+    "Does the application require persistent connections or local state?",
+    "What event sources will trigger function execution?",
+    "Is the team comfortable with serverless debugging and observability tooling?"
+  ],
+  "commonMistakes": [
+    "Building monolithic functions instead of small, focused, single-purpose functions",
+    "Not implementing proper error handling and dead letter queues for async invocations",
+    "Ignoring cold start impact on user-facing latency-sensitive endpoints",
+    "Over-provisioning function memory without measuring actual requirements",
+    "Not implementing distributed tracing, making debugging multi-function flows impossible"
+  ],
+  "workloadTypes": [
+    "serverless",
+    "event-driven",
+    "api-backend",
+    "automation"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

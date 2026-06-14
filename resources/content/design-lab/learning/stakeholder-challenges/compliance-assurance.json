@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "How does the architecture demonstrate compliance with NCSC security principles and Secure by Design?",
+      "What evidence exists that security compliance is continuously maintained rather than point-in-time assessed?",
+      "How are compliance gaps identified and tracked through to remediation?",
+      "What is the process for assessing compliance impact of architecture changes?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "What operational procedures are needed to maintain compliance (log retention, access reviews, patching)?",
+      "How will compliance drift be detected and remediated in production?",
+      "What is the operational burden of compliance reporting and evidence collection?",
+      "How are compliance requirements communicated to operations teams for day-to-day enforcement?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How are compliance requirements integrated into the development workflow and definition of done?",
+      "What automated compliance checks are in the CI/CD pipeline?",
+      "How will compliance requirements affect delivery timelines and sprint planning?",
+      "What training do developers need to understand and implement compliance requirements?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What is the cost of achieving and maintaining compliance (tooling, audits, training, staffing)?",
+      "What are the financial penalties for non-compliance versus the cost of compliance measures?",
+      "How do compliance requirements affect the overall project budget and timeline?",
+      "Are there shared compliance services that could reduce per-project compliance costs?"
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "id": "cloud-first",
+  "name": "Cloud First Policy",
+  "category": "government-policy",
+  "description": "UK government policy requiring public sector organisations to evaluate cloud solutions before considering alternatives. Services should be hosted on public cloud infrastructure unless there is a compelling reason not to.",
+  "url": "https://www.gov.uk/guidance/government-cloud-first-policy",
+  "applicableDomains": [
+    "hosting-compute",
+    "data-persistence",
+    "networking-edge",
+    "resilience-dr",
+    "deployment-release",
+    "cost-sustainability"
+  ]
+}

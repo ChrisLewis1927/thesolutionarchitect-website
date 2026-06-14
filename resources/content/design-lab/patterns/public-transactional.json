@@ -1,0 +1,194 @@
+{
+  "id": "public-transactional",
+  "name": "Public-Facing Transactional Service",
+  "description": "A pattern for citizen-facing digital services that process transactions, collect information, or deliver outcomes. Designed for GOV.UK-style services that must meet the Service Standard, handle sensitive data, and provide reliable, accessible user journeys with audit trails.",
+  "whenToUse": [
+    "Citizen-facing services where users complete transactions such as applications, registrations, or payments",
+    "Services that must meet the GOV.UK Service Standard and pass service assessments",
+    "Digital services handling OFFICIAL or OFFICIAL-SENSITIVE citizen data",
+    "Services requiring audit trails, data retention, and GDPR compliance",
+    "High-availability services where downtime directly impacts citizens"
+  ],
+  "whenNotToUse": [
+    "Internal-only tools used exclusively by civil servants",
+    "Services with no transactional element or user data collection",
+    "Batch processing systems with no real-time user interaction",
+    "Services handling SECRET or TOP SECRET data requiring specialist hosting",
+    "Simple informational content that could be served as a static website"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Web Application",
+      "purpose": "Serve accessible HTML forms and manage user journeys through multi-step transactions",
+      "technology": "Node.js with GOV.UK Frontend, or Python with Flask/Django",
+      "platform": "Cloud compute"
+    },
+    {
+      "name": "Application Database",
+      "purpose": "Store transaction data, user submissions, and application state",
+      "technology": "PostgreSQL or Amazon Aurora",
+      "platform": "Cloud managed database"
+    },
+    {
+      "name": "Session Store",
+      "purpose": "Manage user sessions across stateless application instances",
+      "technology": "Redis or ElastiCache",
+      "platform": "Cloud managed cache"
+    },
+    {
+      "name": "Message Queue",
+      "purpose": "Decouple transaction processing from user-facing responses for reliability",
+      "technology": "SQS, Azure Service Bus, or Pub/Sub",
+      "platform": "Cloud messaging"
+    },
+    {
+      "name": "Notification Service",
+      "purpose": "Send confirmation emails and SMS to citizens after transactions",
+      "technology": "GOV.UK Notify",
+      "platform": "Government platform"
+    },
+    {
+      "name": "Payment Gateway",
+      "purpose": "Process payments securely with PCI DSS compliance",
+      "technology": "GOV.UK Pay",
+      "platform": "Government platform"
+    }
+  ],
+  "securityControls": [
+    "Implement CSRF protection on all form submissions",
+    "Encrypt all data at rest using AES-256 and in transit using TLS 1.2+",
+    "Implement rate limiting and brute-force protection on authentication endpoints",
+    "Apply input validation and output encoding to prevent injection attacks",
+    "Implement session timeout and secure cookie attributes",
+    "Conduct regular penetration testing and vulnerability scanning",
+    "Implement audit logging for all data access and modifications"
+  ],
+  "resilienceConsiderations": [
+    "Deploy across multiple availability zones for high availability",
+    "Implement health checks and automatic instance replacement",
+    "Use message queues to prevent data loss during downstream failures",
+    "Implement circuit breakers for external service integrations",
+    "Design idempotent transaction processing to handle retries safely",
+    "Implement graceful degradation when non-critical services are unavailable"
+  ],
+  "costConsiderations": [
+    "Compute costs scale with user traffic — consider auto-scaling policies",
+    "Database costs include storage, IOPS, and backup retention",
+    "GOV.UK Notify and Pay are free at point of use for government services",
+    "Consider reserved instances for baseline capacity to reduce costs",
+    "Factor in penetration testing and security assessment costs",
+    "Budget for ongoing accessibility audits and service assessments"
+  ],
+  "operationalConsiderations": [
+    "Requires 24/7 monitoring and on-call support for citizen-facing availability",
+    "Regular patching cycles for application dependencies and OS",
+    "Database backup and restore procedures must be tested regularly",
+    "Incident response procedures aligned with GDS service management",
+    "Performance testing required before major releases or traffic events",
+    "Accessibility testing with assistive technologies required for each release"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "AWS Elastic Beanstalk or ECS",
+          "purpose": "Managed application hosting with auto-scaling"
+        },
+        {
+          "name": "Amazon RDS (PostgreSQL)",
+          "purpose": "Managed relational database with Multi-AZ"
+        },
+        {
+          "name": "Amazon ElastiCache (Redis)",
+          "purpose": "Session management and caching"
+        },
+        {
+          "name": "Amazon SQS",
+          "purpose": "Message queuing for async transaction processing"
+        },
+        {
+          "name": "AWS WAF + Shield",
+          "purpose": "Web application firewall and DDoS protection"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure App Service",
+          "purpose": "Managed web application hosting with deployment slots"
+        },
+        {
+          "name": "Azure Database for PostgreSQL",
+          "purpose": "Managed database with high availability"
+        },
+        {
+          "name": "Azure Cache for Redis",
+          "purpose": "Session store and application caching"
+        },
+        {
+          "name": "Azure Service Bus",
+          "purpose": "Enterprise messaging for reliable processing"
+        },
+        {
+          "name": "Azure Front Door + WAF",
+          "purpose": "Global load balancing with security policies"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Run or App Engine",
+          "purpose": "Managed application hosting with auto-scaling"
+        },
+        {
+          "name": "Cloud SQL (PostgreSQL)",
+          "purpose": "Managed relational database with HA configuration"
+        },
+        {
+          "name": "Memorystore (Redis)",
+          "purpose": "Managed Redis for sessions and caching"
+        },
+        {
+          "name": "Cloud Tasks or Pub/Sub",
+          "purpose": "Async task processing and messaging"
+        },
+        {
+          "name": "Cloud Armor",
+          "purpose": "WAF and DDoS protection"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What is the expected transaction volume and peak usage pattern?",
+    "What data classification applies to the information being collected?",
+    "Is GOV.UK Notify and Pay integration required or are alternatives acceptable?",
+    "What are the availability and recovery time requirements?",
+    "Are there integration requirements with existing back-office systems?",
+    "What is the team's experience with the GOV.UK Service Standard assessment process?"
+  ],
+  "commonMistakes": [
+    "Building custom notification or payment systems instead of using GOV.UK platform services",
+    "Not designing for accessibility from the start, leading to costly retrofitting",
+    "Storing session state in application memory rather than an external session store",
+    "Not implementing idempotency for transaction processing, causing duplicate submissions",
+    "Underestimating the operational burden of running a 24/7 citizen-facing service",
+    "Failing to plan for service assessment checkpoints during delivery"
+  ],
+  "workloadTypes": [
+    "transactional",
+    "citizen-facing",
+    "forms",
+    "payments"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

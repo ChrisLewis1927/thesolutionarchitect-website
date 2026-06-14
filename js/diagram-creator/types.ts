@@ -24,12 +24,13 @@ export interface Rect {
 /** Supported container types representing infrastructure boundaries. */
 export type ContainerType = 'vpc' | 'subnet' | 'az' | 'resource-group' | 'region';
 
-/** Visual style applied to containers based on nesting level. */
+/** Visual style applied to containers based on nesting level or type. */
 export interface ContainerStyle {
   borderColor: string;
   backgroundColor: string;
   borderRadius: number;
   padding: number;
+  dash?: number[];
 }
 
 // --- Diagram Components ---

@@ -13,10 +13,23 @@ import type {
   Point,
   Rect,
   ContainerStyle,
+  ContainerType,
 } from './types';
 
 /** Default padding applied around children within a container (px). */
 const CONTAINER_PADDING = 20;
+
+/**
+ * Type-specific container styles matching AWS/Azure reference diagrams.
+ * Each container type has its own distinct colour, dash pattern, and padding.
+ */
+const TYPE_STYLES: Record<ContainerType, ContainerStyle> = {
+  'region': { borderColor: '#545B64', backgroundColor: 'rgba(84, 91, 100, 0.03)', borderRadius: 0, padding: 24, dash: [] },
+  'vpc': { borderColor: '#248814', backgroundColor: 'rgba(36, 136, 20, 0.04)', borderRadius: 0, padding: 20, dash: [8, 4] },
+  'az': { borderColor: '#147EBA', backgroundColor: 'rgba(20, 126, 186, 0.04)', borderRadius: 0, padding: 16, dash: [6, 3] },
+  'subnet': { borderColor: '#248814', backgroundColor: 'rgba(36, 136, 20, 0.06)', borderRadius: 0, padding: 12, dash: [4, 2] },
+  'resource-group': { borderColor: '#0078D4', backgroundColor: 'rgba(0, 120, 212, 0.04)', borderRadius: 4, padding: 16, dash: [6, 3] },
+};
 
 /** Minimum container size when it has no children. */
 const MIN_CONTAINER_WIDTH = 100;
@@ -253,6 +266,32 @@ export class ContainerManager {
   getContainerStyle(nestingLevel: number): ContainerStyle {
     const index = nestingLevel % LEVEL_STYLES.length;
     return { ...LEVEL_STYLES[index] };
+  }
+
+  /**
+   * Returns a type-appropriate visual style for a container type.
+   * Uses AWS/Azure reference diagram colours and dash patterns.
+   * For subnets, differentiates between public (green) and private (orange) by label.
+   *
+   * @param type - The container type.
+   * @param label - Optional label to differentiate subnet styles.
+   */
+  getContainerStyleByType(type: ContainerType, label?: string): ContainerStyle {
+    const baseStyle = { ...TYPE_STYLES[type] };
+
+    // Differentiate subnet styles by label
+    if (type === 'subnet' && label) {
+      const lowerLabel = label.toLowerCase();
+      if (lowerLabel.includes('public')) {
+        baseStyle.borderColor = '#248814';
+        baseStyle.backgroundColor = 'rgba(36, 136, 20, 0.08)';
+      } else if (lowerLabel.includes('private')) {
+        baseStyle.borderColor = '#E8710A';
+        baseStyle.backgroundColor = 'rgba(232, 113, 10, 0.08)';
+      }
+    }
+
+    return baseStyle;
   }
 
   /**

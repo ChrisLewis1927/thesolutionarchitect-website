@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Single Database for All Data Types",
+    "description": "Using one relational database for everything — transactional data, document storage, search indexes, caching, and analytics — regardless of access patterns.",
+    "whyProblematic": "Different data types have fundamentally different access patterns, consistency requirements, and scaling characteristics. A relational database optimised for OLTP will perform poorly for analytics queries. Mixing concerns creates contention, complicates backup strategies, and makes it impossible to scale individual data stores independently.",
+    "betterApproach": "Apply polyglot persistence: use the right data store for each access pattern. Relational databases for transactional data, document stores for flexible schemas, search engines for full-text queries, caches for hot data, and data warehouses for analytics. Connect them through well-defined integration patterns."
+  },
+  {
+    "name": "No Data Classification or Retention Policy",
+    "description": "Storing all data indefinitely without classifying it by sensitivity, applying retention periods, or implementing deletion mechanisms.",
+    "whyProblematic": "Violates UK GDPR and the Data Protection Act 2018 which require data minimisation and storage limitation. Increases the blast radius of data breaches. Makes subject access requests and right-to-erasure requests extremely difficult to fulfil. Accumulates storage costs for data that has no business value.",
+    "betterApproach": "Classify all data by sensitivity (OFFICIAL, OFFICIAL-SENSITIVE, SECRET) and apply retention policies aligned to business need and legal requirements. Implement automated deletion or archival. Tag personal data for DSAR compliance. Document retention decisions in a data retention schedule."
+  },
+  {
+    "name": "Backup Without Tested Restore",
+    "description": "Configuring automated backups but never testing the restore process or measuring recovery time.",
+    "whyProblematic": "Backups that cannot be restored are worthless. Without regular restore testing, you cannot validate that RPO and RTO targets are achievable. Corruption may go undetected until a restore is attempted in an emergency. Government services have defined recovery objectives that must be demonstrably achievable.",
+    "betterApproach": "Implement regular automated restore testing to a separate environment. Measure actual recovery time and compare against RTO targets. Validate data integrity after restore. Document the restore procedure and ensure multiple team members can execute it. Include restore testing in DR exercises."
+  },
+  {
+    "name": "Storing Secrets in the Database",
+    "description": "Keeping API keys, passwords, certificates, or encryption keys in application database tables rather than dedicated secrets management.",
+    "whyProblematic": "Database compromises expose all secrets simultaneously. Database backups contain secrets in plaintext. Access controls for secrets differ from application data access patterns. Audit trails for secret access are mixed with application queries. Violates NCSC secure design principles and Secure by Design guidance.",
+    "betterApproach": "Use a dedicated secrets manager (AWS Secrets Manager, Azure Key Vault, HashiCorp Vault). Rotate secrets automatically. Apply least-privilege access policies. Audit all secret access independently. Never store secrets in application databases, configuration files, or source control."
+  }
+]

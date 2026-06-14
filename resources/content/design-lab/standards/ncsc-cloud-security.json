@@ -1,0 +1,16 @@
+{
+  "id": "ncsc-cloud-security",
+  "name": "NCSC Cloud Security Principles",
+  "category": "security",
+  "description": "Fourteen principles published by the National Cyber Security Centre to help organisations evaluate the security of cloud services. Covers data in transit, asset protection, separation between users, governance, operational security, personnel security, secure development, supply chain security, secure user management, identity and authentication, external interface protection, secure service administration, audit information, and safe use of the service.",
+  "url": "https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles",
+  "applicableDomains": [
+    "hosting-compute",
+    "data-persistence",
+    "networking-edge",
+    "identity-access",
+    "security-controls",
+    "observability-operations",
+    "compliance-assurance"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "secure-by-design",
+  "name": "Secure by Design",
+  "category": "security",
+  "description": "UK government approach requiring security to be built into services from the start rather than added retrospectively. Covers threat modelling, secure development practices, supply chain security, and continuous assurance throughout the service lifecycle.",
+  "url": "https://www.security.gov.uk/guidance/secure-by-design/",
+  "applicableDomains": [
+    "identity-access",
+    "security-controls",
+    "networking-edge",
+    "data-persistence",
+    "deployment-release",
+    "integration-apis",
+    "compliance-assurance"
+  ]
+}

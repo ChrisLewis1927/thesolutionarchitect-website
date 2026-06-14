@@ -1,0 +1,224 @@
+{
+  "domain": "observability-operations",
+  "description": "Assesses the appropriate observability and operational monitoring strategy based on service type, availability requirements, team capability, and deployment model.",
+  "rules": [
+    {
+      "id": "oo-001",
+      "priority": 1,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "public-facing" },
+          { "field": "availability.targetAvailability", "operator": "in", "values": ["99.9", "99.95", "99.99"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Full Observability Stack with SLO Monitoring",
+        "rationale": "Public-facing services with high availability targets require comprehensive observability including metrics, logs, traces, and Service Level Objective (SLO) monitoring. This enables rapid incident detection, root cause analysis, and proactive capacity management to maintain availability targets.",
+        "candidateTechnologies": [
+          { "name": "AWS CloudWatch", "platform": "aws", "category": "monitoring" },
+          { "name": "AWS X-Ray", "platform": "aws", "category": "distributed-tracing" },
+          { "name": "Azure Monitor", "platform": "azure", "category": "monitoring" },
+          { "name": "Azure Application Insights", "platform": "azure", "category": "apm" },
+          { "name": "Google Cloud Operations Suite", "platform": "gcp", "category": "monitoring" },
+          { "name": "Datadog", "platform": "saas", "category": "observability-platform" },
+          { "name": "Grafana Cloud", "platform": "saas", "category": "observability-platform" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires SRE or platform engineering capability; on-call rotation for high-availability services",
+          "skillsRequired": ["observability-engineering", "slo-definition", "alerting-strategy", "incident-response", "capacity-planning"],
+          "toolingRequired": ["metrics-platform", "log-aggregation", "distributed-tracing", "alerting-system", "incident-management", "status-page"],
+          "ongoingMaintenance": "Dashboard maintenance, alert tuning (reduce noise), SLO review, capacity forecasting, and runbook updates"
+        },
+        "costConsiderations": {
+          "runningCosts": "Significant for high-volume services; log ingestion and retention are primary cost drivers",
+          "transitionCosts": "Instrumentation effort; dashboard development; alert configuration; on-call process setup",
+          "costDrivers": ["log-ingestion-volume", "metrics-cardinality", "trace-sampling-rate", "data-retention-period", "alerting-notifications"],
+          "optimisationOpportunities": ["log-sampling-for-high-volume", "reduce-metrics-cardinality", "tiered-retention", "intelligent-alerting"]
+        }
+      }
+    },
+    {
+      "id": "oo-002",
+      "priority": 2,
+      "condition": {
+        "all": [
+          { "field": "deployment.preference", "operator": "in", "values": ["containerised", "cloud-native"] },
+          { "field": "teamCapability.cloudExperience", "operator": "in", "values": ["intermediate", "advanced"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Cloud-Native Observability with OpenTelemetry",
+        "rationale": "Containerised and cloud-native deployments with experienced teams benefit from OpenTelemetry-based observability. This provides vendor-neutral instrumentation that can export to multiple backends, avoiding lock-in while providing comprehensive metrics, logs, and traces.",
+        "candidateTechnologies": [
+          { "name": "OpenTelemetry Collector", "platform": "multi-cloud", "category": "telemetry-collection" },
+          { "name": "AWS CloudWatch Container Insights", "platform": "aws", "category": "container-monitoring" },
+          { "name": "AWS Managed Grafana", "platform": "aws", "category": "visualisation" },
+          { "name": "Azure Monitor for Containers", "platform": "azure", "category": "container-monitoring" },
+          { "name": "Google Cloud Monitoring", "platform": "gcp", "category": "monitoring" },
+          { "name": "Prometheus + Grafana", "platform": "multi-cloud", "category": "metrics" }
+        ],
+        "operationalBurden": {
+          "complexity": "medium",
+          "staffingImplications": "Requires platform engineering skills; OpenTelemetry configuration needs initial investment but reduces long-term vendor dependency",
+          "skillsRequired": ["opentelemetry", "prometheus", "grafana", "container-monitoring", "log-aggregation"],
+          "toolingRequired": ["otel-collector", "metrics-backend", "log-backend", "trace-backend", "dashboard-platform"],
+          "ongoingMaintenance": "Collector configuration updates, dashboard maintenance, storage management, and instrumentation library updates"
+        },
+        "costConsiderations": {
+          "runningCosts": "Depends on backend choice; self-managed is cheaper but more operational effort; managed services are simpler but costlier",
+          "transitionCosts": "Application instrumentation; collector deployment; backend setup; dashboard development",
+          "costDrivers": ["telemetry-volume", "backend-choice", "retention-period", "query-complexity"],
+          "optimisationOpportunities": ["sampling-strategies", "aggregation-at-collector", "tiered-retention", "open-source-backends"]
+        }
+      }
+    },
+    {
+      "id": "oo-003",
+      "priority": 3,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "internal" },
+          { "field": "teamCapability.cloudExperience", "operator": "in", "values": ["none", "basic"] }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Managed Monitoring with Pre-Built Dashboards",
+        "rationale": "Internal services with teams that have limited cloud experience benefit from fully managed monitoring services with pre-built dashboards and automated alerting. This provides visibility without requiring deep observability engineering skills.",
+        "candidateTechnologies": [
+          { "name": "AWS CloudWatch (automatic dashboards)", "platform": "aws", "category": "monitoring" },
+          { "name": "Azure Monitor (insights)", "platform": "azure", "category": "monitoring" },
+          { "name": "Google Cloud Operations (auto-instrumentation)", "platform": "gcp", "category": "monitoring" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Standard development team can use pre-built dashboards; minimal configuration required",
+          "skillsRequired": ["basic-monitoring-concepts", "alert-response", "log-reading"],
+          "toolingRequired": ["cloud-native-monitoring", "email-alerting", "basic-dashboards"],
+          "ongoingMaintenance": "Alert threshold tuning and periodic dashboard review"
+        },
+        "costConsiderations": {
+          "runningCosts": "Low to moderate; cloud-native monitoring often included in service pricing",
+          "transitionCosts": "Minimal; enable monitoring features and configure basic alerts",
+          "costDrivers": ["log-retention", "custom-metrics", "alert-notifications"],
+          "optimisationOpportunities": ["reduce-log-retention-for-non-critical", "use-built-in-metrics", "consolidate-alerts"]
+        }
+      }
+    },
+    {
+      "id": "oo-004",
+      "priority": 4,
+      "condition": {
+        "all": [
+          { "field": "serviceType.type", "operator": "equals", "value": "batch-processing" }
+        ]
+      },
+      "recommendation": {
+        "pattern": "Job Monitoring with Completion Tracking",
+        "rationale": "Batch processing workloads require monitoring focused on job completion, processing duration, error rates, and data quality metrics rather than real-time request monitoring. Alerting should focus on job failures, SLA breaches, and data anomalies.",
+        "candidateTechnologies": [
+          { "name": "AWS CloudWatch (custom metrics)", "platform": "aws", "category": "monitoring" },
+          { "name": "AWS Step Functions (execution history)", "platform": "aws", "category": "workflow-monitoring" },
+          { "name": "Azure Monitor (custom metrics)", "platform": "azure", "category": "monitoring" },
+          { "name": "Azure Data Factory Monitor", "platform": "azure", "category": "pipeline-monitoring" },
+          { "name": "Google Cloud Monitoring", "platform": "gcp", "category": "monitoring" }
+        ],
+        "operationalBurden": {
+          "complexity": "low",
+          "staffingImplications": "Development team manages job monitoring; no dedicated operations team needed",
+          "skillsRequired": ["custom-metrics-design", "alerting-configuration", "log-analysis"],
+          "toolingRequired": ["job-scheduler-monitoring", "custom-metrics-publishing", "alerting", "log-aggregation"],
+          "ongoingMaintenance": "Alert threshold updates, SLA monitoring configuration, and periodic review of job performance trends"
+        },
+        "costConsiderations": {
+          "runningCosts": "Low; custom metrics and basic alerting",
+          "transitionCosts": "Custom metric instrumentation; alert configuration; dashboard setup",
+          "costDrivers": ["custom-metric-count", "log-volume", "alert-notifications"],
+          "optimisationOpportunities": ["aggregate-metrics", "reduce-log-verbosity-for-successful-runs", "batch-metric-publishing"]
+        }
+      }
+    },
+    {
+      "id": "oo-005",
+      "priority": 8,
+      "condition": {
+        "all": [
+          { "field": "cloudPlatforms.noCloudAvailable", "operator": "equals", "value": true }
+        ]
+      },
+      "recommendation": {
+        "pattern": "On-Premises Monitoring Stack",
+        "rationale": "Without cloud access, observability requires self-managed monitoring infrastructure. Open-source tools like Prometheus, Grafana, and the ELK stack provide comprehensive monitoring but require dedicated infrastructure and administration.",
+        "candidateTechnologies": [
+          { "name": "Prometheus", "platform": "on-premises", "category": "metrics" },
+          { "name": "Grafana", "platform": "on-premises", "category": "visualisation" },
+          { "name": "Elasticsearch + Kibana", "platform": "on-premises", "category": "log-management" },
+          { "name": "Jaeger", "platform": "on-premises", "category": "distributed-tracing" },
+          { "name": "Nagios/Zabbix", "platform": "on-premises", "category": "infrastructure-monitoring" }
+        ],
+        "operationalBurden": {
+          "complexity": "high",
+          "staffingImplications": "Requires dedicated monitoring infrastructure management; Elasticsearch clusters need significant attention",
+          "skillsRequired": ["prometheus-administration", "elasticsearch-management", "grafana-dashboard-design", "alertmanager-configuration"],
+          "toolingRequired": ["monitoring-infrastructure", "storage-for-metrics-and-logs", "alerting-system", "on-call-management"],
+          "ongoingMaintenance": "Infrastructure scaling, index management, retention policies, cluster health, and tool upgrades"
+        },
+        "costConsiderations": {
+          "runningCosts": "Hardware for monitoring infrastructure; staffing for administration; storage for logs and metrics",
+          "transitionCosts": "Infrastructure setup; tool installation and configuration; dashboard development",
+          "costDrivers": ["storage-for-logs", "hardware", "staffing", "retention-period"],
+          "optimisationOpportunities": ["log-rotation", "metric-aggregation", "tiered-storage", "sampling"]
+        }
+      }
+    }
+  ],
+  "defaultRecommendation": {
+    "pattern": "Cloud-Native Monitoring with Alerting",
+    "rationale": "When no specific conditions strongly favour an alternative, cloud-native monitoring services provide good visibility with minimal setup. These services offer metrics, logs, and basic alerting out of the box for most cloud resources.",
+    "candidateTechnologies": [
+      { "name": "AWS CloudWatch", "platform": "aws", "category": "monitoring" },
+      { "name": "Azure Monitor", "platform": "azure", "category": "monitoring" },
+      { "name": "Google Cloud Operations", "platform": "gcp", "category": "monitoring" }
+    ],
+    "operationalBurden": {
+      "complexity": "low",
+      "staffingImplications": "Standard development team can manage",
+      "skillsRequired": ["basic-monitoring", "alert-configuration"],
+      "toolingRequired": ["cloud-native-monitoring", "alerting"],
+      "ongoingMaintenance": "Alert tuning and dashboard updates"
+    },
+    "costConsiderations": {
+      "runningCosts": "Low; included with most cloud services",
+      "transitionCosts": "Minimal configuration effort",
+      "costDrivers": ["log-retention", "custom-metrics"],
+      "optimisationOpportunities": ["use-built-in-metrics", "reduce-log-retention"]
+    }
+  },
+  "relevantStandards": [
+    "ncsc-cloud-security",
+    "tcop",
+    "govuk-service-standard"
+  ],
+  "commonQuestions": [
+    "What are the key metrics that indicate service health?",
+    "Who will respond to alerts and what is the on-call model?",
+    "What is the log retention requirement for compliance?",
+    "Is there an existing monitoring platform to integrate with?",
+    "What SLOs need to be tracked?",
+    "Is distributed tracing needed for debugging?"
+  ],
+  "evidenceNeeded": [
+    "Service Level Objectives (SLOs) and key performance indicators",
+    "On-call and incident response process",
+    "Log retention requirements (compliance-driven)",
+    "Existing monitoring infrastructure inventory",
+    "Team capability for observability engineering"
+  ],
+  "artefactsToProduce": [
+    "Observability strategy decision record (ADR)",
+    "SLO definitions and error budget policy",
+    "Alerting strategy and escalation procedures",
+    "Dashboard specifications",
+    "Incident response runbook"
+  ]
+}

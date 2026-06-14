@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "How do DR procedures maintain security controls during failover (encryption, access controls, logging)?",
+      "What is the security posture of the DR environment — is it as hardened as production?",
+      "How are secrets and credentials managed across primary and DR sites?",
+      "Could a DR failover be triggered maliciously and what controls prevent this?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "How frequently are DR procedures tested and what was the result of the last test?",
+      "What is the actual measured recovery time versus the stated RTO target?",
+      "How many team members can execute the DR procedure and what happens if they are unavailable?",
+      "What monitoring confirms that DR replication is functioning correctly?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How does the DR architecture affect deployment complexity and frequency?",
+      "What additional testing is needed to validate DR capability after each release?",
+      "How are database schema changes propagated to DR environments?",
+      "Does the DR architecture constrain technology choices or deployment patterns?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What is the cost of maintaining DR infrastructure that may never be used?",
+      "How does the DR strategy (active-active vs pilot-light vs backup-restore) affect ongoing costs?",
+      "What is the business cost of downtime that justifies the DR investment?",
+      "Are there more cost-effective DR approaches that still meet the RTO/RPO requirements?"
+    ]
+  }
+]

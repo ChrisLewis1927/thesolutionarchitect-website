@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "Where is the threat model and does it cover all identified attack vectors?",
+      "How are security controls tested and validated on an ongoing basis?",
+      "What is the vulnerability management process and what are the patching SLAs?",
+      "How will you detect and respond to a security incident in this architecture?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "What is the operational overhead of the security controls (agent management, log collection, scanning)?",
+      "How will security patching be coordinated with service availability requirements?",
+      "What security tooling needs to be operated and who is responsible for it?",
+      "How do security controls impact application performance and user experience?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How are security requirements integrated into the development workflow without slowing delivery?",
+      "What security testing is automated in the CI/CD pipeline?",
+      "How will security findings be triaged and prioritised against feature delivery?",
+      "What security training or awareness is needed for the development team?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What is the cost of security tooling (SIEM, vulnerability scanning, WAF, DDoS protection)?",
+      "What are the staffing costs for security operations and incident response?",
+      "How do security requirements impact the overall project budget and timeline?",
+      "What is the cost of a security breach versus the cost of prevention controls?"
+    ]
+  }
+]

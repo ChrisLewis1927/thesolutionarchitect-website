@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Shared Service Accounts with Static Credentials",
+    "description": "Using a single shared service account with long-lived static credentials for all application-to-service authentication.",
+    "whyProblematic": "Shared credentials cannot be attributed to specific actions, destroying audit trails. Static credentials that never rotate accumulate risk over time. If compromised, the blast radius is every system that uses the shared account. Violates NCSC identity and access management guidance and Secure by Design principles. Credential rotation requires coordinated changes across all consumers.",
+    "betterApproach": "Use individual service identities with short-lived credentials (IAM roles, managed identities, workload identity federation). Implement automatic credential rotation. Apply least-privilege permissions per service. Use cloud-native identity mechanisms that eliminate the need for static secrets."
+  },
+  {
+    "name": "No Separation Between User and Admin Access",
+    "description": "Granting administrative privileges through the same authentication flow and session as regular user access, without additional verification.",
+    "whyProblematic": "Compromised user sessions immediately grant administrative access. No defence in depth against privilege escalation. Violates the principle of least privilege and NCSC privileged access management guidance. Makes it impossible to apply stronger controls (MFA, session limits, network restrictions) specifically to administrative actions.",
+    "betterApproach": "Implement separate authentication flows for administrative access with step-up MFA. Use privileged access workstations or jump boxes for admin operations. Apply time-limited elevated access (just-in-time). Log all administrative actions separately. Restrict admin access to specific network locations."
+  },
+  {
+    "name": "Rolling Your Own Authentication",
+    "description": "Building custom authentication and session management rather than using established identity providers and protocols (OAuth 2.0, OIDC, SAML).",
+    "whyProblematic": "Authentication is extremely difficult to implement securely. Custom implementations invariably contain vulnerabilities (session fixation, timing attacks, weak hashing). Cannot leverage MFA, SSO, or federation without significant additional work. Security teams will require extensive penetration testing. Maintenance burden is ongoing as attack vectors evolve.",
+    "betterApproach": "Use established identity providers (GOV.UK One Login for citizens, Azure AD/Entra ID for internal users, Cognito/Auth0 for specific use cases). Implement standard protocols (OAuth 2.0, OIDC). Delegate credential storage and MFA to the identity provider. Focus application code on authorisation rather than authentication."
+  },
+  {
+    "name": "Overly Broad IAM Permissions",
+    "description": "Granting wildcard permissions (e.g., s3:*, ec2:*) or administrator access to application roles because fine-grained permissions are complex to configure.",
+    "whyProblematic": "Violates least privilege — the most fundamental security principle. If the application is compromised, the attacker inherits all permissions. Makes it impossible to contain blast radius. Audit findings will flag overly broad permissions. Cloud security posture tools will generate continuous alerts.",
+    "betterApproach": "Start with zero permissions and add only what the application demonstrably needs. Use IAM Access Analyzer or equivalent to identify unused permissions. Implement permission boundaries. Review and tighten permissions regularly. Use condition keys to further restrict access (source IP, time, resource tags)."
+  }
+]

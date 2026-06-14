@@ -1,0 +1,8 @@
+[
+  "Data classification applied to all data stores with appropriate controls for each classification level (OFFICIAL, OFFICIAL-SENSITIVE, SECRET).",
+  "Documented data retention policies aligned to legal requirements and business need, with automated enforcement mechanisms.",
+  "Evidence that backup and restore procedures are tested regularly with measured recovery times against defined RPO and RTO targets.",
+  "Encryption at rest and in transit for all data stores, with documented key management procedures including rotation schedules.",
+  "Justification for database technology choices based on access patterns, consistency requirements, and scaling needs rather than team preference.",
+  "Data sovereignty confirmation — evidence that data residency requirements are met and data does not leave approved jurisdictions."
+]

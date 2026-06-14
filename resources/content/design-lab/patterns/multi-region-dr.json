@@ -1,0 +1,104 @@
+{
+  "id": "multi-region-dr",
+  "name": "Multi-Region Disaster Recovery",
+  "description": "A pattern for deploying workloads across multiple geographic regions to survive complete regional outages. Provides the highest level of resilience for critical national infrastructure and services where regional failure would have significant public impact.",
+  "whenToUse": [
+    "Critical national infrastructure where regional failure is unacceptable",
+    "Services with 99.99% or higher availability requirements",
+    "Workloads where regulatory requirements mandate geographic redundancy",
+    "Services where a complete regional outage would have significant public or economic impact",
+    "Disaster recovery scenarios requiring recovery within minutes rather than hours"
+  ],
+  "whenNotToUse": [
+    "Most government services where multi-AZ provides sufficient resilience",
+    "Services where the cost of multi-region deployment is disproportionate to the risk",
+    "Workloads with data residency requirements restricting deployment to a single region",
+    "Applications that cannot tolerate eventual consistency between regions",
+    "Services with low traffic where the complexity of multi-region is unjustified"
+  ],
+  "typicalComponents": [
+    { "name": "Global Load Balancer", "purpose": "Route traffic to the nearest healthy region with automatic failover", "technology": "Route 53, Azure Traffic Manager/Front Door, or Cloud DNS", "platform": "Cloud global networking" },
+    { "name": "Regional Application Stacks", "purpose": "Independent application deployments in each region", "technology": "ECS/EKS, App Service, or GKE per region", "platform": "Cloud compute (multi-region)" },
+    { "name": "Cross-Region Database Replication", "purpose": "Replicate data between regions for DR or active-active operation", "technology": "Aurora Global, Cosmos DB, or Cloud Spanner", "platform": "Cloud global database" },
+    { "name": "Cross-Region Storage Replication", "purpose": "Replicate objects and files between regions", "technology": "S3 Cross-Region Replication, GRS, or Multi-Region Storage", "platform": "Cloud storage" },
+    { "name": "DR Orchestration", "purpose": "Automate failover procedures and validate recovery readiness", "technology": "AWS Elastic Disaster Recovery, Azure Site Recovery, or custom runbooks", "platform": "Cloud DR service" }
+  ],
+  "securityControls": [
+    "Ensure encryption keys are available in all deployment regions",
+    "Implement consistent IAM policies and access controls across regions",
+    "Ensure security monitoring covers all regions with centralised alerting",
+    "Validate that data replication complies with data residency requirements",
+    "Implement network security consistently across regional deployments",
+    "Test security controls work correctly after regional failover"
+  ],
+  "resilienceConsiderations": [
+    "Active-active provides highest availability but requires conflict resolution for writes",
+    "Active-passive is simpler but has non-zero RTO during failover",
+    "Pilot light keeps minimal infrastructure warm in DR region to reduce recovery time",
+    "Cross-region replication introduces latency — design for eventual consistency",
+    "Regular DR testing (game days) essential to validate failover procedures",
+    "Consider the RPO implications of asynchronous cross-region replication"
+  ],
+  "costConsiderations": [
+    "Multi-region effectively doubles or triples infrastructure costs for active-active",
+    "Active-passive with pilot light reduces standby costs significantly",
+    "Cross-region data transfer costs can be substantial for high-volume replication",
+    "Global database services (Spanner, Cosmos DB) have premium pricing",
+    "Factor in the cost of regular DR testing and validation exercises",
+    "Weigh the cost against the financial impact of extended regional outage"
+  ],
+  "operationalConsiderations": [
+    "Deployment procedures must coordinate releases across multiple regions",
+    "Monitoring must provide global visibility with per-region drill-down",
+    "DR runbooks must be documented, tested, and kept current",
+    "Regular DR exercises (at least quarterly) to validate recovery procedures",
+    "Capacity planning must account for full traffic in each region during failover",
+    "Team must understand the consistency model and its implications for users"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        { "name": "Amazon Route 53", "purpose": "DNS-based global traffic routing with health checks" },
+        { "name": "Amazon Aurora Global Database", "purpose": "Cross-region database replication with <1s lag" },
+        { "name": "S3 Cross-Region Replication", "purpose": "Automatic object replication between regions" },
+        { "name": "AWS Elastic Disaster Recovery", "purpose": "Automated DR orchestration and testing" }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        { "name": "Azure Front Door", "purpose": "Global load balancing with automatic failover" },
+        { "name": "Azure Cosmos DB", "purpose": "Multi-region database with configurable consistency" },
+        { "name": "Azure Blob Storage (GRS)", "purpose": "Geo-redundant storage replication" },
+        { "name": "Azure Site Recovery", "purpose": "DR orchestration and automated failover" }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        { "name": "Cloud DNS with Global Load Balancing", "purpose": "Global traffic distribution" },
+        { "name": "Cloud Spanner", "purpose": "Globally distributed relational database" },
+        { "name": "Cloud Storage (Multi-Region)", "purpose": "Geo-redundant object storage" },
+        { "name": "Backup and DR Service", "purpose": "Managed disaster recovery orchestration" }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What is the target RTO and RPO for regional failure scenarios?",
+    "Is active-active or active-passive the appropriate DR strategy?",
+    "Are there data residency constraints on which regions can be used?",
+    "How frequently will DR failover be tested?",
+    "What is the acceptable data loss window for asynchronous replication?",
+    "Who has authority to invoke regional failover and what is the decision process?"
+  ],
+  "commonMistakes": [
+    "Implementing multi-region without regular DR testing, discovering failures only during real incidents",
+    "Assuming synchronous replication across regions — latency makes this impractical for most workloads",
+    "Not accounting for DNS TTL propagation time in failover RTO calculations",
+    "Deploying multi-region for services that don't justify the cost and complexity",
+    "Not considering data consistency implications when both regions accept writes"
+  ],
+  "workloadTypes": ["disaster-recovery", "critical-national-infrastructure", "high-availability", "global"],
+  "securityClassifications": ["official", "official-sensitive", "secret"]
+}

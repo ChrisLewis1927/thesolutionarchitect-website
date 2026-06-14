@@ -1,0 +1,193 @@
+{
+  "id": "document-upload-processing",
+  "name": "Document Upload and Processing",
+  "description": "A pattern for services that accept document uploads from users, process them (scanning, validation, extraction, classification), and store them securely. Common in government for evidence submission, form uploads, identity verification, and bulk document ingestion workflows.",
+  "whenToUse": [
+    "Services requiring citizens or staff to upload documents as part of a transaction",
+    "Evidence submission workflows where documents must be validated and classified",
+    "Identity verification processes requiring document scanning and data extraction",
+    "Bulk document ingestion from partner organisations or scanning operations",
+    "Services requiring OCR, text extraction, or automated document classification"
+  ],
+  "whenNotToUse": [
+    "Simple file sharing between known internal users (use SharePoint or equivalent)",
+    "Real-time video or audio streaming that is not document-based",
+    "Scenarios where documents are only stored and retrieved without processing",
+    "Small-scale file uploads where a simple form attachment would suffice",
+    "Document collaboration and co-editing scenarios (use productivity suites)"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Upload Service",
+      "purpose": "Accept file uploads with size limits, type validation, and progress tracking",
+      "technology": "Pre-signed URLs to S3/Blob Storage with API validation",
+      "platform": "Cloud storage + compute"
+    },
+    {
+      "name": "Malware Scanner",
+      "purpose": "Scan all uploaded files for viruses and malicious content before processing",
+      "technology": "ClamAV, Windows Defender, or cloud-native scanning",
+      "platform": "Cloud or self-managed"
+    },
+    {
+      "name": "Document Processor",
+      "purpose": "Extract text, metadata, and structured data from uploaded documents",
+      "technology": "Amazon Textract, Azure Form Recognizer, or Document AI",
+      "platform": "Cloud AI/ML service"
+    },
+    {
+      "name": "Quarantine Storage",
+      "purpose": "Isolate uploaded files until scanning and validation is complete",
+      "technology": "Separate S3 bucket or Blob container with restricted access",
+      "platform": "Cloud storage"
+    },
+    {
+      "name": "Clean Storage",
+      "purpose": "Store validated and processed documents with appropriate retention",
+      "technology": "S3, Azure Blob Storage, or Cloud Storage with lifecycle policies",
+      "platform": "Cloud storage"
+    },
+    {
+      "name": "Processing Queue",
+      "purpose": "Decouple upload acceptance from async processing pipeline",
+      "technology": "SQS, Azure Queue Storage, or Pub/Sub",
+      "platform": "Cloud messaging"
+    }
+  ],
+  "securityControls": [
+    "Scan ALL uploaded files for malware before any processing or storage in clean buckets",
+    "Validate file types using magic bytes, not just file extensions",
+    "Implement file size limits appropriate to the use case",
+    "Store uploads in quarantine storage until scanning is complete",
+    "Encrypt all stored documents at rest with appropriate key management",
+    "Implement access controls ensuring only authorised services can read uploaded documents",
+    "Strip metadata from documents before serving to prevent information leakage",
+    "Implement content type validation to prevent polyglot file attacks"
+  ],
+  "resilienceConsiderations": [
+    "Use pre-signed URLs for direct-to-storage uploads to avoid application bottlenecks",
+    "Queue-based processing ensures uploads are not lost if processing services fail",
+    "Implement retry logic for document processing with dead letter queue for failures",
+    "Design for idempotent processing to handle duplicate uploads safely",
+    "Implement upload resumption for large files over unreliable connections"
+  ],
+  "costConsiderations": [
+    "Storage costs scale with document volume and retention period",
+    "AI/ML document processing services charge per page or per API call",
+    "Malware scanning costs per file scanned",
+    "Consider tiered storage for archived documents (infrequent access)",
+    "Processing compute costs only incurred during active document processing",
+    "Factor in the cost of manual review for documents that fail automated processing"
+  ],
+  "operationalConsiderations": [
+    "Monitoring for processing queue depth and failed document processing",
+    "Alerting for malware detections requiring investigation",
+    "Retention policy enforcement for document lifecycle management",
+    "Capacity planning for peak upload periods (e.g., deadline-driven submissions)",
+    "Manual review workflow for documents that fail automated validation",
+    "Regular updates to malware scanning signatures and processing models"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "Amazon S3",
+          "purpose": "Document storage with pre-signed upload URLs"
+        },
+        {
+          "name": "Amazon Textract",
+          "purpose": "OCR and structured data extraction from documents"
+        },
+        {
+          "name": "AWS Lambda",
+          "purpose": "Event-driven document processing on upload"
+        },
+        {
+          "name": "Amazon SQS",
+          "purpose": "Processing queue for async document handling"
+        },
+        {
+          "name": "Amazon GuardDuty (S3 Protection)",
+          "purpose": "Malware detection for uploaded objects"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Azure Blob Storage",
+          "purpose": "Document storage with SAS token uploads"
+        },
+        {
+          "name": "Azure AI Document Intelligence",
+          "purpose": "Document analysis and data extraction"
+        },
+        {
+          "name": "Azure Functions",
+          "purpose": "Event-driven document processing"
+        },
+        {
+          "name": "Azure Queue Storage",
+          "purpose": "Processing queue for document pipeline"
+        },
+        {
+          "name": "Microsoft Defender for Storage",
+          "purpose": "Malware scanning for uploaded files"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Cloud Storage",
+          "purpose": "Document storage with signed URL uploads"
+        },
+        {
+          "name": "Document AI",
+          "purpose": "Document parsing and entity extraction"
+        },
+        {
+          "name": "Cloud Functions",
+          "purpose": "Event-triggered document processing"
+        },
+        {
+          "name": "Pub/Sub",
+          "purpose": "Event-driven processing pipeline"
+        },
+        {
+          "name": "Cloud DLP",
+          "purpose": "Sensitive data detection in uploaded documents"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What file types and maximum sizes need to be supported?",
+    "Is automated data extraction (OCR) required or just storage and retrieval?",
+    "What is the expected upload volume and are there peak periods?",
+    "What happens when a document fails validation — manual review or rejection?",
+    "What are the data retention requirements for uploaded documents?",
+    "Are there accessibility requirements for the upload interface (e.g., assistive technology support)?"
+  ],
+  "commonMistakes": [
+    "Not scanning uploads for malware, creating a vector for distributing malicious files",
+    "Validating file type by extension only, allowing disguised malicious files through",
+    "Processing uploads synchronously, causing timeouts for large files",
+    "Not implementing quarantine storage, allowing unscanned files to be accessed",
+    "Storing documents indefinitely without lifecycle policies, accumulating unnecessary costs"
+  ],
+  "workloadTypes": [
+    "document-processing",
+    "file-upload",
+    "evidence-submission",
+    "ocr"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

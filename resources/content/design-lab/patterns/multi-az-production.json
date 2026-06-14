@@ -1,0 +1,174 @@
+{
+  "id": "multi-az-production",
+  "name": "Multi-AZ Production",
+  "description": "A pattern for deploying production workloads across multiple availability zones within a single cloud region to achieve high availability. Provides resilience against individual data centre failures while maintaining low-latency communication between components.",
+  "whenToUse": [
+    "Production services requiring 99.9% or higher availability SLA",
+    "Citizen-facing services where downtime directly impacts public trust",
+    "Workloads where single-AZ failure must not cause service interruption",
+    "Services with regulatory or policy requirements for infrastructure redundancy",
+    "Applications where the cost of downtime exceeds the cost of multi-AZ deployment"
+  ],
+  "whenNotToUse": [
+    "Development and testing environments where single-AZ is sufficient",
+    "Internal tools with low availability requirements and acceptable maintenance windows",
+    "Workloads where multi-region DR is required (use multi-region-dr pattern instead)",
+    "Cost-constrained projects where 99% availability is acceptable",
+    "Batch processing workloads that can tolerate interruption and restart"
+  ],
+  "typicalComponents": [
+    {
+      "name": "Multi-AZ Compute",
+      "purpose": "Run application instances across multiple availability zones",
+      "technology": "Auto Scaling Groups, VM Scale Sets, or Managed Instance Groups",
+      "platform": "Cloud compute"
+    },
+    {
+      "name": "Cross-AZ Load Balancer",
+      "purpose": "Distribute traffic across instances in multiple AZs with health checks",
+      "technology": "ALB, Azure Load Balancer, or Cloud Load Balancing",
+      "platform": "Cloud networking"
+    },
+    {
+      "name": "Multi-AZ Database",
+      "purpose": "Replicate data synchronously across AZs for zero data loss on failover",
+      "technology": "RDS Multi-AZ, Azure SQL HA, or Cloud SQL HA",
+      "platform": "Cloud managed database"
+    },
+    {
+      "name": "Cross-AZ Storage",
+      "purpose": "Store data with automatic replication across availability zones",
+      "technology": "S3, Azure Blob (ZRS), or Cloud Storage (multi-regional)",
+      "platform": "Cloud storage"
+    },
+    {
+      "name": "Health Monitoring",
+      "purpose": "Detect AZ-level failures and trigger automatic failover",
+      "technology": "CloudWatch, Azure Monitor, or Cloud Monitoring",
+      "platform": "Cloud observability"
+    }
+  ],
+  "securityControls": [
+    "Implement consistent security group rules across all availability zones",
+    "Ensure encryption keys are available in all AZs used by the deployment",
+    "Implement network segmentation consistently across AZs",
+    "Ensure IAM policies and service accounts work across AZ boundaries",
+    "Implement consistent logging and audit trails across all AZs",
+    "Test security controls during failover scenarios"
+  ],
+  "resilienceConsiderations": [
+    "Synchronous replication between AZs ensures zero data loss during failover",
+    "Automatic failover for managed services (RDS, load balancers) requires no manual intervention",
+    "Design applications to be stateless or use distributed session stores",
+    "Test failover regularly by simulating AZ failures in non-production",
+    "Ensure sufficient capacity in remaining AZs to handle full load during failure",
+    "Consider the blast radius — some failures may affect multiple AZs simultaneously"
+  ],
+  "costConsiderations": [
+    "Multi-AZ deployment approximately doubles compute and database costs",
+    "Cross-AZ data transfer charges apply for inter-AZ communication",
+    "Managed multi-AZ services (RDS Multi-AZ) include replication in pricing",
+    "Right-size for N+1 capacity — each AZ must handle increased load during failure",
+    "Consider the cost of downtime versus the cost of redundancy",
+    "Reserved capacity across multiple AZs for cost optimisation"
+  ],
+  "operationalConsiderations": [
+    "Deployment procedures must update all AZs consistently (rolling or blue-green)",
+    "Monitoring must detect AZ-level degradation before complete failure",
+    "Runbooks needed for AZ failover scenarios and recovery procedures",
+    "Capacity planning must account for running on reduced AZs during failure",
+    "Regular failover testing to validate recovery procedures work correctly",
+    "Configuration management must ensure consistency across all AZs"
+  ],
+  "cloudServiceExamples": [
+    {
+      "platform": "aws",
+      "services": [
+        {
+          "name": "EC2 Auto Scaling (multi-AZ)",
+          "purpose": "Distribute instances across availability zones"
+        },
+        {
+          "name": "Application Load Balancer",
+          "purpose": "Cross-AZ traffic distribution with health checks"
+        },
+        {
+          "name": "Amazon RDS Multi-AZ",
+          "purpose": "Synchronous database replication across AZs"
+        },
+        {
+          "name": "Amazon ElastiCache (multi-AZ)",
+          "purpose": "Redis cluster with automatic failover"
+        }
+      ]
+    },
+    {
+      "platform": "azure",
+      "services": [
+        {
+          "name": "Availability Zones",
+          "purpose": "Deploy VMs and services across physically separate zones"
+        },
+        {
+          "name": "Azure Load Balancer (Standard)",
+          "purpose": "Zone-redundant load balancing"
+        },
+        {
+          "name": "Azure SQL (Zone Redundant)",
+          "purpose": "Database with synchronous zone replication"
+        },
+        {
+          "name": "Azure Cache for Redis (Zone Redundant)",
+          "purpose": "Cache with cross-zone replication"
+        }
+      ]
+    },
+    {
+      "platform": "gcp",
+      "services": [
+        {
+          "name": "Regional Managed Instance Groups",
+          "purpose": "Distribute VMs across zones in a region"
+        },
+        {
+          "name": "Cloud Load Balancing",
+          "purpose": "Global and regional load balancing"
+        },
+        {
+          "name": "Cloud SQL (High Availability)",
+          "purpose": "Regional database with automatic failover"
+        },
+        {
+          "name": "Memorystore (Standard Tier)",
+          "purpose": "Redis with cross-zone replication"
+        }
+      ]
+    }
+  ],
+  "questionsToAsk": [
+    "What is the target availability SLA and what does downtime cost the organisation?",
+    "How many availability zones should be used (2 or 3)?",
+    "What is the acceptable recovery time if an AZ fails?",
+    "Are there data consistency requirements during failover?",
+    "How will failover be tested and how frequently?",
+    "Is the application designed to be stateless or does it require session affinity?"
+  ],
+  "commonMistakes": [
+    "Deploying multi-AZ but not testing failover, discovering issues only during real incidents",
+    "Not provisioning sufficient capacity in remaining AZs to handle full load during failure",
+    "Using single-AZ components (e.g., single NAT gateway) that become single points of failure",
+    "Not accounting for cross-AZ data transfer costs in budget planning",
+    "Assuming multi-AZ protects against regional failures — it does not"
+  ],
+  "workloadTypes": [
+    "production",
+    "high-availability",
+    "citizen-facing",
+    "mission-critical"
+  ],
+  "securityClassifications": [
+    "official",
+    "official-sensitive",
+    "secret"
+  ]
+}

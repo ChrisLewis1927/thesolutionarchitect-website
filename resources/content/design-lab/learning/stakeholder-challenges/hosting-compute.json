@@ -1,0 +1,38 @@
+[
+  {
+    "stakeholder": "security",
+    "typicalChallenges": [
+      "How will you patch and update the compute platform without service disruption?",
+      "What is the attack surface of the chosen compute model and how is it minimised?",
+      "How are container images or VM images scanned for vulnerabilities before deployment?",
+      "What isolation exists between workloads if sharing compute infrastructure?"
+    ]
+  },
+  {
+    "stakeholder": "operations",
+    "typicalChallenges": [
+      "What skills does the team need to operate this compute platform and do they currently have them?",
+      "How will you monitor resource utilisation and respond to capacity issues?",
+      "What is the operational overhead of the chosen platform compared to managed alternatives?",
+      "How will you handle compute platform upgrades and end-of-life transitions?"
+    ]
+  },
+  {
+    "stakeholder": "delivery",
+    "typicalChallenges": [
+      "How long will it take the team to become productive on this compute platform?",
+      "Does the chosen platform support the deployment frequency the team needs?",
+      "Are there sufficient development and testing environments available?",
+      "What is the lead time for provisioning new compute resources?"
+    ]
+  },
+  {
+    "stakeholder": "finance",
+    "typicalChallenges": [
+      "What is the monthly running cost and how does it scale with usage?",
+      "Have you considered reserved capacity or savings plans for the baseline workload?",
+      "How does the cost compare to the current on-premises hosting arrangement?",
+      "What happens to costs if usage grows 2x or 5x beyond current projections?"
+    ]
+  }
+]
