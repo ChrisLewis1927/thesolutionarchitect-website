@@ -208,18 +208,7 @@ function initApp(): void {
     // Thumbnail
     const thumb = document.createElement('div');
     thumb.className = 'template-card__thumb';
-    if (template.thumbnailUrl) {
-      const img = document.createElement('img');
-      img.src = template.thumbnailUrl;
-      img.alt = '';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
-      img.style.borderRadius = '4px';
-      thumb.appendChild(img);
-    } else {
-      thumb.textContent = '📐';
-    }
+    thumb.textContent = '📐';
     card.appendChild(thumb);
 
     // Info section

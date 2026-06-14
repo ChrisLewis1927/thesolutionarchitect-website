@@ -218,6 +218,47 @@
           "defaultHeight": 48
         }
       ]
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructure",
+      "services": [
+        {
+          "id": "region",
+          "name": "Region",
+          "iconPath": "images/diagram-icons/aws/infrastructure/region.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "az",
+          "name": "Availability Zone",
+          "iconPath": "images/diagram-icons/aws/infrastructure/az.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "vpc",
+          "name": "VPC",
+          "iconPath": "images/diagram-icons/aws/infrastructure/vpc-container.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "public-subnet",
+          "name": "Public Subnet",
+          "iconPath": "images/diagram-icons/aws/infrastructure/public-subnet.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "private-subnet",
+          "name": "Private Subnet",
+          "iconPath": "images/diagram-icons/aws/infrastructure/private-subnet.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
     }
   ]
 }

@@ -218,6 +218,47 @@
           "defaultHeight": 48
         }
       ]
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructure",
+      "services": [
+        {
+          "id": "region",
+          "name": "Region",
+          "iconPath": "images/diagram-icons/gcp/infrastructure/region.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "zone",
+          "name": "Zone",
+          "iconPath": "images/diagram-icons/gcp/infrastructure/zone.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "vpc-network",
+          "name": "VPC Network",
+          "iconPath": "images/diagram-icons/gcp/infrastructure/vpc-network.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "public-subnet",
+          "name": "Public Subnet",
+          "iconPath": "images/diagram-icons/gcp/infrastructure/public-subnet.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "private-subnet",
+          "name": "Private Subnet",
+          "iconPath": "images/diagram-icons/gcp/infrastructure/private-subnet.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
     }
   ]
 }

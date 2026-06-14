@@ -218,6 +218,54 @@
           "defaultHeight": 48
         }
       ]
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructure",
+      "services": [
+        {
+          "id": "region",
+          "name": "Region",
+          "iconPath": "images/diagram-icons/azure/infrastructure/region.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "az",
+          "name": "Availability Zone",
+          "iconPath": "images/diagram-icons/azure/infrastructure/az.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "vnet",
+          "name": "Virtual Network",
+          "iconPath": "images/diagram-icons/azure/infrastructure/vnet.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "public-subnet",
+          "name": "Public Subnet",
+          "iconPath": "images/diagram-icons/azure/infrastructure/public-subnet.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "private-subnet",
+          "name": "Private Subnet",
+          "iconPath": "images/diagram-icons/azure/infrastructure/private-subnet.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        },
+        {
+          "id": "resource-group",
+          "name": "Resource Group",
+          "iconPath": "images/diagram-icons/azure/infrastructure/resource-group.svg",
+          "defaultWidth": 48,
+          "defaultHeight": 48
+        }
+      ]
     }
   ]
 }

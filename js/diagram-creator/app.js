@@ -112,18 +112,7 @@ function initApp() {
     card.setAttribute("aria-label", `${template.name}: ${template.description}`);
     const thumb = document.createElement("div");
     thumb.className = "template-card__thumb";
-    if (template.thumbnailUrl) {
-      const img = document.createElement("img");
-      img.src = template.thumbnailUrl;
-      img.alt = "";
-      img.style.width = "100%";
-      img.style.height = "100%";
-      img.style.objectFit = "cover";
-      img.style.borderRadius = "4px";
-      thumb.appendChild(img);
-    } else {
-      thumb.textContent = "\u{1F4D0}";
-    }
+    thumb.textContent = "\u{1F4D0}";
     card.appendChild(thumb);
     const info = document.createElement("div");
     info.className = "template-card__info";
