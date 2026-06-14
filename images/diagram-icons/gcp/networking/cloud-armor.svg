@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect x="4" y="4" width="40" height="40" rx="4" fill="#34A853"/>
+  <path d="M24,8 L38,16 L38,28 Q38,38 24,42 Q10,38 10,28 L10,16 Z" fill="none" stroke="white" stroke-width="2.5"/>
+  <path d="M24,14 L32,18 L32,26 Q32,34 24,36 Q16,34 16,26 L16,18 Z" fill="white" opacity="0.3"/>
+  <text x="24" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="white">CA</text>
+</svg>

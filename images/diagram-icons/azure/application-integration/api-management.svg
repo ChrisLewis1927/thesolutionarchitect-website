@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect x="4" y="4" width="40" height="40" rx="4" fill="#0078D4"/>
+  <rect x="18" y="8" width="12" height="32" rx="3" fill="#50E6FF"/>
+  <text x="24" y="26" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#0078D4">API</text>
+  <path d="M8,18 L18,24 L8,30" fill="none" stroke="#50E6FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M40,18 L30,24 L40,30" fill="none" stroke="#50E6FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

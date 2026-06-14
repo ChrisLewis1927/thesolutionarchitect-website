@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect x="4" y="4" width="40" height="40" rx="4" fill="#232F3E"/>
+  <ellipse cx="24" cy="14" rx="12" ry="5" fill="#FF9900"/>
+  <rect x="12" y="14" width="24" height="20" fill="#FF9900"/>
+  <ellipse cx="24" cy="34" rx="12" ry="5" fill="#FF9900"/>
+  <ellipse cx="24" cy="14" rx="12" ry="5" fill="#232F3E" opacity="0.2"/>
+  <text x="24" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#232F3E">S3</text>
+</svg>

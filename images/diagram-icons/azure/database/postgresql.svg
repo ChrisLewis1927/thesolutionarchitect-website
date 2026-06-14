@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect x="4" y="4" width="40" height="40" rx="4" fill="#0078D4"/>
+  <ellipse cx="24" cy="14" rx="11" ry="4" fill="#50E6FF"/>
+  <path d="M13,14 L13,34 Q13,38 24,38 Q35,38 35,34 L35,14" fill="none" stroke="#50E6FF" stroke-width="2.5"/>
+  <ellipse cx="24" cy="34" rx="11" ry="4" fill="none" stroke="#50E6FF" stroke-width="2.5"/>
+  <ellipse cx="24" cy="24" rx="11" ry="4" fill="none" stroke="#50E6FF" stroke-width="1"/>
+  <text x="24" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#50E6FF">PG</text>
+</svg>
