@@ -23,6 +23,8 @@ It's not a prescriptive standard like ISO 27001. It's a checklist of principles,
 
 #### The thirteen points
 
+
+
 ##### 1. Define user needs
 
 Start with research. Understand who you're building for and what they actually need to do, rather than building what someone in a meeting room assumed they need. This is the principle that links the TCoP to the wider Government Design Principles and the Service Standard.
