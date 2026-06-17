@@ -2,20 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-DF1MYHFXP4');
-  </script>
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Transition Architecture / Migration Plan — A plan describing the intermediate architectural states between the current state and target state, showing how the organisation will migrate from one to the other in manageable, low-risk increments.">
-  <meta property="og:title" content="Transition Architecture / Migration Plan — The Solution Architect">
+  <meta name="description" content="Transition Architecture / Migration Plan â€” A plan describing the intermediate architectural states between the current state and target state, showing how the organisation will migrate from one to the other in manageable, low-risk increments.">
+  <meta property="og:title" content="Transition Architecture / Migration Plan â€” The Solution Architect">
   <meta property="og:description" content="A plan describing the intermediate architectural states between the current state and target state, showing how the organisation will migrate from one to the other in manageable, low-risk increments.">
   <link rel="icon" type="image/png" href="../images/favicon.png">
-  <title>Transition Architecture / Migration Plan — The Solution Architect</title>
+  <title>Transition Architecture / Migration Plan â€” The Solution Architect</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -67,7 +61,7 @@
 
         <section class="lesson-section">
           <h2>How to Build</h2>
-          <p>Define the current state architecture clearly — you cannot plan a journey without knowing the starting point.</p>
+          <p>Define the current state architecture clearly â€” you cannot plan a journey without knowing the starting point.</p>
           <p>Identify the major changes needed to reach the target state. Group these into logical increments that can be delivered independently and each leave the system in a stable, operational state.</p>
           <p>For each transition state, document: what changes, what stays the same, what temporary scaffolding is needed (e.g., data synchronisation, API adapters), and what can be decommissioned.</p>
           <p>Sequence the transitions considering: dependencies, risk, value delivery, and resource availability. Earlier transitions should reduce risk and deliver learning.</p>
@@ -77,11 +71,11 @@
         <section class="lesson-section">
           <h2>Tips</h2>
           <ul>
-            <li>Each transition state must be stable and operational — never plan a state where the system is broken.</li>
-            <li>Use the Strangler Fig pattern for legacy replacement — gradually route traffic to the new system.</li>
-            <li>Plan for rollback at each transition — what happens if the new state has problems?</li>
-            <li>Include data migration strategy for each transition — this is often the hardest part.</li>
-            <li>Communicate transition states to operations teams early — they need to support each state.</li>
+            <li>Each transition state must be stable and operational â€” never plan a state where the system is broken.</li>
+            <li>Use the Strangler Fig pattern for legacy replacement â€” gradually route traffic to the new system.</li>
+            <li>Plan for rollback at each transition â€” what happens if the new state has problems?</li>
+            <li>Include data migration strategy for each transition â€” this is often the hardest part.</li>
+            <li>Communicate transition states to operations teams early â€” they need to support each state.</li>
           </ul>
         </section>
 
@@ -89,7 +83,7 @@
           <h2>Common Mistakes</h2>
           <ul>
             <li>Planning transitions that are too large, creating big-bang risk.</li>
-            <li>Not planning for coexistence — old and new systems often need to run in parallel.</li>
+            <li>Not planning for coexistence â€” old and new systems often need to run in parallel.</li>
             <li>Ignoring data migration complexity and the need for data synchronisation during transition.</li>
             <li>Not planning rollback strategies for each transition.</li>
             <li>Underestimating the operational overhead of supporting multiple architectural states simultaneously.</li>
@@ -146,6 +140,7 @@
           <p class="footer__nav-title">About</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../about.html">About This Site</a></li>
+            <li><a href="../privacy.html">Privacy &amp; Cookies</a></li>
           </ul>
         </div>
       </div>

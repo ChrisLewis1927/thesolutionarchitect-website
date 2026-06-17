@@ -2,20 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-DF1MYHFXP4');
-  </script>
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Integration Architecture Document — A document describing how multiple systems connect and exchange data, including integration patterns, protocols, data formats, error handling, and the overall integration strategy.">
-  <meta property="og:title" content="Integration Architecture Document — The Solution Architect">
+  <meta name="description" content="Integration Architecture Document â€” A document describing how multiple systems connect and exchange data, including integration patterns, protocols, data formats, error handling, and the overall integration strategy.">
+  <meta property="og:title" content="Integration Architecture Document â€” The Solution Architect">
   <meta property="og:description" content="A document describing how multiple systems connect and exchange data, including integration patterns, protocols, data formats, error handling, and the overall integration strategy.">
   <link rel="icon" type="image/png" href="../images/favicon.png">
-  <title>Integration Architecture Document — The Solution Architect</title>
+  <title>Integration Architecture Document â€” The Solution Architect</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -67,7 +61,7 @@
 
         <section class="lesson-section">
           <h2>How to Build</h2>
-          <p>Start by cataloguing all integration points — every system-to-system connection. For each, document the source, target, data exchanged, direction, frequency, and volume.</p>
+          <p>Start by cataloguing all integration points â€” every system-to-system connection. For each, document the source, target, data exchanged, direction, frequency, and volume.</p>
           <p>Define the integration patterns to be used: synchronous request-response, asynchronous messaging, event-driven, batch file transfer, or API-led connectivity. Justify why each pattern is appropriate for its use case.</p>
           <p>Specify the technical standards: API design standards (REST, GraphQL, SOAP), message formats (JSON, XML, Avro), authentication mechanisms (OAuth2, mTLS, API keys), and error handling approaches.</p>
           <p>Document the integration infrastructure: API gateways, message brokers, ESBs, or integration platforms. Show how they fit into the deployment architecture.</p>
@@ -77,10 +71,10 @@
         <section class="lesson-section">
           <h2>Tips</h2>
           <ul>
-            <li>Prefer asynchronous patterns for resilience — synchronous calls create temporal coupling.</li>
+            <li>Prefer asynchronous patterns for resilience â€” synchronous calls create temporal coupling.</li>
             <li>Use an API gateway for external-facing integrations to centralise security and rate limiting.</li>
             <li>Define clear data contracts (schemas) for each integration and version them.</li>
-            <li>Plan for failure — every integration will fail at some point. Design retry and fallback strategies.</li>
+            <li>Plan for failure â€” every integration will fail at some point. Design retry and fallback strategies.</li>
             <li>Document SLAs for each integration point including availability and response time expectations.</li>
           </ul>
         </section>
@@ -146,6 +140,7 @@
           <p class="footer__nav-title">About</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../about.html">About This Site</a></li>
+            <li><a href="../privacy.html">Privacy &amp; Cookies</a></li>
           </ul>
         </div>
       </div>

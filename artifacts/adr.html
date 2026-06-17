@@ -2,20 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-DF1MYHFXP4');
-  </script>
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Architecture Decision Record (ADR) — A concise document that captures a single architecture decision, its context, the options considered, and the rationale for the chosen approach.">
-  <meta property="og:title" content="Architecture Decision Record (ADR) — The Solution Architect">
+  <meta name="description" content="Architecture Decision Record (ADR) â€” A concise document that captures a single architecture decision, its context, the options considered, and the rationale for the chosen approach.">
+  <meta property="og:title" content="Architecture Decision Record (ADR) â€” The Solution Architect">
   <meta property="og:description" content="A concise document that captures a single architecture decision, its context, the options considered, and the rationale for the chosen approach.">
   <link rel="icon" type="image/png" href="../images/favicon.png">
-  <title>Architecture Decision Record (ADR) — The Solution Architect</title>
+  <title>Architecture Decision Record (ADR) â€” The Solution Architect</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -67,21 +61,21 @@
 
         <section class="lesson-section">
           <h2>How to Build</h2>
-          <p>Start by identifying the decision that needs to be recorded. Write a clear, concise title that summarises the decision in active voice (e.g., 'Use PostgreSQL for transactional data storage'). Document the context — what forces are at play, what constraints exist, and what problem you are solving.</p>
+          <p>Start by identifying the decision that needs to be recorded. Write a clear, concise title that summarises the decision in active voice (e.g., 'Use PostgreSQL for transactional data storage'). Document the context â€” what forces are at play, what constraints exist, and what problem you are solving.</p>
           <p>Next, list the options you considered. For each option, provide a brief description and note its pros and cons. Be honest about trade-offs; an ADR that only lists positives for the chosen option lacks credibility.</p>
           <p>State the decision clearly and explain the rationale. Link back to the forces and constraints you identified in the context. If the decision was influenced by a spike, proof of concept, or vendor demonstration, reference that evidence.</p>
-          <p>Finally, document the consequences — both positive and negative. What will this decision enable? What technical debt might it introduce? What future decisions does it constrain or enable? Record the status (proposed, accepted, deprecated, superseded) and date.</p>
+          <p>Finally, document the consequences â€” both positive and negative. What will this decision enable? What technical debt might it introduce? What future decisions does it constrain or enable? Record the status (proposed, accepted, deprecated, superseded) and date.</p>
         </section>
 
         <section class="lesson-section">
           <h2>Tips</h2>
           <ul>
-            <li>Keep ADRs short — one to two pages maximum. If it is longer, you are probably documenting multiple decisions.</li>
+            <li>Keep ADRs short â€” one to two pages maximum. If it is longer, you are probably documenting multiple decisions.</li>
             <li>Use a sequential numbering scheme (ADR-001, ADR-002) and store them in version control alongside the code.</li>
             <li>Write in past tense for accepted decisions and present tense for proposed ones.</li>
             <li>Link ADRs to each other when decisions are related or when one supersedes another.</li>
             <li>Include the names of people involved in the decision for future reference.</li>
-            <li>Review ADRs periodically — mark outdated ones as superseded with a link to the replacement.</li>
+            <li>Review ADRs periodically â€” mark outdated ones as superseded with a link to the replacement.</li>
           </ul>
         </section>
 
@@ -89,7 +83,7 @@
           <h2>Common Mistakes</h2>
           <ul>
             <li>Writing ADRs after the fact without capturing the original context and alternatives considered.</li>
-            <li>Making ADRs too long or too detailed — they should be decision records, not design documents.</li>
+            <li>Making ADRs too long or too detailed â€” they should be decision records, not design documents.</li>
             <li>Not recording rejected alternatives, which leads to the same options being re-evaluated later.</li>
             <li>Failing to update the status when a decision is superseded or deprecated.</li>
             <li>Using vague language like 'we chose the best option' without explaining why it was best for this context.</li>
@@ -146,6 +140,7 @@
           <p class="footer__nav-title">About</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../about.html">About This Site</a></li>
+            <li><a href="../privacy.html">Privacy &amp; Cookies</a></li>
           </ul>
         </div>
       </div>

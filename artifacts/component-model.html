@@ -2,20 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-DF1MYHFXP4');
-  </script>
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Component Model — A detailed view of the internal components within a system or service, showing their responsibilities, interfaces, dependencies, and how they collaborate to deliver functionality.">
-  <meta property="og:title" content="Component Model — The Solution Architect">
+  <meta name="description" content="Component Model â€” A detailed view of the internal components within a system or service, showing their responsibilities, interfaces, dependencies, and how they collaborate to deliver functionality.">
+  <meta property="og:title" content="Component Model â€” The Solution Architect">
   <meta property="og:description" content="A detailed view of the internal components within a system or service, showing their responsibilities, interfaces, dependencies, and how they collaborate to deliver functionality.">
   <link rel="icon" type="image/png" href="../images/favicon.png">
-  <title>Component Model — The Solution Architect</title>
+  <title>Component Model â€” The Solution Architect</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -68,17 +62,17 @@
         <section class="lesson-section">
           <h2>How to Build</h2>
           <p>Start from the logical architecture and decompose each container or service into its constituent components. Each component should have a single, clear responsibility.</p>
-          <p>Define the interfaces each component exposes — what operations can other components call? What data does it accept and return?</p>
-          <p>Show dependencies between components — which components call which? Are dependencies synchronous or asynchronous? Minimise circular dependencies.</p>
+          <p>Define the interfaces each component exposes â€” what operations can other components call? What data does it accept and return?</p>
+          <p>Show dependencies between components â€” which components call which? Are dependencies synchronous or asynchronous? Minimise circular dependencies.</p>
           <p>Document the technology implementation for each component: framework, language, key libraries. This guides developers on implementation approach.</p>
-          <p>Validate the component model against user stories — can each story be implemented by changing a small number of components? If not, the decomposition may need adjustment.</p>
+          <p>Validate the component model against user stories â€” can each story be implemented by changing a small number of components? If not, the decomposition may need adjustment.</p>
         </section>
 
         <section class="lesson-section">
           <h2>Tips</h2>
           <ul>
             <li>Align components with Domain-Driven Design aggregates for a stable, business-aligned structure.</li>
-            <li>Keep components loosely coupled — changes to one should not ripple across many others.</li>
+            <li>Keep components loosely coupled â€” changes to one should not ripple across many others.</li>
             <li>Use the component model to inform team structure (Conway's Law).</li>
             <li>Show both provided and required interfaces for each component.</li>
             <li>Include data stores owned by each component to clarify data ownership.</li>
@@ -146,6 +140,7 @@
           <p class="footer__nav-title">About</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../about.html">About This Site</a></li>
+            <li><a href="../privacy.html">Privacy &amp; Cookies</a></li>
           </ul>
         </div>
       </div>
