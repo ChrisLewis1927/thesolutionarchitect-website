@@ -5,11 +5,11 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AI Governance and Guardrails in UK Government â€” practical guidance on responsible AI use in public services.">
-  <meta property="og:title" content="AI Governance & Guardrails â€” The Solution Architect">
+  <meta name="description" content="AI Governance and Guardrails in UK Government &mdash; practical guidance on responsible AI use in public services.">
+  <meta property="og:title" content="AI Governance & Guardrails &mdash; The Solution Architect">
   <meta property="og:description" content="Practical guidance on AI guardrails in government. What frameworks exist, why they matter, and how to apply them.">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <title>AI Governance & Guardrails â€” The Solution Architect</title>
+  <title>AI Governance & Guardrails &mdash; The Solution Architect</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -58,18 +58,18 @@
 
       <div class="info-box mb-2xl">
         <p><strong>Article 22, briefly</strong></p>
-        <p>Article 22 of UK GDPR gives individuals the right not to be subject to a decision based <em>solely</em> on automated processing where it produces legal effects or similarly significant ones. The word "solely" is doing real work here. If a human reviews the output meaningfully â€” not as a rubber stamp â€” the restriction doesn't apply.</p>
+        <p>Article 22 of UK GDPR gives individuals the right not to be subject to a decision based <em>solely</em> on automated processing where it produces legal effects or similarly significant ones. The word "solely" is doing real work here. If a human reviews the output meaningfully &mdash; not as a rubber stamp &mdash; the restriction doesn't apply.</p>
         <p>This is part of why "human in the loop" matters legally, not just ethically. But the human review has to be substantive. The ICO has been clear that a reviewer who routinely approves AI recommendations without engaging with the underlying reasoning doesn't satisfy the test. Design the reviewer's interface accordingly.</p>
       </div>
 
-      <p>Public trust is the third factor. The Post Office Horizon scandal, the 2020 A-level results, the Home Office visa streaming tool withdrawn that same year â€” each one has made it harder for the next government AI project to earn the benefit of the doubt. Architects working in this space are designing for an audience that is, with good reason, sceptical.</p>
+      <p>Public trust is the third factor. The Post Office Horizon scandal, the 2020 A-level results, the Home Office visa streaming tool withdrawn that same year &mdash; each one has made it harder for the next government AI project to earn the benefit of the doubt. Architects working in this space are designing for an audience that is, with good reason, sceptical.</p>
 
       <h2>The frameworks that apply</h2>
       <p>Four come up most often.</p>
       <p>The <strong>UK Government AI Framework</strong>, published by CDDO and DSIT, sets out principles for AI use across departments: proportionality, accountability, transparency, fairness, security. Treat these as non-functional requirements that shape the design from the start, not text to copy into the assurance pack at the end.</p>
-      <p>The <strong>Algorithmic Transparency Recording Standard (ATRS)</strong> requires central government departments to publish information about algorithmic tools used in decisions affecting the public. That has practical implications for architecture: the system needs to capture inputs, model version, reasoning, and outcomes in a form that can be published â€” and that means designing the data model for it on day one.</p>
+      <p>The <strong>Algorithmic Transparency Recording Standard (ATRS)</strong> requires central government departments to publish information about algorithmic tools used in decisions affecting the public. That has practical implications for architecture: the system needs to capture inputs, model version, reasoning, and outcomes in a form that can be published &mdash; and that means designing the data model for it on day one.</p>
       <p>The <strong>Data Ethics Framework</strong> gives delivery teams a structured way to surface ethical risks in data and AI work. It is most useful in discovery and design phases, before the architectural decisions are locked in. Use it early or do not bother.</p>
-      <p>The <strong>AI Safety Institute (AISI)</strong>, set up after the Bletchley Declaration in 2023, focuses on frontier model evaluation. Most government services will not use frontier models directly, but the disciplines AISI champions â€” pre-deployment evaluation, red-teaming, ongoing monitoring â€” apply at every scale of deployment.</p>
+      <p>The <strong>AI Safety Institute (AISI)</strong>, set up after the Bletchley Declaration in 2023, focuses on frontier model evaluation. Most government services will not use frontier models directly, but the disciplines AISI champions &mdash; pre-deployment evaluation, red-teaming, ongoing monitoring &mdash; apply at every scale of deployment.</p>
       <p>The diagram below shows where each framework bites hardest across a project's lifecycle.</p>
 
       <figure class="wide" aria-labelledby="fig1-caption">
@@ -251,13 +251,13 @@
       </figure>
 
       <h3>Explainability</h3>
-      <p>Pick models that can show their reasoning where you can. Log inputs and outputs at the AI component boundary. Design the UI to communicate confidence levels, not just decisions â€” a recommendation flagged as low-confidence should be handled differently from one the system is sure about, and the user receiving the decision should be able to see which it was.</p>
+      <p>Pick models that can show their reasoning where you can. Log inputs and outputs at the AI component boundary. Design the UI to communicate confidence levels, not just decisions &mdash; a recommendation flagged as low-confidence should be handled differently from one the system is sure about, and the user receiving the decision should be able to see which it was.</p>
 
       <h3>Bias testing and live monitoring</h3>
       <p>Representative test data is non-negotiable, and that is harder than it sounds for public services where the population skews differently in different regions. Live monitoring of outcomes across protected characteristics matters at least as much: the bias you catch in testing is the bias you happened to think to look for, while live monitoring is how you catch the rest. Budget for both.</p>
 
       <h3>Data governance</h3>
-      <p>AI quality follows data quality. Provenance, consent, retention, classification â€” the boring questions that determine whether your system is legal and whether its outputs are defensible. In government you will also need to think about cross-departmental data sharing agreements, which adds its own layer of complications.</p>
+      <p>AI quality follows data quality. Provenance, consent, retention, classification &mdash; the boring questions that determine whether your system is legal and whether its outputs are defensible. In government you will also need to think about cross-departmental data sharing agreements, which adds its own layer of complications.</p>
 
       <h3>Failing safely</h3>
       <p>What happens when the AI component is down, or returns low-confidence results, or returns nothing? The system needs to degrade gracefully, and "the AI is unavailable, please try again later" is rarely an acceptable failure mode for a public service. Design the manual path properly. It is not a stopgap, it is part of the system.</p>
@@ -266,7 +266,7 @@
       <p>Every AI-influenced decision needs to be reconstructable months or years later. That means logging the data used, the model version, the confidence score, the human decision (where there was one), and the action that followed. Build this in from day one. Retrofitting it is painful and sometimes impossible.</p>
 
       <h2>Where it goes wrong</h2>
-      <p>A few patterns recur across projects that get into trouble. Governance treated as a compliance exercise rather than a design concern, with the assurance work starting only after build â€” by which point the architecture is already wrong. Commercial AI products assumed to be pre-approved because the vendor is well-known: even Microsoft Copilot, AWS Bedrock, and Google's models need departmental assessment for bias, data handling, and fit for purpose. Third-party AI services brought in without understanding what models sit underneath; the supply chain matters, and so do the assumptions baked into someone else's training pipeline. Decisions automated that should not have been, because some calls are too consequential or too context-dependent to delegate to a model regardless of how accurate the model is. And no plan for model drift, which is what gets you eighteen months in when the world has moved on and the training data has not.</p>
+      <p>A few patterns recur across projects that get into trouble. Governance treated as a compliance exercise rather than a design concern, with the assurance work starting only after build &mdash; by which point the architecture is already wrong. Commercial AI products assumed to be pre-approved because the vendor is well-known: even Microsoft Copilot, AWS Bedrock, and Google's models need departmental assessment for bias, data handling, and fit for purpose. Third-party AI services brought in without understanding what models sit underneath; the supply chain matters, and so do the assumptions baked into someone else's training pipeline. Decisions automated that should not have been, because some calls are too consequential or too context-dependent to delegate to a model regardless of how accurate the model is. And no plan for model drift, which is what gets you eighteen months in when the world has moved on and the training data has not.</p>
 
       <h2>The architect's job</h2>
       <p>You do not need to become an AI ethics specialist. You need to make sure the ethical considerations are baked into the architecture: that the system is transparent, that humans can intervene, that bias can be detected, that failure is survivable, and that decisions can be explained to the person they affected. The same rigour you apply to security and accessibility, applied to a problem that is newer, less well-understood, and watched more closely.</p>
