@@ -1,0 +1,4 @@
+# Maintenance mode — all traffic redirected to maintenance page
+# Remove this file (or its contents) to restore normal site operation
+/maintenance.html  /maintenance.html  200
+/*                 /maintenance.html  200
