@@ -1,3 +1,0 @@
-# Maintenance mode - redirect everything except the maintenance page itself
-/maintenance.html   /maintenance.html   200!
-/*                  /maintenance.html   302!
