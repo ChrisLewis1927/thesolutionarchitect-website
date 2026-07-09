@@ -42,7 +42,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">What a Solution Architect actually does</h1>
-        <p class="lesson-hero__description">Most people learn the role by doing it, without a clear picture of what it actually demands. This guide gives you the honest, practical picture.</p>
+        <p class="lesson-hero__description">Most people learn the role by doing it, without a clear picture of what it actually demands. This guide gives you the honest, practical version.</p>
       </div>
     </section>
 
@@ -60,60 +60,111 @@
       <!-- Section 1: The real role -->
       <h2>The real role of a Solution Architect</h2>
 
-      <img src="images/1.1 - The Real Role of a Solution Architect.webp" alt="The real role of a Solution Architect in UK government" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/1.1 - The Real Role of a Solution Architect.webp" data-title="The Real Role of a Solution Architect" tabindex="0" role="button" aria-label="Click to enlarge: The real role of a Solution Architect">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">What the role actually involves: decisions, translation, and making things work within constraints.</p>
+      <figure style="margin: 0 0 1.5rem 0;">
+        <img src="images/sa-role-bridge.png" alt="The real role of a Solution Architect: bridging organisation needs and technology" style="width: 100%; border-radius: 12px;">
+        <figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">What the role actually involves: making decisions, enabling them, and keeping them well informed.</figcaption>
+      </figure>
 
-      <p>The common thread across everything you do is decisions. You're making them, enabling them, or ensuring they're well-informed. On Monday you might be in a workshop with policy colleagues unpicking a regulatory requirement. By Thursday you're reviewing a vendor proposal and identifying the risks they've conveniently left out. The role is context-dependent in a way that few other technology roles are. In government specifically, every decision must be justifiable because you're spending public money, working within procurement frameworks, and expected to follow the Technology Code of Practice while delivering something that actually works for users.</p>
+      <p>Strip away the padding from the job description and the role comes down to one thing. You make sure a specific solution, whether that is a system, a service, or a set of integrated components, is fit for purpose, technically sound, deliverable, and aligned with everything around it. You are the bridge between what the organisation needs and what technology can realistically build. That sounds simple. It is not.</p>
 
-      <blockquote>Architecture is fundamentally about decisions &mdash; which ones to make, when to make them, and how to make them defensible.</blockquote>
+      <p>The job shifts with context more than almost any other role in technology. What you do on Monday in a discovery workshop looks nothing like what you do on Thursday in a live service review. A single week might include:</p>
+
+      <ul>
+        <li>Running a session with policy colleagues to understand a new regulatory requirement</li>
+        <li>Reviewing a proposed API design and pushing back on complexity the team does not need</li>
+        <li>Writing an Architecture Decision Record explaining why you chose a managed service over a custom build</li>
+        <li>Presenting a solution options paper to a programme board, turning technical trade offs into business language</li>
+        <li>Reading a vendor proposal and spotting the risks they quietly left out</li>
+        <li>Sitting in a stand up to unblock a technical dependency</li>
+        <li>Updating the solution architecture document after a change in scope</li>
+      </ul>
+
+      <p>The thread running through all of it is decisions. You are making them, enabling them, or making sure they are well informed. The significant ones, the choices that are expensive or painful to undo later, are yours to own. In UK government that work carries extra weight. You are spending public money, so every choice has to be justifiable. You sit inside procurement frameworks that limit your options, between policy teams who may not follow the technology and delivery teams who may not follow the policy. And you are expected to meet the Technology Code of Practice and the Service Standard while still shipping something that genuinely works for users.</p>
+
+      <blockquote>"Architecture is about decisions. Which ones to make, when to make them, and how to make them defensible."</blockquote>
 
       <!-- Section 2: How the role differs -->
       <h2>How the role differs from other architecture disciplines</h2>
 
-      <img src="images/1.2 - How the SA Role Differs.webp" alt="How the Solution Architect role differs from Enterprise, Technical, Business and Data Architects" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/1.2 - How the SA Role Differs.webp" data-title="How the SA Role Differs" tabindex="0" role="button" aria-label="Click to enlarge: How the SA role differs">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Where the Solution Architect sits relative to other architecture roles.</p>
+      <figure style="margin: 0 0 1.5rem 0;">
+        <img src="images/sa-role-differs.png" alt="How the Solution Architect role differs from other architecture disciplines" style="width: 100%; border-radius: 12px;">
+        <figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">Where the Solution Architect sits relative to the other architecture roles.</figcaption>
+      </figure>
 
-      <p>The Enterprise Architect defines that the department should adopt cloud-first; you figure out what that means for a specific service. The Technical Architect decides which message broker to use; you decided an event-driven pattern was needed in the first place. The confusion between these roles is real, especially in government where teams are small and one person often covers multiple. The key insight is that the Solution Architect is the integrator. You don't need to be the deepest expert in any single area, but you need to be competent across all of them and excellent at synthesising them into something coherent that actually gets delivered.</p>
+      <p>Confusion between architecture roles is common, and in government it is worse, because teams are small and one person often wears several of these labels at once. It pays to be precise about who does what.</p>
 
-      <blockquote>You're the person who sees how the enterprise strategy, the business process, the data model, the security requirements, and the technical implementation all connect &mdash; or fail to connect.</blockquote>
+      <p>The enterprise architect works at the level of the whole organisation: strategy, standards, principles, roadmaps. They might decide the department should be cloud first. You work out what that means for one specific service. The technical architect goes deep on implementation. Where you decide an event driven integration pattern is the right approach, they pick the message broker and tune it. In many government teams that line is blurred, and that is fine, as long as someone owns both the strategic and the tactical view.</p>
+
+      <p>The business architect maps capabilities, processes, and how the organisation is structured. You need to understand their work, because you cannot design a sound solution without the business context, but they own the business model and you own the solution design. The data architect owns data models, flows, governance, and quality. In government, where data sharing across departments is both vital and politically charged, their decisions shape what you can and cannot do.</p>
+
+      <p>Notice the pattern. You are not the deepest specialist in any one of these areas, and you do not need to be. You are the integrator. Your value is seeing how the strategy, the process, the data, the security, and the implementation fit together, and naming the places where they do not.</p>
 
       <!-- Section 3: The four hats -->
-      <h2>The four hats: translator, decision-maker, risk-manager, quality guardian</h2>
+      <h2>The four hats you wear</h2>
 
-      <img src="images/1.3 - The SA as Translator.webp" alt="The four hats a Solution Architect wears: translator, decision-maker, risk-manager, quality guardian" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/1.3 - The SA as Translator.webp" data-title="The SA as Translator" tabindex="0" role="button" aria-label="Click to enlarge: The four hats of a Solution Architect">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">A mental model for how you split your time and attention across the role's four core responsibilities.</p>
+      <figure style="margin: 0 0 1.5rem 0;">
+        <img src="images/sa-four-hats.png" alt="The four hats a Solution Architect wears: translator, decision-maker, risk-manager, quality guardian" style="width: 100%; border-radius: 12px;">
+        <figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">The four core responsibilities you balance, often several at once.</figcaption>
+      </figure>
 
-      <p>Most architects lean naturally towards one or two of these hats and neglect the others. The technically-minded architect makes good decisions but forgets to translate them for the programme board. The communicative architect translates brilliantly but avoids the hard risk conversations. The quality-focused architect holds high standards but creates bottlenecks by trying to review everything. Knowing which hat you're wearing at any given moment &mdash; and which one you're neglecting &mdash; is the difference between being effective and being busy.</p>
+      <p>On any given day you are wearing at least one of four hats, often more than one at the same time. Most architects lean naturally towards one or two of them and quietly neglect the rest.</p>
 
-      <blockquote>Your job isn't to eliminate risk. It's to identify it, communicate it honestly, and ensure the right people accept it consciously.</blockquote>
+      <p>As translator you move between worlds. Policy talks in outcomes and legislation, delivery in sprints and story points, security in threats and controls, commercial in contracts and service levels, leadership in risk and value. Your job is to get these groups understanding each other well enough to decide together, which means finding the right level of abstraction for each one rather than dumbing anything down.</p>
+
+      <p>As decision maker you choose between options, accept trade offs, and set constraints. Good architects make those decisions explicit and write them down. Poor architects make them by accident, forget them, and later wonder how the system ended up the way it did.</p>
+
+      <p>As risk manager you deal with the fact that every decision carries risk. New technology brings adoption risk, old technology brings obsolescence risk, building brings maintenance risk, buying brings lock in. You will not eliminate any of it, so the work is to name it, size it where you can, and make sure the right people accept it with their eyes open.</p>
+
+      <p>As quality guardian you hold the line on what good enough means. Not as a gatekeeper who blocks everything, which only breeds resentment, but as the person who pushes back when a team wants to cut corners on performance, security and resilience, or when a vendor claims their product does everything, or when delivery pressure turns documentation into a someday job. It takes courage and tact in roughly equal measure.</p>
 
       <!-- Section 4: What good looks like -->
       <h2>What good architecture looks like in government</h2>
 
-      <img src="images/1.4 - What good looks like.webp" alt="The six characteristics of good architecture in UK government" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/1.4 - What good looks like.webp" data-title="What Good Looks Like" tabindex="0" role="button" aria-label="Click to enlarge: What good architecture looks like">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The six qualities that define good architecture in a public service context.</p>
+      <p>Good architecture in government is not the same animal as good architecture in a startup or a bank. A startup can move fast and break things. You cannot, because the things break on citizens. You are handling people's data and building services they rely on to heat their homes, claim what they are owed, or prove who they are.</p>
 
-      <p>Good architecture in government is not the same as good architecture in a startup. A startup can afford to move fast and break things. You can't &mdash; you're handling citizens' data, spending taxpayers' money, and building services that people depend on for things like heating their homes or claiming benefits. The most common failure mode is over-engineering: building a microservices architecture for a service that has 200 users and processes 50 transactions a day. Proportionality is the quality that separates experienced government architects from those who've only worked in the private sector.</p>
+      <p>So the first quality is that it serves users. The Service Standard exists for a reason. However elegant the technical design, if it does not enable a service that meets a real user need, simply and reliably, it has failed.</p>
 
-      <blockquote>Good government architecture is proportionate. It matches the complexity of the solution to the complexity of the problem.</blockquote>
+      <p>The second, and the one that most separates experienced government architects from newcomers, is proportionality. Government services run from a single form that collects some data to platforms spanning several departments and moving millions of transactions. Good architecture matches the weight of the solution to the weight of the problem. Building a microservices estate for a service with two hundred users and fifty transactions a day is as much a failure as under building the critical one.</p>
+
+      <p>The rest follows from those two. Good government architecture is honest about its trade offs and makes sure the right people have accepted them. It works within real constraints rather than wishing them away, and government has plenty: procurement rules, security classifications, accessibility duties, Welsh language obligations, dependencies on other departments, ministerial priorities. It can be operated and evolved by whoever inherits it, because in government people move, contracts end, and the team in two years will not be the team today. And it fits the wider estate, reusing the cross government building blocks like GOV.UK Notify, GOV.UK Pay and GOV.UK One Login rather than rebuilding them badly.</p>
+
+      <blockquote>"Good government architecture is proportionate. It matches the weight of the solution to the weight of the problem."</blockquote>
 
       <!-- Section 5: TCoP and Service Standard -->
       <h2>The Technology Code of Practice and Service Standard</h2>
 
-      <img src="images/1.5 - TCoP.webp" alt="How the Technology Code of Practice and Service Standard shape architecture decisions" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/1.5 - TCoP.webp" data-title="Technology Code of Practice" tabindex="0" role="button" aria-label="Click to enlarge: Technology Code of Practice">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The two documents that fundamentally shape how you work as an architect in UK government.</p>
+      <p>Two documents shape how you work more than any others. The Technology Code of Practice sets twelve principles for government technology: start with user needs, make things accessible, default to open, use cloud, build in security, design for integration, treat data as a shared asset, reuse before you build. The Service Standard sets fourteen points that any public facing service has to meet at each assessment.</p>
 
-      <p>These aren't abstract policy documents you read once and forget. They're the lens through which your work will be judged at service assessments. When you choose to build custom rather than reuse an existing government component, you need to explain why. When you propose on-premises hosting, you need to justify it against Cloud First. The practical implication is simple: for every significant architecture decision, you should be able to articulate how it aligns with the TCoP. If you can't, either the decision is wrong or you haven't thought it through properly.</p>
+      <p>Treat neither as policy you read once and file away. They are the lens your work gets judged through at assessment. Choose to build custom instead of reusing a government component and you will need to explain why. Propose hosting it in your own data centre and you will need to justify that against Cloud First. The practical test is simple. For every significant decision you make, you should be able to say how it lines up with the Code of Practice. If you cannot, either the decision is wrong or you have not finished thinking it through.</p>
 
       <!-- Section 6: Misconceptions -->
       <h2>Common misconceptions about the role</h2>
 
-      <img src="images/1.6 - Misconceptions.webp" alt="Common misconceptions about what Solution Architects do" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/1.6 - Misconceptions.webp" data-title="Common Misconceptions" tabindex="0" role="button" aria-label="Click to enlarge: Common misconceptions about the role">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The myths that trip up new architects and the reality behind each one.</p>
+      <h3>"The architect is just a senior developer who draws diagrams."</h3>
+      <p>Technical depth helps, but the role lives in decision making, communication, and synthesis. A brilliant coder who cannot explain a choice to a stakeholder from outside the technical team will struggle in the chair.</p>
 
-      <p>The most damaging misconception is that architecture is a phase that ends when development starts. In reality, architecture is a continuous activity. The design changes as requirements evolve, as user research reveals new needs, as integration testing exposes assumptions that were wrong. An architect who hands over a document and walks away has done half the job. The other half is staying involved, adapting the design, and ensuring the thing that gets built actually resembles the thing that was designed &mdash; or is better, because you learned something along the way.</p>
+      <h3>"The architect designs the solution and hands it over."</h3>
+      <p>Architecture has no end date. The design keeps moving as requirements evolve and as reality intrudes on the plan, and you move with it.</p>
 
-      <blockquote>Architecture isn't a phase. It's a continuous activity that runs from discovery through to live operation.</blockquote>
+      <h3>"The architect has the final say on everything technical."</h3>
+      <p>You own the significant, hard to reverse decisions. The day to day technical calls belong to the team. Try to control all of it and you become the bottleneck everyone routes around.</p>
+
+      <h3>"Architecture is mostly about choosing technologies."</h3>
+      <p>Technology selection is a small slice of it. The larger part is understanding the problem, setting the approach, and managing the trade offs so the whole thing holds together.</p>
+
+      <h3>"You need to know everything."</h3>
+      <p>You do not. You need to know enough to ask the right questions, recognise a good answer, and tell when it is time to bring in a specialist. Some of the most credible architects are the ones comfortable saying they want the security lead in the room before they commit.</p>
+
+      <!-- Section 7: What separates competent from excellent -->
+      <h2>What separates competent from excellent</h2>
+
+      <p>A competent architect designs a solution that works. An excellent one does a few things beyond that.</p>
+
+      <p>They anticipate, asking what happens when this scales before the scaling problem arrives, and what happens when this vendor folds before the contract is signed. They simplify, because anyone can design something complicated and it takes real skill to design something simple that still meets every requirement. They communicate, explaining the same architecture to a minister in two minutes and a developer in two hours, and writing documents people actually read. And they build trust slowly, by being honest about what they know and do not know, admitting when they are wrong, and pushing back firmly but well when they watch a bad decision forming.</p>
+
+      <p>Underneath all of it sits one habit. Excellent architects care about outcomes rather than outputs. They do not count the documents they produced or the diagrams they drew. They look at whether the service works for the people using it, whether the team can keep it running, and whether the public got value for the money spent.</p>
+
+      <blockquote>"Success is whether the service works, whether the team can run it, and whether the public got value for money. The documents and diagrams are only the means."</blockquote>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
