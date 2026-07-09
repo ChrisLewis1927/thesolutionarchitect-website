@@ -1,0 +1,26 @@
+<svg viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t41 d41">
+<title id="t41">The layers of stakeholders around a government design</title>
+<desc id="d41">Concentric rings around a central teal box, your design. From the inside out: the obvious stakeholders such as sponsor, delivery, policy and users; governance, including assessors, the SIRO and the DPO; operational teams who run the service; adjacent teams who own integrations and data; and the outermost political ring of private office, press and scrutiny.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .ring{fill:none;stroke:#B4B2A9;stroke-width:1}
+</style>
+<rect class="ring" x="30" y="20" width="620" height="480" rx="16"/>
+<text class="t-title ink-ctx-1" x="340" y="44" text-anchor="middle">Political: private office, press, scrutiny</text>
+<rect class="ring" x="80" y="64" width="520" height="392" rx="14"/>
+<text class="t-title ink-ctx-1" x="340" y="88" text-anchor="middle">Adjacent: integrations, data owners, other departments</text>
+<rect class="ring" x="130" y="108" width="420" height="304" rx="12"/>
+<text class="t-title ink-ctx-1" x="340" y="132" text-anchor="middle">Operational: run the service, service desk, incidents</text>
+<rect class="ring" x="180" y="152" width="320" height="216" rx="10"/>
+<text class="t-title ink-ctx-1" x="340" y="176" text-anchor="middle">Governance: assessors, SIRO, DPO</text>
+<rect class="ring" x="230" y="196" width="220" height="128" rx="9"/>
+<text class="t-title ink-ctx-1" x="340" y="220" text-anchor="middle">Obvious: sponsor, delivery, policy, users</text>
+<rect class="box-sa" x="270" y="236" width="140" height="52" rx="8"/>
+<text class="t-title ink-sa-1" x="340" y="267" text-anchor="middle">Your design</text>
+</svg>

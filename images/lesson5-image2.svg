@@ -1,0 +1,30 @@
+<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t52 d52">
+<title id="t52">The deadline spike in load that many government services face</title>
+<desc id="d52">A chart of load over time. Load sits low and almost flat for most of the period, near the average line, then climbs steeply to a high peak as the deadline approaches. The peak is marked in teal as the level you must design for.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .axis{stroke:#B4B2A9;stroke-width:1;fill:none}
+  .avg{stroke:#888780;stroke-width:1;stroke-dasharray:5 4;fill:none}
+  .area{fill:#E1F5EE;stroke:none}
+  .curve{fill:none;stroke:#0F6E56;stroke-width:2}
+  .dl{stroke:#0F6E56;stroke-width:1;stroke-dasharray:4 3;fill:none}
+  .dot{fill:#0F6E56}
+</style>
+<path class="area" d="M70,260 L70,224 L160,222 L250,219 L340,213 L430,203 L500,188 L550,150 L585,98 L610,64 L610,260 Z"/>
+<polyline class="curve" points="70,224 160,222 250,219 340,213 430,203 500,188 550,150 585,98 610,64"/>
+<line class="axis" x1="70" y1="40" x2="70" y2="260"/>
+<line class="axis" x1="70" y1="260" x2="645" y2="260"/>
+<line class="avg" x1="70" y1="220" x2="610" y2="220"/>
+<text class="t-cap" x="78" y="216" text-anchor="start">average load</text>
+<line class="dl" x1="620" y1="48" x2="620" y2="260"/>
+<text class="t-cap" x="620" y="278" text-anchor="middle">deadline</text>
+<circle class="dot" cx="610" cy="64" r="4"/>
+<text class="t-sub ink-sa-2" x="598" y="52" text-anchor="end">design for this peak</text>
+<text class="t-cap" transform="rotate(-90 36 150)" x="36" y="150" text-anchor="middle">load</text>
+<text class="t-cap" x="200" y="278" text-anchor="middle">time</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t54 d54">
+<title id="t54">How non functional requirements map to Service Standard assessment points</title>
+<desc id="d54">Four teal boxes on the left, your non functional requirements, connect across to four grey boxes on the right, the Service Standard points. Accessibility maps to point 5, everyone can use it. Security and privacy maps to point 9. Technology choices map to point 11. Reliability maps to point 14, operate a reliable service.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .box-ctx{fill:#F1EFE8;stroke:#B4B2A9;stroke-width:.75}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .conn{stroke:#888780;stroke-width:1.25;fill:none}.head{fill:#888780}
+</style>
+<text class="t-cap" x="165" y="18" text-anchor="middle">Your NFRs</text>
+<text class="t-cap" x="515" y="18" text-anchor="middle">Service Standard</text>
+<line class="conn" x1="300" y1="54" x2="378" y2="54"/><polygon class="head" points="378,48 390,54 378,60"/>
+<line class="conn" x1="300" y1="118" x2="378" y2="118"/><polygon class="head" points="378,112 390,118 378,124"/>
+<line class="conn" x1="300" y1="182" x2="378" y2="182"/><polygon class="head" points="378,176 390,182 378,188"/>
+<line class="conn" x1="300" y1="246" x2="378" y2="246"/><polygon class="head" points="378,240 390,246 378,252"/>
+<rect class="box-sa" x="30" y="30" width="270" height="48" rx="8"/>
+<text class="t-title ink-sa-1" x="165" y="59" text-anchor="middle">Accessibility</text>
+<rect class="box-sa" x="30" y="94" width="270" height="48" rx="8"/>
+<text class="t-title ink-sa-1" x="165" y="123" text-anchor="middle">Security and privacy</text>
+<rect class="box-sa" x="30" y="158" width="270" height="48" rx="8"/>
+<text class="t-title ink-sa-1" x="165" y="187" text-anchor="middle">Technology choices</text>
+<rect class="box-sa" x="30" y="222" width="270" height="48" rx="8"/>
+<text class="t-title ink-sa-1" x="165" y="251" text-anchor="middle">Reliability</text>
+<rect class="box-ctx" x="390" y="30" width="260" height="48" rx="8"/>
+<text class="t-title ink-ctx-1" x="520" y="59" text-anchor="middle">Point 5: everyone can use it</text>
+<rect class="box-ctx" x="390" y="94" width="260" height="48" rx="8"/>
+<text class="t-title ink-ctx-1" x="520" y="123" text-anchor="middle">Point 9: secure and private</text>
+<rect class="box-ctx" x="390" y="158" width="260" height="48" rx="8"/>
+<text class="t-title ink-ctx-1" x="520" y="187" text-anchor="middle">Point 11: right tools</text>
+<rect class="box-ctx" x="390" y="222" width="260" height="48" rx="8"/>
+<text class="t-title ink-ctx-1" x="520" y="251" text-anchor="middle">Point 14: reliable service</text>
+</svg>

@@ -5,11 +5,11 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Understanding the problem before designing the solution - why the most expensive mistake in solution architecture is solving the wrong problem.">
-  <meta property="og:title" content="Understanding the problem before designing the solution - Architect's Library">
-  <meta property="og:description" content="The discipline of understanding the problem properly before you let yourself design anything.">
+  <meta name="description" content="The work that comes before design: spotting premature solutioning, framing the real problem, running a discovery that earns its keep, and knowing when you are ready to design.">
+  <meta property="og:title" content="Understanding the problem before you design the solution &mdash; Architect's Library">
+  <meta property="og:description" content="The work that comes before design: spotting premature solutioning, framing the real problem, running a discovery that earns its keep, and knowing when you are ready to design.">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <title>Understanding the problem before designing the solution - Architect's Library</title>
+  <title>Understanding the problem before you design the solution &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -41,8 +41,8 @@
   <main id="main">
     <section class="lesson-hero">
       <div class="container">
-        <h1 class="lesson-hero__title">Understanding the problem before designing the solution</h1>
-        <p class="lesson-hero__description">The single most expensive mistake in solution architecture is solving the wrong problem. It happens constantly in government. A policy team asks for a database when what they actually need is a reporting capability. A programme board approves a platform rebuild when the real issue is a broken process. A delivery team builds a workflow engine when a spreadsheet would have done. This guide is about the discipline that prevents it, which is understanding the problem properly before you let yourself design anything.</p>
+        <h1 class="lesson-hero__title">Understanding the problem before you design the solution</h1>
+        <p class="lesson-hero__description">The most expensive mistake in solution architecture is solving the wrong problem, and in government it is also the hardest to undo. This guide is about the work that comes before design: framing the real problem, running a discovery that earns its keep, and knowing when you understand enough to start.</p>
       </div>
     </section>
 
@@ -50,94 +50,78 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>How to recognise premature solutioning in yourself and in the people who brief you</li>
-          <li>Practical framing techniques that work on real government briefs</li>
-          <li>What discovery actually involves, and how to engage with it as an architect</li>
-          <li>How policy intent shapes technical decisions in ways that aren't always obvious</li>
-          <li>How to tell the stated problem apart from the real one</li>
-          <li>The questions that tell you when you're ready to start designing</li>
+          <li>A way to catch premature solutioning in yourself and work back to the real problem.</li>
+          <li>Framing techniques that hold up against a vague brief, from the five whys to surfacing assumptions.</li>
+          <li>What discovery is for in government, and the failure modes that quietly wreck it.</li>
+          <li>A short test for whether you're ready to design, or just keen to.</li>
         </ul>
       </div>
 
-      <!-- Section 1: The danger of premature solutioning -->
-      <h2>The danger of premature solutioning</h2>
+      <h2>The most expensive mistake is solving the wrong problem</h2>
+      <p>Premature solutioning is the occupational hazard of anyone technical. Someone starts describing a problem and by the second sentence your brain is already sketching the fix. It feels productive. It is almost always a mistake, because the first framing you hear is rarely the right one. The person in front of you is describing their experience of the problem, their symptoms and their guess at what would fix it, not the root cause or the full set of people affected.</p>
+      <figure>
+        <img src="images/lesson3-image1.png" alt="A grey box, stated request, build us a database, with an arrow to a teal box, understand the problem, what's the actual goal, then an arrow to a grey box, solution, fits the real need. A dashed arc labelled premature solutioning arches straight from the request to the solution, skipping the middle step.">
+        <figcaption>The architect's job is to insist on the middle step the shortcut skips.</figcaption>
+      </figure>
+      <p>You see this in government constantly. A policy team asks for a database to track energy performance certificates. What they actually need is to answer questions like how many commercial buildings in the North East have an EPC rating below C. Accept the database framing and you might build something that works and still misses the point, duplicating data that already exists, or fixing storage when the real trouble is data quality. The discipline is to work backwards from the request to the need. Ask what they are trying to achieve, not what they want you to build. Ask what happens today, not what the system should do. This is not slowing things down. In government, where changing direction halfway through is brutally expensive, getting the problem right is the highest value thing you do.</p>
+      <blockquote>When someone hands you a solution, your first job is to find the problem it was meant to solve.</blockquote>
 
-      <img src="images/3.1 - The Danger of Premature Solutioning.webp" alt="The danger of premature solutioning" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.1 - The Danger of Premature Solutioning.webp" data-title="The Danger of Premature Solutioning" tabindex="0" role="button" aria-label="Click to enlarge: The danger of premature solutioning">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why architects jump to design before they understand the problem, and what disciplined thinking looks like instead.</p>
+      <h2>Work back to the problem</h2>
+      <p>Framing a problem well is a skill, not an instinct, and a few techniques do most of the heavy lifting. The plainest is to write a single sentence naming who is affected, what they experience, what it costs them and what evidence you have. For the energy example: analysts in DESNZ cannot reliably see the energy performance of commercial buildings by region, so they cannot target retrofit incentives well, and the proof is the three month delay in producing last year's regional analysis. Written that way, the conversation moves from build us a database to help us answer questions by region, and the solution space opens right up.</p>
+      <p>When you need to get past the symptoms, the five whys still works, but in government you have to be ready to follow the chain somewhere uncomfortable. The root cause is often a policy decision, an organisational boundary or an old procurement choice rather than anything technical.</p>
+      <figure>
+        <img src="images/lesson3-image2.png" alt="A vertical chain of five boxes joined by why arrows. Top, the symptom: analysts can't answer regional EPC questions. Then: the data sits in three separate systems; three programmes collected it at different times; each policy change made a new store and none was retired. Bottom, in teal, the root cause: no one owns the data over its lifecycle.">
+        <figcaption>Five whys turns a request for a database into a data governance problem.</figcaption>
+      </figure>
+      <p>The last technique is to surface assumptions and test them, because every brief arrives loaded with them. When someone says real time, ask what they mean: it is often within a day, not within a second. When someone says all users, count them, because it might be twelve people rather than twelve thousand. When someone says it must integrate with system X, ask why, because the integration may be a workaround for a problem you could solve another way. Each assumption you surface either confirms a genuine constraint, which is useful, or reveals a false one, which is better still, because it widens what you are allowed to consider.</p>
 
-      <p>Premature solutioning is the occupational hazard of technically capable people. You hear a problem and your brain immediately starts designing. It feels productive. It feels like expertise. But it's often the moment where the most expensive mistakes get locked in. In government, the consequences are amplified: a solution designed for the wrong problem doesn't just waste a sprint, it wastes months of procurement, governance approvals, and delivery effort. The pattern is predictable. Someone describes a symptom. The architect hears a technology. Within minutes there's a whiteboard sketch of a system that solves something nobody actually asked for. The discipline is to notice that impulse, pause, and ask: do I actually understand what's going wrong here, or am I just pattern-matching to something I already know how to build?</p>
+      <h2>Discovery is where you earn the right to design</h2>
+      <p>The Service Manual calls discovery the phase where you learn about the problem you are solving. It is not a formality. It is the foundation everything else stands on. You are not running the user research yourself, but you have to engage with what it finds, because users working around a system with spreadsheets and phone calls are telling you exactly what the real one needs to do. You map who has a stake, which in government is always more people than you first think: policy, operations, legal, data protection, security, commercial, the assessors, sometimes a minister's private office. You work out what already exists, what data is available and what contracts box you in. And you separate the hard constraints, the legal and security and accessibility boundaries that do not move, from the soft ones like budget and timeline that shape your trade offs.</p>
+      <p>Your job in discovery is specific. You are not designing the solution. You are making sure the problem is understood well enough that a good one can be designed. The usual way it goes wrong is impatience, and it shows up in a handful of recognisable traps:</p>
+      <ul>
+        <li>Confirmation bias. You arrive with a solution in mind and quietly collect the evidence that agrees with it. The fix is to ask what would make you abandon your current hypothesis, then go looking for exactly that.</li>
+        <li>Stakeholder capture. The loudest or most senior voice defines the problem and goes unchallenged, often the policy team because they are seen as the customer. Make sure you also hear the operational staff and the people who actually use the service.</li>
+        <li>Scope creep. Discovery shows the problem is bigger than anyone thought, so the team tries to solve all of it at once. Decide what the smallest problem worth solving first is, and let the rest wait.</li>
+        <li>Analysis paralysis. Understanding the problem quietly becomes the whole project. Timebox it, and commit to deciding with what you have.</li>
+        <li>The technology hammer. The team recently adopted something new, and now every problem looks like a reason to use it. Keep technology out of discovery altogether.</li>
+      </ul>
+      <p>Discovery is where you earn the right to design well. Skip it and you pay later, in rework and in a solution that fits a problem nobody actually had.</p>
 
-      <blockquote>The most valuable thing you bring as an architect is the discipline to hold the space for problem understanding when everyone around you wants to start building.</blockquote>
+      <h2>The stated problem and the real one</h2>
+      <p>Every experienced architect collects stories where the stated problem and the real one had almost nothing in common. The stated problem is what you are told: we need a new case management system, the database is slow, we need to move to the cloud. The real problem is what is actually causing the pain, and it is usually quieter and less exciting.</p>
+      <figure>
+        <img src="images/lesson3-image3.png" alt="A grey box at the top, stated problem, the database is too slow, sits above a dashed line marking what you're told from what's causing the pain. Below it a teal box, real problem, the data model doesn't match how the data is used.">
+        <figcaption>The named problem is rarely the one doing the damage.</figcaption>
+      </figure>
+      <p>The case management system is fine; the trouble is three teams running three processes who cannot see each other's work. The database is not slow; the queries are inefficient because the model does not match how the data is used. The cloud move is not a technical need; the data centre contract is expiring. Three habits find the real problem reliably. Follow the pain: ask what frustrates people about how things work today, not what they want the new system to do, and when everyone names the same thing you have your signal. Watch the workarounds: the spreadsheets, email chains and shadow IT show you precisely what the current system should do and does not. And challenge the brief, respectfully, which takes some nerve in a hierarchy. Asking for a week to understand why the current system is failing before anyone designs a new one is not obstruction. It is being careful with public money, and more often than people expect, the existing system turns out to be fixable for a fraction of the cost of replacing it.</p>
+      <blockquote>The best architects save their organisations from expensive solutions to cheap problems.</blockquote>
 
-      <!-- Section 2: Problem framing techniques that actually work -->
-      <h2>Problem framing techniques that actually work</h2>
+      <h2>Policy intent is the hidden driver</h2>
+      <p>In government every digital service exists to implement policy. That is the real difference from the private sector, where a service exists to make or save money. If you do not understand the policy intent behind a service, you cannot design it well, because intent is the why behind the why. A policy team wants to collect energy performance data because the government has committed to net zero by 2050 and needs to know the state of the building stock to target interventions. Hold only the stated need and you might build a tidy data collection form. Understand the intent and you see that the data has to be analytically useful, comparable across regions and years, linkable to ownership and grants and planning records, and reachable by several teams across government. Same request, completely different architecture.</p>
+      <p>You uncover intent by asking what legislation or commitment drives the work, what outcome the policy is chasing, how success will be measured, what decisions the outputs will feed, and how the policy itself might move over the next three to five years. That last one matters most. Policy changes constantly, and a service built tight to today's version that cannot bend to tomorrow's will need replacing sooner than anyone wants. Policy colleagues will not always hand you this in technical terms, because they think in policy, not systems. Translating between the two is the job. When someone says we need to incentivise building owners to improve efficiency, you are the one who hears data collection, eligibility checks, payments, compliance monitoring, reporting and audit.</p>
 
-      <img src="images/3.2 - Problem Framing Techniques That Actually Work.webp" alt="Problem framing techniques that actually work" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.2 - Problem Framing Techniques That Actually Work.webp" data-title="Problem Framing Techniques That Actually Work" tabindex="0" role="button" aria-label="Click to enlarge: Problem framing techniques that actually work">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Repeatable methods for clarifying the real need before any solution is chosen.</p>
+      <h2>Tools for thinking, not documents to file</h2>
+      <p>A handful of structured methods help you analyse a problem without turning discovery into paperwork. Impact mapping keeps you honest about outcomes: start from the goal, name the actors who can help or hinder, the behaviours that need to change, and only then the things you might build. Wardley mapping earns its place in government because it shows the maturity of each component, so you buy or reuse the commodity parts and save custom build for the genuinely novel ones, which is the reverse of the usual mistake. A PESTLE pass, adapted for architecture, makes you check the political, economic, social, technological, legal and environmental forces around the work before you commit to anything.</p>
+      <p>The one worth pausing on is Cynefin, because it tells you what kind of problem you are holding in the first place, and that changes how you should approach it.</p>
+      <figure>
+        <img src="images/lesson3-image4.png" alt="A two by two grid. Top row in teal: complicated, where cause and effect are found with expertise and good practice applies; and complex, where cause and effect are clear only in hindsight, so you probe, sense and respond. Bottom row in grey: obvious, with clear cause and effect and best practice; and chaotic, with no cause and effect yet, where you act first to stabilise.">
+        <figcaption>Most government work sits in the two teal quadrants.</figcaption>
+      </figure>
+      <p>Treat a complex problem as if it were merely complicated, reaching for a standard pattern instead of probing and learning, and you are setting yourself up to fail. Most government work sits in the complicated and complex quadrants, which is exactly why a pattern lifted from somewhere else so often disappoints. The point of all these methods is the same. They are tools for thinking, not exhibits. A problem understood on a whiteboard beats a problem buried in a fifty page report every time.</p>
 
-      <p>Problem framing is the practice of defining what you're actually trying to solve before you let yourself think about how to solve it. It sounds obvious, but in practice it's the step most often skipped. A good problem frame answers three questions: who is affected, what is going wrong for them, and what would better look like? It deliberately excludes technology. The techniques that work in government are simple and repeatable. Problem statements force you to articulate the issue in one or two sentences without mentioning a solution. "How might we" questions open the solution space rather than narrowing it prematurely. Context maps show you who else is involved and what constraints exist. The value isn't in the artefact you produce; it's in the thinking the technique forces you to do. A well-framed problem makes the architecture work easier because you know what success looks like before you start designing.</p>
-
-      <blockquote>A good problem statement shifts the conversation from 'build us this' to 'help us achieve this'. The solution space gets wider, and that's exactly what you want.</blockquote>
-
-      <!-- Section 3: Discovery in government -->
-      <h2>Discovery in government: what it is and why architects must engage</h2>
-
-      <img src="images/3.3 - Discovery in Government.webp" alt="Discovery in government: what it is and why architects must engage" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.3 - Discovery in Government.webp" data-title="Discovery in Government" tabindex="0" role="button" aria-label="Click to enlarge: Discovery in government">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">What discovery looks like in practice, and how the architect contributes without designing too soon.</p>
-
-      <p>Discovery is the phase where you learn about the problem space before committing to a solution. In government, it's a formal part of the service design process, but architects often treat it as something that happens before they get involved. That's a mistake. Discovery is where you learn the things that will constrain and shape your architecture: who the users are, what the existing landscape looks like, what policy obligations apply, what's been tried before and why it failed. The architect's role in discovery isn't to design. It's to listen, ask questions, map the technical landscape, identify constraints, and start forming a mental model of the problem that will eventually inform the architecture. If you skip discovery, or join only at the end, you'll design based on assumptions rather than evidence. And assumptions in government architecture tend to be expensive when they turn out to be wrong.</p>
-
-      <blockquote>Discovery is where you earn the right to design well. Skip it, and you'll pay for it later in rework and regret.</blockquote>
-
-      <!-- Section 4: Understanding policy intent -->
-      <h2>Understanding policy intent: the hidden driver</h2>
-
-      <img src="images/3.4 - Understanding Policy Intent.webp" alt="Understanding policy intent: the hidden driver" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.4 - Understanding Policy Intent.webp" data-title="Understanding Policy Intent" tabindex="0" role="button" aria-label="Click to enlarge: Understanding policy intent">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How policy purpose shapes architecture decisions, and how architects translate between policy and technical worlds.</p>
-
-      <p>Every government service exists to deliver a policy outcome. The policy intent is the reason the service exists, and it shapes architecture decisions in ways that aren't always visible. A policy that requires discretionary decision-making needs different architecture from one that applies fixed rules. A policy that's likely to change annually needs a system that can be reconfigured without rebuilding. A policy with strict eligibility criteria needs robust data validation; one with flexible criteria needs human judgement supported by good information. The architect who understands policy intent can design systems that serve it well and adapt as it evolves. The architect who ignores it builds systems that work technically but fight the policy at every turn. The practical skill is translation: understanding what the policy is trying to achieve, and working out what that means for data, workflow, integration, and user experience. You don't need to become a policy expert, but you do need to ask the right questions and listen carefully to the answers.</p>
-
-      <blockquote>Architecture that fits today's policy but can't survive tomorrow's is architecture you'll be replacing before it's paid for itself.</blockquote>
-
-      <!-- Section 5: The real problem vs the stated problem -->
-      <h2>The real problem vs the stated problem</h2>
-
-      <img src="images/3.5 - The Real Problem.webp" alt="The real problem vs the stated problem" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.5 - The Real Problem.webp" data-title="The Real Problem vs The Stated Problem" tabindex="0" role="button" aria-label="Click to enlarge: The real problem vs the stated problem">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why the stated request is rarely the real issue, and how good architects find what actually needs fixing.</p>
-
-      <p>The problem you're asked to solve is almost never the actual problem. A team says they need a new database; the real problem is that reporting takes three days because data is scattered across five systems. A programme board says they need a platform migration; the real problem is that the support contract expires in six months and nobody renewed it. A product owner says they need an API; the real problem is that two teams can't share data because of an organisational boundary. The stated problem is usually a symptom, or a solution someone has already decided on. The architect's job is to keep asking "why" until you reach the thing that actually needs fixing. This isn't about being difficult or contrarian. It's about making sure the organisation spends its money and effort on the right thing. The technique is simple: when someone tells you what they want built, ask what problem it solves. Then ask what causes that problem. Keep going until you find something that, if fixed, would make the original request unnecessary.</p>
-
-      <blockquote>The best architects save their organisation from expensive solutions to cheap problems. Nobody thanks you for it, but it's the work.</blockquote>
-
-      <!-- Section 6: Structured approaches to problem analysis -->
-      <h2>Structured approaches to problem analysis</h2>
-
-      <img src="images/3.6 - Structured Approaches.webp" alt="Structured approaches to problem analysis" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.6 - Structured Approaches.webp" data-title="Structured Approaches to Problem Analysis" tabindex="0" role="button" aria-label="Click to enlarge: Structured approaches to problem analysis">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Four thinking frameworks that help you analyse problems systematically without producing bureaucratic documents.</p>
-
-      <p>Structured problem analysis doesn't mean producing heavyweight documents. It means thinking systematically rather than jumping to the first idea that feels right. Four approaches work well in practice. Root cause analysis helps you trace symptoms back to their source, so you solve the cause rather than treating the effect. Stakeholder impact mapping shows you who is affected and how, so your solution addresses the right needs. Constraint identification surfaces the boundaries you'll have to work within, before you design something that ignores them. And assumption testing forces you to name the things you're taking for granted, so you can validate them before they become expensive mistakes. None of these need to produce formal deliverables. They're thinking tools, not documentation exercises. Use them in a conversation, on a whiteboard, or in your own notes. The value is in the rigour of thought, not the polish of the output.</p>
-
-      <blockquote>Use these to structure your thinking and challenge your assumptions, not to produce impressive looking documents.</blockquote>
-
-      <!-- Section 7: When discovery goes wrong -->
-      <h2>When discovery goes wrong: patterns of failure</h2>
-
-      <img src="images/3.7 - When Discovery Goes Wrong.webp" alt="When discovery goes wrong: patterns of failure" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.7 - When Discovery Goes Wrong.webp" data-title="When Discovery Goes Wrong" tabindex="0" role="button" aria-label="Click to enlarge: When discovery goes wrong">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The traps that distort discovery, and how mature architects spot them and reset course early.</p>
-
-      <p>Discovery fails in predictable ways. Confirmation bias is the most common: the team enters discovery having already decided what they want to build, and unconsciously filters evidence to support that conclusion. Scope creep is another: discovery expands endlessly because nobody defined what "enough understanding" looks like. Authority bias distorts findings when a senior stakeholder's opinion carries more weight than user research. And theatre discovery produces the right artefacts without doing the real thinking, ticking boxes for governance without generating genuine insight. The architect's role is to notice these patterns and name them. You don't need to run discovery yourself, but you do need to be honest about whether the discovery that's been done is actually good enough to design from. If the problem statement is vague, if the user needs are assumed rather than researched, if the constraints haven't been tested, then you're not ready to design, regardless of what the project plan says.</p>
-
-      <blockquote>Every architect falls into these traps occasionally. The good ones notice quickly and reset.</blockquote>
-
-      <!-- Section 8: From problem understanding to architecture readiness -->
-      <h2>From problem understanding to architecture readiness</h2>
-
-      <img src="images/3.8 - From Problem Understanding.webp" alt="From problem understanding to architecture readiness" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/3.8 - From Problem Understanding.webp" data-title="From Problem Understanding to Architecture Readiness" tabindex="0" role="button" aria-label="Click to enlarge: From problem understanding to architecture readiness">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The bridge between discovery and design, and the questions that tell you when you're ready to start designing.</p>
-
-      <p>There's a moment between understanding the problem and starting to design where you need to make a judgement call: do I know enough? The answer is never "everything," but it needs to be "enough." Enough means you can articulate the problem clearly without referencing a solution. You know who the users are and what they need. You understand the policy intent and how it might change. You've mapped the existing landscape and know what you're integrating with. You've identified the hard constraints and validated your key assumptions. You know what success looks like and how it will be measured. If you can answer these questions with confidence, you're ready to design. If you can't, you need more discovery, not more architecture. The bridge between problem understanding and design isn't a formal gate or a sign-off meeting. It's a professional judgement that you, as the architect, are responsible for making honestly.</p>
-
-      <blockquote>Good architecture doesn't start when all uncertainty disappears. It starts when uncertainty has been reduced enough to make reasonable decisions, and to adapt as you learn more.</blockquote>
+      <h2>Knowing when you're ready to design</h2>
+      <p>Discovery does not produce an architecture. It produces the understanding that makes a good architecture possible. You are ready to design when you can answer a short set of questions honestly:</p>
+      <ul>
+        <li>What problem are we solving, and for whom? In a sentence or two, with no jargon.</li>
+        <li>What does success look like, stated as outcomes you can measure?</li>
+        <li>What are the hard constraints, the legal, security, accessibility and political boundaries that do not move?</li>
+        <li>What already exists, across systems, data, services and contracts?</li>
+        <li>What are the main risks, and how likely and how damaging is each?</li>
+        <li>Who are the stakeholders, and what does each of them actually need?</li>
+        <li>What do we still not know, and how will we close those gaps?</li>
+      </ul>
+      <p>If you cannot answer these, you are not ready, and pressing on anyway is premature solutioning wearing the costume of progress. The output should be short and usable: a one or two page brief covering the problem, constraints, estate, risks and approach is worth more than a hundred pages of requirements. The aim was never to remove all uncertainty, which is impossible. It is to reduce it enough to make sound decisions and keep adapting as you learn, which in government, with its new ministers and shifting priorities, is worth as much as the ability to plan.</p>
+      <blockquote>You're ready to design when you can say what the problem is without naming a single piece of technology.</blockquote>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
@@ -147,8 +131,8 @@
         <div>
           <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
           <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
-            <li style="margin-bottom: 0.25rem;"><a href="guide-what-a-solution-architect-does.html">What a Solution Architect actually does</a></li>
             <li style="margin-bottom: 0.25rem;"><a href="guide-how-architecture-thinking-differs.html">How architecture thinking differs from technical thinking</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-what-a-solution-architect-does.html">What a solution architect actually does</a></li>
           </ul>
         </div>
       </nav>

@@ -1,0 +1,34 @@
+<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t62 d62">
+<title id="t62">Matching decision effort to how reversible a decision is</title>
+<desc id="d62">A horizontal spectrum from easy to reverse on the left to hard to reverse on the right. Easy decisions, such as a logging framework or a component library, sit on the left and should be decided fast. Hard decisions, in teal, such as the database and the cloud provider, sit on the right and deserve careful analysis.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:13px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .box-ctx{fill:#F1EFE8;stroke:#B4B2A9;stroke-width:.75}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .axis{stroke:#888780;stroke-width:1.5;fill:none}.head{fill:#888780}
+  .tick{stroke:#B4B2A9;stroke-width:1;fill:none}
+</style>
+<rect class="box-ctx" x="40" y="40" width="150" height="40" rx="7"/>
+<text class="t-title ink-ctx-1" x="115" y="65" text-anchor="middle">Logging framework</text>
+<rect class="box-ctx" x="210" y="40" width="150" height="40" rx="7"/>
+<text class="t-title ink-ctx-1" x="285" y="65" text-anchor="middle">Component library</text>
+<rect class="box-sa" x="380" y="40" width="130" height="40" rx="7"/>
+<text class="t-title ink-sa-1" x="445" y="65" text-anchor="middle">Database</text>
+<rect class="box-sa" x="520" y="40" width="130" height="40" rx="7"/>
+<text class="t-title ink-sa-1" x="585" y="65" text-anchor="middle">Cloud provider</text>
+<line class="tick" x1="115" y1="80" x2="115" y2="150"/>
+<line class="tick" x1="285" y1="80" x2="285" y2="150"/>
+<line class="tick" x1="445" y1="80" x2="445" y2="150"/>
+<line class="tick" x1="585" y1="80" x2="585" y2="150"/>
+<line class="axis" x1="40" y1="150" x2="652" y2="150"/>
+<polygon class="head" points="652,144 664,150 652,156"/>
+<text class="t-sub ink-ctx-2" x="40" y="178" text-anchor="start">Easy to reverse</text>
+<text class="t-cap" x="40" y="196" text-anchor="start">decide fast</text>
+<text class="t-sub ink-sa-2" x="640" y="178" text-anchor="end">Hard to reverse</text>
+<text class="t-cap" x="640" y="196" text-anchor="end">analyse carefully</text>
+</svg>

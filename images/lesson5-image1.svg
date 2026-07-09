@@ -1,0 +1,33 @@
+<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t51 d51">
+<title id="t51">Non functional requirements narrow many possible architectures to a few</title>
+<desc id="d51">Four candidate architectures, a monolith, microservices, serverless and a spreadsheet, all meet the functional requirements. They pass into a teal funnel labelled with non functional requirements such as fifty thousand submissions in two weeks, 99.9 percent uptime, WCAG 2.2 AA and a small operations team. Out of the bottom comes a single teal box, the few architectures that actually fit.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .box-ctx{fill:#F1EFE8;stroke:#B4B2A9;stroke-width:.75}
+  .funnel{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .conn{stroke:#888780;stroke-width:1.25;fill:none}.head{fill:#888780}
+</style>
+<text class="t-cap" x="340" y="16" text-anchor="middle">Many architectures meet the functional requirements</text>
+<rect class="box-ctx" x="40" y="26" width="135" height="42" rx="7"/>
+<text class="t-title ink-ctx-1" x="107" y="52" text-anchor="middle">Monolith</text>
+<rect class="box-ctx" x="190" y="26" width="135" height="42" rx="7"/>
+<text class="t-title ink-ctx-1" x="257" y="52" text-anchor="middle">Microservices</text>
+<rect class="box-ctx" x="340" y="26" width="135" height="42" rx="7"/>
+<text class="t-title ink-ctx-1" x="407" y="52" text-anchor="middle">Serverless</text>
+<rect class="box-ctx" x="490" y="26" width="150" height="42" rx="7"/>
+<text class="t-title ink-ctx-1" x="565" y="52" text-anchor="middle">Spreadsheet</text>
+<line class="conn" x1="340" y1="74" x2="340" y2="112"/><polygon class="head" points="334,112 340,122 346,112"/>
+<polygon class="funnel" points="95,126 590,126 410,252 270,252"/>
+<text class="t-title ink-sa-1" x="342" y="158" text-anchor="middle">Non functional requirements</text>
+<text class="t-sub ink-sa-2" x="342" y="182" text-anchor="middle">50k submissions in two weeks, 99.9% uptime</text>
+<text class="t-sub ink-sa-2" x="342" y="200" text-anchor="middle">WCAG 2.2 AA, run by a team of three</text>
+<line class="conn" x1="340" y1="258" x2="340" y2="292"/><polygon class="head" points="334,292 340,302 346,292"/>
+<rect class="box-sa" x="210" y="296" width="260" height="48" rx="8"/>
+<text class="t-title ink-sa-1" x="340" y="325" text-anchor="middle">The few that actually fit</text>
+</svg>

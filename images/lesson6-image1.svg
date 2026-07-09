@@ -1,0 +1,28 @@
+<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t61 d61">
+<title id="t61">The hierarchy of architecture principles</title>
+<desc id="d61">Three tiers narrowing downward. At the top, the widest, the Technology Code of Practice, which applies across all government. In the middle, departmental strategy, which adds direction for your organisation. At the bottom, in teal and narrowest, project principles, which you author for your own service. Each tier refines the one above it.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .box-ctx{fill:#F1EFE8;stroke:#B4B2A9;stroke-width:.75}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .conn{stroke:#888780;stroke-width:1.25;fill:none}.head{fill:#888780}
+</style>
+<rect class="box-ctx" x="90" y="28" width="500" height="64" rx="8"/>
+<text class="t-title ink-ctx-1" x="340" y="54" text-anchor="middle">Technology Code of Practice</text>
+<text class="t-sub ink-ctx-2" x="340" y="76" text-anchor="middle">applies across all government</text>
+<line class="conn" x1="340" y1="94" x2="340" y2="106"/><polygon class="head" points="334,106 340,114 346,106"/>
+<rect class="box-ctx" x="160" y="116" width="360" height="64" rx="8"/>
+<text class="t-title ink-ctx-1" x="340" y="142" text-anchor="middle">Departmental strategy</text>
+<text class="t-sub ink-ctx-2" x="340" y="164" text-anchor="middle">direction for your organisation</text>
+<line class="conn" x1="340" y1="182" x2="340" y2="194"/><polygon class="head" points="334,194 340,202 346,194"/>
+<rect class="box-sa" x="210" y="204" width="260" height="64" rx="8"/>
+<text class="t-title ink-sa-1" x="340" y="230" text-anchor="middle">Project principles</text>
+<text class="t-sub ink-sa-2" x="340" y="252" text-anchor="middle">authored by you, for this service</text>
+<text class="t-cap" x="612" y="56" text-anchor="start">broad</text>
+<text class="t-cap" x="612" y="236" text-anchor="start">specific</text>
+</svg>

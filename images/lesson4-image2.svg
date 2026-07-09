@@ -1,0 +1,33 @@
+<svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t42 d42">
+<title id="t42">The power and interest grid for prioritising stakeholder engagement</title>
+<desc id="d42">A two by two grid. The vertical axis is power, the horizontal axis is interest. Top left, high power and low interest: keep satisfied, such as the CTO, spend control and private office. Top right, high power and high interest: manage closely, shown in teal, such as the SRO, policy lead and SIRO. Bottom left, low power and low interest: monitor. Bottom right, low power and high interest: keep informed, such as operational staff and end users.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .box-ctx{fill:#F1EFE8;stroke:#B4B2A9;stroke-width:.75}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .axis{stroke:#B4B2A9;stroke-width:1}
+</style>
+<text class="t-cap" transform="rotate(-90 26 165)" x="26" y="165" text-anchor="middle">Power</text>
+<text class="t-cap" x="84" y="36" text-anchor="end">high</text>
+<text class="t-cap" x="84" y="296" text-anchor="end">low</text>
+<text class="t-cap" x="365" y="362" text-anchor="middle">Interest</text>
+<text class="t-cap" x="225" y="340" text-anchor="middle">low</text>
+<text class="t-cap" x="505" y="340" text-anchor="middle">high</text>
+<rect class="box-ctx" x="90" y="30" width="270" height="130" rx="8"/>
+<text class="t-title ink-ctx-1" x="225" y="86" text-anchor="middle">Keep satisfied</text>
+<text class="t-sub ink-ctx-2" x="225" y="108" text-anchor="middle">CTO, spend control, private office</text>
+<rect class="box-sa" x="370" y="30" width="270" height="130" rx="8"/>
+<text class="t-title ink-sa-1" x="505" y="86" text-anchor="middle">Manage closely</text>
+<text class="t-sub ink-sa-2" x="505" y="108" text-anchor="middle">SRO, policy lead, SIRO</text>
+<rect class="box-ctx" x="90" y="170" width="270" height="130" rx="8"/>
+<text class="t-title ink-ctx-1" x="225" y="226" text-anchor="middle">Monitor</text>
+<text class="t-sub ink-ctx-2" x="225" y="248" text-anchor="middle">peripheral, watch for change</text>
+<rect class="box-ctx" x="370" y="170" width="270" height="130" rx="8"/>
+<text class="t-title ink-ctx-1" x="505" y="226" text-anchor="middle">Keep informed</text>
+<text class="t-sub ink-ctx-2" x="505" y="248" text-anchor="middle">operational staff, end users</text>
+</svg>

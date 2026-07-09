@@ -1,0 +1,30 @@
+<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t63 d63">
+<title id="t63">The lifecycle of an Architecture Decision Record</title>
+<desc id="d63">A decision record moves from proposed, under review, to accepted, the live decision shown in teal, and from there either to deprecated, no longer applies, or to superseded, replaced by a newer record. Superseded records stay on the file.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .box-ctx{fill:#F1EFE8;stroke:#B4B2A9;stroke-width:.75}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .conn{stroke:#888780;stroke-width:1.25;fill:none}.head{fill:#888780}
+</style>
+<line class="conn" x1="178" y1="115" x2="222" y2="115"/><polygon class="head" points="222,109 232,115 222,121"/>
+<line class="conn" x1="388" y1="98" x2="468" y2="62"/><polygon class="head" points="460,58 472,60 463,69"/>
+<line class="conn" x1="388" y1="132" x2="468" y2="168"/><polygon class="head" points="463,161 472,170 460,172"/>
+<rect class="box-ctx" x="28" y="90" width="150" height="56" rx="8"/>
+<text class="t-title ink-ctx-1" x="103" y="114" text-anchor="middle">Proposed</text>
+<text class="t-sub ink-ctx-2" x="103" y="133" text-anchor="middle">under review</text>
+<rect class="box-sa" x="232" y="90" width="156" height="56" rx="8"/>
+<text class="t-title ink-sa-1" x="310" y="114" text-anchor="middle">Accepted</text>
+<text class="t-sub ink-sa-2" x="310" y="133" text-anchor="middle">the live decision</text>
+<rect class="box-ctx" x="472" y="34" width="180" height="54" rx="8"/>
+<text class="t-title ink-ctx-1" x="562" y="58" text-anchor="middle">Deprecated</text>
+<text class="t-sub ink-ctx-2" x="562" y="77" text-anchor="middle">no longer applies</text>
+<rect class="box-ctx" x="472" y="146" width="180" height="54" rx="8"/>
+<text class="t-title ink-ctx-1" x="562" y="170" text-anchor="middle">Superseded</text>
+<text class="t-sub ink-ctx-2" x="562" y="189" text-anchor="middle">replaced by a newer record</text>
+</svg>

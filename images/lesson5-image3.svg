@@ -1,0 +1,28 @@
+<svg viewBox="0 0 680 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t53 d53">
+<title id="t53">Defence in depth, layers of control around the data</title>
+<desc id="d53">Four stacked grey layers of security control, from perimeter and edge at the top, through network controls, application controls, to identity and access. Beneath them sits a teal box holding OFFICIAL SENSITIVE data. An arrow down the left shows that an attacker must get through every layer to reach it.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .box-ctx{fill:#F1EFE8;stroke:#B4B2A9;stroke-width:.75}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .conn{stroke:#888780;stroke-width:1.25;fill:none}.head{fill:#888780}
+</style>
+<text class="t-cap" transform="rotate(-90 92 150)" x="92" y="150" text-anchor="middle">an attacker must pass every layer</text>
+<line class="conn" x1="118" y1="34" x2="118" y2="250"/><polygon class="head" points="112,250 118,260 124,250"/>
+<rect class="box-ctx" x="150" y="30" width="470" height="42" rx="7"/>
+<text class="t-title ink-ctx-1" x="385" y="56" text-anchor="middle">Perimeter and edge</text>
+<rect class="box-ctx" x="150" y="80" width="470" height="42" rx="7"/>
+<text class="t-title ink-ctx-1" x="385" y="106" text-anchor="middle">Network controls</text>
+<rect class="box-ctx" x="150" y="130" width="470" height="42" rx="7"/>
+<text class="t-title ink-ctx-1" x="385" y="156" text-anchor="middle">Application controls</text>
+<rect class="box-ctx" x="150" y="180" width="470" height="42" rx="7"/>
+<text class="t-title ink-ctx-1" x="385" y="206" text-anchor="middle">Identity and access</text>
+<rect class="box-sa" x="240" y="244" width="290" height="56" rx="8"/>
+<text class="t-title ink-sa-1" x="385" y="270" text-anchor="middle">OFFICIAL SENSITIVE data</text>
+<text class="t-sub ink-sa-2" x="385" y="288" text-anchor="middle">protected by every layer above</text>
+</svg>

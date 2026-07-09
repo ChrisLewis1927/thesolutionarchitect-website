@@ -1,0 +1,42 @@
+<svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t43 d43">
+<title id="t43">Six stakeholder groups pulling the architecture in different directions</title>
+<desc id="d43">A central teal box, your architecture, the balance you strike. Six grey boxes press in on it: policy wanting maximum data, users wanting minimum effort, security wanting maximum control, delivery wanting maximum speed, operations wanting maximum simplicity, and finance wanting minimum cost.</desc>
+<style>
+  text{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .t-title{font-size:14px;font-weight:500}
+  .t-sub{font-size:12px;font-weight:400}
+  .t-cap{font-size:12px;font-weight:400;fill:#5F5E5A}
+  .box-sa{fill:#E1F5EE;stroke:#0F6E56;stroke-width:1}
+  .box-ctx{fill:#F1EFE8;stroke:#B4B2A9;stroke-width:.75}
+  .ink-sa-1{fill:#04342C}.ink-sa-2{fill:#0F6E56}
+  .ink-ctx-1{fill:#2C2C2A}.ink-ctx-2{fill:#5F5E5A}
+  .conn{stroke:#888780;stroke-width:1.25;fill:none}.head{fill:#888780}
+</style>
+<line class="conn" x1="214" y1="56" x2="262" y2="146"/><polygon class="head" points="256,136 264,150 250,144"/>
+<line class="conn" x1="214" y1="188" x2="262" y2="188"/><polygon class="head" points="262,182 272,188 262,194"/>
+<line class="conn" x1="214" y1="320" x2="262" y2="230"/><polygon class="head" points="250,232 264,226 256,240"/>
+<line class="conn" x1="466" y1="56" x2="418" y2="146"/><polygon class="head" points="430,144 416,150 424,136"/>
+<line class="conn" x1="466" y1="188" x2="418" y2="188"/><polygon class="head" points="418,182 408,188 418,194"/>
+<line class="conn" x1="466" y1="320" x2="418" y2="230"/><polygon class="head" points="424,240 416,226 430,232"/>
+<rect class="box-ctx" x="24" y="24" width="190" height="64" rx="8"/>
+<text class="t-title ink-ctx-1" x="119" y="52" text-anchor="middle">Policy</text>
+<text class="t-sub ink-ctx-2" x="119" y="71" text-anchor="middle">maximum data</text>
+<rect class="box-ctx" x="24" y="156" width="190" height="64" rx="8"/>
+<text class="t-title ink-ctx-1" x="119" y="184" text-anchor="middle">Security</text>
+<text class="t-sub ink-ctx-2" x="119" y="203" text-anchor="middle">maximum control</text>
+<rect class="box-ctx" x="24" y="288" width="190" height="64" rx="8"/>
+<text class="t-title ink-ctx-1" x="119" y="316" text-anchor="middle">Operations</text>
+<text class="t-sub ink-ctx-2" x="119" y="335" text-anchor="middle">maximum simplicity</text>
+<rect class="box-ctx" x="466" y="24" width="190" height="64" rx="8"/>
+<text class="t-title ink-ctx-1" x="561" y="52" text-anchor="middle">Users</text>
+<text class="t-sub ink-ctx-2" x="561" y="71" text-anchor="middle">minimum effort</text>
+<rect class="box-ctx" x="466" y="156" width="190" height="64" rx="8"/>
+<text class="t-title ink-ctx-1" x="561" y="184" text-anchor="middle">Delivery</text>
+<text class="t-sub ink-ctx-2" x="561" y="203" text-anchor="middle">maximum speed</text>
+<rect class="box-ctx" x="466" y="288" width="190" height="64" rx="8"/>
+<text class="t-title ink-ctx-1" x="561" y="316" text-anchor="middle">Finance</text>
+<text class="t-sub ink-ctx-2" x="561" y="335" text-anchor="middle">minimum cost</text>
+<rect class="box-sa" x="270" y="150" width="140" height="76" rx="8"/>
+<text class="t-title ink-sa-1" x="340" y="184" text-anchor="middle">Your architecture</text>
+<text class="t-sub ink-sa-2" x="340" y="203" text-anchor="middle">the balance you strike</text>
+</svg>

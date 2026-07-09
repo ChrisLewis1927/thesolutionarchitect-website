@@ -5,11 +5,11 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Users, stakeholders and the landscape around your design - understanding the people who shape government architecture.">
-  <meta property="og:title" content="Users, stakeholders and the landscape around your design - Architect's Library">
-  <meta property="og:description" content="No architecture exists in a vacuum. Every solution you design sits inside a landscape of people who shape its success or failure.">
+  <meta name="description" content="Why stakeholder understanding is an architecture skill, how to map the people around a government design, and how to balance competing demands without losing the user.">
+  <meta property="og:title" content="Users, stakeholders and the people around your design &mdash; Architect's Library">
+  <meta property="og:description" content="Why stakeholder understanding is an architecture skill, how to map the people around a government design, and how to balance competing demands without losing the user.">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <title>Users, stakeholders and the landscape around your design - Architect's Library</title>
+  <title>Users, stakeholders and the people around your design &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -41,121 +41,91 @@
   <main id="main">
     <section class="lesson-hero">
       <div class="container">
-        <h1 class="lesson-hero__title">Users, stakeholders and the landscape around your design</h1>
-        <p class="lesson-hero__description">No architecture exists in a vacuum. Every solution you design sits inside a landscape of people: users who depend on it, stakeholders who fund it, teams who build it, operators who run it, and leaders who carry the can when something goes wrong. Ignore that landscape and you'll produce something technically elegant but organisationally undeliverable.</p>
+        <h1 class="lesson-hero__title">Users, stakeholders and the people around your design</h1>
+        <p class="lesson-hero__description">No architecture exists in a vacuum. Every solution sits among people: users who depend on it, stakeholders who fund it, teams who build and run it, leaders held accountable for it. Design without understanding them and you'll produce something technically elegant and organisationally undeliverable. In government the cast is unusually large, and reading it well is part of the job, not someone else's.</p>
       </div>
     </section>
 
     <div class="lesson-content">
-      <p>In UK government the stakeholder landscape is uniquely complex. You're not working for a single product owner with clear authority. You're navigating policy teams, operational teams, security teams, commercial teams, GDS assessors, ministerial private offices, and sometimes other departments entirely. Each one has legitimate interests, different priorities, and varying levels of influence. The architect who can map that landscape, understand the dynamics, and move through it skilfully will deliver better outcomes than the architect who only focuses on the technology.</p>
-
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>How to map the stakeholders who actually shape government architecture</li>
-          <li>How to use a power/interest grid without becoming a slave to it</li>
-          <li>How to handle the tension between user needs and stakeholder wants</li>
-          <li>How GDS user research principles translate into concrete design choices</li>
-          <li>How to manage competing demands without trying to please everyone</li>
-          <li>How to stay politically aware without becoming a political operator</li>
+          <li>Why stakeholder understanding is an architecture skill, not the delivery manager's problem.</li>
+          <li>How to map the people around a government design, from the obvious to the political.</li>
+          <li>A way to decide who gets your attention, using power and interest.</li>
+          <li>How to hold the line on user needs, and make competing demands explicit instead of pretending they aren't there.</li>
         </ul>
       </div>
 
-      <!-- Section 1: Why stakeholder understanding is an architecture skill -->
-      <h2>Why stakeholder understanding is an architecture skill</h2>
+      <h2>Stakeholder understanding is an architecture skill</h2>
+      <p>Plenty of architects treat stakeholder management as someone else's job, the delivery manager's or the business analyst's. That habit produces architecture failures. The pattern is always the same. You design to the requirements as written, but those requirements came from one group and miss what the others needed. The security team finds the design doesn't meet their standards three months into build. Operations realise they can't support it after it's built. The minister's private office discovers at launch that the service can't produce the report the minister wants. Every one of those is an architecture failure, not a project management one.</p>
+      <p>The reason is plain. Architecture decisions affect people, and people affect architecture decisions. The security team's requirements shape your technology choices. Operations' capabilities constrain your deployment model. The policy team's future plans drive how extensible you make things. The minister's priorities set your timeline and scope. Miss those influences and you're designing blind. The DDaT framework names stakeholder understanding as a capability for solution architects, and at senior levels it expects more than managing people. It expects you to influence them, helping them see what their requirements imply and steering them toward decisions that serve the whole system rather than one corner of it.</p>
+      <blockquote>Architecture decisions affect people, and people affect architecture decisions. Miss that and you're designing blind.</blockquote>
 
-      <img src="images/4.1 - Stakeholder Understanding.webp" alt="Why stakeholder understanding is an architecture skill" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/4.1 - Stakeholder Understanding.webp" data-title="Why Stakeholder Understanding is an Architecture Skill" tabindex="0" role="button" aria-label="Click to enlarge: Why stakeholder understanding is an architecture skill">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Architecture fails when the people side of the problem gets treated as someone else's job.</p>
+      <h2>Mapping the people around your design</h2>
+      <p>Mapping is where the work starts, and in government the map has more layers than most private sector work does. It helps to picture them as rings around your design, widening from the people everyone names to the ones nobody thinks of until it's too late.</p>
+      <figure>
+        <img src="images/lesson4-image1.svg" alt="Concentric rings around a central teal box, your design. From the inside out: obvious stakeholders such as sponsor, delivery, policy and users; governance, including assessors, the SIRO and the DPO; operational teams who run the service; adjacent teams who own integrations and data; and an outer political ring of private office, press and scrutiny.">
+        <figcaption>The failures rarely come from the inner ring. They come from forgetting the outer ones.</figcaption>
+      </figure>
+      <p>The mistake is seldom missing the obvious people. It's stopping at them. The failures that surface deep into delivery all live further out: the governance bodies who can block you, the operations teams who inherit what you build, the adjacent teams whose systems and data you depend on, the political actors who can turn a quiet decision into a headline. For each person worth tracking, capture a few things:</p>
+      <ul>
+        <li>Name and role, specifically. Not "the security team" but who in it.</li>
+        <li>What they care about in relation to your architecture.</li>
+        <li>How much power they have to shape or block a decision.</li>
+        <li>Whether they're supportive, neutral or resistant today.</li>
+        <li>How, and how often, you'll engage them.</li>
+        <li>What actually worries them about the work.</li>
+      </ul>
+      <p>And keep it live. Stakeholder maps go stale fast, because people move, priorities shift, and new actors appear as the work progresses. Revisit it monthly at least, and whenever the project or the organisation changes shape.</p>
 
-      <p>Many architects treat stakeholder engagement as a soft skill, something that delivery managers or business analysts handle while the architect focuses on the "real" technical work. This is a fundamental misunderstanding of what architecture is. Architecture is the set of decisions that are expensive to change. Many of those decisions are shaped, constrained, or blocked by people, not by technology. A design that ignores organisational politics, funding dynamics, or operational capacity is not a design that exists in the real world. It's a fantasy.</p>
+      <h2>Power and interest</h2>
+      <p>Once you have the list, you have to decide where your attention goes, and the power and interest grid is the quickest way to do it. Plot each person by how much they can influence or block the work, and how much they actually care about the outcome.</p>
+      <figure>
+        <img src="images/lesson4-image2.svg" alt="A two by two grid with power on the vertical axis and interest on the horizontal. Top left, high power low interest: keep satisfied, CTO, spend control, private office. Top right in teal, high power high interest: manage closely, SRO, policy lead, SIRO. Bottom left, low power low interest: monitor. Bottom right, low power high interest: keep informed, operational staff and end users.">
+        <figcaption>A planning tool, not a fixed map. Positions move when a minister asks a question.</figcaption>
+      </figure>
+      <p>High power and high interest is where your real engagement goes: the SRO, the policy lead, the SIRO on a service handling sensitive data. If any of them is surprised by something, you've failed. High power and low interest, often the departmental CTO, spend control or a private office, you keep satisfied with a light, regular brief so nothing reaches them cold. High interest but low power, the operational staff and the end users, you keep informed and genuinely listen to, because their insight is good even when their sign off isn't required. The rest you monitor. Two warnings. Power in government is fluid, and a low power stakeholder turns critical the moment a minister asks them a question or an FOI request lands. And don't confuse low organisational power with low knowledge. The caseworker who processes applications all day holds more useful detail than most people in the room, and dismissing them because they're junior is a classic and expensive mistake.</p>
 
-      <p>In government, this is amplified. Your architecture will be assessed by GDS. It will be scrutinised by security teams. It will need sign-off from senior responsible owners who may not understand the technology but absolutely understand the risk. It will be built by teams you may not control, operated by people you may never meet, and used by citizens who have no choice but to interact with it. If you don't understand that landscape, you can't design for it. And if you can't design for it, your architecture will fail, not because it was technically wrong, but because it was organisationally impossible.</p>
+      <h2>User needs and stakeholder wants</h2>
+      <p>The Service Standard starts with user needs, which sounds obvious and creates one of the sharpest tensions you'll face. User needs are observable. They come out of research: watching someone try to finish a task, hearing where they get stuck. "I need to report my building's energy data without having to understand technical classifications" is a user need. Stakeholder wants are aspirational, born of organisational priorities and personal preference. "I want one platform that captures every possible data point, with real time analytics and machine learning predictions" is a want.</p>
+      <p>Both are legitimate inputs. They don't carry equal weight. User needs define what the service has to do to be any use; wants describe what the organisation would like on top. When they conflict, and they will, user needs should generally win. That's harder than it sounds, because the person with the want is often more senior and better connected than the users who just want to submit their data and move on. Holding the line takes evidence, nerve and tact. Your job is to make the tension visible and help resolve it well: show the research, show what happens when user needs lose, in poor take up, workarounds, complaints and failed assessments, and put numbers on it. "We can add those fifteen fields, but research says every extra field drops completion by three percent. Do we want that?" The best architects find a shape that serves both sides. The worst pick one side and lose the other.</p>
+      <blockquote>User needs are what the service must do to be useful. Everything else is what the organisation would like on top.</blockquote>
 
-      <blockquote>Stakeholder understanding is part of architecture, not an optional extra. A design that ignores stakeholder reality is not fit for purpose.</blockquote>
+      <h2>What user research principles ask of your architecture</h2>
+      <p>The GDS user research principles aren't abstract ideals. Each one lands as a concrete demand on your architecture.</p>
+      <ul>
+        <li>Start from user needs. If users think in "my application" while the department thinks in "cases", your architecture carries that translation, presenting a user view over the departmental model underneath.</li>
+        <li>Design for the whole journey. Users live a service made of forms, phone calls, letters and waiting, so you integrate with contact centres, letter generation, appointments and cross channel status, not only the online form.</li>
+        <li>Make it accessible and inclusive. WCAG 2.2 AA is a constraint that shapes how content is structured, how forms are built and how errors are handled, and it can decide real choices, such as when a single page app raises barriers a multi page approach would avoid.</li>
+        <li>Iterate on evidence. That means designing for change: modular components, clear interfaces, feature flags, pipelines that make releases frequent and low risk. A six month release cycle can't iterate.</li>
+        <li>Be open and honest. Your documentation should make sense to non technical stakeholders, and your trade offs should be on the table even when the truth is awkward.</li>
+      </ul>
+      <p>Treat user research as someone else's problem and you'll keep producing architectures that frustrate users and fall over at assessment.</p>
 
-      <!-- Section 2: Stakeholder mapping for government architecture -->
-      <h2>Stakeholder mapping for government architecture</h2>
-
-      <img src="images/4.2 - Stakeholder Mapping.webp" alt="Stakeholder mapping for government architecture" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/4.2 - Stakeholder Mapping.webp" data-title="Stakeholder Mapping for Government Architecture" tabindex="0" role="button" aria-label="Click to enlarge: Stakeholder mapping for government architecture">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">In government the stakeholder landscape is wider and stranger than most private sector contexts. Mapping it properly is the foundation of everything else.</p>
-
-      <p>Government stakeholder landscapes are unusually complex. In the private sector you typically have a product owner, a leadership team, and customers. In government you have policy teams who define what the service should achieve, operational teams who run it day to day, security and assurance teams who must approve it, commercial teams who manage suppliers, GDS assessors who evaluate it against the Service Standard, finance teams who control the budget, ministerial private offices who manage political risk, and sometimes other government departments who depend on or feed into your service.</p>
-
-      <p>Mapping this landscape is not a one-off exercise you do at the start of a project and then file away. It's a living model that you update as the programme evolves. People move roles. Priorities shift. New stakeholders emerge as the service takes shape. The practical approach is to identify everyone who can influence, block, or be affected by your architecture decisions, then understand what they care about, what power they have, and how engaged they currently are. This gives you the foundation for every engagement decision you'll make.</p>
-
-      <blockquote>Map the landscape early, keep it current, and use it to drive better engagement and better decisions.</blockquote>
-
-      <!-- Section 3: The power/interest grid in practice -->
-      <h2>The power/interest grid in practice</h2>
-
-      <img src="images/4.3 - Power Interest Grid.webp" alt="The power/interest grid in practice" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/4.3 - Power Interest Grid.webp" data-title="The Power/Interest Grid in Practice" tabindex="0" role="button" aria-label="Click to enlarge: The power/interest grid in practice">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">A simple two by two that helps you decide where to spend your engagement effort.</p>
-
-      <p>The power/interest grid is one of the most widely taught stakeholder tools, and for good reason. It's simple: plot stakeholders on two axes (how much power they have over your work, and how interested they are in it) and you get four quadrants that suggest different engagement strategies. High power, high interest: manage closely. High power, low interest: keep satisfied. Low power, high interest: keep informed. Low power, low interest: monitor.</p>
-
-      <p>The danger is treating it as a fixed map rather than a dynamic model. In government, power and interest shift constantly. A stakeholder who was low interest last month becomes high interest when a ministerial question lands on their desk. A team with no formal power suddenly becomes critical when they control a dependency you hadn't identified. The grid is useful as a thinking tool, not as a permanent classification. Use it to decide where to focus your engagement effort this week, this sprint, this phase. But revisit it regularly, and be prepared for the landscape to shift beneath you.</p>
-
-      <blockquote>Use the grid to focus your effort. Stay alert enough to update it when the world shifts.</blockquote>
-
-      <!-- Section 4: User needs versus stakeholder wants -->
-      <h2>User needs versus stakeholder wants</h2>
-
-      <img src="images/4.4 - User Needs vs Stakeholder Wants.webp" alt="User needs versus stakeholder wants" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/4.4 - User Needs vs Stakeholder Wants.webp" data-title="User Needs versus Stakeholder Wants" tabindex="0" role="button" aria-label="Click to enlarge: User needs versus stakeholder wants">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The GDS Service Standard tells you to start with user needs. In practice that creates one of the hardest dynamics you'll face.</p>
-
-      <p>The first principle of the GDS Service Standard is "start with user needs." This sounds straightforward until you're in a room where a senior stakeholder wants something that conflicts with what users actually need. A policy team wants complex eligibility rules that create a terrible user experience. An operations team wants detailed audit trails that slow the service down. A security team wants authentication requirements that exclude the most vulnerable users. These aren't bad people making bad decisions. They're people with legitimate concerns that happen to conflict with user needs.</p>
-
-      <p>The architect's role is not to pick a side. It's to make the trade-offs visible and help the organisation make an informed choice. Sometimes user needs win. Sometimes operational or security requirements take priority. The important thing is that the decision is made consciously, with full understanding of the consequences, rather than by accident because nobody surfaced the conflict. Your job is to design the options, articulate the trade-offs, and support the decision-makers in choosing well.</p>
-
-      <blockquote>Start with user needs, understand stakeholder intent, and make the trade offs explicit.</blockquote>
-
-      <!-- Section 5: GDS user research principles and what they mean for architecture -->
-      <h2>GDS user research principles and what they mean for architecture</h2>
-
-      <img src="images/4.5 - GDS User Research Principles.webp" alt="GDS user research principles and what they mean for architecture" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/4.5 - GDS User Research Principles.webp" data-title="GDS User Research Principles and What They Mean for Architecture" tabindex="0" role="button" aria-label="Click to enlarge: GDS user research principles and what they mean for architecture">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The user research principles aren't just for researchers and designers. They have direct consequences for how you design the service.</p>
-
-      <p>GDS user research principles state that research should be inclusive, ethical, and continuous. For architects, these principles translate directly into design constraints. Inclusive research means your architecture must support accessibility from the ground up, not as an afterthought. It means designing for assisted digital users, for people with low digital confidence, for people using older devices or slower connections. Ethical research means your data architecture must respect privacy, minimise data collection, and give users control where possible.</p>
-
-      <p>Continuous research means your architecture must support iteration. If the service will be tested and improved based on ongoing user feedback, you need to design for changeability. Monolithic systems that require months of work to modify are incompatible with continuous improvement. The architecture needs to allow the service to evolve as understanding of user needs deepens. This isn't about following a methodology for its own sake. It's about recognising that user research findings will shape your architecture, and designing in a way that can respond to what research reveals.</p>
-
-      <blockquote>Good architecture supports good service design. If the architecture undermines user needs, accessibility, or iteration, it isn't fit for purpose.</blockquote>
-
-      <!-- Section 6: Managing competing demands -->
       <h2>Managing competing demands</h2>
+      <p>Competing demands are the normal state in government. Policy wants the most data, users want the least effort, security wants the most control, delivery wants the most speed, operations wants the most simplicity, finance wants the least cost. Your job is to find the architecture that balances them, and to make the trade offs explicit rather than quietly choosing for everyone.</p>
+      <figure>
+        <img src="images/lesson4-image3.svg" alt="A central teal box, your architecture, the balance you strike, with six grey boxes pressing in on it: policy wanting maximum data, users minimum effort, security maximum control, delivery maximum speed, operations maximum simplicity, and finance minimum cost.">
+        <figcaption>Six groups, six definitions of a good outcome. You design the balance between them.</figcaption>
+      </figure>
+      <p>A few moves make this manageable. Put the demands side by side in plain sight, because written down together the conflicts and the possible compromises both become obvious. Separate the genuine non negotiables, the legal duties, security classifications and accessibility standards, from the preferences dressed up as requirements. Quantify the trade off instead of waving at it. Saying "there's a tension between security and usability" helps no one; saying "two factor authentication raises security and drops completion by fifteen percent for users over sixty five, and here are three options that balance the two differently" gives people something to decide on. Offer the options and let the people with authority choose with the consequences in front of them. Write the decision down, who decided, why, and what was traded away, so that in a year nobody has to guess why the service works the way it does. And revisit it, because the balance moves: a low priority security worry becomes urgent the week after a breach somewhere else. The architect who tries to please everyone pleases no one. The one who makes the trade offs explicit earns trust.</p>
 
-      <img src="images/4.6 - Managing Competing Demands.webp" alt="Managing competing demands" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/4.6 - Managing Competing Demands.webp" data-title="Managing Competing Demands" tabindex="0" role="button" aria-label="Click to enlarge: Managing competing demands">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">In government, competing demands are normal. Pretending you can satisfy everyone is the fastest route to a service that satisfies nobody.</p>
+      <h2>The political reality you design inside</h2>
+      <p>Government architecture sits in a political reality with no real private sector parallel, and ignoring it doesn't make it go away. It just means it blindsides you. A ministerial announcement turns a launch date into a commitment, which may mean designing a phased launch, core function by the political deadline and the rest later, rather than holding out for the technically ideal timeline. Budgets are annual and reviewed, so a multi year programme can lose its funding halfway through, which is the argument for each phase delivering something usable rather than laying foundations that only pay off at the end. Data sharing that makes perfect technical sense can be blocked by cross departmental politics. Public scrutiny, through FOI, the National Audit Office, the Public Accounts Committee and the press, means your decisions have to be defensible: "we chose this because it best balanced user needs, security and value for money, and here is the options appraisal" survives daylight in a way that "the architect preferred this technology" does not. And an election can change policy direction overnight, which rewards architectures that keep policy rules separate from the technical plumbing. None of this asks you to become a political operator. It asks you to be politically literate, to know the forces around you and to know when to push back and when to settle for a pragmatic compromise.</p>
 
-      <p>Every architecture decision involves trade-offs. In government, those trade-offs are amplified because you have more stakeholders with more competing interests than in most private sector contexts. The security team wants defence in depth; the delivery team wants speed. The policy team wants flexibility; the operations team wants stability. The finance team wants cost reduction; the users want a better experience. You cannot satisfy all of these simultaneously, and pretending you can leads to compromised designs that serve nobody well.</p>
-
-      <p>The skill is not in finding a magical solution that makes everyone happy. It's in making the competing demands explicit, helping stakeholders understand the consequences of each option, and supporting a clear decision. Document the trade-offs. Present the options honestly. Recommend where you have a professional view, but be transparent about what you're trading away. The worst outcome is a design that tries to please everyone and ends up as an incoherent mess of compromises. The best outcome is a design where the trade-offs were made consciously and the rationale is clear to everyone involved.</p>
-
-      <blockquote>Good architecture negotiation isn't about winning an argument. It's about making difficult choices explicit, defensible, and fit for the whole service.</blockquote>
-
-      <!-- Section 7: Understanding the political landscape -->
-      <h2>Understanding the political landscape</h2>
-
-      <img src="images/4.7 - Understanding the Political Landscape.webp" alt="Understanding the political landscape" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/4.7 - Understanding the Political Landscape.webp" data-title="Understanding the Political Landscape" tabindex="0" role="button" aria-label="Click to enlarge: Understanding the political landscape">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Government architecture operates inside a political environment that shapes scope, timelines, funding, and scrutiny in ways that have no real parallel in the private sector.</p>
-
-      <p>Government technology does not exist in a purely rational space. It operates within a political environment where ministerial priorities, spending reviews, election cycles, media scrutiny, and cross-departmental dynamics all shape what gets built, when, and how. An architect who ignores this reality will repeatedly find their designs derailed by forces they didn't anticipate. A project gets accelerated because a minister made a public commitment. A programme gets cut because the spending review changed priorities. A technical decision gets overruled because of reputational risk that has nothing to do with technology.</p>
-
-      <p>Political awareness doesn't mean becoming a political operator. It means understanding the environment well enough to design within it successfully. It means knowing when a decision is really a technical decision and when it's a political one wearing technical clothes. It means understanding why certain stakeholders behave the way they do, and what pressures they're responding to. It means designing architectures that can survive political shifts, not because they're politically neutral, but because they're resilient to the kinds of changes that political environments produce.</p>
-
-      <blockquote>Good architecture in government combines technical excellence with political literacy. The aim is not to play politics. It is to design successfully within reality.</blockquote>
-
-      <!-- Section 8: Building your stakeholder engagement practice -->
-      <h2>Building your stakeholder engagement practice</h2>
-
-      <img src="images/4.8 - Building Your Stakeholder Engagement.webp" alt="Building your stakeholder engagement practice" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/4.8 - Building Your Stakeholder Engagement.webp" data-title="Building Your Stakeholder Engagement Practice" tabindex="0" role="button" aria-label="Click to enlarge: Building your stakeholder engagement practice">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Engagement isn't a one off task. It's a habit you build through delivery and across your career.</p>
-
-      <p>Stakeholder engagement is not something you do once at the start of a project and then forget about. It's a continuous practice that you develop over time. The best architects build relationships before they need them. They invest in understanding people's concerns before those concerns become blockers. They communicate proactively, sharing progress and surfacing risks early rather than waiting until problems become crises. They build trust by being honest about trade-offs, reliable in their commitments, and transparent about uncertainty.</p>
-
-      <p>As you progress in your career, your stakeholder landscape gets wider and more complex. You move from engaging with a single delivery team to navigating department-wide governance. You move from explaining technical decisions to one product owner to influencing strategy across multiple programmes. The fundamentals stay the same: understand what people care about, communicate clearly, surface trade-offs early, and build trust through consistent, honest engagement. The scale changes, but the practice doesn't. Start building it now, and it will serve you throughout your career.</p>
-
-      <blockquote>Good stakeholder engagement is an architecture practice. It builds trust, surfaces trade offs early, and produces decisions that can be supported as well as implemented.</blockquote>
+      <h2>Building the engagement habit</h2>
+      <p>Stakeholder engagement is a practice you build over a project and a career, not a one off. A handful of habits carry most of it:</p>
+      <ul>
+        <li>Start by listening. Before you present anything, ask what they're worried about and what success looks like to them. The answers tell you how to frame the architecture so it lands.</li>
+        <li>Tailor the message. The same decision goes to the SRO as risk, cost and timeline; to security as threat and compliance; to the delivery team as approach and implementation; to a private office as user impact and messaging. That isn't manipulation, it's being understood.</li>
+        <li>Build relationships before you need them. Meet the security team before you need their sign off. People back an architecture they helped shape far more readily than one dropped on them finished.</li>
+        <li>Be honest about bad news early. If the design has a weakness or a timeline is unrealistic, say so before someone else finds it. Honesty is the currency of these relationships.</li>
+        <li>Keep a stakeholder journal. After each significant conversation, note what you learned, what was raised and what you promised, then follow through. Broken promises wreck trust faster than anything.</li>
+        <li>Know when to escalate. Some conflicts can't be settled at your level. When two senior people have genuinely incompatible requirements and neither will move, take it to the SRO or the board with the conflict, the options and the trade offs laid out. Don't try to solve a political problem with technical cleverness; it rarely works and usually makes things worse.</li>
+      </ul>
+      <p>All of this rests on one idea. Architecture is as much about the people as the systems, and the sooner you treat the two as one job, the better your designs get.</p>
+      <blockquote>Half of architecture is the systems. The other half is the people who fund it, run it and live with it.</blockquote>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
@@ -165,9 +135,8 @@
         <div>
           <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
           <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
-            <li style="margin-bottom: 0.25rem;"><a href="guide-what-a-solution-architect-does.html">What a Solution Architect actually does</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem before you design the solution</a></li>
             <li style="margin-bottom: 0.25rem;"><a href="guide-how-architecture-thinking-differs.html">How architecture thinking differs from technical thinking</a></li>
-            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem before designing the solution</a></li>
           </ul>
         </div>
       </nav>

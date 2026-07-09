@@ -5,11 +5,11 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Functional and non-functional requirements: the full picture - why NFRs drive architecture more than functional requirements, and how to capture them properly.">
-  <meta property="og:title" content="Functional and non-functional requirements: the full picture - Architect's Library">
-  <meta property="og:description" content="The requirements that actually shape architecture, and how to capture them in a way that holds up.">
+  <meta name="description" content="Why non functional requirements drive architecture more than the feature list, how to pin down performance, scalability, availability, security and accessibility, and how to write requirements you can test.">
+  <meta property="og:title" content="Functional and non functional requirements &mdash; Architect's Library">
+  <meta property="og:description" content="Why non functional requirements drive architecture more than the feature list, how to pin down performance, scalability, availability, security and accessibility, and how to write requirements you can test.">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <title>Functional and non-functional requirements: the full picture - Architect's Library</title>
+  <title>Functional and non functional requirements &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -41,8 +41,8 @@
   <main id="main">
     <section class="lesson-hero">
       <div class="container">
-        <h1 class="lesson-hero__title">Functional and non-functional requirements: the full picture</h1>
-        <p class="lesson-hero__description">Most projects start with functional requirements and treat everything else as something to sort out later. By the time the service hits production, the consequences of that order are baked in. This guide is the corrective. It covers the requirements that actually shape architecture, and how to capture them in a way that holds up.</p>
+        <h1 class="lesson-hero__title">Functional and non functional requirements</h1>
+        <p class="lesson-hero__description">Here's something that catches new architects off guard: what a system does barely shapes its architecture, while how it has to behave shapes almost everything. Two services doing completely different jobs can share an architecture if they face the same demands for speed, scale and security. Two services doing the identical job can need completely different architectures if one handles a hundred records a year and the other handles ten million. This guide is about those behavioural demands, the non functional requirements, and why they, not the feature list, decide most of what you build.</p>
       </div>
     </section>
 
@@ -50,127 +50,77 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>A clear sense of why non-functional requirements drive architecture more than functional ones do</li>
-          <li>Practical guidance on performance, scalability, availability, and security in a government context</li>
-          <li>How accessibility under WCAG 2.2 shapes core design decisions</li>
-          <li>What operability and maintainability mean for services that run for years</li>
-          <li>A workable method for capturing and quantifying NFRs that survive service assessment</li>
+          <li>Why non functional requirements drive architecture decisions more than the feature list does.</li>
+          <li>How to pin down performance, scalability, availability and security as targets you can test.</li>
+          <li>Why accessibility and security are designed in from the start, never added at the end.</li>
+          <li>A method for writing requirements that are specific, measurable and verifiable.</li>
         </ul>
       </div>
 
-      <!-- Section 1: Why non-functional requirements matter more than functional ones -->
-      <h2>Why non-functional requirements matter more than functional ones</h2>
+      <h2>Why non functional requirements drive the architecture</h2>
+      <p>This runs against how most projects work. They start with the functional requirements, what the system should do, and treat everything else as something to sort out later. Performance next sprint. Security before launch. Accessibility at the end. That order fails reliably, and it's worth understanding why. Functional requirements tell you what to build. Non functional requirements tell you how to build it, and the how is the architecture. Take a service that lets businesses submit annual energy reports. The functional requirements are unremarkable: sign in, show a form, validate it, store the submission, send a confirmation. Plenty of architectures could deliver that, from a single web application to a set of microservices to a chain of serverless functions, even a well built spreadsheet with macros.</p>
+      <figure>
+        <img src="images/lesson5-image1.svg" alt="Four candidate architectures, monolith, microservices, serverless and spreadsheet, all meet the functional requirements and pass into a teal funnel labelled non functional requirements: fifty thousand submissions in two weeks, 99.9 percent uptime, WCAG 2.2 AA, run by a team of three. Out of the bottom comes a single teal box, the few that actually fit.">
+        <figcaption>The feature list lets almost anything through. The behavioural demands do the narrowing.</figcaption>
+      </figure>
+      <p>Now add the behavioural demands. It has to take fifty thousand submissions in a two week window. It has to stay up through that window. It has to meet WCAG 2.2 AA. It has to protect commercially sensitive data at OFFICIAL SENSITIVE. It has to be run by a team of three, and changed every year when the regulations move. The options collapse. The spreadsheet is gone. The single application may buckle under the burst. Serverless scales but loads complexity onto a small operations team. The architecture is being decided almost entirely by the non functional requirements. This is why architects who fixate on features ship systems that do the right things badly: too slowly, or falling over under load, or impossible to change when the policy shifts, or shutting out anyone on a screen reader. Those are architecture failures, and they trace straight back to NFRs treated as an afterthought.</p>
+      <blockquote>Functional requirements tell you what to build. Non functional requirements tell you how. The how is the architecture.</blockquote>
 
-      <img src="images/5.1 - Why NFRs Matter More.webp" alt="Why non-functional requirements matter more than functional ones" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/5.1 - Why NFRs Matter More.webp" data-title="Why NFRs Matter More" tabindex="0" role="button" aria-label="Click to enlarge: Why non-functional requirements matter more than functional ones">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Functional and non-functional requirements compared, and why the second set usually drives the design.</p>
-
-      <p>Functional requirements describe what a system does. They're the features, the user stories, the capabilities that appear in backlogs and get demonstrated at sprint reviews. They matter, obviously. But they rarely drive architecture. Two systems with identical functional requirements can have completely different architectures depending on how fast they need to respond, how many users they need to support, how available they need to be, and how secure the data is. Those are non-functional requirements, and they're the ones that actually shape the design.</p>
-
-      <p>Consider a simple example: a service that lets citizens report energy performance data. The functional requirement is straightforward: accept a form submission, validate it, store it, and confirm receipt. You could build that with a static form and a single database. But add the non-functional context and the architecture changes completely. The service needs to handle 50,000 submissions in the final week of a reporting deadline. It needs to be available 99.9% of the time during that window. It processes personal data, so it needs appropriate security controls. It must meet WCAG 2.2 AA. Suddenly the architecture involves queuing, autoscaling, caching, monitoring, and a fundamentally different deployment model. The functional requirement didn't change. The non-functional requirements drove every significant design decision.</p>
-
-      <p>This is why architects who focus only on functional requirements produce designs that work in demos but fail in production. The architecture is shaped by the qualities the system must exhibit, not just the tasks it must perform.</p>
-
-      <blockquote>Functional requirements tell you what to build. Non-functional requirements decide whether what you build will survive contact with production.</blockquote>
-
-      <!-- Section 2: Performance -->
       <h2>Performance: what "fast enough" actually means</h2>
+      <p>Performance is the requirement everyone thinks they understand and few write down properly. "It should be fast" is not a requirement. "It should respond within two seconds under normal load and within five under peak" is. A few dimensions are worth separating. Response time is how quickly the system answers a user action, and GDS guidance puts page loads in the two to three second range, though a simple page, a complex search and a report each deserve their own target. Throughput is how much it handles per unit of time, and a system built for ten requests a second looks nothing like one built for ten thousand. Latency is how long data takes to move through the system, and whether a regulator needs to see a submission within a second, within minutes or overnight reshapes your integration design. Resource use is the quiet one, and since you are spending public money on cloud, efficiency is a value for money question, not only a technical one.</p>
+      <figure>
+        <img src="images/lesson5-image2.svg" alt="A chart of load over time. Load sits low and almost flat near the average line for most of the period, then climbs steeply to a high peak as the deadline approaches. The peak is marked in teal as the level to design for.">
+        <figcaption>Design for the peak, optimise for the norm.</figcaption>
+      </figure>
+      <p>The government trap is the deadline spike. Tax returns, grant rounds, regulatory reports: usage is not smooth, it climbs hard as a deadline nears. Design for the average and you fall over on the busiest day of the year. Get your numbers from data where you can, the current service's load, its peak to average ratio, its busy periods, and where there's no data, write your assumptions down and test them in alpha.</p>
 
-      <img src="images/5.2 - Performance.webp" alt="Performance: what fast enough actually means" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/5.2 - Performance.webp" data-title="Performance" tabindex="0" role="button" aria-label="Click to enlarge: Performance: what fast enough actually means">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How to turn "the system should be fast" into something an architect can actually use.</p>
+      <h2>Scalability and availability</h2>
+      <p>Scalability and availability sound like the same thing and are not. Scalability is coping with more load. Availability is staying up over time. For scalability, the question is what shape the growth takes. Steady growth, a new service gaining users over months, wants an architecture you can scale a step at a time. Periodic spikes, the annual deadline, want elastic scaling, capacity you add fast and release afterwards, which is where cloud earns its keep. Unexpected surges, a policy announcement that lands on the news, want elastic scaling and graceful degradation together, so the core still works even when demand outruns capacity. During the pandemic, the services on GOV.UK built to scale elastically rode the traffic, and the ones built for a steady state struggled.</p>
+      <p>Availability gets quoted as a percentage, and the number means little on its own. 99.9% sounds strong until you work out it still allows nearly nine hours of downtime a year. Fine for an internal tool used in office hours. Not fine for a service businesses depend on to meet a legal deadline. State the target uptime, the period you measure it over, when planned maintenance is allowed, how fast you have to recover from a failure, and how much data you can afford to lose. Then match those to the real impact of the service going down, rather than to a number that sounds reassuring in a slide.</p>
 
-      <p>"The system should be performant" is not a requirement. It's a wish. Performance requirements only become useful when they name the operation, the load, the target, and the conditions. A useful performance requirement looks like this: "The search results page must return within 2 seconds for 95% of requests under a concurrent load of 500 users." That gives you something to design for, test against, and monitor in production.</p>
+      <h2>Designing security in from the start</h2>
+      <p>Security is a property of the whole system, and it has to be there in the design rather than added to a finished build. In government a handful of frameworks set the terms. Data classification sets the baseline, so know the classification of every data type your service touches, mostly OFFICIAL with some OFFICIAL SENSITIVE, and design to it. The Secure by Design approach that NCSC and CDDO promote expects security to be considered at every stage rather than added at the end, which for an architect means a few habits:</p>
+      <ul>
+        <li>Threat modelling while you design, working out what could go wrong and building the mitigations in.</li>
+        <li>Secure defaults, so the system is safe out of the box rather than safe only once someone configures it.</li>
+        <li>Least privilege, so people and systems hold only the access they actually need.</li>
+        <li>Defence in depth, so no single failure opens the whole thing up.</li>
+      </ul>
+      <figure>
+        <img src="images/lesson5-image3.svg" alt="Four stacked grey layers of control, perimeter and edge, network controls, application controls, and identity and access, sit above a teal box holding OFFICIAL SENSITIVE data. An arrow down the left shows an attacker must pass every layer to reach it.">
+        <figcaption>No single layer is the defence. The stack of them is.</figcaption>
+      </figure>
+      <p>Authentication and authorisation are architecture decisions in their own right. Whether users sign in through GOV.UK One Login, a departmental provider or a third party changes the security properties, the user experience and the integration work, and authorisation, who is allowed to do what, is usually the harder half. Data protection law shapes the rest: collect only what you need, use it only for the stated purpose, keep it no longer than necessary, protect it appropriately. Handle personal data and you'll need a DPIA, and the architecture has to support the controls it identifies. Through all of it you are balancing security against usability, because every control adds friction. The aim is protection proportionate to the risk, not security theatre that irritates users without making them any safer.</p>
+      <blockquote>Security designed in from the start holds. Bolted on at the end, it is mostly theatre.</blockquote>
 
-      <p>In government services, performance matters because users often have no alternative. If a commercial site is slow, people leave and use a competitor. If a government service is slow, people are stuck, and they lose trust in the institution. The Service Standard expects services to work well for everyone, and that includes people on slow connections, older devices, and assistive technologies where performance overhead compounds.</p>
+      <h2>Accessibility shapes the architecture</h2>
+      <p>In government accessibility is law, not aspiration. The Public Sector Bodies Accessibility Regulations require public sector sites and apps to meet WCAG 2.2 AA, the Equality Act requires reasonable adjustments, and the Service Standard assesses it. For you that is a constraint reaching into fundamental decisions. Front end choices matter, because a single page application can break screen reader updates, keyboard navigation and the back button, which doesn't rule it out but does mean understanding the cost and designing around it. The GDS pattern of progressive enhancement, a baseline that works without JavaScript and then improves with it, is an architectural stance, not a styling detail. Content structure matters too, because semantic markup, heading order, link text and alternative text have to be supported by your content system and your form builder, or the service can't be made accessible however good the front end code is. How you handle errors is a design decision with accessibility built in, as is the format of anything you generate: PDF accessibility is famously hard, HTML is generally kinder, and choosing between them ripples through generation, storage and delivery. The GDS Design System gives you components already tested with assistive technology, and adopting it is itself an architecture decision that narrows your technology choices and cuts your accessibility risk. None of this can be sprinkled on at the end. An architecture that ignored accessibility needs rebuilding to get it, so treat it as first class from day one, alongside security and performance.</p>
 
-      <p>When capturing performance requirements, think about response time targets for key operations, throughput under expected and peak load, behaviour under stress (graceful degradation rather than catastrophic failure), and deadline spikes where load concentrates around specific dates. Be specific about percentiles: a 2-second average means half your users experience something worse. A 2-second 95th percentile is a much stronger commitment. And always ask what happens when the target is missed. If the answer is "nothing much," it's probably not a hard requirement. If the answer is "citizens can't file their tax return," it's a constraint that shapes your entire architecture.</p>
+      <h2>Operability and maintainability: designing for the long run</h2>
+      <p>Most architecture attention goes on building the system and far too little on running and changing it, which is backwards, because government services run for years or decades and the team that builds one is rarely the team that keeps it alive. Operability is how easily you can run it in production. That means instrumentation designed in, the logs, metrics and health checks that tell you something is wrong before users do; deployments that are routine, low risk and reversible, with pipelines, feature flags and a way back; incident response made easy by clear logs and runbooks; and capacity you can see and forecast. Maintainability is how easily you can change it. That means code a developer who never met the original team can follow, clear boundaries and loose coupling so a change in one place doesn't ripple everywhere, tests that let you verify a change safely, and policy rules held in configuration rather than code wherever practical, which matters enormously when a regulation changes and you have days, not months, to respond.</p>
+      <p>The way to make these real is to state them as targets. A new joiner should be able to make a simple change safely in their first week. A deployment should take under thirty minutes with no downtime. The root cause of a production incident should be findable within the hour. A policy rule change should be deployable within two working days. Targets like those push directly on the architecture: a set of microservices may score well on modularity and badly on operational load for a team of three, while a single application may be simpler to run and riskier to change safely. Which is right depends on the operability and maintainability targets you wrote down, which is exactly why you write them down.</p>
 
-      <blockquote>Ask how fast, under what load, for which operation, and at what cost. Anything looser is a hope, not a requirement.</blockquote>
+      <h2>Capturing and quantifying requirements</h2>
+      <p>The hard part of non functional requirements is not understanding them. It is capturing them so they are specific enough to drive a decision and testable enough to verify. A method that works for government services:</p>
+      <ul>
+        <li>Start from categories as a checklist: performance, scalability, availability, security, accessibility, operability, maintainability, compliance. For each, ask what this service actually needs.</li>
+        <li>Make every one measurable. Not "fast" but "page load under two seconds at the 95th percentile". Not "available" but "99.9% measured monthly, excluding planned maintenance". Not "secure" but "encrypted in transit with TLS 1.2 or later, and at rest".</li>
+        <li>Specify the conditions. "Under two seconds" means nothing without the load it holds at, and "99.9%" means nothing without the period and the hours it covers.</li>
+        <li>Prioritise hard. Use MoSCoW or similar to separate the genuinely non negotiable from the merely desirable, because a payments service and a guidance site do not share security priorities.</li>
+        <li>Agree them with the people who care: performance with users and operations, security with the security team and the SIRO, availability with the service owner, accessibility with the accessibility lead and researchers.</li>
+        <li>Record why each target sits where it does, so a future architect can tell whether it still holds when the context changes.</li>
+        <li>Plan how you'll verify each one: load testing for performance, monitoring for availability, penetration testing for security, automated and manual testing for accessibility. A requirement you can't verify isn't a requirement.</li>
+      </ul>
+      <p>A well captured set of these is one of the most useful things you'll produce. It drives the architecture, steers the technology, shapes the test strategy, and gives the assessment something concrete to check. The time you spend getting it right pays back many times over.</p>
 
-      <!-- Section 3: Scalability and availability -->
-      <h2>Scalability and availability: designing for reality</h2>
-
-      <img src="images/5.3 - Scalability and Availability.webp" alt="Scalability and availability: designing for reality" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/5.3 - Scalability and Availability.webp" data-title="Scalability and Availability" tabindex="0" role="button" aria-label="Click to enlarge: Scalability and availability: designing for reality">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The two properties that determine whether your service holds up when it matters.</p>
-
-      <p>Scalability is the ability to handle growth, whether that's more users, more data, or more transactions. Availability is the ability to keep working when things go wrong. They're related but distinct: a system can scale well but have poor availability if it has single points of failure, and a highly available system can still fall over if load exceeds what it was designed for.</p>
-
-      <p>For scalability, the key questions are: what's the expected growth pattern, is it gradual or does it spike around events and deadlines, and does the architecture support elastic capacity or does it require manual intervention to scale? Government services often have predictable spikes: tax deadlines, benefit payment dates, policy announcements that drive traffic. Designing for the average and hoping the peak works out is a recipe for outages at exactly the moment the service matters most.</p>
-
-      <p>For availability, the conversation starts with impact. What happens if the service is down for an hour? A day? A week? The answer determines the investment. A 99.9% availability target (roughly 8.7 hours of downtime per year) requires redundancy, automated failover, and robust monitoring. A 99.99% target (roughly 52 minutes per year) requires active-active deployment, zero-downtime releases, and significant operational maturity. Match the target to the real impact rather than picking a number because it sounds professional. And be honest about what "available" means: is it the whole service, or just the critical path? Partial degradation is often acceptable and much cheaper to achieve than full redundancy.</p>
-
-      <blockquote>Design for the peak, recover from failure, and match uptime to real impact rather than industry folklore.</blockquote>
-
-      <!-- Section 4: Security -->
-      <h2>Security as an architecture concern</h2>
-
-      <img src="images/5.4 - Security.webp" alt="Security as an architecture concern" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/5.4 - Security.webp" data-title="Security" tabindex="0" role="button" aria-label="Click to enlarge: Security as an architecture concern">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why security has to be designed in from day one, and what that means in practice.</p>
-
-      <p>Security is not a feature you add at the end. It's a property of the architecture that either exists from the start or gets retrofitted at enormous cost. In government, the stakes are higher because you're handling citizens' data, and the trust relationship between government and the public depends on that data being protected properly.</p>
-
-      <p>The starting point is data classification. What data does the service handle? Is it OFFICIAL, OFFICIAL-SENSITIVE, or higher? Does it include personal data subject to UK GDPR? Does it include special category data? The classification drives the security architecture: what encryption is needed, where data can be stored, who can access it, and what audit trail is required. Get this wrong and you'll be redesigning the data layer after a security review rejects your approach.</p>
-
-      <p>The NCSC's Secure by Design principles provide the framework: understand your risks before choosing controls, make security proportionate to the threat, and design systems that are secure by default rather than relying on users to make safe choices. In practice, this means thinking about authentication and authorisation models early, designing network boundaries and data flows with security in mind, planning for secrets management and key rotation, and building audit logging into the architecture rather than bolting it on later. A Data Protection Impact Assessment (DPIA) is required for services processing personal data at scale, and it's far easier to complete when the architecture was designed with privacy in mind from the start.</p>
-
-      <blockquote>Good security is designed in, not bolted on. Know your data, understand your risks, and choose controls that match the threat instead of performing compliance theatre.</blockquote>
-
-      <!-- Section 5: Accessibility -->
-      <h2>Accessibility is the one NFR that isn't negotiable</h2>
-
-      <img src="images/5.5 - Accessibility.webp" alt="Accessibility is the one NFR that isn't negotiable" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/5.5 - Accessibility.webp" data-title="Accessibility" tabindex="0" role="button" aria-label="Click to enlarge: Accessibility is the one NFR that isn't negotiable">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why accessibility shapes core architecture decisions, not just frontend polish.</p>
-
-      <p>Public sector services in the UK must meet WCAG 2.2 at AA level. This isn't optional, it's a legal requirement under the Public Sector Bodies Accessibility Regulations 2018. But accessibility isn't just a compliance checkbox; it's an architecture concern that affects fundamental design decisions.</p>
-
-      <p>Single-page applications (SPAs) built with heavy JavaScript frameworks create accessibility challenges that are expensive to fix after the fact: screen reader compatibility, keyboard navigation, focus management, and meaningful page announcements all require architectural support. Progressive enhancement, where the service works without JavaScript and is enhanced with it, is far easier to make accessible and aligns with the GDS Design System's approach. The choice of frontend architecture is an accessibility decision.</p>
-
-      <p>Content management systems, form builders, and PDF generators all need to produce accessible output by default. If your CMS can't generate semantic HTML, or your form builder doesn't support proper labelling and error handling, or your document generation creates inaccessible PDFs, you have an architecture problem that no amount of manual remediation will fix at scale. The GDS Design System provides accessible components and patterns, but only if your architecture can consume them properly. Choose technology that supports accessibility by default rather than fighting against it.</p>
-
-      <blockquote>Accessibility isn't something you add at the end. If the architecture doesn't support accessible patterns from the start, you'll be rebuilding it before launch.</blockquote>
-
-      <!-- Section 6: Operability and maintainability -->
-      <h2>Operability and maintainability: building for the long term</h2>
-
-      <img src="images/5.6 - Operability and Maintainability.webp" alt="Operability and maintainability: building for the long term" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/5.6 - Operability and Maintainability.webp" data-title="Operability and Maintainability" tabindex="0" role="button" aria-label="Click to enlarge: Operability and maintainability: building for the long term">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Most architecture attention goes into building the system. Far less goes into running and changing it.</p>
-
-      <p>Operability is how easy the system is to run in production. Maintainability is how easy it is to change over time. Both are NFRs that get neglected because they don't affect the initial delivery, only everything that comes after it. Government services typically run for five to ten years. The team that built the service will move on. The people who inherit it need to be able to understand it, monitor it, deploy changes safely, and respond to incidents without the original architects on call.</p>
-
-      <p>Operability means designing for observability from the start: structured logging, meaningful metrics, distributed tracing, and health checks that tell you something useful. It means deployment pipelines that support zero-downtime releases, rollback capabilities, and feature flags for gradual rollouts. It means runbooks for common incidents and clear escalation paths. None of this is glamorous, but it's the difference between a service that runs smoothly and one that generates out-of-hours calls every week.</p>
-
-      <p>Maintainability means code that's readable, well-tested, and structured so that changes in one area don't cascade unpredictably. It means documentation that explains why decisions were made, not just what was built. It means dependency management that keeps libraries current rather than letting them drift into unsupported versions. Set specific targets: deployment frequency, mean time to recovery, change failure rate. These give future teams something to measure against and help you design an architecture that supports sustainable pace rather than heroic effort.</p>
-
-      <blockquote>Design for the people who'll run and change the system after you've moved on. That work is the difference between an architecture that ages well and one that becomes everyone's least favourite codebase.</blockquote>
-
-      <!-- Section 7: Capturing and quantifying NFRs -->
-      <h2>Capturing and quantifying NFRs</h2>
-
-      <img src="images/5.7 - Capture and Quantify NFRs.webp" alt="Capturing and quantifying NFRs" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/5.7 - Capture and Quantify NFRs.webp" data-title="Capture and Quantify NFRs" tabindex="0" role="button" aria-label="Click to enlarge: Capturing and quantifying NFRs">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">A practical approach to writing non-functional requirements that actually drive design.</p>
-
-      <p>The difference between useful NFRs and useless ones is specificity. "The system should be secure" tells you nothing. "All data at rest must be encrypted using AES-256, and all data in transit must use TLS 1.2 or higher" tells you exactly what to implement and test. The goal is requirements that are measurable, testable, and tied to real constraints rather than aspirational statements that nobody can verify.</p>
-
-      <p>Start with categories as a checklist: performance, scalability, availability, security, accessibility, operability, maintainability, and any domain-specific qualities that matter for your service. For each category, ask whether there's a real constraint. Not every service needs five-nines availability or sub-second response times. The requirement should reflect the actual need, not a gold-plated ideal.</p>
-
-      <p>Make each requirement measurable by specifying the condition, the metric, and the target. "Under normal load (up to 1,000 concurrent users), the case search must return results within 1.5 seconds at the 95th percentile." That's testable. Prioritise using MoSCoW or a similar method so the team knows which NFRs are hard constraints and which are desirable targets. Include the rationale: why does this number matter? What happens if it's missed? And define how each requirement will be verified, whether through automated testing, load testing, penetration testing, or operational monitoring.</p>
-
-      <p>Well-captured NFRs become the bridge between architecture decisions and acceptance criteria. They give developers clear targets, testers clear pass/fail conditions, and assessors clear evidence that the service meets its obligations.</p>
-
-      <blockquote>Well captured NFRs are one of the most valuable artefacts an architect produces. They drive decisions, guide testing, and define what success looks like.</blockquote>
-
-      <!-- Section 8: NFRs in the service assessment context -->
-      <h2>NFRs in the service assessment context</h2>
-
-      <img src="images/5.8 - NFRs in the Service Assessment Context.webp" alt="NFRs in the service assessment context" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/5.8 - NFRs in the Service Assessment Context.webp" data-title="NFRs in the Service Assessment Context" tabindex="0" role="button" aria-label="Click to enlarge: NFRs in the service assessment context">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">How service assessment criteria turn directly into NFR conversations, and how to be ready for them.</p>
-
-      <p>The Government Service Standard isn't separate from architecture; it's a direct source of non-functional requirements. Several standard points translate directly into NFR categories. Point 5 (make sure everyone can use the service) drives accessibility requirements. Point 9 (create a secure service) drives security requirements. Point 11 (choose the right tools and technology) drives maintainability and operability requirements. Point 14 (operate a reliable service) drives availability and performance requirements.</p>
-
-      <p>Service assessors will ask how you know the service is accessible, secure, reliable, and well-supported. They'll want evidence, not assertions. Strong NFRs give you that evidence base. If you can show that you defined specific accessibility targets, tested against them, and monitor them in production, you've answered the assessor's question before they finish asking it. If your answer is "we followed best practice," you'll get follow-up questions you may not be able to answer.</p>
-
-      <p>The practical approach is to map each relevant Service Standard point to specific, measurable NFRs early in the project. Use those NFRs to drive architecture decisions, build them into your test strategy, and track them through delivery. When assessment comes, you're not scrambling to produce evidence; you're presenting the natural output of a well-run architecture practice. The NFR specification becomes your assessment preparation, because it was always the same thing.</p>
-
-      <blockquote>Don't treat service assessment as separate from architecture. Strong NFRs give you the evidence base that proves the service is accessible, secure, well justified, and reliable.</blockquote>
+      <h2>Non functional requirements at service assessment</h2>
+      <p>Public facing services are assessed against the Service Standard at alpha, beta and live, and several of the points are non functional requirements in all but name. Get the requirements right and these largely look after themselves; treat them as an afterthought and the assessment finds out quickly.</p>
+      <figure>
+        <img src="images/lesson5-image4.svg" alt="Four teal boxes, your NFRs, connect across to four grey Service Standard points. Accessibility to point 5, everyone can use it. Security and privacy to point 9. Technology choices to point 11, right tools. Reliability to point 14, a reliable service.">
+        <figcaption>The qualities you captured as requirements are the ones assessors come to check.</figcaption>
+      </figure>
+      <p>Assessors are experienced practitioners, and they can tell when these were bolted on. They ask the questions that have specific answers. What are your availability targets, and how did you arrive at them? How have you tested with assistive technology? What happens at twice the expected load? Answer those with evidence and the conversation goes well. Answer with a shrug and it doesn't. None of this is about gaming the assessment. The criteria exist because they describe the qualities that make a service work, for the people using it and for the government running it, and your non functional requirements are how the architecture delivers them.</p>
+      <blockquote>Get the non functional requirements right and the architecture has a backbone. Get them wrong and it does the right things badly.</blockquote>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
@@ -180,10 +130,8 @@
         <div>
           <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
           <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
-            <li style="margin-bottom: 0.25rem;"><a href="guide-what-a-solution-architect-does.html">What a Solution Architect actually does</a></li>
-            <li style="margin-bottom: 0.25rem;"><a href="guide-how-architecture-thinking-differs.html">How architecture thinking differs from technical thinking</a></li>
-            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem before designing the solution</a></li>
-            <li style="margin-bottom: 0.25rem;"><a href="guide-stakeholders-and-landscape.html">Stakeholders and the existing landscape</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem before you design the solution</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-stakeholders-and-landscape.html">Users, stakeholders and the people around your design</a></li>
           </ul>
         </div>
       </nav>
