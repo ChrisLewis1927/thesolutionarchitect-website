@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Assessing the current state &mdash; how to map existing systems, assess technical debt, identify root causes, and produce documentation that actually changes decisions.">
+  <meta name="description" content="How to map existing systems, weigh technical debt and integration risk, tell pain points from root causes, and produce current state documentation that actually changes decisions.">
   <meta property="og:title" content="Assessing the current state &mdash; Architect's Library">
-  <meta property="og:description" content="How to map existing systems, assess technical debt, identify root causes, and produce documentation that actually changes decisions.">
-  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <meta property="og:description" content="How to map existing systems, weigh technical debt and integration risk, tell pain points from root causes, and produce current state documentation that actually changes decisions.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Assessing the current state &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -18,7 +23,7 @@
   <header class="header" role="banner">
     <div class="container">
       <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
-        <span class="header__logo-icon">SA</span>
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
         <span>The Solution Architect</span>
       </a>
       <nav class="nav" aria-label="Main navigation">
@@ -27,7 +32,7 @@
         </button>
         <ul class="nav__list" id="nav-list" role="list">
           <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
-          <li><a href="lifecycle.html" class="nav__link">Lifecycle</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
           <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
           <li><a href="cloud.html" class="nav__link">Cloud</a></li>
           <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
@@ -41,12 +46,8 @@
   <main id="main">
     <section class="lesson-hero">
       <div class="container">
-        <div class="lesson-hero__meta">
-          <span class="badge badge--foundation">Foundation</span>
-          <span style="color: var(--color-light-grey); font-size: 0.875rem;">Assessment &amp; Discovery</span>
-        </div>
         <h1 class="lesson-hero__title">Assessing the current state</h1>
-        <p class="lesson-hero__description">Every architecture project starts from somewhere, and that somewhere is rarely as tidy as the documentation claims. This guide is about understanding what you're really working with before you design anything new.</p>
+        <p class="lesson-hero__description">Every architecture project starts from somewhere, and that somewhere is rarely as tidy as the documentation claims. Before you design anything new, you have to understand what you're really working with. This guide is about doing that honestly: mapping the systems, data and processes that already exist, weighing the debt and the risk without flinching, and telling the pain people feel apart from the causes underneath it.</p>
       </div>
     </section>
 
@@ -54,122 +55,91 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>How to map the systems, data and processes that already exist</li>
-          <li>How to assess technical debt and integration risk honestly</li>
-          <li>How to tell pain points apart from the root causes underneath them</li>
-          <li>How to produce current state documentation that actually changes decisions</li>
+          <li>How to map the systems, data and processes that already exist.</li>
+          <li>How to weigh technical debt and integration risk honestly.</li>
+          <li>How to tell pain points apart from the root causes beneath them.</li>
+          <li>How to produce current state documentation that actually changes decisions.</li>
         </ul>
       </div>
 
-      <!-- Section 1: Why current state assessment matters -->
       <h2>Why current state assessment matters</h2>
 
-      <img src="images/8.1 - Why Current State Assessment Matters.webp" alt="Why current state assessment matters before designing the future state" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/8.1 - Why Current State Assessment Matters.webp" data-title="Why Current State Assessment Matters" tabindex="0" role="button" aria-label="Click to enlarge: Why current state assessment matters before designing the future state">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Why understanding the current state is risk mitigation, not box ticking.</p>
+      <p>The hardest part of current state work is resisting the urge to skip it. Designing the future state is the interesting part, there's always pressure to get there, and so the current state gets a glance rather than a proper look. Government punishes that shortcut more than most places, because the systems here have piled up over decades, the people who understood them have long since moved on, and the documentation that outlived them was optimistic when it was written and is simply wrong now.</p>
 
-      <p>The hardest part of current state work is resisting the urge to skip it. Designing the future state is the interesting bit, and there's always pressure to get there quickly, so the current state gets a glance rather than a proper look. Government punishes that shortcut more than most places. Systems here have piled up over decades, the people who understood them have long since moved on, and the documentation that outlived them was usually optimistic when it was written and is now simply wrong.</p>
+      <figure>
+        <img src="images/lesson8-image1.png" alt="Three grey system boxes, a case system, a grants system and reporting, joined by teal lines labelled with what they carry: data, processes and contracts, with people in the middle." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The boxes are the easy part. The lines between them are the work.</figcaption>
+      </figure>
 
-      <p>A list of systems is the easy part. The harder and more valuable picture is the relationships between them: the data that moves around, the processes that quietly depend on them, the contracts that govern them, and the people who keep them running. Miss one of those and the gap reappears later as a delivery surprise, almost always an expensive one.</p>
+      <p>A list of systems is the easy part. The harder and far more valuable picture is the relationships between them: the data that moves around, the processes that quietly depend on them, the contracts that govern them, and the people who keep them running. Miss one of those and the gap reappears later as a delivery surprise, almost always an expensive one.</p>
 
-      <blockquote>Treat current state assessment as risk mitigation. Every hour spent understanding what exists saves several hours of rework once delivery is under way.</blockquote>
+      <blockquote>Treat current state assessment as risk mitigation. Every hour understanding what exists saves several once delivery is under way.</blockquote>
 
-      <!-- Section 2: Mapping existing systems -->
       <h2>Mapping existing systems</h2>
 
-      <img src="images/8.2 - Mapping Existing Systems.webp" alt="Mapping existing systems to build a shared picture of the estate" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/8.2 - Mapping Existing Systems.webp" data-title="Mapping Existing Systems" tabindex="0" role="button" aria-label="Click to enlarge: Mapping existing systems to build a shared picture of the estate">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Building a shared, honest picture of the systems you already have.</p>
+      <p>Start with whatever documentation exists, then assume it's lying to you. Not maliciously, just through neglect: a system gets changed without anyone touching the diagram, an integration gets bolted on in a hurry, a component is switched off on paper but keeps running in production. The reality lives with the people who use and operate the systems every day, which is why a conversation beats a register every time. Ask what they actually use, where their data comes from, and what breaks most often. Watch the manual steps especially closely, because the spreadsheet someone pulls from one system every Monday and loads into another is an integration whether or not anyone calls it one. You'll nearly always turn up a system nobody admitted owning: a database sitting on a desktop, a scheduled job no one remembers setting up. Those shadow systems are worth your attention, because each one is a need the official systems failed to meet. Keep the map simple enough that the whole team can read it without a key, because the goal is shared understanding, not a drawing so elaborate it becomes a thing to admire rather than use.</p>
 
-      <p>Start with whatever documentation exists, then assume it's lying to you. Not maliciously, just through neglect. A system gets changed without anyone touching the diagram, an integration gets bolted on in a hurry, a component is switched off on paper but keeps running in production. The reality lives with the people who use and operate the systems every day, which is why a conversation beats a register every time.</p>
-
-      <p>Ask what they actually use, where their data comes from, and what breaks most often. Watch the manual steps especially closely, because the spreadsheet someone pulls from one system every Monday and loads into another is an integration whether or not anyone calls it one. You'll nearly always turn up a system nobody admitted owning, a database sitting on a desktop or a scheduled job no one remembers setting up. Those shadow systems are worth your attention, because each one is a need the official systems failed to meet.</p>
-
-      <p>Keep the map simple enough that the whole team can read it without a key, because the goal is shared understanding, not a drawing so elaborate it becomes a thing to admire rather than use.</p>
-
-      <blockquote>A whiteboard sketch everyone understands beats a beautiful diagram only its author can read.</blockquote>
-
-      <!-- Section 3: Understanding technical debt -->
       <h2>Understanding technical debt</h2>
-
-      <img src="images/8.3 - Understanding Technical Debt.webp" alt="Understanding the four types of technical debt and how to communicate them" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/8.3 - Understanding Technical Debt.webp" data-title="Understanding Technical Debt" tabindex="0" role="button" aria-label="Click to enlarge: Understanding the four types of technical debt and how to communicate them">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The four kinds of debt, and how to talk about the ones that matter.</p>
 
       <p>Technical debt is the bill that eventually arrives for decisions that made sense under pressure at the time. Some of it was deliberate, taken knowingly to hit a deadline with a promise to fix it once things calmed down, and things rarely calm down. Some accumulated quietly as rotating teams of contractors each left their own fingerprints on the codebase. Some is nobody's fault at all, just the slow drift of technology that was current when it was chosen and is now well past its supported life.</p>
 
-      <p>The kind that bites hardest in government is knowledge debt, the understanding that walked out of the building when a key person's contract ended and was never written down. A system nobody fully grasps is slow and frightening to change.</p>
+      <figure>
+        <img src="images/lesson8-image2.png" alt="Above a waterline sit the visible kinds of debt: deliberate debt taken to hit a deadline, and obsolescence past its supported life. Below the line sit the hidden kinds: contractor drift, and deepest of all in teal, knowledge debt that left with the people." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The debt you can point at is rarely the debt that hurts most.</figcaption>
+      </figure>
 
-      <p>Resist the pull to catalogue every last bit of debt, which is a task with no end, and concentrate on the debt that touches your work: what makes integration harder, what makes migration riskier, what leaves a security hole you'll have to answer for. Then put it in language people who don't think in code can act on. Deferred maintenance on a building is the comparison that tends to land. It still stands, but every repair costs more than it should because you're working around years of problems that were patched over rather than fixed.</p>
+      <p>The kind that bites hardest in government is knowledge debt, the understanding that walked out of the building when a key person's contract ended and was never written down. A system nobody fully grasps is slow and frightening to change. Resist the pull to catalogue every last bit of debt, which is a task with no end, and concentrate on the debt that touches your work: what makes integration harder, what makes migration riskier, what leaves a security hole you'll have to answer for. Then put it in language people who don't think in code can act on. Deferred maintenance on a building is the comparison that tends to land: it still stands, but every repair costs more than it should, because you're working around years of problems that were patched over rather than fixed.</p>
 
-      <blockquote>Debt becomes actionable the moment you connect it to business impact: cost, delay, risk, and the ability to respond to change.</blockquote>
-
-      <!-- Section 4: Assessing integration points -->
       <h2>Assessing integration points</h2>
 
-      <img src="images/8.4 - Assessing Integration Points.webp" alt="Assessing integration points and where the risk usually sits" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/8.4 - Assessing Integration Points.webp" data-title="Assessing Integration Points" tabindex="0" role="button" aria-label="Click to enlarge: Assessing integration points and where the risk usually sits">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">What to check at every connection, and where the risk usually hides.</p>
+      <p>Integrations are where systems meet, and where projects tend to come unstuck. For each connection you want a few honest answers:</p>
+      <ul>
+        <li>What kind of interface it is.</li>
+        <li>What data crosses it, how often, and in what volume.</li>
+        <li>What happens when it fails, which is frequently nothing useful, and that is itself a finding worth recording.</li>
+        <li>Who actually owns it.</li>
+      </ul>
 
-      <p>Integrations are where systems meet, and where projects tend to come unstuck. For each connection you want a few honest answers: what kind of interface it is, what data crosses it, how often and in what volume, and what happens when it fails. That last answer is frequently nothing useful, which is itself a finding worth recording.</p>
+      <p>Ownership is where government turns murky. The integration was built years ago by a supplier who has since gone, and now neither team on either side thinks of the thing as theirs. Contracts box you in just as much, with notice periods and change fees that turn a small technical tweak into a procurement exercise. The riskiest items on any assessment are the undocumented ones, the connections held together by knowledge living in a single person's head. A plain matrix of every system to system link against these few criteria gives you one view of the whole estate and shows you where the danger actually sits, rather than where you assumed it would.</p>
 
-      <p>Ownership is where government turns murky. The integration was built years ago by a supplier who has since gone, and now neither team on either side of it thinks of the thing as theirs. Contracts can box you in just as much, with notice periods and change fees that turn a small technical tweak into a procurement exercise.</p>
+      <h2>Documenting the current state honestly</h2>
 
-      <p>The riskiest items on any assessment are the undocumented ones, the connections held together by knowledge living in a single person's head. A plain matrix listing every system to system link against these few criteria gives you one view of the whole estate and shows you where the danger actually sits, rather than where you assumed it would.</p>
+      <p>Current state documentation has one job: to help people make good decisions about the future. That only works if it tells the truth, including the parts that are uncomfortable to say out loud. The failures here are quiet ones. Systems get described as healthier than they are, because the team that built them is still in the room. Problems get noted without naming the cause, because the cause points at a decision someone is still defending. The diagram gets repeated as gospel while operations tell a completely different story. Honest documentation says what actually exists, backs it with evidence, and admits the places you couldn't verify anything. The skill with sensitive findings is to stay on facts and off judgement. Saying a system was built in 2015 on technology that has since reached end of life is a fact nobody can argue with. Saying it was badly built is a verdict that earns you an enemy and changes nothing. Write for the architect who inherits this in two years, because someone will, and they'll need to know what exists, and also why, what works, and what to keep an eye on.</p>
 
-      <blockquote>The integration nobody documented and nobody quite owns is usually the one that causes the biggest surprise later.</blockquote>
+      <blockquote>If the documentation hides the real problems, the future state design quietly inherits every one of them.</blockquote>
 
-      <!-- Section 5: Documenting current state honestly -->
-      <h2>Documenting current state honestly</h2>
-
-      <img src="images/8.5 - Documenting Current State Honestly.webp" alt="Documenting the current state honestly rather than describing how it should work" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/8.5 - Documenting Current State Honestly.webp" data-title="Documenting Current State Honestly" tabindex="0" role="button" aria-label="Click to enlarge: Documenting the current state honestly rather than describing how it should work">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Telling the truth about the estate, including the awkward parts.</p>
-
-      <p>Current state documentation has one job: to help people make good decisions about the future. That only works if it tells the truth, including the parts that are uncomfortable to say out loud. The failures here are quiet ones. Systems get described as healthier than they are because the team that built them is still in the room. Problems get noted without naming the cause, because the cause points at a decision someone is still defending. The diagram gets repeated as gospel while operations tell a completely different story.</p>
-
-      <p>Honest documentation says what actually exists, backs it with evidence, and admits the places you couldn't verify anything. The skill with sensitive findings is to stay on facts and off judgement. Saying a system was built in 2015 on technology that has since reached end of life is a fact nobody can argue with. Saying it was badly built is a verdict that earns you an enemy and changes nothing.</p>
-
-      <p>Write for the architect who inherits this in two years, because someone will, and they'll need to know not just what exists but why, what works, and what to keep an eye on.</p>
-
-      <blockquote>If the documentation hides the real problems, the future state design will quietly inherit every one of them.</blockquote>
-
-      <!-- Section 6: Capability mapping -->
       <h2>Capability mapping</h2>
 
-      <img src="images/8.6 - Capability Mapping.webp" alt="Capability mapping to show what the organisation can actually do" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/8.6 - Capability Mapping.webp" data-title="Capability Mapping" tabindex="0" role="button" aria-label="Click to enlarge: Capability mapping to show what the organisation can actually do">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Looking past the technology to what the organisation can actually do.</p>
+      <p>Systems are only part of the story. A capability is what the organisation can actually do, and it's always a blend of people, process and the technology that supports them.</p>
 
-      <p>Systems are only part of the story. A capability is what the organisation can actually do, and it's always a blend of people, process and the technology that supports them. Processing grant applications, for instance, is caseworkers plus an assessment process plus a grant system, and if you only see the system you've missed two thirds of what makes it work.</p>
+      <figure>
+        <img src="images/lesson8-image3.png" alt="Three grey boxes, people as caseworkers, process as the assessment process, and technology as the grant system, combine with plus signs and arrows into a single teal box: the capability to process grant applications." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Replace the technology alone, and the capability can still fail.</figcaption>
+      </figure>
 
-      <p>This matters most when you replace something. Swap out the technology without accounting for the skills it demands or the way work really flows, and a technically superior system will still fail in the hands of people it was never shaped around.</p>
+      <p>Processing grant applications is caseworkers plus an assessment process plus a grant system, and if you only see the system you've missed two thirds of what makes it work. This matters most when you replace something. Swap out the technology without accounting for the skills it demands or the way work really flows, and a technically superior system will still fail in the hands of people it was never shaped around. A simple maturity scale gives you a way to discuss this with people who don't live in architecture. Most government capabilities sit near the bottom of that scale, informal and dependent on particular individuals, and knowing that sets honest expectations: nudging a capability up one level is a real achievement, while promising to vault it from the bottom to the top inside a single project is how programmes end up disappointing everyone. Mapping also exposes where two teams are doing almost the same thing in different tools, which looks like easy consolidation right up until you look closely and find the differences that actually matter.</p>
 
-      <p>A simple maturity scale gives you a way to discuss this with people who don't live in architecture. Most government capabilities sit near the bottom of that scale, informal and dependent on particular individuals, and knowing that sets honest expectations. Nudging a capability up one level is a real achievement. Promising to vault it from the bottom to the top inside a single project is how programmes end up disappointing everyone.</p>
+      <h2>Pain points versus symptoms</h2>
 
-      <p>Mapping also exposes where two teams are doing almost the same thing in different tools, which looks like easy consolidation right up until you look closely and find the differences that actually matter.</p>
+      <p>When you ask people about the current state, they tell you what hurts. The system is slow. They can't get the data they need. It doesn't do what they want. Those complaints are real and worth hearing, but they're symptoms, and a single symptom can sit on top of several very different causes.</p>
 
-      <blockquote>A technically better system can still fail if you ignore the people and the process around it.</blockquote>
+      <figure>
+        <img src="images/lesson8-image4.png" alt="A grey box holds the reported symptom, the system is slow. Teal tracing lines fan out to four grey boxes below, each a possible cause: inefficient queries, undersized infrastructure, a saturated link, and heavy reports run at peak." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One complaint, several possible causes. Trace to the one that, if fixed, makes it vanish.</figcaption>
+      </figure>
 
-      <!-- Section 7: Identifying pain points vs symptoms -->
-      <h2>Identifying pain points vs symptoms</h2>
+      <p>Slow might mean inefficient queries, undersized infrastructure, a saturated link to the data centre, or simply users running heavy reports in the busiest hour of the day. Keep asking why until you reach something that, if you fixed it, would make the complaint disappear. Watch for one cause wearing different costumes across teams: when operations say the system is slow, users say the reports take forever, and the developers grumble about the database, they're usually describing one underlying problem from three angles. Design your future state around the symptoms and you'll build something that feels better for a while, then grows the very same problems once the data volume catches up. Trace it back to the cause and the new design improves in substance rather than simply looking newer.</p>
 
-      <img src="images/8.7 - Identifying Pain Points vs Symptoms.webp" alt="Identifying the difference between pain points and their root causes" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/8.7 - Identifying Pain Points vs Symptoms.webp" data-title="Identifying Pain Points vs Symptoms" tabindex="0" role="button" aria-label="Click to enlarge: Identifying the difference between pain points and their root causes">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Separating what people feel from what is really causing it.</p>
+      <h2>Documentation that changes decisions</h2>
 
-      <p>When you ask people about the current state, they tell you what hurts. The system is slow. They can't get the data they need. It doesn't do what they want. Those complaints are real and worth hearing, but they're symptoms, and a single symptom can sit on top of several very different causes. Slow might mean inefficient queries, undersized infrastructure, a saturated link to the data centre, or simply users running heavy reports in the busiest hour of the day.</p>
+      <p>All of this is wasted if the documentation ends up in a folder nobody opens. Structure it so the findings that matter reach the people making decisions first.</p>
 
-      <p>The five whys is the blunt instrument that helps here. Keep asking why until you reach something that, if you fixed it, would make the complaint disappear. Watch for one cause wearing different costumes across teams. When operations say the system is slow, users say the reports take forever, and the developers grumble about the database, they're usually describing one underlying problem from three angles.</p>
+      <figure>
+        <img src="images/lesson8-image5.png" alt="Three stacked tiers narrowing downward. The widest tier at the top, in teal, is the summary of health, biggest risks and constraints, which decision makers read. Below it, narrower, are the key findings and evidence. Narrowest at the bottom is the full detail, for those who go deeper." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Put the findings that change decisions where decision makers will actually see them.</figcaption>
+      </figure>
 
-      <p>Design your future state around the symptoms and you'll build something that feels better for a while, then grows the very same problems once the data volume catches up. Trace it back to the cause and the new design is better in substance, not just newer.</p>
-
-      <blockquote>Design for symptoms and you rebuild the same problems in nicer packaging. Root cause thinking is what moves the architecture forward.</blockquote>
-
-      <!-- Section 8: Producing actionable current state documentation -->
-      <h2>Producing actionable current state documentation</h2>
-
-      <img src="images/8.8 - Producing Actionable Current State Documentation.webp" alt="Producing current state documentation that drives decisions and shapes the future state" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/8.8 - Producing Actionable Current State Documentation.webp" data-title="Producing Actionable Current State Documentation" tabindex="0" role="button" aria-label="Click to enlarge: Producing current state documentation that drives decisions and shapes the future state">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Turning the assessment into something that actually changes decisions.</p>
-
-      <p>All of this is wasted if the documentation ends up in a folder nobody opens. Structure it so the findings that matter reach the people making decisions first: a short summary up front covering the overall health, the biggest risks, and the constraints the future state has to live within, with the detail behind it for those who need to go deeper.</p>
-
-      <p>Keep it visual, because a map of the estate or a matrix of integrations communicates faster than paragraphs ever will. Keep it honest, including the findings you'd rather not write down. Keep it current, because systems change and people move, so date it and plan to revisit it if the work runs past a few months. And keep it somewhere the team can find and open without specialist software.</p>
-
-      <p>There's a simple test for whether any of it was worth the effort. Would the future state design come out any different if you'd skipped the assessment entirely? If the honest answer is no, the work was either unnecessary, which is unlikely, or it didn't go deep enough, which is far more common.</p>
+      <p>A short summary up front covers the overall health, the biggest risks, and the constraints the future state has to live within, with the detail behind it for those who need to go deeper. Keep it visual, because a map of the estate or a matrix of integrations communicates faster than paragraphs ever will. Keep it honest, including the findings you'd rather not write down. Keep it current, because systems change and people move, so date it and plan to revisit it if the work runs past a few months. And keep it somewhere the team can find and open without specialist software. There's a simple test for whether any of it was worth the effort. Would the future state design come out any different if you'd skipped the assessment entirely? If the honest answer is no, the work was either unnecessary, which is unlikely, or it didn't go deep enough, which is far more common.</p>
 
       <blockquote>Good current state documentation passes one test: it changes what happens next. If the design would look the same without it, dig deeper.</blockquote>
 
@@ -181,22 +151,13 @@
         <div>
           <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
           <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
-            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem before you design the solution</a></li>
             <li style="margin-bottom: 0.25rem;"><a href="guide-asking-better-discovery-questions.html">Asking better discovery questions</a></li>
-            <li style="margin-bottom: 0.25rem;"><a href="artifacts.html">Architecture artifacts</a></li>
           </ul>
         </div>
       </nav>
     </div>
   </main>
-
-  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
-    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
-    <div class="lightbox__content">
-      <img class="lightbox__image" src="" alt="">
-      <p class="lightbox__title"></p>
-    </div>
-  </div>
 
   <footer class="footer" role="contentinfo">
     <div class="container">
@@ -209,7 +170,7 @@
           <p class="footer__nav-title">Learn</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="library.html">Architect's Library</a></li>
-            <li><a href="lifecycle.html">Project Lifecycle</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
             <li><a href="cloud.html">Cloud Fundamentals</a></li>
           </ul>
         </div>
@@ -230,8 +191,7 @@
         </div>
       </div>
       <div class="footer__bottom">
-        <p class="footer__tagline">Built by a UK government Solution Architect</p>
-        <p>&copy; 2025 thesolutionarchitect.uk</p>
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
       </div>
     </div>
   </footer>

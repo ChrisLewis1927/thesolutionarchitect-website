@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Integration patterns for government services &mdash; how to choose integration patterns, manage trade-offs, and handle legacy systems in UK government architecture.">
+  <meta name="description" content="How to choose integration patterns, manage trade offs, and handle legacy systems in UK government architecture.">
   <meta property="og:title" content="Integration patterns for government services &mdash; Architect's Library">
-  <meta property="og:description" content="How to choose integration patterns, manage trade-offs, and handle legacy systems in UK government architecture.">
+  <meta property="og:description" content="How to choose integration patterns, manage trade offs, and handle legacy systems in UK government architecture.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Integration patterns for government services &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -41,95 +46,99 @@
   <main id="main">
     <section class="lesson-hero">
       <div class="container">
-        <div class="lesson-hero__meta">
-          <span class="badge badge--foundation">Foundation</span>
-          <span style="color: var(--color-light-grey); font-size: 0.875rem;">Integration &amp; APIs</span>
-        </div>
         <h1 class="lesson-hero__title">Integration patterns for government services</h1>
         <p class="lesson-hero__description">Integration is where government architecture quietly comes undone, usually because the cost of connecting systems gets underestimated right up to the point where it bites. This guide walks through the patterns, the trade offs, and the failure modes you will actually meet.</p>
       </div>
     </section>
-
 
     <div class="lesson-content">
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
           <li>How to choose an integration pattern that fits the context rather than the fashion</li>
-          <li>The trade offs between point to point, hub, API, messaging, and event driven approaches</li>
           <li>When synchronous integration helps and when it quietly makes your service fragile</li>
           <li>How to deal with the legacy systems that government integration always seems to involve</li>
-          <li>How to handle data transformation and error management so failures stay contained</li>
+          <li>How to handle data transformation and errors so failures stay contained</li>
         </ul>
       </div>
 
-      <!-- Section 1: Integration patterns: an overview -->
       <h2>Integration patterns: an overview</h2>
 
-      <img src="images/11.1 - Integration Patterns Overview.webp" alt="Integration patterns across traditional tighter coupling and modern loosely coupled approaches, with guidance on how to choose" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.1 - Integration Patterns Overview.webp" data-title="Integration Patterns Overview" tabindex="0" role="button" aria-label="Click to enlarge: Integration patterns across traditional tighter coupling and modern loosely coupled approaches, with guidance on how to choose">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">The main integration patterns, what they suit, and the questions that point you towards one.</p>
+      <p>The patterns themselves are not complicated. What trips people up is choosing one out of habit rather than on the evidence in front of them. Point to point feels sensible when you have two systems to join, and it stays sensible right up until you have eight, at which point the wiring diagram looks like a plate of spaghetti and nobody can change anything without breaking something else. A hub tidies that up by giving everything a single place to connect, but it comes with a quieter cost that rarely makes it into the design document: whoever owns the hub owns everyone else's ability to integrate, which in government is a political fact as much as a technical one.</p>
 
-      <p>The patterns themselves are not complicated. What trips people up is choosing one out of habit rather than on the evidence in front of them. Point to point feels sensible when you have two systems to join, and it stays sensible right up until you have eight, at which point the wiring diagram looks like a plate of spaghetti and nobody can change anything without breaking something else. A hub tidies that up by giving everything a single place to connect, but it comes with a quieter cost that rarely makes it into the design document: whoever owns the hub owns everyone else's ability to integrate, which in government is a political fact as much as a technical one. APIs, messaging and events loosen the coupling further, and they earn their keep as the estate grows, but each one adds infrastructure you then have to run. Start with the interaction you actually need, not the pattern you would most like to put on your CV.</p>
+      <figure>
+        <img src="images/lesson11-image1.png" alt="Five small topology sketches showing point to point, hub and spoke, API, messaging, and event driven integration, arranged from tighter to looser coupling, with your service in teal among other systems in grey." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The shape of each pattern is the trade off. More coupling on the left, more infrastructure on the right.</figcaption>
+      </figure>
+
+      <p>APIs give you a clear, on demand interface and suit request and response work, which is why they dominate modern government services and why the Technology Code of Practice keeps pointing at open standards. Messaging decouples sender from receiver so each can run at its own speed. Events loosen things further still: a system announces that something happened, and anything that cares reacts, without the publisher knowing or caring who is listening. Each step towards looser coupling earns its keep as the estate grows, and each one adds infrastructure you then have to run and a team that has to understand it. Start with the interaction you actually need, not the pattern you would most like to put on your CV.</p>
 
       <blockquote>Start with the interaction you need and the coupling you can afford. The right pattern falls out of that, not the other way round.</blockquote>
 
-      <!-- Section 2: Synchronous and asynchronous: choosing the model -->
       <h2>Synchronous and asynchronous: choosing the model</h2>
 
-      <img src="images/11.2 - Synchronous vs Asynchronous.webp" alt="Synchronous integration where the caller waits compared with asynchronous integration where work is processed later, plus a decision guide" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.2 - Synchronous vs Asynchronous.webp" data-title="Synchronous vs Asynchronous" tabindex="0" role="button" aria-label="Click to enlarge: Synchronous integration where the caller waits compared with asynchronous integration where work is processed later, plus a decision guide">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Whether the caller waits for an answer shapes user experience, resilience, and how much operational complexity you take on.</p>
+      <p>This is the decision people get wrong most often, usually because synchronous feels simpler and simpler feels safer. It is simpler, right until the system you are calling slows down or falls over, at which point your service inherits its problems. Call a back office system that has been running for thirty years and let it have a bad morning, and now your users are having one too.</p>
 
-      <p>This is the decision people get wrong most often, usually because synchronous feels simpler and simpler feels safer. It is simpler, right until the system you are calling slows down or falls over, at which point your service inherits its problems. Call a thirty year old back office system synchronously and let it have a bad morning, and now your users are having one too. Asynchronous breaks that chain. You accept the request, hand back a reference number, and do the awkward work out of sight. The price is real, because you now have to think about messages that fail to arrive, arrive twice, or turn up in the wrong order, and you have to design the screen that says we will update you shortly without making anyone anxious. Most government services that work well are quietly hybrid. They are synchronous at the front door, where someone is waiting for an answer, and asynchronous in the back office, where the slow and unreliable integrations live.</p>
+      <figure>
+        <img src="images/lesson11-image2.png" alt="Two panels comparing a synchronous call, where your service and its user wait for the downstream response, with an asynchronous flow, where your service replies at once with a reference and a queue carries the work to the downstream system." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Whether the caller waits decides how much of someone else's reliability you inherit.</figcaption>
+      </figure>
 
-      <blockquote>Synchronous integration ties your availability to theirs. Sometimes that is fine. Often it is the reason your service goes down when something else does.</blockquote>
+      <p>Asynchronous breaks that chain. You accept the request, hand back a reference number, and do the awkward work out of sight. The price is real. You now have to think about messages that fail to arrive, arrive twice, or turn up in the wrong order, and you have to design the screen that says we will update you shortly without making anyone anxious. As a working rule, stay synchronous when the user genuinely needs an answer before they can proceed, an eligibility check or a payment confirmation, and the downstream system is fast and dependable. Go asynchronous when the processing takes time, the downstream system has moods, or your service needs to stay up when its dependencies are not.</p>
 
-      <!-- Section 3: Government integration platforms and common components -->
-      <h2>Government integration platforms and common components</h2>
+      <p>Most government services that work well are quietly hybrid. They are synchronous at the front door, where someone is waiting, and asynchronous in the back office, where the slow and unreliable integrations live. A grant service accepts the application and confirms it in seconds, then validates against Companies House, checks for duplicates, and routes to a caseworker in its own time. The user sees a reference number and a promise of an update within five working days, and never sees any of the machinery behind it.</p>
 
-      <img src="images/11.3 - Government Integration Platforms and Common Components.webp" alt="Reusable government common components such as Notify, Pay and One Login alongside integration platforms, with checks before adopting them" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.3 - Government Integration Platforms and Common Components.webp" data-title="Government Integration Platforms and Common Components" tabindex="0" role="button" aria-label="Click to enlarge: Reusable government common components such as Notify, Pay and One Login alongside integration platforms, with checks before adopting them">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Common components speed up delivery, and they also hand you dependencies and boundaries you need to design around.</p>
+      <h2>Government platforms and common components</h2>
 
-      <p>Reaching for a common component before building your own is the right instinct, and it is also what the Technology Code of Practice expects of you. Notify, Pay, One Login and Forms exist precisely so that you are not rebuilding email delivery or card payments for the hundredth time across government. Use them. What the adoption pages tend to skip over is that every component you reuse becomes a dependency you now carry. If Notify has an outage, your service cannot send notifications, and no amount of clever code on your side changes that, so treat these as external systems with their own availability, their own rate limits, and their own edges. Pay handles the common payment flows well and then stops short of the unusual ones. You want to find those limits during design, when changing your mind is cheap, rather than at a service assessment, when it is not.</p>
+      <p>Reaching for a common component before building your own is the right instinct, and it is also what the Technology Code of Practice expects of you. Notify handles email, text messages and letters, including the government specific edges like Welsh language and accessibility. Pay takes card payments and carries the PCI DSS burden so you do not have to. One Login handles identity for citizen facing services, and Forms can replace custom form development entirely for simple data collection. Beyond the platforms, there are cross government APIs worth knowing: Companies House for company data, HMRC for tax data with the right authorisation, Land Registry for property, Ordnance Survey for geography. Each has its own authentication, its own rate limits, and its own data quality quirks.</p>
 
-      <blockquote>Reuse what fits. Just remember that anything you reuse becomes something you depend on and cannot control.</blockquote>
+      <p>What the adoption pages tend to skip over is that every component you reuse becomes a dependency you now carry. If Notify has an outage, your service cannot send notifications, and no amount of clever code on your side changes that. Treat these as external systems with their own availability and their own edges. Queue your notifications and retry rather than assuming delivery. Read the service level commitments and set your own availability targets accordingly. And find the boundaries early: Pay handles the common payment flows well and then stops short of the unusual ones, split payments, recurring payments, conditional refunds. You want to discover that during design, when changing your mind is cheap, rather than at a service assessment, when it is not.</p>
 
-      <!-- Section 4: Legacy integration challenges -->
       <h2>Legacy integration challenges</h2>
 
-      <img src="images/11.4 - Legacy Integration Challenges.webp" alt="Common legacy integration challenges like no API and batch only processing, with pragmatic responses such as adapters and the strangler fig pattern" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.4 - Legacy Integration Challenges.webp" data-title="Legacy Integration Challenges" tabindex="0" role="button" aria-label="Click to enlarge: Common legacy integration challenges like no API and batch only processing, with pragmatic responses such as adapters and the strangler fig pattern">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Older systems rarely behave like modern platforms, so the work is isolating their quirks and designing around their constraints.</p>
+      <p>In government, integrating with something old is most of the job. There will be a system that predates your team, has no API, sends a file once a night, and behaves in ways nobody still employed can fully explain. Data access might mean direct database queries that bypass the business logic, overnight file exports, or screen scraping that breaks whenever someone adjusts a field. Sometimes the protocol is proprietary and the client library only runs on a platform you retired years ago.</p>
 
-      <p>In government, integrating with something old is not the exception, it is most of the job. There will be a system that predates your team, has no API, sends a file once a night, and behaves in ways nobody still employed can fully explain. You will not find those behaviours in the documentation, because there isn't any worth the name. You will find them in integration testing, three weeks before go live, in the shape of an error code that means one thing on Tuesdays and something else on Wednesdays. The practical move is to stop fighting this and contain it. Put an adapter between your service and the old world so all the strangeness lives in one place you control, and your new service only ever sees clean, modern data. Whether you call it a wrapper, an anti corruption layer, or scheduled synchronisation matters less than the principle behind it: the old system's quirks are a design input, and your job is to stop them leaking into everything else.</p>
+      <p><em style="color: #4a4f4b;">"The interface is documented, so the integration will be straightforward."</em></p>
+
+      <p>The documentation describes the system somebody intended to build. The running system has twenty years of undocumented validation rules, error codes that mean one thing on Tuesdays and something else on Wednesdays, and edge cases nobody remembers implementing. You will not find these on paper. You will find them in integration testing, three weeks before go live.</p>
+
+      <figure>
+        <img src="images/lesson11-image3.png" alt="Your service and an adapter you own shown in teal, exchanging clean modern data, while the adapter exchanges batch files and odd codes with a grey legacy system, keeping the quirks away from your service." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Whatever you call it, the principle is the same: the old system's strangeness lives in one place you control.</figcaption>
+      </figure>
+
+      <p>The practical move is to stop fighting this and contain it. Put an adapter between your service and the old world so all the strangeness lives in one component you own and can test, and your new service only ever sees clean, modern data. The literature offers variations on the theme. An anti corruption layer translates at the boundary. A strangler fig routes requests through a new system that delegates to the old one until, feature by feature, there is nothing left to delegate. Scheduled data synchronisation avoids touching the old system in real time at all, if a day of latency is acceptable. Which one you pick matters less than the principle behind them all: the old system's quirks are a design input, and your job is to stop them leaking into everything else.</p>
 
       <blockquote>Treat the old system's quirks as a design input, not a nasty surprise, and keep them behind the adapter where they belong.</blockquote>
 
-      <!-- Section 5: Data transformation and mapping -->
       <h2>Data transformation and mapping</h2>
 
-      <img src="images/11.5 - Data Transformation and Mapping.webp" alt="Data transformation challenges such as semantic and structural differences, with good design practices like a canonical model and transforming at the boundary" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.5 - Data Transformation and Mapping.webp" data-title="Data Transformation and Mapping" tabindex="0" role="button" aria-label="Click to enlarge: Data transformation challenges such as semantic and structural differences, with good design practices like a canonical model and transforming at the boundary">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Connecting systems is the easy half. Getting them to agree on what the data means is the half that eats the timeline.</p>
+      <p>Connecting two systems is the straightforward part. Getting them to agree on what the data means is the part that quietly consumes your schedule. One system calls a person an applicant, the next calls them a claimant, a third calls them a customer, and somewhere a fourth has decided gender is recorded as one or two with no surviving note of which is which. One system holds an address as a single text field while another wants it in four parts, so now you are parsing free text and handling every address that refuses to fit. Dates are the classic trap. They look trivial, then a time zone or a daylight saving boundary corrupts a batch and you lose a day working out why.</p>
 
-      <p>Connecting two systems is the straightforward part. Getting them to agree on what the data means is the part that quietly consumes your schedule. One system calls a person an applicant, the next calls them a claimant, a third calls them a customer, and somewhere a fourth has decided gender is recorded as one or two with no surviving note of which is which. Dates are the classic trap. They look trivial, then a time zone or a daylight saving boundary corrupts a batch and you lose a day working out why. The discipline that saves you is to keep all this mapping in one place at the boundary of your service rather than smeared through the code, and to translate everything to a single internal model so each external system needs only one set of mappings. Then test it with real data, including the ugly records, because transformation logic that sails through tidy samples tends to fall over the moment it meets production.</p>
+      <figure>
+        <img src="images/lesson11-image4.png" alt="A teal canonical data model at the centre with four grey external systems around it, each connected by a single two way mapping, so no external system needs to understand another one directly." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One internal model, one mapping per system. Without it, every new system means mapping to every existing one.</figcaption>
+      </figure>
 
-      <blockquote>The connection is only half the work. The data still has to mean the same thing on both sides, and that is where the real effort hides.</blockquote>
+      <p>Two disciplines save you. Keep all the mapping in one place at the boundary of your service rather than smeared through the code, so it can be found, tested and versioned when an external format changes, and formats always change. And translate everything to a single internal model, so each external system needs exactly one set of mappings instead of one per neighbour. Then test with real data, including the ugly records. Transformation logic that sails through tidy samples tends to fall over the moment it meets production, because production data contains the edge cases that samples were quietly chosen to avoid. When a record still refuses to transform, log it and queue it for a human rather than dropping it, because in government that record is usually a person.</p>
 
-      <!-- Section 6: Error handling in integrations -->
       <h2>Error handling in integrations</h2>
 
-      <img src="images/11.6 - Error Handling in Integrations.webp" alt="Types of integration error from transient to partial failures, with resilient patterns like retry with backoff, circuit breakers and dead letter queues" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.6 - Error Handling in Integrations.webp" data-title="Error Handling in Integrations" tabindex="0" role="button" aria-label="Click to enlarge: Types of integration error from transient to partial failures, with resilient patterns like retry with backoff, circuit breakers and dead letter queues">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Failures are inevitable, so resilience comes down to how deliberately you detect, contain, and recover from them.</p>
+      <p>Everything you integrate with will fail at some point, so the useful question is how you respond when it does. A momentary network blip and a permanently rejected record need completely different treatment. Retry the blip with increasing backoff and it resolves itself in seconds. Retry the rejected record forever and you have built a machine for generating load and hiding a problem. The standard patterns exist for exactly this. A circuit breaker stops you hammering a dependency that is clearly down and degrades gracefully instead. A dead letter queue catches messages that repeated retries cannot save, so they wait for a human instead of blocking everything behind them. Idempotency makes retries safe in the first place, so a message handled twice does not become a duplicate application or a second payment landing in someone's account.</p>
 
-      <p>Everything you integrate with will fail at some point, so the useful question is not whether but how you respond when it does. A momentary network blip and a permanently rejected record need completely different treatment. A service that retries a genuinely broken request forever causes as much trouble as one that gives up on a request that would have worked on the second attempt. The rules that matter most in government are the ones with a citizen on the other end. Never drop data silently, because a swallowed payment is someone who did not receive money they were owed, and that turns into a complaint and then a headline. Never show a user the words something went wrong and walk away from it. Tell them what happened and what to do about it. And make your retries safe to repeat, so a message handled twice does not become a duplicate application or a second payment landing in someone's account.</p>
+      <p>In government the stakes are concrete, because a swallowed failure usually has a citizen on the other end of it. A dropped payment is someone who did not receive money they were owed, and that becomes a complaint, then a case, then a headline. So the rules are short and firm:</p>
+      <ul>
+        <li>Never drop data silently. Every failure is logged, alerted, and eventually resolved.</li>
+        <li>Never show a user the words something went wrong and walk away. Tell them what happened and what to do next.</li>
+        <li>Give support staff the tools to investigate and fix the failures that automation cannot.</li>
+        <li>Watch error rates, not just individual errors. A rising rate is the early warning, and it usually arrives before the incident does.</li>
+      </ul>
 
-      <blockquote>Failure is normal. The quality of your error handling is usually what decides how reliable your service actually feels to the people using it.</blockquote>
-
-      <!-- Section 7: Designing integration architecture for government -->
       <h2>Designing integration architecture for government</h2>
 
-      <img src="images/11.7 - Designing Integration Architecture for Government.webp" alt="A systematic approach to integration architecture covering mapping the estate, classifying integrations, a dedicated integration layer, designing for failure, and planning for change" style="width: 100%; border-radius: 8px; margin-bottom: 1rem; cursor: pointer;" data-lightbox="images/11.7 - Designing Integration Architecture for Government.webp" data-title="Designing Integration Architecture for Government" tabindex="0" role="button" aria-label="Click to enlarge: A systematic approach to integration architecture covering mapping the estate, classifying integrations, a dedicated integration layer, designing for failure, and planning for change">
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Good integration architecture is methodical: map the estate, choose patterns on evidence, design for failure, and plan for change.</p>
+      <p>Put all of this together and a method appears, and it is reassuringly dull. Map the estate first, because the integration you forget is the one that derails you in month four. Write down every system you exchange data with, what flows, in which direction, how often, through what interface, and who owns it. Classify each one: fast or slow, modern or legacy, inside your department or across a boundary, sensitive or not. The right pattern falls out of the classification rather than out of preference.</p>
 
-      <p>Put all of this together and a method appears, and it is reassuringly dull. Map the estate first, because the integration you forget is the one that derails you in month four. Write down every system you exchange data with, what flows, in which direction, how often, through what interface, and who owns it. Classify each one, because the right pattern falls out of the classification rather than out of preference. Then give the whole lot somewhere to live, a dedicated integration layer that handles connection, authentication, transformation, retries, logging and monitoring in one place, so the messiness of the outside world stays out of your core service. Assume each integration will fail and decide now how that failure is spotted, explained and put right. Assume each one will change, because external APIs and data formats always do. None of this removes the difficulty of integrating in government, but it means you meet that difficulty on purpose, with a plan, rather than discovering it live in production with users watching.</p>
+      <p>Then give the whole lot somewhere to live. A dedicated integration layer handles connection, authentication, transformation, retries, logging and monitoring in one place, so the messiness of the outside world stays out of your core service. Assume each integration will fail and decide now how that failure is spotted, explained and put right. Assume each one will change, because external APIs and data formats always do, and version accordingly. Instrument everything, because integration trouble is usually the first symptom of wider trouble. None of this removes the difficulty of integrating in government. It means you meet that difficulty on purpose, with a plan, rather than discovering it live in production with users watching.</p>
 
       <blockquote>Connecting systems is the easy part to picture. Keeping those connections working while the estate around them keeps shifting is the part that actually defines the architecture.</blockquote>
 
@@ -149,14 +158,6 @@
       </nav>
     </div>
   </main>
-
-  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
-    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
-    <div class="lightbox__content">
-      <img class="lightbox__image" src="" alt="">
-      <p class="lightbox__title"></p>
-    </div>
-  </div>
 
   <footer class="footer" role="contentinfo">
     <div class="container">
