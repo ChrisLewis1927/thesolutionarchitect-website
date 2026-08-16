@@ -5,9 +5,9 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How to choose integration patterns, manage trade offs, and handle legacy systems in UK government architecture.">
+  <meta name="description" content="How to choose integration patterns, manage trade-offs, and handle legacy systems in UK government architecture.">
   <meta property="og:title" content="Integration patterns for government services &mdash; Architect's Library">
-  <meta property="og:description" content="How to choose integration patterns, manage trade offs, and handle legacy systems in UK government architecture.">
+  <meta property="og:description" content="How to choose integration patterns, manage trade-offs, and handle legacy systems in UK government architecture.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Integration patterns for government services &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Integration patterns for government services</h1>
-        <p class="lesson-hero__description">Integration is where government architecture quietly comes undone, usually because the cost of connecting systems gets underestimated right up to the point where it bites. This guide walks through the patterns, the trade offs, and the failure modes you will actually meet.</p>
+        <p class="lesson-hero__description">Integration is where government architecture quietly comes undone, usually because the cost of connecting systems gets underestimated right up to the point where it bites. This guide walks through the patterns, the trade-offs, and the failure modes you will actually meet.</p>
       </div>
     </section>
 
@@ -67,8 +67,8 @@
       <p>The patterns themselves are not complicated. What trips people up is choosing one out of habit rather than on the evidence in front of them. Point to point feels sensible when you have two systems to join, and it stays sensible right up until you have eight, at which point the wiring diagram looks like a plate of spaghetti and nobody can change anything without breaking something else. A hub tidies that up by giving everything a single place to connect, but it comes with a quieter cost that rarely makes it into the design document: whoever owns the hub owns everyone else's ability to integrate, which in government is a political fact as much as a technical one.</p>
 
       <figure>
-        <img src="images/lesson11-image1.png" alt="Five small topology sketches showing point to point, hub and spoke, API, messaging, and event driven integration, arranged from tighter to looser coupling, with your service in teal among other systems in grey." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The shape of each pattern is the trade off. More coupling on the left, more infrastructure on the right.</figcaption>
+        <img src="images/lesson11-image1.png" alt="Five small topology sketches showing point to point, hub and spoke, API, messaging, and event-driven integration, arranged from tighter to looser coupling, with your service in teal among other systems in grey." style="width: 100%; display: block;">
+        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The shape of each pattern is the trade-off. More coupling on the left, more infrastructure on the right.</figcaption>
       </figure>
 
       <p>APIs give you a clear, on demand interface and suit request and response work, which is why they dominate modern government services and why the Technology Code of Practice keeps pointing at open standards. Messaging decouples sender from receiver so each can run at its own speed. Events loosen things further still: a system announces that something happened, and anything that cares reacts, without the publisher knowing or caring who is listening. Each step towards looser coupling earns its keep as the estate grows, and each one adds infrastructure you then have to run and a team that has to understand it. Start with the interaction you actually need, not the pattern you would most like to put on your CV.</p>
@@ -90,7 +90,7 @@
 
       <h2>Government platforms and common components</h2>
 
-      <p>Reaching for a common component before building your own is the right instinct, and it is also what the Technology Code of Practice expects of you. Notify handles email, text messages and letters, including the government specific edges like Welsh language and accessibility. Pay takes card payments and carries the PCI DSS burden so you do not have to. One Login handles identity for citizen facing services, and Forms can replace custom form development entirely for simple data collection. Beyond the platforms, there are cross government APIs worth knowing: Companies House for company data, HMRC for tax data with the right authorisation, Land Registry for property, Ordnance Survey for geography. Each has its own authentication, its own rate limits, and its own data quality quirks.</p>
+      <p>Reaching for a common component before building your own is the right instinct, and it is also what the Technology Code of Practice expects of you. Notify handles email, text messages and letters, including the government specific edges like Welsh language and accessibility. Pay takes card payments and carries the PCI DSS burden so you do not have to. One Login handles identity for citizen-facing services, and Forms can replace custom form development entirely for simple data collection. Beyond the platforms, there are cross-government APIs worth knowing: Companies House for company data, HMRC for tax data with the right authorisation, Land Registry for property, Ordnance Survey for geography. Each has its own authentication, its own rate limits, and its own data quality quirks.</p>
 
       <p>What the adoption pages tend to skip over is that every component you reuse becomes a dependency you now carry. If Notify has an outage, your service cannot send notifications, and no amount of clever code on your side changes that. Treat these as external systems with their own availability and their own edges. Queue your notifications and retry rather than assuming delivery. Read the service level commitments and set your own availability targets accordingly. And find the boundaries early: Pay handles the common payment flows well and then stops short of the unusual ones, split payments, recurring payments, conditional refunds. You want to discover that during design, when changing your mind is cheap, rather than at a service assessment, when it is not.</p>
 

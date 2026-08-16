@@ -52,7 +52,7 @@
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
           <li>A clear way to tell a technical problem apart from an architecture decision, and to treat each one accordingly.</li>
           <li>The four kinds of context a design has to survive, and why ignoring any of them sinks good work.</li>
-          <li>A habit of making trade offs explicit and getting the right people to agree to them.</li>
+          <li>A habit of making trade-offs explicit and getting the right people to agree to them.</li>
           <li>The discipline of matching your level of detail to the audience and the decision in front of you.</li>
         </ul>
       </div>
@@ -63,7 +63,7 @@
         <img src="images/lesson2-image1.png" alt="A grey box labelled technical thinking, asking how do I build this, with an arrow pointing to a teal box labelled architecture thinking, asking whether we should build this and what follows if we do.">
         <figcaption>The same project, two completely different questions.</figcaption>
       </figure>
-      <p>The trap for anyone arriving from a strong technical background is to treat the second kind of question like the first, hunting for the right answer when the real work is understanding the trade offs and making a choice you can defend. The stakes are higher in government because the blast radius is wider. Choosing a database engine affects one team. Choosing to decompose a system reaches into procurement, operations, security, the skills you need to hire for and sometimes other departments. A decision that large earns more thought and broader consultation before you commit to it.</p>
+      <p>The trap for anyone arriving from a strong technical background is to treat the second kind of question like the first, hunting for the right answer when the real work is understanding the trade-offs and making a choice you can defend. The stakes are higher in government because the blast radius is wider. Choosing a database engine affects one team. Choosing to decompose a system reaches into procurement, operations, security, the skills you need to hire for and sometimes other departments. A decision that large earns more thought and broader consultation before you commit to it.</p>
       <blockquote>A technical problem has a right answer. An architecture decision has consequences you then have to live with.</blockquote>
 
       <h2>Thinking in whole systems</h2>
@@ -82,15 +82,15 @@
       </figure>
       <p>Organisational context is who holds the priorities and who actually has authority to decide, which in government means reading the machinery: how departments relate, how arm's length bodies sit, how a shared service runs across several of them. Political context is not optional and never has been. A commitment a minister makes at a conference can set a delivery date that no amount of architecture will move, so the design has to absorb it rather than argue with it. Commercial context decides what you can even reach for, because the route to market through G Cloud, the Digital Outcomes frameworks or an existing contract shapes both the technology and how fast you can have it. Delivery context is the team you have, the method they work to, and the assessment they will be held to at alpha and beta. Get all four right and you design things that get built. Ignore them and you design things that win the whiteboard and lose the programme board.</p>
 
-      <h2>Every decision is a trade off</h2>
-      <p>Architecture thinking gives up on the idea of an optimal solution, because at this level there usually isn't one. There are only trade offs, and the job is to make them visible rather than pretend they aren't there. A few that turn up on almost every government service:</p>
+      <h2>Every decision is a trade-off</h2>
+      <p>Architecture thinking gives up on the idea of an optimal solution, because at this level there usually isn't one. There are only trade-offs, and the job is to make them visible rather than pretend they aren't there. A few that turn up on almost every government service:</p>
       <ul>
         <li>Simplicity against flexibility. A single deployable is easier to build and reason about, and harder to change later. A modular design is easier to evolve and more work to build and run.</li>
         <li>Speed against quality. Shipping fast means carrying debt you will pay interest on. Shipping clean means a longer road to the first release.</li>
         <li>Cost against resilience. Spreading across regions costs real money every month. A single region is cheaper and falls over harder.</li>
         <li>Security against usability. Stronger controls protect the data and get in the user's way. Every extra step at sign in is friction someone has to accept.</li>
       </ul>
-      <p>You do not get to remove these. You get to choose which way to lean, make the choice explicit, and get the people who will live with it to agree. In government the cost of a bad trade off lands on the public. Trade accessibility away for speed and real people cannot use the service. Trade away maintainability and the taxpayer funds the rework. A useful habit: for any decision that matters, write down in one line what you gain and what you give up. If you can't write the line, you don't yet understand the decision well enough to be making it.</p>
+      <p>You do not get to remove these. You get to choose which way to lean, make the choice explicit, and get the people who will live with it to agree. In government the cost of a bad trade-off lands on the public. Trade accessibility away for speed and real people cannot use the service. Trade away maintainability and the taxpayer funds the rework. A useful habit: for any decision that matters, write down in one line what you gain and what you give up. If you can't write the line, you don't yet understand the decision well enough to be making it.</p>
 
       <h2>Working at the right level of abstraction</h2>
       <p>Technical people like detail, and detail is valuable at the right moment. Architecture thinking is the ability to move between levels of detail on purpose, and to know which level a given conversation actually needs.</p>

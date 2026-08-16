@@ -112,7 +112,7 @@
 
       <h2>Identity and access patterns</h2>
 
-      <p>Identity is one of those decisions that quietly shapes your security, your user experience and half your integration work, so it rewards some thought up front. The first instinct of a team under pressure is to build their own login and roll their own admin roles because it feels quicker, and it almost always leaves behind a duplicate user store and a pile of risk that someone else inherits. For citizen facing services, GOV.UK One Login already solves identity verification and authentication, including the awkward parts like document checking, so reuse it. For internal users, integrate with the departmental identity provider rather than minting your own accounts.</p>
+      <p>Identity is one of those decisions that quietly shapes your security, your user experience and half your integration work, so it rewards some thought up front. The first instinct of a team under pressure is to build their own login and roll their own admin roles because it feels quicker, and it almost always leaves behind a duplicate user store and a pile of risk that someone else inherits. For citizen-facing services, GOV.UK One Login already solves identity verification and authentication, including the awkward parts like document checking, so reuse it. For internal users, integrate with the departmental identity provider rather than minting your own accounts.</p>
 
       <blockquote>Authentication gets people through the door. Authorisation decides which rooms they can walk into. Confusing the two is how services end up either leaky or unusable.</blockquote>
 
@@ -143,7 +143,7 @@
       <ul>
         <li>Data: is it classified, encrypted, minimised and set to delete itself when its time is up?</li>
         <li>Application: does it authenticate appropriately, authorise with least privilege and validate what users send it?</li>
-        <li>Network: is traffic encrypted in transit, is the public facing edge protected, and is the internal network segmented where that earns its keep?</li>
+        <li>Network: is traffic encrypted in transit, is the public-facing edge protected, and is the internal network segmented where that earns its keep?</li>
         <li>Operations: are you logging who did what and when, and is anyone watching those logs?</li>
         <li>Governance: do your threat model, DPIA and risk register tell the same story rather than three unconnected ones?</li>
       </ul>

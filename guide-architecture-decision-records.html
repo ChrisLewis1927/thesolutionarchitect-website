@@ -66,13 +66,13 @@
 
       <p>An Architecture Decision Record is a short document that captures a single significant architecture decision. Michael Nygard popularised the idea in 2011, and it has spread across UK government since, for a simple reason. It fixes a problem every programme has.</p>
 
-      <p>The problem is memory. Government programmes run for years and staff rotate every eighteen months to two years on average. The decisions that shape a system, the technology choices, the integration patterns, the trade offs accepted and the options rejected, usually live only in the heads of the people who made them. When those people move on, and in the civil service they always do, the reasoning leaves with them. New teams inherit systems they do not understand, repeat mistakes that were already made once, and reverse decisions without knowing why they were made in the first place.</p>
+      <p>The problem is memory. Government programmes run for years and staff rotate every eighteen months to two years on average. The decisions that shape a system, the technology choices, the integration patterns, the trade-offs accepted and the options rejected, usually live only in the heads of the people who made them. When those people move on, and in the civil service they always do, the reasoning leaves with them. New teams inherit systems they do not understand, repeat mistakes that were already made once, and reverse decisions without knowing why they were made in the first place.</p>
 
-      <p>An ADR fixes this cheaply. When you make a decision that is significant, hard to reverse, or likely to be questioned later, you write it down in a structured record: the context, the options considered, the decision, and the consequences. Twenty minutes of writing. A dedicated, findable, dated record, rather than a meeting note that gets lost, a Slack message that scrolls away, or a memory that resigns.</p>
+      <p>An ADR fixes this cheaply. When you make a decision that is significant, hard-to-reverse, or likely to be questioned later, you write it down in a structured record: the context, the options considered, the decision, and the consequences. Twenty minutes of writing. A dedicated, findable, dated record, rather than a meeting note that gets lost, a Slack message that scrolls away, or a memory that resigns.</p>
 
       <p>The payoff goes beyond institutional memory. Writing the record sharpens the decision itself, because if you cannot articulate in writing why you chose Option A over Option B, you have not thought it through carefully enough. It gives you an audit trail, which matters in government where technology spending faces spend controls, service assessments, internal audit and the occasional National Audit Office review. Treat that as professional accountability rather than paperwork.</p>
 
-      <p>It also keeps disagreement professional. When a decision sits in a record with its full context and trade offs, people can challenge it constructively. They can say the context has changed since this was decided, or that a new option exists that did not exist then. Without the record, disagreements about old decisions turn personal, because there is nothing else to argue with.</p>
+      <p>It also keeps disagreement professional. When a decision sits in a record with its full context and trade-offs, people can challenge it constructively. They can say the context has changed since this was decided, or that a new option exists that did not exist then. Without the record, disagreements about old decisions turn personal, because there is nothing else to argue with.</p>
 
       <blockquote>The reasoning leaves when the people do. An ADR is how you keep it.</blockquote>
 
@@ -91,14 +91,14 @@
 
       <p>Options considered lists the alternatives you evaluated, each with its genuine advantages and disadvantages. The decision itself should be one or two clear sentences, with any conditions or caveats stated alongside. Consequences is where you show you thought past the immediate choice: what becomes easier, what becomes harder, what risk you have accepted, and what this decision forces or enables elsewhere.</p>
 
-      <p>If you want more, add decision makers, links to related records, and a review date. But those are extras. The seven core sections are the record.</p>
+      <p>If you want more, add decision-makers, links to related records, and a review date. But those are extras. The seven core sections are the record.</p>
 
       <h2>When to write one and when not to</h2>
 
       <p>Not every decision deserves a record. Write too many and you dilute their value and create maintenance you will resent. Write too few and the reasoning that mattered is lost. The skill is knowing where the threshold sits, and two questions find it: how much does this decision matter, and how expensive is it to reverse.</p>
 
       <figure>
-        <img src="images/lesson14-image2.png" alt="Diagram: a quadrant plotting impact against cost to reverse. High impact, hard to reverse decisions get an ADR. Low impact, easily reversed decisions do not. The remaining quadrants are judgement calls." style="width: 100%; display: block;">
+        <img src="images/lesson14-image2.png" alt="Diagram: a quadrant plotting impact against cost to reverse. High impact, hard-to-reverse decisions get an ADR. Low impact, easily reversed decisions do not. The remaining quadrants are judgement calls." style="width: 100%; display: block;">
         <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Two questions find the threshold: how much it matters, and what it costs to undo.</figcaption>
       </figure>
 
@@ -115,13 +115,13 @@
 
       <h2>Honest context, honest options</h2>
 
-      <p>The most common failure in ADRs is dishonesty. Rarely deliberate lying, but the unconscious pull towards presenting the chosen option as obviously correct and the rejected ones as obviously flawed. Give in to it and the record becomes worthless, because it no longer tells future readers what the real trade offs were.</p>
+      <p>The most common failure in ADRs is dishonesty. Rarely deliberate lying, but the unconscious pull towards presenting the chosen option as obviously correct and the rejected ones as obviously flawed. Give in to it and the record becomes worthless, because it no longer tells future readers what the real trade-offs were.</p>
 
       <p>Honest context means writing down the real situation, including the uncomfortable parts. If a procurement framework limited your options to one vendor, say so. If you chose the simpler architecture because the team lacked the skills for the sophisticated one, say so. If the timeline forced you into the more expensive route, say so. Future readers need the real constraints, and an idealised version will only mislead them.</p>
 
       <p>Honest options means presenting every alternative fairly. Each option you considered had genuine advantages, or you would not have considered it. State them clearly, including for the options you rejected. And the option you chose has disadvantages, so state those too. A record that presents the winning option as having no downsides is not credible, and assessors notice.</p>
 
-      <p>You can tell the difference at a glance. The dishonest version describes the chosen option as modern, scalable and aligned with strategy, then dismisses the rejected ones as legacy, expensive and risky. That is advocacy dressed as analysis, and every rejected option has been set up as a straw man. The honest version reads differently. The managed service brings lower operational overhead and automatic scaling, at the cost of a higher unit price and a dependency on one cloud provider. The self hosted alternative avoids licence costs and lock in, but demands an operations team you do not currently have. The emerging platform fits the use case best on paper, with a thin production track record and no government adoption to point at.</p>
+      <p>You can tell the difference at a glance. The dishonest version describes the chosen option as modern, scalable and aligned with strategy, then dismisses the rejected ones as legacy, expensive and risky. That is advocacy dressed as analysis, and every rejected option has been set up as a straw man. The honest version reads differently. The managed service brings lower operational overhead and automatic scaling, at the cost of a higher unit price and a dependency on one cloud provider. The self hosted alternative avoids licence costs and lock-in, but demands an operations team you do not currently have. The emerging platform fits the use case best on paper, with a thin production track record and no government adoption to point at.</p>
 
       <p>The second version is the useful one. It lets future readers reassess when the context changes, and it shows assessors and auditors that the thinking was rigorous rather than retrofitted.</p>
 
@@ -167,7 +167,7 @@
 
       <p>Spend controls require you to show the Central Digital and Data Office that you considered alternatives, chose rationally, and understood the implications. A set of well written ADRs is exactly that evidence. Rather than drafting a retrospective justification for the panel, you point at decisions captured in real time with their full context, which is more credible and far less effort.</p>
 
-      <p>Service assessments look for the same thing through a different lens. Assessors want evidence that options were weighed, trade offs understood, and choices aligned with the Technology Code of Practice. Your ADRs are the most direct evidence you can hand them, and an assessor who can read your reasoning will trust your architecture far more than one who has to extract it by questioning.</p>
+      <p>Service assessments look for the same thing through a different lens. Assessors want evidence that options were weighed, trade-offs understood, and choices aligned with the Technology Code of Practice. Your ADRs are the most direct evidence you can hand them, and an assessor who can read your reasoning will trust your architecture far more than one who has to extract it by questioning.</p>
 
       <p>Internal audit and the National Audit Office turn up occasionally, usually on programmes that have overspent or underdelivered. When they do, a clear decision trail is worth a great deal. The records show that choices were made deliberately, with proper consideration, at identifiable points in time. The alternative is reconstructing history from memory and old meeting notes, months or years later, and it is as unreliable as it sounds.</p>
 
@@ -185,7 +185,7 @@
 
       <p>Two more failures are quieter but just as corrosive. Stale status, where superseded records still read as Accepted, leaves new joiners holding contradictory decisions and wondering which to trust. Make the status update part of making the new decision. And inconsistent adoption undermines the whole set: if only some decisions get records, nobody can rely on the collection being complete, and they are back to asking around. A consistent set of plain records is worth more than an occasional brilliant one.</p>
 
-      <p>Which points to the right way to start. Start light. Title, status, context, decision, consequences, in a markdown file, is enough. Add options considered, decision makers and review dates as the habit matures. If writing a record takes more than half an hour, something is wrong: either the decision is too big for one record and needs splitting, or the format has grown heavier than the thinking it captures.</p>
+      <p>Which points to the right way to start. Start light. Title, status, context, decision, consequences, in a markdown file, is enough. Add options considered, decision-makers and review dates as the habit matures. If writing a record takes more than half an hour, something is wrong: either the decision is too big for one record and needs splitting, or the format has grown heavier than the thinking it captures.</p>
 
       <blockquote>A simple record written every time beats a perfect template nobody uses.</blockquote>
 
