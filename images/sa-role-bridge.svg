@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024" role="img" aria-labelledby="t d">
+<title id="t">The real role of a Solution Architect</title>
+<desc id="d">Organisation needs flow through the Solution Architect bridge to technology, supported by make, enable and inform decisions.</desc>
+
+<style>
+  :root{
+    --ink:#0B2A4A;
+    --ink-muted:#52657A;
+    --accent:#155E96;
+    --accent-2:#EAF5FC;
+    --card:#FBFCFE;
+    --card-border:#B9C9D8;
+    --soft:#DDECF6;
+    --line:#0B2A4A;
+    --shadow:rgba(11,42,74,.10);
+  }
+  svg{background:#ffffff}
+  text{
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    fill:var(--ink);
+  }
+  .title{font-size:44px;font-weight:760;letter-spacing:-1.2px}
+  .subtitle{font-size:30px;font-weight:420;fill:var(--ink-muted)}
+  .chip-title{font-size:32px;font-weight:720}
+  .chip-text{font-size:28px;font-weight:640}
+  .small{font-size:28px;font-weight:440;fill:var(--ink-muted)}
+  .card{fill:var(--card);stroke:var(--card-border);stroke-width:2.5}
+  .accent-card{fill:var(--accent-2);stroke:var(--accent);stroke-width:3}
+  .icon-bg{fill:var(--soft)}
+  .icon-line{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+  .icon-fill{fill:var(--ink)}
+  .connector{fill:none;stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+  .arrow-head{fill:var(--line)}
+  .caption{font-size:31px;font-weight:640}
+  .shadow{filter:url(#softShadow)}
+</style>
+<defs>
+  <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0B2A4A" flood-opacity=".08"/>
+  </filter>
+</defs>
+
+<rect width="1536" height="1024" fill="#fff"/>
+
+<!-- Main cards -->
+<rect class="card shadow" x="78" y="190" width="388" height="326" rx="22"/>
+
+    <g transform="translate(272 295) scale(0.9)" class="icon-line">
+      <circle cx="-28" cy="-28" r="13"/>
+      <circle cx="0" cy="-38" r="16"/>
+      <circle cx="28" cy="-28" r="13"/>
+      <path d="M-50 28v-15c0-18 12-30 30-30"/>
+      <path d="M-25 30v-18c0-22 15-36 25-36s25 14 25 36v18"/>
+      <path d="M50 28v-15c0-18-12-30-30-30"/>
+    </g>
+<text class="title" x="272" y="407" text-anchor="middle">Organisation needs</text>
+<text class="subtitle" x="272" y="460" text-anchor="middle">users, policy, money</text>
+
+<path class="connector" d="M468 340 H535"/>
+<path class="arrow-head" d="M535 340 l-18 -16 v32 z"/>
+
+<rect class="accent-card shadow" x="558" y="190" width="420" height="326" rx="22"/>
+
+    <g transform="translate(768 320) scale(0.88)" class="icon-line">
+      <path d="M-88 28h176"/>
+      <path d="M-70 28v-70M70 28v-70"/>
+      <path d="M-100 -10 C-58 -20 -35 -48 0 -48 C35 -48 58 -20 100 -10"/>
+      <path d="M-82 -8v36M-55 -17v45M-28 -35v63M28 -35v63M55 -17v45M82 -8v36"/>
+      <path d="M-105 50 C-80 40 -60 60 -35 50 S10 60 35 50 S80 60 105 50"/>
+    </g>
+<text class="title" x="768" y="421" text-anchor="middle">Solution architect</text>
+<text class="subtitle" x="768" y="478" text-anchor="middle" fill="#155E96">the bridge</text>
+
+<path class="connector" d="M980 340 H1052"/>
+<path class="arrow-head" d="M1052 340 l-18 -16 v32 z"/>
+
+<rect class="card shadow" x="1070" y="190" width="388" height="326" rx="22"/>
+
+    <g transform="translate(1264 292) scale(0.75)" class="icon-line">
+      <rect x="-48" y="-52" width="65" height="24" rx="7"/>
+      <rect x="-48" y="-20" width="65" height="24" rx="7"/>
+      <rect x="-48" y="12" width="65" height="24" rx="7"/>
+      <path d="M-33 -40h16M-33 -8h16M-33 24h16"/>
+      <path d="M8 38h58c14 0 25-10 25-23 0-12-9-22-21-23-5-20-25-31-43-23-11 5-18 14-20 26-14 1-25 12-25 25 0 10 6 18 16 18z"/>
+    </g>
+<text class="title" x="1264" y="411" text-anchor="middle">Technology</text>
+<text class="subtitle" x="1264" y="460" text-anchor="middle">systems and services</text>
+
+<!-- Caption and chips -->
+<text class="caption" x="768" y="622" text-anchor="middle">Decisions you make, enable, or keep well informed</text>
+
+<rect class="card" x="218" y="678" width="316" height="132" rx="18"/>
+<circle class="icon-bg" cx="298" cy="744" r="48"/>
+
+    <g transform="translate(298 744) scale(0.52)" class="icon-line">
+      <path d="M-38 -28l10 10 20-22"/>
+      <path d="M-38 2l10 10 20-22"/>
+      <path d="M-38 32l10 10 20-22"/>
+      <path d="M12 -30h38M12 0h38M12 30h38"/>
+    </g>
+<text class="chip-text" x="376" y="760">Make</text>
+
+<rect class="card" x="610" y="678" width="316" height="132" rx="18"/>
+<circle class="icon-bg" cx="690" cy="744" r="48"/>
+
+    <g transform="translate(690 744) scale(0.5)" class="icon-line">
+      <path d="M0-54l9 16 19-6 8 14-14 14 9 16 20 3v16l-20 3-9 16 14 14-8 14-19-6-9 16h-16l-9-16-19 6-8-14 14-14-9-16-20-3V3l20-3 9-16-14-14 8-14 19 6 9-16z"/>
+      <circle cx="0" cy="0" r="22"/>
+    </g>
+<text class="chip-text" x="770" y="760">Enable</text>
+
+<rect class="card" x="1002" y="678" width="316" height="132" rx="18"/>
+<circle class="icon-bg" cx="1082" cy="744" r="48"/>
+
+    <g transform="translate(1082 744) scale(0.5)" class="icon-line">
+      <circle cx="0" cy="0" r="50"/>
+      <path d="M0 -8v34"/>
+      <path d="M-10 28h20"/>
+      <circle cx="0" cy="-30" r="3" fill="#0B2A4A" stroke="none"/>
+    </g>
+<text class="chip-text" x="1162" y="760">Inform</text>
+</svg>

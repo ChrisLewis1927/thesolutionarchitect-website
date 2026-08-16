@@ -266,7 +266,7 @@
       "prerequisites": [14, 15],
       "skillsAddressed": ["Strategic Thinking", "Stakeholder Understanding", "Government Standards Awareness"],
       "recommendedNext": 20,
-      "contentFile": null
+      "contentFile": "lessons/lesson-019.json"
     },
     {
       "lessonNumber": 20,
@@ -279,7 +279,7 @@
       "prerequisites": [19],
       "skillsAddressed": ["Architecture Communication", "Design Quality", "Decision-Making"],
       "recommendedNext": 21,
-      "contentFile": null
+      "contentFile": "lessons/lesson-020.json"
     },
     {
       "lessonNumber": 21,
@@ -292,7 +292,7 @@
       "prerequisites": [9, 16],
       "skillsAddressed": ["Option Appraisal", "Government Standards Awareness", "Architecture Communication"],
       "recommendedNext": 22,
-      "contentFile": null
+      "contentFile": "lessons/lesson-021.json"
     },
     {
       "lessonNumber": 22,
@@ -305,7 +305,7 @@
       "prerequisites": [8, 18],
       "skillsAddressed": ["Strategic Thinking", "Option Appraisal", "Design Quality"],
       "recommendedNext": 23,
-      "contentFile": null
+      "contentFile": "lessons/lesson-022.json"
     },
     {
       "lessonNumber": 23,
@@ -318,7 +318,7 @@
       "prerequisites": [17, 19],
       "skillsAddressed": ["Stakeholder Understanding", "Strategic Thinking", "Government Standards Awareness"],
       "recommendedNext": 24,
-      "contentFile": null
+      "contentFile": "lessons/lesson-023.json"
     },
     {
       "lessonNumber": 24,
@@ -331,7 +331,7 @@
       "prerequisites": [10, 11],
       "skillsAddressed": ["Non-Functional Thinking", "Security & Risk Awareness", "Design Quality"],
       "recommendedNext": 25,
-      "contentFile": null
+      "contentFile": "lessons/lesson-024.json"
     },
     {
       "lessonNumber": 25,
@@ -344,7 +344,7 @@
       "prerequisites": [10],
       "skillsAddressed": ["Design Quality", "Government Standards Awareness", "Non-Functional Thinking"],
       "recommendedNext": 26,
-      "contentFile": null
+      "contentFile": "lessons/lesson-025.json"
     },
     {
       "lessonNumber": 26,
@@ -357,7 +357,7 @@
       "prerequisites": [21],
       "skillsAddressed": ["Option Appraisal", "Stakeholder Understanding", "Strategic Thinking"],
       "recommendedNext": 27,
-      "contentFile": null
+      "contentFile": "lessons/lesson-026.json"
     },
     {
       "lessonNumber": 27,
@@ -370,7 +370,7 @@
       "prerequisites": [22],
       "skillsAddressed": ["Strategic Thinking", "Architecture Communication", "Decision-Making"],
       "recommendedNext": 28,
-      "contentFile": null
+      "contentFile": "lessons/lesson-027.json"
     },
     {
       "lessonNumber": 28,
@@ -383,7 +383,7 @@
       "prerequisites": [20],
       "skillsAddressed": ["Architecture Communication", "Stakeholder Understanding"],
       "recommendedNext": 29,
-      "contentFile": null
+      "contentFile": "lessons/lesson-028.json"
     },
     {
       "lessonNumber": 29,
@@ -396,7 +396,7 @@
       "prerequisites": [10],
       "skillsAddressed": ["Design Quality", "Strategic Thinking", "Decision-Making"],
       "recommendedNext": 30,
-      "contentFile": null
+      "contentFile": "lessons/lesson-029.json"
     },
     {
       "lessonNumber": 30,
@@ -409,7 +409,7 @@
       "prerequisites": [12, 16],
       "skillsAddressed": ["Strategic Thinking", "Security & Risk Awareness", "Government Standards Awareness"],
       "recommendedNext": 31,
-      "contentFile": null
+      "contentFile": "lessons/lesson-030.json"
     },
     {
       "lessonNumber": 31,
@@ -422,7 +422,7 @@
       "prerequisites": [5, 24],
       "skillsAddressed": ["Non-Functional Thinking", "Design Quality"],
       "recommendedNext": 32,
-      "contentFile": null
+      "contentFile": "lessons/lesson-031.json"
     },
     {
       "lessonNumber": 32,
@@ -435,7 +435,7 @@
       "prerequisites": [11, 17],
       "skillsAddressed": ["Design Quality", "Government Standards Awareness", "Documentation Quality"],
       "recommendedNext": 33,
-      "contentFile": null
+      "contentFile": "lessons/lesson-032.json"
     },
     {
       "lessonNumber": 33,
@@ -448,7 +448,7 @@
       "prerequisites": [12, 18],
       "skillsAddressed": ["Security & Risk Awareness", "Decision-Making"],
       "recommendedNext": 34,
-      "contentFile": null
+      "contentFile": "lessons/lesson-033.json"
     },
     {
       "lessonNumber": 34,
@@ -461,7 +461,7 @@
       "prerequisites": [21],
       "skillsAddressed": ["Option Appraisal", "Decision-Making", "Strategic Thinking"],
       "recommendedNext": 35,
-      "contentFile": null
+      "contentFile": "lessons/lesson-034.json"
     },
     {
       "lessonNumber": 35,
@@ -474,7 +474,7 @@
       "prerequisites": [10, 11],
       "skillsAddressed": ["Design Quality", "Non-Functional Thinking"],
       "recommendedNext": 36,
-      "contentFile": null
+      "contentFile": "lessons/lesson-035.json"
     },
     {
       "lessonNumber": 36,
@@ -487,7 +487,7 @@
       "prerequisites": [24, 31],
       "skillsAddressed": ["Non-Functional Thinking", "Design Quality"],
       "recommendedNext": 37,
-      "contentFile": null
+      "contentFile": "lessons/lesson-036.json"
     },
     {
       "lessonNumber": 37,
@@ -500,7 +500,7 @@
       "prerequisites": [10, 25],
       "skillsAddressed": ["Design Quality", "Non-Functional Thinking", "Stakeholder Understanding"],
       "recommendedNext": 38,
-      "contentFile": null
+      "contentFile": "lessons/lesson-037.json"
     },
     {
       "lessonNumber": 38,
@@ -513,7 +513,7 @@
       "prerequisites": [19, 28],
       "skillsAddressed": ["Strategic Thinking", "Architecture Communication", "Stakeholder Understanding"],
       "recommendedNext": 39,
-      "contentFile": null
+      "contentFile": "lessons/lesson-038.json"
     },
     {
       "lessonNumber": 39,
@@ -526,7 +526,7 @@
       "prerequisites": [15, 38],
       "skillsAddressed": ["Strategic Thinking", "Stakeholder Understanding", "Architecture Communication"],
       "recommendedNext": 40,
-      "contentFile": null
+      "contentFile": "lessons/lesson-039.json"
     },
     {
       "lessonNumber": 40,
@@ -539,7 +539,7 @@
       "prerequisites": [39],
       "skillsAddressed": ["Discovery & Problem Framing", "Stakeholder Understanding", "Architecture Communication", "Design Quality", "Non-Functional Thinking", "Government Standards Awareness", "Security & Risk Awareness", "Option Appraisal", "Documentation Quality", "Decision-Making", "Strategic Thinking"],
       "recommendedNext": null,
-      "contentFile": null
+      "contentFile": "lessons/lesson-040.json"
     }
   ]
 }
