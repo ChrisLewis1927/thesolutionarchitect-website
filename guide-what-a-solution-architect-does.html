@@ -50,7 +50,7 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>A clear picture of what the role involves day to day in UK government</li>
+          <li>A clear picture of what the role involves day-to-day in UK government</li>
           <li>How the Solution Architect differs from Enterprise, Technical, Business and Data Architects</li>
           <li>What "good" looks like in government architecture</li>
           <li>How the Technology Code of Practice and Service Standard shape your decisions</li>
@@ -70,7 +70,7 @@
         <li>Running a session with policy colleagues to understand a new regulatory requirement</li>
         <li>Reviewing a proposed API design and pushing back on complexity the team does not need</li>
         <li>Writing an Architecture Decision Record explaining why you chose a managed service over a custom build</li>
-        <li>Presenting a solution options paper to a programme board, turning technical trade offs into business language</li>
+        <li>Presenting a solution options paper to a programme board, turning technical trade-offs into business language</li>
         <li>Reading a vendor proposal and spotting the risks they quietly left out</li>
         <li>Sitting in a stand up to unblock a technical dependency</li>
         <li>Updating the solution architecture document after a change in scope</li>
@@ -86,7 +86,7 @@
         <figcaption>Where the Solution Architect sits relative to the other architecture roles.</figcaption>
       </figure>
 
-      <p>The enterprise architect works at the level of the whole organisation: strategy, standards, principles, roadmaps. They might decide the department should be cloud first. You work out what that means for one specific service. The technical architect goes deep on implementation. Where you decide an event driven integration pattern is the right approach, they pick the message broker and tune it. In many government teams that line is blurred, and that is fine, as long as someone owns both the strategic and the tactical view.</p>
+      <p>The enterprise architect works at the level of the whole organisation: strategy, standards, principles, roadmaps. They might decide the department should be cloud first. You work out what that means for one specific service. The technical architect goes deep on implementation. Where you decide an event-driven integration pattern is the right approach, they pick the message broker and tune it. In many government teams that line is blurred, and that is fine, as long as someone owns both the strategic and the tactical view.</p>
       <p>The business architect maps capabilities, processes, and how the organisation is structured. You need to understand their work, because you cannot design a sound solution without the business context, but they own the business model and you own the solution design. The data architect owns data models, flows, governance, and quality. In government, where data sharing across departments is both vital and politically charged, their decisions shape what you can and cannot do.</p>
       <p>Notice the pattern. You are not the deepest specialist in any one of these areas, and you do not need to be. You are the integrator. Your value is seeing how the strategy, the process, the data, the security, and the implementation fit together, and naming the places where they do not.</p>
 
@@ -94,20 +94,20 @@
       <p>On any given day you are wearing at least one of four hats, often more than one at the same time. Most architects lean naturally towards one or two of them and quietly neglect the rest.</p>
 
       <figure>
-        <img src="images/lesson1-image3.png" alt="Diagram: the four hats a Solution Architect wears, translator, decision maker, risk manager and quality guardian.">
+        <img src="images/lesson1-image3.png" alt="Diagram: the four hats a Solution Architect wears, translator, decision-maker, risk manager and quality guardian.">
         <figcaption>The four core responsibilities you balance, often several at once.</figcaption>
       </figure>
 
       <p>As translator you move between worlds. Policy talks in outcomes and legislation, delivery in sprints and story points, security in threats and controls, commercial in contracts and service levels, leadership in risk and value. Your job is to get these groups understanding each other well enough to decide together, which means finding the right level of abstraction for each one rather than dumbing anything down.</p>
-      <p>As decision maker you choose between options, accept trade offs, and set constraints. Good architects make those decisions explicit and write them down. Poor architects make them by accident, forget them, and later wonder how the system ended up the way it did.</p>
-      <p>As risk manager you deal with the fact that every decision carries risk. New technology brings adoption risk, old technology brings obsolescence risk, building brings maintenance risk, buying brings lock in. You will not eliminate any of it, so the work is to name it, size it where you can, and make sure the right people accept it with their eyes open.</p>
+      <p>As decision-maker you choose between options, accept trade-offs, and set constraints. Good architects make those decisions explicit and write them down. Poor architects make them by accident, forget them, and later wonder how the system ended up the way it did.</p>
+      <p>As risk manager you deal with the fact that every decision carries risk. New technology brings adoption risk, old technology brings obsolescence risk, building brings maintenance risk, buying brings lock-in. You will not eliminate any of it, so the work is to name it, size it where you can, and make sure the right people accept it with their eyes open.</p>
       <p>As quality guardian you hold the line on what good enough means. Not as a gatekeeper who blocks everything, which only breeds resentment, but as the person who pushes back when a team wants to cut corners on performance, security and resilience, or when a vendor claims their product does everything, or when delivery pressure turns documentation into a someday job. It takes courage and tact in roughly equal measure.</p>
 
       <h2>What good architecture looks like in government</h2>
       <p>Good architecture in government is not the same animal as good architecture in a startup or a bank. A startup can move fast and break things. You cannot, because the things break on citizens. You are handling people's data and building services they rely on to heat their homes, claim what they are owed, or prove who they are.</p>
       <p>So the first quality is that it serves users. The Service Standard exists for a reason. However elegant the technical design, if it does not enable a service that meets a real user need, simply and reliably, it has failed.</p>
-      <p>The second, and the one that most separates experienced government architects from newcomers, is proportionality. Government services run from a single form that collects some data to platforms spanning several departments and moving millions of transactions. Good architecture matches the weight of the solution to the weight of the problem. Building a microservices estate for a service with two hundred users and fifty transactions a day is as much a failure as under building the critical one.</p>
-      <p>The rest follows from those two. Good government architecture is honest about its trade offs and makes sure the right people have accepted them. It works within real constraints rather than wishing them away, and government has plenty: procurement rules, security classifications, accessibility duties, Welsh language obligations, dependencies on other departments, ministerial priorities. It can be operated and evolved by whoever inherits it, because in government people move, contracts end, and the team in two years will not be the team today. And it fits the wider estate, reusing the cross government building blocks like GOV.UK Notify, GOV.UK Pay and GOV.UK One Login rather than rebuilding them badly.</p>
+      <p>The second, and the one that most separates experienced government architects from newcomers, is proportionality. Government services run from a single form that collects some data to platforms spanning several departments and moving millions of transactions. Good architecture matches the weight of the solution to the weight of the problem. Building a microservices estate for a service with two hundred users and fifty transactions a day is as much a failure as under-building the critical one.</p>
+      <p>The rest follows from those two. Good government architecture is honest about its trade-offs and makes sure the right people have accepted them. It works within real constraints rather than wishing them away, and government has plenty: procurement rules, security classifications, accessibility duties, Welsh language obligations, dependencies on other departments, ministerial priorities. It can be operated and evolved by whoever inherits it, because in government people move, contracts end, and the team in two years will not be the team today. And it fits the wider estate, reusing the cross-government building blocks like GOV.UK Notify, GOV.UK Pay and GOV.UK One Login rather than rebuilding them badly.</p>
       <blockquote>Good government architecture is proportionate. It matches the weight of the solution to the weight of the problem.</blockquote>
 
       <h2>The Technology Code of Practice and Service Standard</h2>
@@ -125,10 +125,10 @@
       <p>Architecture has no end date. The design keeps moving as requirements evolve and as reality intrudes on the plan, and you move with it.</p>
 
       <p class="myth">"The architect has the final say on everything technical."</p>
-      <p>You own the significant, hard to reverse decisions. The day to day technical calls belong to the team. Try to control all of it and you become the bottleneck everyone routes around.</p>
+      <p>You own the significant, hard-to-reverse decisions. The day-to-day technical calls belong to the team. Try to control all of it and you become the bottleneck everyone routes around.</p>
 
       <p class="myth">"Architecture is mostly about choosing technologies."</p>
-      <p>Technology selection is a small slice of it. The larger part is understanding the problem, setting the approach, and managing the trade offs so the whole thing holds together.</p>
+      <p>Technology selection is a small slice of it. The larger part is understanding the problem, setting the approach, and managing the trade-offs so the whole thing holds together.</p>
 
       <p class="myth">"You need to know everything."</p>
       <p>You do not. You need to know enough to ask the right questions, recognise a good answer, and tell when it is time to bring in a specialist. Some of the most credible architects are the ones comfortable saying they want the security lead in the room before they commit.</p>
@@ -143,7 +143,6 @@
         <p style="margin: 0 0 0.4rem;"><em>This is one practising architect's account of the role in UK central government, not official guidance. Local government and the NHS work differently.</em></p>
         <p style="margin: 0 0 0.6rem;"><em>Last reviewed August 2026 against the primary sources below. Government policy changes; check the source before relying on this.</em></p>
         <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
-          <li><a href="https://www.gov.uk/guidance/solution-architect" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">DDaT Capability Framework: Solution Architect</a></li>
           <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice</a></li>
           <li><a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard</a></li>
         </ul>
