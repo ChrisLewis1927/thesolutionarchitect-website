@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <!-- Cookie consent and conditional analytics -->
@@ -58,28 +58,28 @@
       </div>
 
       <h2>The real role of a Solution Architect</h2>
-      <p>Strip away the padding from the job description and the role comes down to one thing. You make sure a specific solution (a system, a service, or a set of components that have to work together) is technically sound and can actually be built here, by this organisation, within its constraints. You are the bridge between what the organisation needs and what technology can realistically build. That sounds simple. It is not.</p>
+      <p>Strip away the padding from the job description and the role comes down to one thing. You make sure a specific solution (a system, a service, or a set of components that have to work together) is technically sound and can actually be built by this organisation, within its constraints. You are the bridge between what the organisation needs and what technology can realistically build. That sounds simple. It is not.</p>
 
       <figure>
         <img src="images/lesson1-image1.png" alt="Diagram: the Solution Architect as the bridge between organisation needs and technology, making and informing decisions.">
         <figcaption>What the role actually involves: making decisions, enabling them, and keeping them well informed.</figcaption>
       </figure>
 
-      <p>The job shifts with context more than almost any other role in technology. What you do on Monday in a discovery workshop looks nothing like what you do on Thursday in a live service review. A single week might include:</p>
+      <p>The job shifts with context as much as any role in technology I've worked in. What you do on Monday in a discovery workshop looks nothing like what you do on Thursday in a live service review. A single week might include:</p>
       <ul>
         <li>Running a session with policy colleagues to understand a new regulatory requirement</li>
         <li>Reviewing a proposed API design and pushing back on complexity the team does not need</li>
         <li>Writing an Architecture Decision Record explaining why you chose a managed service over a custom build</li>
         <li>Presenting a solution options paper to a programme board, turning technical trade-offs into business language</li>
         <li>Reading a vendor proposal and spotting the risks they quietly left out</li>
-        <li>Sitting in a stand up to unblock a technical dependency</li>
+        <li>Sitting in a stand-up to unblock a technical dependency</li>
         <li>Updating the solution architecture document after a change in scope</li>
       </ul>
       <p>The thread running through all of it is decisions. You are making them, enabling them, or making sure they are well informed. The significant ones, the choices that are expensive or painful to undo later, are yours to own. In UK government that work carries extra weight. You are spending public money, so every choice has to be justifiable. You sit inside procurement frameworks that limit your options, between policy teams who may not follow the technology and delivery teams who may not follow the policy. And you are expected to meet the Technology Code of Practice and the Service Standard while still shipping something that genuinely works for users.</p>
       <blockquote>Architecture is about decisions: which ones to make, and how to make them defensible six months later.</blockquote>
 
       <h2>How the role differs from other architecture disciplines</h2>
-      <p>Confusion between architecture roles is common, and in government it is worse, because teams are small and one person often wears several of these labels at once. It pays to be precise about who does what.</p>
+      <p>Confusion between architecture roles is common, and in the government teams I've worked in it is worse, because teams are small and one person often wears several of these labels at once. It pays to be precise about who does what.</p>
 
       <figure>
         <img src="images/lesson1-image2.png" alt="Diagram: the Solution Architect as the integrator, connected to the Enterprise, Technical, Business and Data Architect roles.">
@@ -91,7 +91,7 @@
       <p>Notice the pattern. You are not the deepest specialist in any one of these areas, and you do not need to be. You are the integrator. Your value is seeing how the strategy, the process, the data, the security, and the implementation fit together, and naming the places where they do not.</p>
 
       <h2>The four hats you wear</h2>
-      <p>On any given day you are wearing at least one of four hats, often more than one at the same time. Most architects lean naturally towards one or two of them and quietly neglect the rest.</p>
+      <p>On any given day you are wearing at least one of four hats, often more than one at the same time. In my experience most architects lean towards one or two of them and quietly neglect the rest.</p>
 
       <figure>
         <img src="images/lesson1-image3.png" alt="Diagram: the four hats a Solution Architect wears, translator, decision-maker, risk manager and quality guardian.">
@@ -106,20 +106,20 @@
       <h2>What good architecture looks like in government</h2>
       <p>Good architecture in government is not the same animal as good architecture in a startup or a bank. A startup can move fast and break things. You cannot, because the things break on citizens. You are handling people's data and building services they rely on to heat their homes, claim what they are owed, or prove who they are.</p>
       <p>So the first quality is that it serves users. The Service Standard exists for a reason. However elegant the technical design, if it does not enable a service that meets a real user need, simply and reliably, it has failed.</p>
-      <p>The second, and the one that most separates experienced government architects from newcomers, is proportionality. Government services run from a single form that collects some data to platforms spanning several departments and moving millions of transactions. Good architecture matches the weight of the solution to the weight of the problem. Building a microservices estate for a service with two hundred users and fifty transactions a day is as much a failure as under-building the critical one.</p>
+      <p>The second, and the one I've seen separate experienced government architects from newcomers, is proportionality. Government services run from a single form that collects some data to platforms spanning several departments and moving millions of transactions. Good architecture matches the weight of the solution to the weight of the problem. Building a microservices estate for a service with, say, two hundred users and fifty transactions a day is as much a failure as under-building the critical one.</p>
       <p>The rest follows from those two. Good government architecture is honest about its trade-offs and makes sure the right people have accepted them. It works within real constraints rather than wishing them away, and government has plenty: procurement rules, security classifications, accessibility duties, Welsh language obligations, dependencies on other departments, ministerial priorities. It can be operated and evolved by whoever inherits it, because in government people move, contracts end, and the team in two years will not be the team today. And it fits the wider estate, reusing the cross-government building blocks like GOV.UK Notify, GOV.UK Pay and GOV.UK One Login rather than rebuilding them badly.</p>
       <blockquote>Good government architecture is proportionate. It matches the weight of the solution to the weight of the problem.</blockquote>
 
       <h2>The Technology Code of Practice and Service Standard</h2>
-      <p>Two documents shape how you work more than any others. The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice">Technology Code of Practice</a> sets 13 points that every government technology project is measured against in the Cabinet Office spend control process. They run from defining user needs and making things accessible and inclusive, through open source, open standards, Cloud First, security, privacy, reuse, integration and better use of data, to purchasing strategy and sustainability. Point 13 is meeting the Service Standard, which is why the two documents are really one lens rather than two. The <a href= "https://www.gov.uk/service-manual/service-standard">Service Standard</a> sets 14 points. If you are building a transactional service in central government you must have it <a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard">assessed</a> against them, and that applies even when the service is internal and only civil servants will ever use it. Assessments happen at the end of alpha and beta, and each point is now rated red, amber or green rather than met or not met.</p>
+      <p>Two documents shape how you work more than any others. The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice">Technology Code of Practice</a> sets 13 points that government technology projects are measured against. They run from defining user needs and making things accessible and inclusive, through open source, open standards, Cloud First, security, privacy, reuse, integration and better use of data, to purchasing strategy and sustainability. Point 13 is meeting the Service Standard, which is why the two documents are really one lens rather than two. The <a href="https://www.gov.uk/service-manual/service-standard">Service Standard</a> sets 14 points. If you are building a transactional service in central government you must have it <a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard">assessed</a> against them, and that applies even when the service is internal and only civil servants will ever use it. Assessments happen at the end of alpha and beta, and each point is now rated red, amber or green rather than met or not met.</p>
       <p>Treat neither as policy you read once and file away. They are the lens your work gets judged through at assessment. Choose to build custom instead of reusing a government component and you will need to explain why. Propose hosting it in your own data centre and you will need to justify that against Cloud First. The practical test is simple. For every significant decision you make, you should be able to say how it lines up with the Code of Practice. If you cannot, either the decision is wrong or you have not finished thinking it through.</p>
-      <p>One caveat on all of this. In July 2026 GDS set out plans to move the Service Standard away from a one-off assessment model towards a "living standard" covering the whole life of a service. The 14 points still apply today, but expect the framing around assessments to change. More details can be found <a href= "https://gds.blog.gov.uk/2026/07/02/evolving-the-service-standard-for-the-future-of-public-services/">here</a></p>
+      <p>One caveat on all of this. In July 2026 GDS set out plans to move the Service Standard away from a one-off assessment model towards a "living standard" covering the whole life of a service. The 14 points still apply today, but expect the framing around assessments to change. GDS set out its plans in <a href="https://gds.blog.gov.uk/2026/07/02/evolving-the-service-standard-for-the-future-of-public-services/">a blog post on evolving the Service Standard.</a></p>
 
       <h2>Common misconceptions about the role</h2>
       <p>A few myths trip up new architects, and they are worth naming plainly.</p>
 
       <p class="myth">"The architect is just a senior developer who draws diagrams."</p>
-      <p>Technical depth helps, but the role lives in decision making, communication, and synthesis. A brilliant coder who cannot explain a choice to a stakeholder from outside the technical team will struggle in the chair.</p>
+      <p>Technical depth helps, but the role lives in decision-making, communication, and synthesis. A brilliant coder who cannot explain a choice to a stakeholder from outside the technical team will struggle in the chair.</p>
 
       <p class="myth">"The architect designs the solution and hands it over."</p>
       <p>Architecture has no end date. The design keeps moving as requirements evolve and as reality intrudes on the plan, and you move with it.</p>
@@ -131,7 +131,7 @@
       <p>Technology selection is a small slice of it. The larger part is understanding the problem, setting the approach, and managing the trade-offs so the whole thing holds together.</p>
 
       <p class="myth">"You need to know everything."</p>
-      <p>You do not. You need to know enough to ask the right questions and recognise a good answer when you get one. Beyond that, know when to bring in a specialist. Some of the most credible architects are the ones comfortable saying they want the security lead in the room before they commit.</p>
+      <p>You do not. You need to know enough to ask the right questions and recognise a good answer when you get one. Beyond that, you need to know when to bring in a specialist. Some of the most credible architects I've worked with are the ones comfortable saying they want the security lead in the room before they commit.</p>
 
       <h2>What separates competent from excellent</h2>
       <p>A competent architect designs a solution that works. An excellent one does a few things beyond that.</p>
@@ -145,6 +145,8 @@
         <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
           <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice</a></li>
           <li><a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service assessments</a></li>
+          <li><a href="https://gds.blog.gov.uk/2026/07/02/evolving-the-service-standard-for-the-future-of-public-services/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GDS, evolving the Service Standard</a></li>
         </ul>
       </div>
 
