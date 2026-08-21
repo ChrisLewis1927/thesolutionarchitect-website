@@ -41,7 +41,7 @@ The government's API technical and data standards make the same point as a desig
 
 An open read endpoint is also a capacity commitment. You are serving traffic you do not control, at a rate the caller chooses, and caching and rate limits are how that stays affordable. The standards go further and tell you to enforce your quotas even when you have spare capacity, so that consumers get a consistent experience on the days you do not.
 
-# **JSON is easy. The agreement is not**
+### **JSON is easy. The agreement is not**
 
 Almost everything comes back as JSON: keys and values inside curly braces, keys in double quotes, objects nesting inside other objects to whatever depth you need. Values are strings, numbers, booleans, arrays, nested objects and null. It won because it needs nothing special to read or write, and it survives being passed between systems that agree on nothing else.
 
