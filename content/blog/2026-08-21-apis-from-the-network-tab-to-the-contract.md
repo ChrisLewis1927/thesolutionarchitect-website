@@ -1,112 +1,118 @@
 ---
-title: "APIs: from the network tab to the contract"
+title: What an API is, without the jargon
 date: 2026-08-21T08:07:00.000Z
 category: Cloud
-excerpt: An API is the set of promises one piece of software makes to another.
-  Here is what you may ask me, here is the shape of what comes back, here is how
-  I behave when something goes wrong, and here is what I will not change without
-  telling you first. The mechanics take an afternoon to learn. The promises
-  outlive the code, the team and usually the contract that paid for it, which is
-  the part worth your attention.
+excerpt: "An API is the way one piece of software asks another piece of software
+  for something and gets an answer back. "
 author: The Solution Architect
 ---
-An API is the set of promises one piece of software makes to another: 
+The word turns up in every delivery meeting and almost nobody stops to explain it. By the third time you have heard it, asking feels like admitting you should have known, so you nod and look it up later, and what you find is written for people who already understand it.
 
-* Here is what you may ask me
-* Here is the shape of what comes back
-* Here is how I behave when something goes wrong
-* Here is what I will not change without telling you first. 
+This starts from nothing. No assumed knowledge, no acronyms left hanging.
 
-The mechanics take an afternoon to learn. The promises outlive the code, the team and usually the contract that paid for it.
+### **One program asking another for something**
 
-Everything below is that sentence unpacked, starting with the easiest way to see it.
+An API is the way one piece of software asks another piece of software for something and gets an answer back. Everything else in this piece is detail about how the asking is done.
 
-### **Open the network tab**
+Picture a records office. You cannot walk in and go through the filing cabinets yourself. You go to a counter, make one of the specific requests they accept, and somebody brings back exactly what you asked for and nothing else. An API is that counter, built for software rather than people.
 
-Pick a public service you use often, open your browser's developer tools, go to the network tab and reload the page. You are now watching the page assemble itself.
+Two words you will hear constantly and which mean nothing more complicated than this. The program doing the asking is the client. The program doing the answering is the server. A phone app asking a government service for your licence details is the client; the thing that answers is the server. Swap the app for a spreadsheet or another department's system and nothing changes. The two programs can belong to different organisations or sit inside the same service, and the arrangement works the same way either way.
 
-The HTML document arrives first. Then stylesheets and scripts, then fonts, then images, often from an address that looks like nonsense because a content delivery network is serving them from a data centre near you. Sort the list by type and a handful of requests fall outside all of that. They go to a different host name, usually with an api or content prefix in front of the familiar domain, and what comes back is data instead of page.
+The letters stand for application programming interface, which nobody finds helpful, so it is safe to forget them.
 
-A modern page is assembled in the browser out of a dozen separate conversations, each with its own owner, its own cache behaviour and its own way of failing, so when somebody reports that the service is broken the useful question is which of those conversations broke.
+### **Go and look at one**
 
-The data calls tell you about the design as well. An endpoint named for what a screen needs, something like home page tiles, is doing presentation shaped work for one front end. An endpoint named for something the organisation owns, applications or licences or vehicles, is doing domain work and can serve anyone who asks. Both are legitimate. Building the first while telling everyone you have built the second is how you end up with an API that serves one screen beautifully and nobody else at all.
+You can watch this happening in about a minute, and it is worth doing once because it makes the rest concrete.
 
-### **Anything the browser can call, anyone can call**
+Open a website you use, right click anywhere on the page and choose Inspect. A panel opens. Find the tab labelled Network and reload the page. A list starts filling up. If your work laptop has that locked down, and plenty do, it works the same on a personal one.
 
-Copy the address of one of those images out of the network tab and paste it into a fresh browser tab. It loads. No key, no session, no permission. Do the same with a public content endpoint and you get back exactly what the website got, in any tool that can make an HTTP request.
+Every line in that list is one request the page has made. Some are fetching things you can see: the text and structure of the page, the styling that makes it look like something rather than a wall of text, the images, the fonts. Others are fetching something you cannot see directly. They come back as blocks of labelled data, and those are the API calls.
 
-The browser holds no privileged position. It is a client with a user interface bolted on. Whatever the page can fetch without credentials, anybody can fetch without credentials, at whatever volume they like. So the front end is not a security control, and hiding a field in the interface hides nothing at all. If the endpoint returns a National Insurance number and the page declines to display it, you have disclosed a National Insurance number to anyone who thought to look. It is the same argument as the [trusted network](https://thesolutionarchitect.uk/the-end-of-the-trusted-network) one, a layer further down.
+The first useful thing to take from that list is that a web page is not one thing arriving from one place. It is a dozen or more separate requests, often to different systems owned by different people. When someone says the service is down, one of those requests has usually failed rather than all of them.
 
-The government's API technical and data standards make the same point as a design rule. A response should answer the question that was asked and go no further: if the question is whether someone is eligible, the answer is true or false, and not the record that proves it. Data minimisation shows up in your endpoint design long before it shows up in a privacy notice.
+### **What a request looks like**
 
-An open read endpoint is also a capacity commitment. You are serving traffic you do not control, at a rate the caller chooses, and caching and rate limits are how that stays affordable. The standards go further and tell you to enforce your quotas even when you have spare capacity, so that consumers get a consistent experience on the days you do not.
+A request is an address and an instruction. Here is one:
 
-### **JSON is easy. The agreement is not**
+*GET https://example.gov.uk/licences/12345*
 
-Almost everything comes back as JSON: keys and values inside curly braces, keys in double quotes, objects nesting inside other objects to whatever depth you need. Values are strings, numbers, booleans, arrays, nested objects and null. It won because it needs nothing special to read or write, and it survives being passed between systems that agree on nothing else.
+The address says which thing you want. The word in front of it says what you want done with it. Every request you will ever see is a variation on those two parts.
 
-The part of the syntax that causes arguments is null. A field that exists and carries no value makes a different claim about the world from a field that is absent, and consumers will guess differently unless you tell them which you mean. That one ambiguity produces more defects than the rest of the format put together, and most of them are found in production by somebody else.
+There are four instructions you will see most of the time:
 
-What JSON gives you is a syntax. What it does not give you is an agreement, and that catches people out most visibly at the storage end. A document store accepts whatever shape you send it, which is useful when you cannot know the shape of the data in advance. It also means the validation your relational schema used to do has not gone away. It has moved into every consumer of that data, usually somewhere with less scrutiny and no test coverage.
+* **GET** fetches something and changes nothing.
+* **POST** creates something new.
+* **PUT** updates something that already exists.
+* **DELETE** removes it.
 
-So the fields need defining where both sides can see them: types, units, formats, which are optional, what an empty value means. The government standards settle some of it for you. UTF-8 for text. ISO 8601 for dates and times, so 09/08 stops meaning two different days depending on where your consumer sits. One casing convention for keys, chosen and kept. Small print, until you are joining data from four organisations and it becomes most of the work.
+Two pieces of vocabulary while we are here, because both get used as though everybody knows them. That address, the specific one you send a request to, is called an endpoint. When somebody says a system exposes three endpoints, they mean it accepts requests at three addresses. Nothing more.
 
-### **REST is a style, and the style is the point**
+And when somebody asks whether it is a REST API, they are asking whether it is arranged the way described above, with addresses naming things and instructions saying what to do with them. Most of the time the answer is yes, and it rarely changes anything you need to know.
 
-REST, representational state transfer, is the shape most of these APIs take. It is a style rather than a standard, and it is certainly not a protocol. There is no syntax to learn and no library you are obliged to use, which is most of why it spread. The style comes down to a few habits.
+Many requests also carry a key or a token alongside them, which is how the answering system knows who is asking. If you have heard a team say they are waiting on an API key, that is what they meant: permission to make requests, tied to them, so it can be counted, limited or switched off.
 
-**Resources are nouns, usually plural.** Endpoints are named for things. Applications, licences, vehicles. What you do to the thing belongs in the HTTP method. The moment you write an endpoint called getApplicationById you have stopped doing REST and started doing remote procedure calls with extra ceremony.
+What comes back
 
-**The method carries the verb.** GET reads, POST creates, PUT and PATCH update, DELETE removes. The one to take seriously is GET, which must be safe. No side effects, ever, because caches, crawlers, prefetchers and retry logic all assume it and none of them will ask you first.
+The answer arrives as text, in a format called JSON. Send the request from the last section and this is what comes back:
 
-**Hierarchy stays shallow.** Sub resources sit underneath the resource they belong to, and the government standards cap that at three levels deep. Reaching the third is itself the prompt to stop and look again, because what you usually have at that point is two resources that have been folded into one path.
+*{*
 
-None of that makes an API fast or secure by itself. REST carries no performance guarantee and no security model; both come from what you build around it. What the style buys you is predictability, and any competent developer can guess your third endpoint after reading your first two. It is the default and not the only option, though. The standards say to build RESTful where it fits and accept that it does not suit everything, streaming being their own example, and there is separate guidance on GraphQL. Everything below applies whichever shape you pick.
+ * "licence_number": "12345",*
 
-#### **Versioning is a promise about the future**
+ * "status": "active",*
 
-The interesting part of API design is never the first release. It is the fifteenth change, two years later, when you no longer know everyone who depends on you.
+ * "expires": "2027-04-30",*
 
-Additive changes are safe: a new optional field, a new endpoint, a new value in a list that clients ignore when they do not recognise it. Breaking changes remove a field, rename it, tighten validation, or make something optional mandatory. The worst of them alters what an existing value means while leaving the schema untouched, because nothing looks different and everything downstream is quietly now wrong.
+ * "penalty_points": 3*
 
-When a break is unavoidable you version, and you run the old version alongside the new one while consumers move across. That is the part people underestimate: a version number commits you to operating two things at once for as long as the slowest team takes to migrate, so you need a deprecation policy with real dates in it, and you need to know who your consumers are. You cannot retire what you cannot see. That is the unglamorous argument for API keys, registration and a published catalogue: between them they give you the list of people you owe a phone call before you change anything.
+*}*
 
-Central government has a formal version of this. Public sector organisations publish details of their APIs in the catalogue at api.gov.uk so that other organisations can find them, and listing yours there is a condition of getting one of the api.gov.uk domains. Appearing in the catalogue does not make an API publicly accessible and is not meant to; it is a discovery mechanism for the [Technology Code of Practice](https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy) expectation to share and reuse. An API nobody can find is an API somebody else pays to build again.
+Labels on the left, values on the right, a colon between them. Text values sit inside quotation marks and numbers do not. The whole thing is wrapped in curly brackets. Those few rules cover most of what you will meet.
 
-### **The documentation is the interface**
+It looks unremarkable and that is the point. It is plain text, so any system written in any language on any kind of computer can read it, which is why it ended up everywhere. A person can read it too, though it is not really written for one.
 
-Hand written API documentation drifts from the implementation within about a fortnight of the first hotfix. The answer is a machine readable definition, and OpenAPI 3 is the one to reach for; the Open Standards Board recommends it for government use. One structured file describes every endpoint, method, parameter, response code and data contract in the API.
+Notice the date. Government guidance requires dates in that order, year then month then day, precisely so that nobody has to guess whether 09/08 means the ninth of August or the eighth of September. Small rules like that one are most of what data standards are.
 
-From that file you get rendered documentation with a working console, generated client libraries, mock servers so other teams can build against you before you have finished, and contract tests that fail the build the moment code and definition disagree.
+### **When it goes wrong**
 
-### **What sits behind the endpoint**
+Every answer comes back with a number attached, and the number tells the asking program what happened. You have seen one of these already, because 404 is the one websites put on their error pages.
 
-You should know roughly what is on the other side, because that is where your seams are. A route handler bound to a path such as /users reads the request and writes the response. A controller behind it works out what the response should contain. Services behind that do the work, and one of them, only ever one, is allowed to talk to the database. That last constraint is the point of the whole arrangement: because a single component touches the data store, you can change the store, put a cache in front of it or split it in two without touching anything a caller can see. The route handler is the promise. Everything behind it is an implementation detail you have kept the right to change, and preserving that right is most of what a boundary is for.
+* **200** means it worked.
+* **400** means you asked for something in a way that made no sense.
+* **404** means the thing you asked for is not there.
+* **429** means you are asking too often and should slow down.
+* **500** means something broke at their end rather than yours.
 
-Real endpoints do more than fetch a row: a create request might validate, write, then send a confirmation, some of it in parallel, while hundreds of other requests are in flight. Which is why "the API is slow" is so rarely one thing: a slow query, a synchronous call out to something else that is slow, or work being done inside the request that had no business being there. Anything the caller does not need to wait for should not happen inside the request. Accept the work, acknowledge it, do the slow part afterwards. Nobody's connection should be held open while a mail server thinks about its life choices.
+These matter more than they look, because a program cannot read an apology. The number is what tells it whether to give up, try again in a moment, or show the user an error. Get the numbers wrong and thousands of copies of somebody else's software make the wrong decision at once.
 
-### **Where APIs get expensive**
+### **Why any of this matters in government**
 
-Three costs turn up in year two instead of at launch.
+Think about what happens without APIs. Two services need the same information, so either one copies the data and it starts going stale from the day it is copied, or a person retypes it from one screen into another, which is slower and produces mistakes nobody catches for months.
 
-**Chattiness**. A screen that needs ten resources and makes ten calls to draw itself is fine on a wired connection in an office and dreadful on a phone on a bus. The fix is an endpoint shaped for that screen, sitting in front of your domain APIs and doing the assembly server side, or parameters that let a caller ask for everything in one round trip. At bulk scale the standards have their own answer. Where the data is open and not restricted, let people download the whole dataset instead of paging through a million records: rate limits will throttle them anyway, and a dataset that changes halfway through the download hands them inconsistent records.
+An API means the organisation that owns the information holds it once, and everybody else asks for it when they need it. That is the whole argument, and it is why the [Technology Code of Practice](https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy) pushes departments to share and reuse rather than rebuild. There is a public catalogue at [api.gov.uk](https://www.api.gov.uk/) where organisations list theirs so others can find them.
 
-**Dependency chains.** Availability multiplies. Four services at 99.9 per cent, each needing the next, puts you at roughly 99.6 per cent before your own code has done a single thing wrong. The Service Manual puts it plainly: rely on a third party API and you have tied your availability to theirs. So every outbound call needs a timeout, every dependency needs a decision about what happens while it is unavailable, and users need telling honestly what is degraded. Failing well is a design decision, made deliberately or by default.
+It is also the reason "can we integrate with them" is a question with an answer. If a service has an API, you can ask it for things. If it does not, your options are a copy of the data, a spreadsheet, or a person.
 
-**The synchronous habit.** Request and response is the easy model and the wrong one for anything long running: batch processing, document generation, payments that clear overnight, anything waiting on a human decision. There the caller submits the job, gets an acknowledgement and a reference straight away, then either polls for the result or is called back when it is ready. Events and webhooks are a different shape for a different problem, and picking that shape early costs far less than retrofitting it around an interface everyone has already built against.
+### **Three things that go wrong**
 
-### **The questions governance will ask**
+You do not need to build one of these to be caught out by them.
 
-Everything above applies to any API anywhere. Take one through a design authority or a Service Standard assessment in the public sector and a fairly predictable set of questions arrives.
+**Somebody changes it.** A field gets renamed, or dropped, or starts meaning something slightly different. Everything built on top of it breaks, often quietly, and sometimes nobody notices for weeks. This is why teams version their APIs and give notice before changing them, and why the useful question to ask of any provider is how much warning you would get.
 
-Who are your consumers, and how do they find you? Where is your OpenAPI definition published? What is your versioning and deprecation policy, and how much notice does a consumer get? What data does each response carry, at what classification, and can you defend every field in it? How do callers authenticate, and how tightly are their tokens scoped? What is your rate limit, and what happens to a caller who hits it? What does your service do when something you do not own stops answering? Is it in the catalogue?
+**The other end goes down.** If your service needs four other services to answer before it can respond, you have inherited all four of their bad days. Depending on somebody else's API means depending on their reliability, their maintenance windows and their funding.
 
-Almost none of that is about code. All of it is the promise, written down somewhere another person can hold you to.
+**Anything open is genuinely open.** If a web page can fetch something without a password, so can anybody else who works out the address. Hiding a field so it does not appear on screen does not hide it, because the data still arrived. It is the [same argument as Zero Trust](https://thesolutionarchitect.uk/the-end-of-the-trusted-network), at a smaller scale: what protects information is a control on the data, not the fact that the screen chose not to show it.
 
-### **The plumbing was never the hard part**
+### **If you end up responsible for one**
 
-The technology here is the shallow end. A data format with six value types. A handful of HTTP methods. Status codes that mean what they have always meant. A definition file. A layered handler with one component allowed near the database. I put off learning any of it for years on the assumption that it went deeper than it does.
+You do not need to be technical to ask the questions that matter, and these four are the ones that catch problems early.
 
-If you want the reps, take an API your service already depends on and answer the governance questions above as though you owned it. Where is its definition? What notice would you get before it changed? What happens to your service the day it returns 500 for an hour? You will probably fail two or three, and those are the promises nobody ever made you.
+Who is using this, and do we have a way to contact them? What happens to them when we change it, and how much notice do they get? What information does each answer contain, and can we justify every field being in there? What does our service do on the day the thing we depend on stops answering?
 
-None of the mechanics is the design. The design is the promise: what you return, what you accept, what you will never break without warning, how you behave when something you depend on goes dark, and who you owe a conversation before any of it changes. The plumbing turned out to be straightforward the moment I stopped avoiding it. Keeping the promise is the job, and that one never gets easier.
+None of those are technical questions. They are all about what has been promised to somebody else.
+
+### **What it comes down to**
+
+An address, an instruction, and a block of labelled text coming back. That is an API, and once you have seen one request and one answer, most of the remaining difficulty is vocabulary rather than concept.
+
+The word sounds like it is protecting something complicated. What it is protecting is a counter, a list of things you are allowed to ask for, and an agreement about what comes back.
