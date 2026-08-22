@@ -89,7 +89,7 @@ These matter more than they look, because a program cannot read an apology. The 
 
 Think about what happens without APIs. Two services need the same information, so either one copies the data and it starts going stale from the day it is copied, or a person retypes it from one screen into another, which is slower and produces mistakes nobody catches for months.
 
-An API means the organisation that owns the information holds it once, and everybody else asks for it when they need it. That is the whole argument, and it is why the [Technology Code of Practice](<https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy target="_blank">) pushes departments to share and reuse rather than rebuild. There is a public catalogue at [api.gov.uk](https://www.api.gov.uk/) where organisations list theirs so others can find them.
+An API means the organisation that owns the information holds it once, and everybody else asks for it when they need it. That is the whole argument, and it is why the [Technology Code of Practice](https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy) pushes departments to share and reuse rather than rebuild. There is a public catalogue at [api.gov.uk](https://www.api.gov.uk/) where organisations list theirs so others can find them.
 
 It is also the reason "can we integrate with them" is a question with an answer. If a service has an API, you can ask it for things. If it does not, your options are a copy of the data, a spreadsheet, or a person.
 
