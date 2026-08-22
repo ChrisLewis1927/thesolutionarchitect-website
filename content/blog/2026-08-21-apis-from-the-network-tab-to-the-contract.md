@@ -16,7 +16,7 @@ An API is the way one piece of software asks another piece of software for somet
 
 Picture a records office. You cannot walk in and go through the filing cabinets yourself. You go to a counter, make one of the specific requests they accept, and somebody brings back exactly what you asked for and nothing else. An API is that counter, built for software rather than people.
 
-Two words you will hear constantly and which mean nothing more complicated than this. The program doing the asking is the client. The program doing the answering is the server. A phone app asking a government service for your licence details is the client; the thing that answers is the server. Swap the app for a spreadsheet or another department's system and nothing changes. The two programs can belong to different organisations or sit inside the same service, and the arrangement works the same way either way.
+Two words you will hear constantly and which mean nothing more complicated than this. The program doing the asking is the **client**. The program doing the answering is the **server**. A phone app asking a government service for your licence details is the client; the thing that answers is the server. Swap the app for a spreadsheet or another department's system and nothing changes. The two programs can belong to different organisations or sit inside the same service, and the arrangement works the same way either way.
 
 The letters stand for application programming interface, which nobody finds helpful, so it is safe to forget them.
 
@@ -34,7 +34,7 @@ The first useful thing to take from that list is that a web page is not one thin
 
 A request is an address and an instruction. Here is one:
 
-*GET https://example.gov.uk/licences/12345*
+*`GET https://example.gov.uk/licences/12345`*
 
 The address says which thing you want. The word in front of it says what you want done with it. Every request you will ever see is a variation on those two parts.
 
@@ -45,27 +45,27 @@ There are four instructions you will see most of the time:
 * **PUT** updates something that already exists.
 * **DELETE** removes it.
 
-Two pieces of vocabulary while we are here, because both get used as though everybody knows them. That address, the specific one you send a request to, is called an endpoint. When somebody says a system exposes three endpoints, they mean it accepts requests at three addresses. Nothing more.
+Two pieces of vocabulary while we are here, because both get used as though everybody knows them. That address, the specific one you send a request to, is called an **endpoint**. When somebody says a system exposes three endpoints, they mean it accepts requests at three addresses. Nothing more.
 
 And when somebody asks whether it is a REST API, they are asking whether it is arranged the way described above, with addresses naming things and instructions saying what to do with them. Most of the time the answer is yes, and it rarely changes anything you need to know.
 
 Many requests also carry a key or a token alongside them, which is how the answering system knows who is asking. If you have heard a team say they are waiting on an API key, that is what they meant: permission to make requests, tied to them, so it can be counted, limited or switched off.
 
-What comes back
+### **What comes back**
 
 The answer arrives as text, in a format called JSON. Send the request from the last section and this is what comes back:
 
-*{*
+*`{`*
 
- * "licence_number": "12345",*
+ *` "licence_number": "12345",`*
 
- * "status": "active",*
+ *` "status": "active",`*
 
- * "expires": "2027-04-30",*
+ *` "expires": "2027-04-30",`*
 
- * "penalty_points": 3*
+ *` "penalty_points": 3`*
 
-*}*
+*`}`*
 
 Labels on the left, values on the right, a colon between them. Text values sit inside quotation marks and numbers do not. The whole thing is wrapped in curly brackets. Those few rules cover most of what you will meet.
 
@@ -89,7 +89,7 @@ These matter more than they look, because a program cannot read an apology. The 
 
 Think about what happens without APIs. Two services need the same information, so either one copies the data and it starts going stale from the day it is copied, or a person retypes it from one screen into another, which is slower and produces mistakes nobody catches for months.
 
-An API means the organisation that owns the information holds it once, and everybody else asks for it when they need it. That is the whole argument, and it is why the [Technology Code of Practice](https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy) pushes departments to share and reuse rather than rebuild. There is a public catalogue at [api.gov.uk](https://www.api.gov.uk/) where organisations list theirs so others can find them.
+An API means the organisation that owns the information holds it once, and everybody else asks for it when they need it. That is the whole argument, and it is why the [Technology Code of Practice](<https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy target="_blank">) pushes departments to share and reuse rather than rebuild. There is a public catalogue at [api.gov.uk](https://www.api.gov.uk/) where organisations list theirs so others can find them.
 
 It is also the reason "can we integrate with them" is a question with an answer. If a service has an API, you can ask it for things. If it does not, your options are a copy of the data, a spreadsheet, or a person.
 
