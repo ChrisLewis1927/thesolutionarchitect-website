@@ -7,11 +7,46 @@ excerpt: Containers underpin a large share of how applications run on AWS, and
   right order.
 author: The Solution Architect
 ---
-Designing for containerised workloads on AWS
-
 Containers give you a repeatable way to package and run software, but choosing to use containers does not tell you how the application should be structured or which AWS services it should use. Those decisions still start with the workload.
 
 Do not begin by asking whether the application should use ECS, EKS or Fargate. First write down what the workload needs. The answers give you criteria against which the AWS options can be compared.
+
+```
+ <table>
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Why it affects the design</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Does the organisation already use Kubernetes?</td>
+        <td>This may make EKS a better organisational fit than introducing a second orchestration model.</td>
+      </tr>
+      <tr>
+        <td>Does the workload require a GPU, privileged access, a particular instance type or host-level software?</td>
+        <td>Some managed compute options restrict access to the underlying host.</td>
+      </tr>
+      <tr>
+        <td>Is demand steady, highly variable or unpredictable?</td>
+        <td>The utilisation pattern affects scaling, capacity management and cost.</td>
+      </tr>
+      <tr>
+        <td>What data must survive when a container is replaced?</td>
+        <td>This determines whether the application needs a database, object storage, block storage or a shared file system.</td>
+      </tr>
+      <tr>
+        <td>What are the availability and recovery requirements?</td>
+        <td>These affect placement, scaling, storage and failure-handling decisions.</td>
+      </tr>
+      <tr>
+        <td>What must be logged, measured and traced?</td>
+        <td>Containers are disposable, so operational data normally needs to leave the container.</td>
+      </tr>
+    </tbody>
+  </table>
+```
 
 Question
 
