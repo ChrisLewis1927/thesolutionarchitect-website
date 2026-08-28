@@ -24,37 +24,18 @@ Containers give you a repeatable way to package and run software, but choosing t
 
 Do not begin by asking whether the application should use ECS, EKS or Fargate. First write down what the workload needs. The answers give you criteria against which the AWS options can be compared.
 
-### Does the organisation already use Kubernetes?
+* **Does the organisation already use Kubernetes?** - Existing Kubernetes skills, tooling and platform standards may make EKS a better organisational fit than introducing a second orchestration model.
+* **Does the workload need specialist compute or host access?** - Requirements such as GPUs, privileged access, particular instance types or host-level software affect which compute options are available.
+* **Is demand steady, variable or unpredictable?** - The utilisation pattern affects scaling, capacity management and cost.
+* **What data must survive when a container is replaced?** -This determines whether the application needs a database, object storage, block storage or a shared file system.
+* **What are the availability and recovery requirements?** - These affect placement, scaling, storage and failure-handling decisions.
+* **What must be logged, measured and traced?** - Containers are disposable, so operational data normally needs to leave the container.
 
-Existing Kubernetes skills, tooling and platform standards may make EKS a better organisational fit than introducing a second orchestration model.
-
-### Does the workload need specialist compute or host access?
-
-Requirements such as GPUs, privileged access, particular instance types or host-level software affect which compute options are available.
-
-### Is demand steady, variable or unpredictable?
-
-The utilisation pattern affects scaling, capacity management and cost.
-
-### What data must survive when a container is replaced?
-
-This determines whether the application needs a database, object storage, block storage or a shared file system.
-
-### What are the availability and recovery requirements?
-
-These affect placement, scaling, storage and failure-handling decisions.
-
-### What must be logged, measured and traced?
-
-Containers are disposable, so operational data normally needs to leave the container.
-
-This is the architecture work. The service choice comes afterwards.
+***This is the architecture work. The service choice comes afterwards.***
 
 ## Containers do not mean microservices
 
 Loose coupling is useful because a component can change or fail without every dependent component having to change with it. A load balancer is one way to achieve this when several interchangeable targets serve request traffic. Queues, events, streams and workflows are other ways of reducing direct dependencies.
-
-
 
 ![](/images/blog/1-tight-versus-loose-coupling.png)
 
@@ -62,17 +43,13 @@ The important point is the interface between components, not the presence of a p
 
 The same applies to microservices. A monolith can be containerised, and a containerised application does not need to be decomposed into microservices.
 
-
-
 ![](/images/blog/2-monolith-v-microservices.png)
 
 Microservices can allow parts of an application to be deployed and scaled independently, but they also introduce network communication, distributed failure modes, additional security boundaries and more operational components. Use them when those trade-offs are justified by the application's domain, scaling needs, release model or team structure.
 
 ## What a container is
 
-A virtual machine provides a virtualised machine with its own guest operating system and kernel. A container normally runs as an isolated process while sharing the host operating system kernel with other containers on that host.
-
-
+A virtual machine behaves like a separate computer, with its own operating system running on virtualised hardware. A container normally runs as an isolated process while sharing the host operating system kernel with other containers on that host.
 
 ![](/images/blog/3-virtual-machines-v-containers.png)
 
@@ -84,8 +61,6 @@ Packaging the runtime environment also improves consistency between environments
 
 A container image is made from read-only layers. When a container runs, it receives a writable layer for changes made during that container's lifetime. Removing the container removes that writable layer.
 
-
-
 ![](/images/blog/4-container-image-layers.png)
 
 Keep production images focused on what the application actually needs. Smaller images require less storage and network transfer and can reduce the number of unnecessary packages and vulnerabilities shipped with the application.
@@ -93,8 +68,6 @@ Keep production images focused on what the application actually needs. Smaller i
 Container images commonly use the Open Container Initiative image format. Amazon Elastic Container Registry (ECR) stores Docker and OCI-compatible images and artefacts. Private repositories can be protected with IAM and repository policies, and ECR provides vulnerability-scanning capabilities.
 
 Image tags are convenient labels, but deployments that require an exact immutable image can identify it by its content digest.
-
-
 
 ![](/images/blog/4.620build20deploy-20pipeline.png)
 
@@ -140,33 +113,17 @@ EKS can run workloads on EC2-backed nodes or Fargate. EKS Auto Mode can also man
 
 Fargate for EKS has limitations that matter when evaluating it. For example, it does not support GPUs, privileged containers, DaemonSets, EBS volumes or Fargate Spot.
 
-\[IMAGE 6 — Do not use the old orchestrator and launch type matrix unchanged. Replace it only with an updated version that reflects the current ECS and EKS compute models.]
-
 The decision is therefore not simply "managed equals Fargate" and "control equals EC2". Compare the workload's host requirements, operational model, scaling pattern and expected utilisation before choosing.
 
 ## Keep persistent state outside disposable containers
 
 A container should be replaceable without losing important application state. That does not mean every workload is stateless. It means persistent state should be stored somewhere with the required durability and lifecycle.
 
-### Object storage
-
-For documents, images, exports and other object data, Amazon S3 may be appropriate.
-
-### Relational or application data
-
-For persistent relational data, a managed database such as Amazon RDS or Aurora may be appropriate.
-
-### Shared file-system access
-
-For workloads that need a shared file system, Amazon EFS may be appropriate.
-
-### Persistent block storage
-
-For workloads that need block storage, Amazon EBS may be appropriate where it is supported by the selected orchestration and compute model.
-
-### Temporary working data
-
-Ephemeral task, pod or node storage can be used where losing the data is acceptable.
+* **Object storage** - For documents, images, exports and other object data, Amazon S3 may be appropriate.
+* **Relational or application data** - For persistent relational data, a managed database such as Amazon RDS or Aurora may be appropriate.
+* **Shared file-system access** - For workloads that need a shared file system, Amazon EFS may be appropriate.
+* **Persistent block storage** - For workloads that need block storage, Amazon EBS may be appropriate where it is supported by the selected orchestration and compute model.
+* **Temporary working data** - Ephemeral task, pod or node storage can be used where losing the data is acceptable.
 
 Storage semantics come before the service name. EFS and EBS are not interchangeable: one provides shared file storage while the other provides block storage, and support differs between ECS, EKS and their compute options.
 
@@ -179,16 +136,6 @@ Amazon CloudWatch provides metrics and logs for AWS container workloads. ECS Con
 FireLens is an ECS log-routing capability. It can use Fluent Bit or Fluentd to route container logs to supported AWS or partner destinations and can be used with ECS workloads running on Fargate or EC2-based capacity.
 
 EKS has its own observability choices, including CloudWatch, Prometheus and OpenTelemetry tooling. The right combination depends on what the organisation already operates and which metrics, logs and traces are needed.
-
-## A worked decision
-
-Consider an illustrative internal API. Demand varies during the working day, it does not require Kubernetes, GPUs, privileged host access or a custom operating system, and the application itself is stateless. Persistent records are stored in a managed database and generated files in object storage.
-
-The main evaluation criteria are therefore low infrastructure-management effort, automatic replacement of failed tasks, straightforward scaling and integration with existing AWS networking and identity.
-
-ECS on Fargate would be a reasonable option to evaluate because none of the stated requirements needs access to the underlying hosts and there is no requirement for Kubernetes. ECS Managed Instances or EC2-backed ECS could still be preferable if later analysis showed that sustained utilisation, specialised compute or host-level requirements changed the trade-off.
-
-That is the important architecture pattern: the requirement produces the criteria, the criteria are used to compare the options, and the evidence supports the final decision.
 
 ## Summary
 
