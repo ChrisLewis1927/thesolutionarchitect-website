@@ -11,7 +11,9 @@ Containers give you a repeatable way to package and run software, but choosing t
 
 Do not begin by asking whether the application should use ECS, EKS or Fargate. First write down what the workload needs. The answers give you criteria against which the AWS options can be compared.
 
-```
+
+
+```html
  <table>
     <thead>
       <tr>
