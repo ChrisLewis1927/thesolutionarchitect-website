@@ -42,98 +42,161 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">How architecture thinking differs from technical thinking</h1>
-        <p class="lesson-hero__description">Moving into solution architecture changes how you think more than it changes what you work on. The shift is from solving the problem you have been handed to weighing what the solution does to everything around it</p>
+        <p class="lesson-hero__description">Architecture thinking does not replace technical thinking. It extends it across a wider scope: the user journey, the organisation, connected services, data, operations, cost, risk and change over time. The shift is less about leaving technical detail behind and more about knowing when a local design choice has consequences beyond the component or team making it.</p>
       </div>
     </section>
 
     <div class="lesson-content">
       <div class="info-box mb-2xl">
-        <p><strong>You'll come away with:</strong></p>
+        <p><strong>You will come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>A clear way to tell a technical problem apart from an architecture decision, and to treat each one accordingly.</li>
-          <li>The four kinds of context a design has to survive, and why ignoring any of them sinks good work.</li>
-          <li>A habit of making trade-offs explicit and getting the right people to agree to them.</li>
-          <li>The discipline of matching your level of detail to the audience and the decision in front of you.</li>
+          <li>a practical way to recognise when a technical choice has architecture significance;</li>
+          <li>a method for moving from a problem and its evidence to credible options and a defensible recommendation;</li>
+          <li>questions that expose whole-service effects, constraints and trade-offs; and</li>
+          <li>a way to match architecture effort and detail to the decision being made.</li>
         </ul>
       </div>
 
-      <h2>The difference between a technical problem and an architecture decision</h2>
-      <p>You solve technical problems all day, and most of them have an answer. The API takes three seconds to respond and needs to come in under half a second. The scope is bounded, the target is measurable, and you can tell whether caching or an index or a query rewrite has done the job. Architecture decisions do not behave like that. Whether to build a service as one deployable or break it into several has no correct answer waiting to be found. It depends on the size of the team, how often they release, what they can operate, the budget, the timeline and a dozen other things that have nothing to do with code.</p>
+      <h2>The difference is scope and consequence</h2>
+      <p>Technical work and architecture work overlap. Both involve uncertainty, evidence and trade-offs. A query rewrite may have a measurable answer, but choosing a database, API style or deployment model rarely has one universally correct answer. The right choice depends on the service and the conditions in which it must operate.</p>
+      <p>A technical choice has architecture significance when it affects several teams or services, changes important qualities such as security or availability, creates a substantial cost or dependency, or would be difficult to reverse. The same choice may be routine in one service and architectural in another.</p>
       <figure>
         <img src="images/lesson2-image1.png" alt="A grey box labelled technical thinking, asking how do I build this, with an arrow pointing to a teal box labelled architecture thinking, asking whether we should build this and what follows if we do.">
        <!-- <figcaption>The same project, two completely different questions.</figcaption> -->
       </figure>
-      <p>The trap for anyone arriving from a strong technical background is to treat the second kind of question like the first, hunting for the right answer when the real work is understanding the trade-offs and making a choice you can defend. The stakes are higher in government because the blast radius is wider. Choosing a database engine affects one team. Choosing to decompose a system reaches into procurement, operations, security, the skills you need to hire for and sometimes other departments. A decision that large earns more thought and broader consultation before you commit to it.</p>
-      <blockquote>A technical problem has a right answer. An architecture decision has consequences that you have to live with.</blockquote>
+      <p>The distinction is therefore not "engineers solve technical problems while architects make architecture decisions". Engineers, architects, security specialists, service owners and other delivery roles may all contribute. The architect helps the group understand the wider effects, compare options and keep the reasoning visible. Who recommends, decides, assures or approves depends on the organisation, the risk and the governance in place.</p>
+      <blockquote>Ask whether the choice works locally, then ask what it changes for the service around it.</blockquote>
 
-      <h2>Thinking in whole systems</h2>
-      <p>Technical thinking is reductionist, and rightly so. You break a problem into parts, solve each part, and assemble the result. That instinct is what makes good engineers. It is also what trips up new architects, because a system's behaviour is not the sum of its parts. It comes from how the parts interact. A clean database, a well written API and an elegant front end will still produce a poor service if the joins between them are wrong.</p>
+      <h2>Start with the problem and the outcome</h2>
+      <p>A familiar technology can make a team feel as though it has made progress before it has understood the problem. "We should use microservices" is not yet a design decision. It is a proposed answer with no stated need.</p>
+      <p>Begin by establishing:</p>
+      <ul>
+        <li>who is affected and what outcome needs to improve;</li>
+        <li>how the current service or process works, including non-digital steps;</li>
+        <li>what evidence shows that a change is needed;</li>
+        <li>which requirements and constraints apply;</li>
+        <li>what is assumed but not yet known; and</li>
+        <li>how success will be measured.</li>
+      </ul>
+      <p>Only then should the team evaluate solution approaches. If several teams need to release independently, the service has clear boundaries and the organisation can operate a distributed system, separate deployables may be credible. If those conditions do not exist, a well-structured single deployable may be the better option. The technology follows the reasoning.</p>
+      <p>Patterns still matter. Experience helps you recognise familiar problems and generate options quickly. Treat a pattern as a candidate to test, not a rule to apply.</p>
+
+      <h2>Think about the whole service</h2>
+      <p>A service is more than its software components. It includes users, staff, policy, process, suppliers, data, operational support and the other services it depends on. A collection of well-designed parts can still produce a poor outcome if the interactions between them fail.</p>
       <figure>
         <img src="images/lesson2-image2.png" alt="A small system. The user, front end and API are joined by emphasised interaction lines, and the API calls two services. Service A is healthy while service B is unavailable, shown as a broken connection. Every part except one is working, yet the user still sees a degraded result.">
         <!--<figcaption>Every part but one is healthy. Because of how they connect, the user still feels it.</figcaption>-->
       </figure>
-      <p>Working this way means asking a different set of questions. What does the user actually see when one component fails and the next is left holding the request? If you change the data model in one service, which services downstream break, who owns them, and how do you coordinate the change? The design copes with a thousand users today, so where does it fall over at a hundred thousand? You are building for this year's policy, so how much will have to move when the policy changes next year? In government the system is wider than the technology, because a public service is people, process and policy as much as software. A technically perfect design that ignores how the operational team actually works will fail in service, and a well built one that misses an accessibility obligation will fail its assessment. The discipline is easy to say and hard to keep: before you zoom into the detail, zoom out and understand what the detail sits inside.</p>
+      <p>Before going deeper into a component, ask:</p>
+      <ul>
+        <li>What does the user experience when this dependency is slow or unavailable?</li>
+        <li>Where does data originate, who is responsible for it and where is it copied?</li>
+        <li>Which teams and suppliers must coordinate a change?</li>
+        <li>How will the service be supported, monitored and recovered?</li>
+        <li>What happens to staff or users when an automated step fails?</li>
+        <li>Which policy, security, privacy, accessibility or commercial concerns cross the system boundary?</li>
+      </ul>
+      <p>The <a href="https://ddat-capability-framework.service.gov.uk/role/solution-architect" target="_blank" rel="noopener noreferrer">Government Digital and Data Profession Capability Framework</a> describes this as "architect for the whole context". It does not mean one architect personally owns every concern. It means the design is developed with the people who do.</p>
 
-      <h2>Context is the architect's real material</h2>
-      <p>A developer can write excellent code without knowing the minister's name. You cannot design a solution that survives contact with government without knowing the context it has to land in. That context comes in four kinds, and a design that ignores any one of them tends to be elegant on paper and impossible in practice.</p>
+      <h2>Understand the setting in which the solution must work</h2>
+      <p>The diagram below uses four useful lenses for government delivery. They are a teaching aid, not an official framework or an exhaustive list.</p>
       <figure>
         <img src="images/lesson2-image3.png" alt="A central teal box for the solution architect, connected to four grey boxes: organisational context covering stakeholders and authority, political context covering ministers and commitments, commercial context covering budgets and frameworks, and delivery context covering team, method and assessment.">
        <!-- <figcaption>The architect sits inside all four at once.</figcaption>-->
       </figure>
-      <p>Organisational context is who holds the priorities and who actually has authority to decide, which in government means reading the machinery: how departments relate, how arm's length bodies sit, how a shared service runs across several of them. Political context is not optional and never has been. A commitment a minister makes at a conference can set a delivery date that no amount of architecture will move, so the design has to absorb it rather than argue with it. Commercial context decides what you can even reach for, because the route to market through <a href="https://www.gca.gov.uk/agreements/RM1557.15" target="_blank" rel="noopener noreferrer">G-Cloud</a>, <a href="https://www.gca.gov.uk/agreements/RM1043.9" target="_blank" rel="noopener noreferrer">Digital Outcomes and Specialists 7</a> or an existing contract shapes both the technology and how fast you can have it. Delivery context is the team you have, the method they work to, and the service assessment they will be held to at the end of alpha and again at beta. GDS announced in July 2026 that it is reworking the Service Standard from a one-off assessment into a living standard, so check the current position before you plan around assessment gates. Get all four right and you design things that get built. Ignore them and you design things that win the whiteboard and lose the programme board.</p>
-
-      <h2>Every decision is a trade-off</h2>
-      <p>Architecture thinking gives up on the idea of an optimal solution, because at this level there usually isn't one. There are only trade-offs, and the job is to make them visible rather than pretend they aren't there. A few i meet regularly include:</p>
       <ul>
-        <li>Simplicity against flexibility. A single deployable is easier to build and harder to change later. A modular design is easier to evolve and more work to build and run.</li>
-        <li>Speed against quality. Shipping fast means carrying debt you will pay interest on. Shipping clean means a longer road to the first release.</li>
-        <li>Cost against resilience. Spreading across regions costs real money every month. A single region is cheaper and falls over harder.</li>
-        <li>Security against usability. Stronger controls protect the data and get in the user's way. Every extra step at sign in is friction someone has to accept.</li>
+        <li><strong>Organisational:</strong> Who owns the service, funding, data and risks? Which teams or public bodies are involved? Who can recommend, decide, assure and approve?</li>
+        <li><strong>Policy and public commitments:</strong> What legislation, policy intent, published commitments or delivery dates shape the work? Architecture should test feasibility, expose consequences and escalate conflicts rather than silently reinterpret policy.</li>
+        <li><strong>Commercial:</strong> Is there an existing contract, suitable government commercial agreement or need for a new procurement? What do the terms mean for exit, data, intellectual property, service levels and supplier dependency? Involve commercial specialists before a design assumes a purchasing route.</li>
+        <li><strong>Delivery and assurance:</strong> What skills, time and operational capacity are available? Which standards, internal governance and assurance routes apply? What evidence will they need?</li>
       </ul>
-      <p>You do not get to remove these. You get to choose which way to lean, make the choice explicit, and get the people who will live with it to agree. In government the cost of a bad trade-off lands on the public. Trade accessibility away for speed and real people cannot use the service. Trade away maintainability and the taxpayer funds the rework. A useful habit: for any decision that matters, write down in one line what you gain and what you give up. If you can't write the line, you don't yet understand the decision well enough to be making it.</p>
+      <p>Do not assume every service follows the same assessment route. Current Service Manual guidance says that transactional services developed for central government must be assessed, including internal transactional services. An assessment can also be required as a condition of approval, while other services may use the Service Standard without a formal assessment. Check the current guidance and the department's assurance process.</p>
+      <p>In July 2026, the Government Digital Service announced work to evolve the Service Standard into a living system supporting continuous improvement and end-to-end services. GDS described that work as being at an early stage. Until revised requirements are published, teams should continue to use the current <a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener noreferrer">Service Standard</a> and <a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard" target="_blank" rel="noopener noreferrer">assessment guidance</a>.</p>
 
-      <h2>Working at the right level of abstraction</h2>
-      <p>Technical people like detail, and detail is valuable at the right moment. Architecture thinking is the ability to move between levels of detail on purpose, and to know which level a given conversation actually needs.</p>
+      <h2>Separate requirements, constraints, assumptions and preferences</h2>
+      <p>Weak architecture discussions often mix several different things together. Separating them makes the decision easier to challenge and defend.</p>
+      <ul>
+        <li><strong>Requirements</strong> describe an outcome or quality the solution must achieve. They should be measurable where that is useful.</li>
+        <li><strong>Constraints</strong> limit the available options, such as legislation, an approved budget, a fixed integration or a contract term.</li>
+        <li><strong>Assumptions</strong> are believed to be true but still need evidence, such as forecast demand or the availability of a specialist skill.</li>
+        <li><strong>Preferences</strong> express a favoured approach but are open to challenge.</li>
+      </ul>
+      <p>Some constraints are mandatory and some can be changed by the person with the authority to change them. Record the source and owner instead of treating every statement beginning with "we have to" as fixed.</p>
+      <p>Government examples need particular care:</p>
+      <ul>
+        <li>Public sector websites and mobile applications within scope of the 2018 accessibility regulations normally need to meet WCAG 2.2 AA and publish an accessibility statement, although the regulations include defined exceptions and a disproportionate-burden provision.</li>
+        <li>The Government Security Classifications Policy is an administrative policy, not a statute. It sets classification tiers and baseline controls, supplemented by departmental security policy and risk assessment.</li>
+        <li>Government information does not automatically have to remain in the UK merely because it is classified OFFICIAL. Data location and legal jurisdiction must be assessed against the information, threat, applicable law, contract and departmental policy. Personal information transferred to a separate organisation outside the UK may also engage the UK GDPR rules on restricted transfers.</li>
+        <li>A commercial agreement is one possible route to market, not the default for every purchase. Check the live agreements and work with commercial colleagues to choose a lawful, suitable route.</li>
+      </ul>
+
+      <h2>Compare credible options and make trade-offs visible</h2>
+      <p>Define the evaluation criteria before choosing an option. The criteria should come from the problem, user needs, requirements, constraints and evidence. Depending on the decision, they might cover service outcomes, accessibility, security, privacy, operability, delivery time, whole-life cost, sustainability, supplier dependency and ease of change.</p>
+      <p>Then compare credible options at a consistent level of detail. These might include improving the current service, reusing an existing capability, buying a product, building a service or combining approaches. A "do nothing" or "do minimum" option is useful when it provides a genuine baseline, but it should not be included mechanically when it is not viable.</p>
+      <p>A trade-off is more useful when it is specific. "Microservices give flexibility but add complexity" is too vague. A stronger statement would identify who gains which flexibility, which operational capabilities are required, what extra failure modes are introduced and why those consequences are acceptable for this service.</p>
+      <p>Avoid false oppositions:</p>
+      <ul>
+        <li>A single deployable can still be modular and easy to change. Separate services do not guarantee flexibility.</li>
+        <li>Faster delivery does not have to mean poor quality. Reducing scope, automating tests or using an established platform may improve both speed and quality.</li>
+        <li>Security and usability can conflict in a particular control, but good design can improve both. The task is to meet the required protection without adding avoidable friction.</li>
+        <li>Resilience is not simply "one region or two". The design should follow the service's impact assessment, recovery objectives, dependencies and evidence about failure.</li>
+      </ul>
+      <p>Legal obligations and agreed minimum controls are boundaries for the options, not benefits to trade away. Above that baseline, show what each option improves, what it weakens, what evidence supports the assessment and who accepts the remaining risk.</p>
+
+      <h2>Work at the level of detail the decision needs</h2>
+      <p>Architecture thinking moves between levels deliberately. A discussion about funding or service risk needs a different view from a discussion about an API contract or deployment configuration.</p>
       <figure>
         <img src="images/lesson2-image4.png" alt="Three stacked boxes. Strategic at the top, for senior leadership, covering cloud first and open standards. Solution in the middle in teal, for the programme board, covering front end, API, business logic and managed data. Component at the bottom, for the delivery team, naming Node.js, containers and PostgreSQL.">
         <!--<figcaption>Same system, pitched at three heights for three audiences.</figcaption>-->
       </figure>
-      <p>The mistake I see most often is reaching for the component level too early, naming the framework and the database before anyone has agreed what the solution even is. That is choosing the paint before you know how many rooms the house has. It matters more in government because in any given week you are talking to people at very different heights. A deputy director does not need to hear PostgreSQL. They need to know the data is held securely, the service stays up, and the cost is predictable. The delivery team does not need the ministerial backstory. They need the API contract and the deployment pipeline. Pitch the abstraction to the audience and to the decision, and go deeper only when the decision in front of you actually turns on the detail.</p>
-      <blockquote>Going deep is a skill. Knowing when not to is the harder one.</blockquote>
+      <p>Senior leaders usually need the outcome, cost, risk, dependencies and decision required from them. Delivery teams need enough technical detail to build and operate the solution. Security, data, commercial and operational specialists need views that expose the concerns they are responsible for.</p>
+      <p>Adapting the message does not mean hiding important detail. If a technology choice materially changes cost, risk or delivery, explain that consequence in language the decision-maker can use. Go deeper when the decision turns on the detail.</p>
 
-      <h2>Now, next and later</h2>
-      <p>Technical thinking concentrates on the problem in front of you. Architecture thinking holds three time horizons at once. <b>Now</b> is the current phase, where the delivery pressure sits and the constraints are immediate. <b>Next</b> is the six to eighteen months after that, where requirements you can half see today will firm up and the design's ability to flex gets tested. <b>Later</b> is the direction of travel: the department's strategy, and the technology shifts that might reshape your choices before the service is even old.</p>
-      <p>Balancing them is the whole game. Design only for Now and you build something that works this quarter and cannot move. Design only for Later and you gold plate something that never ships. Government makes this sharper than most places, because political cycles push hard for Now while the services themselves run for decades. Tax, benefits, immigration: these outlive the people who designed them. So build for the current phase, but keep your decisions reversible where you can. Put interfaces where you expect change, and write down the assumptions underneath today's design so the architect who inherits it knows what was meant to move. In the programmes I have worked on, evolutionary architecture (designed to change in steps rather than be ripped out and replaced) has gone better than the big-bang rebuild.</p>
+      <h2>Design for change without designing an imaginary future</h2>
+      <p>Architecture has to serve the current need while allowing for changes that have credible evidence behind them. A simple "now, next and later" view can help, but the time horizons should come from the service rather than a fixed number of months.</p>
+      <p>Where uncertainty is high, favour choices that are cheap to test or reverse. Where a decision is expensive or difficult to undo, gather more evidence before committing. Useful techniques include small experiments, explicit interfaces, incremental migration and recording the assumptions behind a decision.</p>
+      <p>Every important decision should also have a reason to revisit it. A review trigger might be a change in demand, policy, threat, supplier terms, cost, service performance or team capability. This prevents an old decision from becoming an unexplained rule.</p>
 
-      <h2>Constraints are what make architecture necessary</h2>
-      <p>Technical thinking tends to start from what is possible. Architecture thinking starts from what is possible here, inside these boundaries. In government the boundaries are numerous, and most of them do not move:</p>
+      <h2>A repeatable method for architecture decisions</h2>
+      <p>The amount of work should be proportionate to the decision's risk, complexity, cost, sensitivity, novelty, dependencies and potential impact. A low-risk, reversible choice may need a short conversation and a decision record. A cross-government dependency or long-term commercial commitment needs stronger evidence and wider assurance.</p>
+      <ol>
+        <li><strong>Frame the problem and outcome.</strong> State whose problem it is, what needs to improve and how success will be recognised.</li>
+        <li><strong>Gather evidence.</strong> Use user research, service data, technical investigation, costs, operational experience and specialist advice.</li>
+        <li><strong>Identify requirements and constraints.</strong> Separate mandatory obligations from assumptions and preferences.</li>
+        <li><strong>Agree evaluation criteria.</strong> Decide how the options will be compared before selecting one.</li>
+        <li><strong>Develop credible options.</strong> Describe them at a consistent level and test important uncertainties.</li>
+        <li><strong>Explain the trade-offs.</strong> Show benefits, drawbacks, costs, risks and evidence without disguising the weaknesses of the preferred option.</li>
+        <li><strong>Make or support the decision.</strong> Be clear about the recommendation, decision owner, assurance and any conditions attached.</li>
+        <li><strong>Record and review.</strong> Capture the reasoning, assumptions, consequences and triggers that would cause the decision to be reconsidered.</li>
+      </ol>
+      <blockquote>Good architecture reasoning makes the route from evidence to decision visible.</blockquote>
+
+      <h2>What good architecture thinking sounds like</h2>
       <ul>
-        <li>Budget is usually fixed and annual, and it has to cover running the thing, not just building it.</li>
-        <li>Skills are whatever the team actually has. An architecture that needs Kubernetes expertise nobody on the team holds is an architecture with a problem.</li>
-        <li>Legacy is real and often decades old, and your new service will almost certainly have to talk to it.</li>
-        <li>Policy and law are not the same thing. Accessibility is statutory, security classification and data residency are policy, and the difference decides what you can argue with.</li>
-        <li>Procurement decides what you can buy and how quickly, through frameworks rather than a card and a checkout.</li>
-        <li>Time is frequently set by something political and not open to negotiation.</li>
+        <li>"The outcome we need is&hellip;"</li>
+        <li>"The evidence shows&hellip;"</li>
+        <li>"These constraints are mandatory; these are assumptions we still need to test&hellip;"</li>
+        <li>"We compared these options against the same criteria&hellip;"</li>
+        <li>"We recommend this option because&hellip;, accepting that&hellip;"</li>
+        <li>"This person or forum owns the decision and this specialist owns the risk&hellip;"</li>
+        <li>"We will revisit the decision if&hellip;"</li>
       </ul>
-      <p>Ignore the constraints and you design a fantasy. Take them seriously and you design something that gets built. Constraints are the reason the role exists at all. With no budget, no legacy, no policy and infinite time, anyone could draw the diagram and nobody would need you to.</p>
-
-      <h2>Start from the problem, then choose the technology</h2>
-      <p>Experienced architects build up pattern recognition, the knack of seeing a familiar shape of problem and reaching for an approach that has worked before. It is genuinely useful, and it carries one specific risk: starting from the pattern instead of the problem.</p>
-      <p class="myth">"We should use microservices."</p>
-      <p>That is technology talking first. The architecture version of the same thought is "we have a large team that needs to release parts of the system independently, so decomposing it is worth the operational cost." The same word might appear at the end of both. The reasoning that got there is completely different, and the reasoning is the part that holds up when someone pushes on it.</p>
-      <p>Starting from the technology feels productive because you can begin designing straight away and skip the unglamorous work of understanding the problem. It tends to over engineer, because not every service needs a cluster and a data lake when a well designed single deployable would do. It opens skills gaps, because adopting something new the team can't operate is just deferred risk. And it spends public money building more than the problem asked for. Point 8 of the Technology Code of Practice, share, reuse and collaborate, exists to stop the neighbouring failure: building what government already has. A quick test settles most cases. Can you justify the decision without naming a product? If you can say you need asynchronous integration because the upstream system responds unpredictably and you can't block the user's journey while you wait, that is architecture thinking. If the most you can say is the name of a message broker, you started in the wrong place.</p>
-      <blockquote>If you can only name the technology, you haven't finished understanding the problem.</blockquote>
+      <p>That is the practical difference architecture thinking adds. It connects technical design to the service, organisation and evidence around it, so that a choice can be built, operated, governed and changed with its consequences understood.</p>
 
       <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
-        <p style="margin: 0 0 0.4rem;"><em>This is one practitioner's account of moving into solution architecture in UK government, not official guidance. It does not cover enterprise architecture, security architecture, or architecture outside central government.</em></p>
-        <p style="margin: 0 0 0.6rem;"><em>Last reviewed August 2026 against the primary sources below. Government policy changes; check the source before relying on this.</em></p>
+        <p style="margin: 0 0 0.4rem;"><em>This is a practitioner guide to solution architecture in UK central government, not official guidance. Responsibilities and decision authority vary by organisation, role level and risk.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary sources below. Government policy and commercial agreements change; check the source before relying on them.</em></p>
         <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://ddat-capability-framework.service.gov.uk/role/solution-architect" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Digital and Data Profession Capability Framework: solution architect</a></li>
           <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice</a></li>
-          <li><a href="https://www.gca.gov.uk/agreements/RM1557.15" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">G-Cloud</a></li>
-          <li><a href="https://www.gca.gov.uk/agreements/RM1043.9" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Digital Outcomes and Specialists 7</a></li>
-          <li><a href="https://www.legislation.gov.uk/uksi/2018/952/contents/made" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Accessibility Regulations 2018</a></li>
-          <li><a href="https://www.gov.uk/service-manual/service-assessments/how-service-assessments-work" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Assessment</a></li>
-          <li><a href="https://www.security.gov.uk/policy-and-guidance/government-cyber-security-policy-handbook/principle-b3-data-security/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">B3 Data Security</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Check if you need to meet the Service Standard or get an assessment</a></li>
+          <li><a href="https://gds.blog.gov.uk/2026/07/02/evolving-the-service-standard-for-the-future-of-public-services/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GDS: Evolving the Service Standard for the future of public services</a></li>
+          <li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Digital Assurance Playbook</a></li>
+          <li><a href="https://www.gov.uk/guidance/accessibility-requirements-for-public-sector-websites-and-apps" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Understanding accessibility requirements for public sector bodies</a></li>
+          <li><a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Security Classifications Policy</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles/principle-2-asset-protection-and-resilience" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC cloud security principle 2: asset protection and resilience</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/a-brief-guide-to-international-transfers/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: a brief guide to international transfers</a></li>
+          <li><a href="https://www.gca.gov.uk/agreements" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Commercial Agency: search current commercial agreements</a></li>
         </ul>
       </div>
 
