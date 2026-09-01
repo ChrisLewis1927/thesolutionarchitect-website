@@ -48,101 +48,150 @@
 
     <div class="lesson-content">
       <div class="info-box mb-2xl">
-        <p><strong>You'll come away with:</strong></p>
+        <p><strong>This guide covers:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>A clear picture of what the role involves day-to-day in UK government</li>
-          <li>How the Solution Architect differs from Enterprise, Technical, Business and Data Architects</li>
-          <li>What "good" looks like in government architecture</li>
-          <li>How the Technology Code of Practice and Service Standard shape your decisions</li>
+          <li>what a Solution Architect does in practice</li>
+          <li>how architectural decisions should be made</li>
+          <li>how the role works with other architecture disciplines</li>
+          <li>what changes when you work in UK government</li>
         </ul>
       </div>
 
-      <h2>The real role of a Solution Architect</h2>
-      <p>Strip away the padding from the job description and the role comes down to one thing. You make sure a specific solution (a system, a service, or a set of components that have to work together) is technically sound and can actually be built by this organisation, within its constraints. You are the bridge between what the organisation needs and what technology can realistically build. That sounds simple. It is not.</p>
+      <h2>The role of a Solution Architect</h2>
+      <p>A Solution Architect turns a problem into a solution that can be delivered, operated and changed. That means understanding what the organisation is trying to achieve, exploring different ways of achieving it, and helping people make informed technical decisions.</p>
+      <p>The <a href="https://ddat-capability-framework.service.gov.uk/role/solution-architect" target="_blank" rel="noopener">Government Digital and Data Profession Capability Framework</a> describes a Solution Architect as someone who designs solutions for problems that affect an organisation. The role includes helping to define the problem and desired outcomes, understanding constraints, developing solution options, making or guiding architectural decisions, documenting designs and working with governance and assurance.</p>
+      <p>In practice, this puts the Solution Architect between organisational needs and technical delivery. You need enough understanding of both to see how decisions in one area affect another.</p>
 
       <figure>
         <img src="images/lesson1-image1.png" alt="Diagram: the Solution Architect as the bridge between organisation needs and technology, making and informing decisions.">
         <!-- <figcaption>What the role actually involves: making decisions, enabling them, and keeping them well informed.</figcaption>-->
       </figure>
 
-      <p>The job shifts with context as much as any role in technology I've worked in. What you do on Monday in a discovery workshop looks nothing like what you do on Thursday in a live service review. A single week might include:</p>
+      <p>The solution is wider than the technology. It may need to satisfy user needs, policy, legislation, security requirements, data considerations, commercial constraints, operational support and existing organisational standards. The architecture has to bring those concerns together into something that can realistically be delivered.</p>
+      <p>The emphasis changes during the lifecycle. In discovery you may spend most of your time understanding the problem and constraints. During alpha you may compare approaches and test assumptions. During delivery you are more likely to resolve design questions, manage architectural risks and respond to what the team learns. Existing services bring another set of questions around reliability, technical debt, cost and change.</p>
+      <p>A typical week might therefore include:</p>
       <ul>
-        <li>Running a session with policy colleagues to understand a new regulatory requirement</li>
-        <li>Reviewing a proposed API design and pushing back on complexity the team does not need</li>
-        <li>Writing an Architecture Decision Record explaining why you chose a managed service over a custom build</li>
-        <li>Presenting a solution options document to an architectural review board, turning technical trade-offs into business language</li>
-        <li>Reading a vendor proposal and spotting the risks they quietly left out</li>
-        <li>Sitting in a stand-up to unblock a technical dependency</li>
-        <li>Updating the solution architecture document after a change in scope</li>
+        <li>working with policy or business colleagues to understand a requirement</li>
+        <li>comparing possible solution approaches and their trade-offs</li>
+        <li>reviewing an integration, data or security design with specialists</li>
+        <li>recording an architectural decision and the evidence behind it</li>
+        <li>explaining a recommendation to technical and non-technical stakeholders</li>
+        <li>reviewing a supplier proposal or a change to an existing design</li>
       </ul>
-      <p>The thread running through all of it is decisions. You are making them, enabling them, or making sure they are well informed. The significant ones, the choices that are expensive or painful to undo later, are yours to own. In UK government that work carries extra weight. You are spending public money, so every choice has to be justifiable. You sit inside procurement frameworks that limit your options, between policy teams who may not follow the technology and delivery teams who may not follow the policy. And you are expected to meet the Technology Code of Practice and the Service Standard while still shipping something that genuinely works for users.</p>
-      <blockquote>Architecture is about decisions: which ones to make, and how to make them defensible six months later.</blockquote>
+      <p>Producing diagrams and documents is part of the job, but they are evidence of the architecture work rather than the purpose of it.</p>
 
-      <h2>How the role differs from other architecture disciplines</h2>
-      <p>Confusion between architecture roles is common, and in the government teams I've worked in it is worse, because teams are small and one person often wears several of these labels at once. It pays to be precise about who does what.</p>
+      <h2>Architecture is a decision-making process</h2>
+      <p>A common mistake is to start with a requirement and jump immediately to a technology. Architecture should create enough space to understand the problem and compare reasonable alternatives.</p>
+      <p>A useful sequence is:</p>
+      <ol>
+        <li><strong>Understand the problem.</strong> What outcome is needed, who needs it and what problem are you actually trying to solve?</li>
+        <li><strong>Identify requirements and constraints.</strong> These might include user needs, policy, legislation, security, existing systems, delivery deadlines, skills, budget or contractual commitments.</li>
+        <li><strong>Define the evaluation criteria.</strong> Decide what matters when comparing approaches. Cost, delivery risk, interoperability, operability, accessibility, security and ability to change may all matter, but their importance depends on the problem.</li>
+        <li><strong>Develop credible options.</strong> Include alternatives that genuinely could solve the problem rather than creating several variations of an option you have already chosen.</li>
+        <li><strong>Compare the trade-offs.</strong> An option may be cheaper but harder to change, quicker to implement but increase dependency on a supplier, or operationally simpler while offering less control.</li>
+        <li><strong>Make or recommend the decision.</strong> Record the reasoning, evidence, assumptions, risks and consequences at a level proportionate to the importance of the decision.</li>
+      </ol>
+      <p>Not every technical decision belongs to the Solution Architect. Developers, technical architects, security specialists, data specialists, product teams and others will make decisions within their areas. Higher-risk or cross-cutting decisions may also need formal governance or approval.</p>
+      <p>The architect's job is to make sure important architectural decisions are taken at the right level, with the relevant people involved and with enough evidence to explain why the chosen approach was reasonable.</p>
+
+      <h2>How the role works with other architects</h2>
+      <p>Architecture roles overlap, and organisations divide responsibilities differently. The <a href="https://ddat-capability-framework.service.gov.uk/" target="_blank" rel="noopener">Government Digital and Data Profession Capability Framework</a> nevertheless provides useful distinctions.</p>
 
       <figure>
         <img src="images/lesson1-image2.png" alt="Diagram: the Solution Architect as the integrator, connected to the Enterprise, Technical, Business and Data Architect roles.">
        <!-- <figcaption>Where the Solution Architect sits relative to the other architecture roles.</figcaption>-->
       </figure>
 
-      <p><b>The enterprise architect</b> works at the level of the whole organisation: strategy, standards, principles, roadmaps. They might decide the department should be cloud first. You work out what that means for one specific service. <b>The technical architect</b> goes deep on implementation. Where you decide an event-driven integration pattern is the right approach, they pick the message broker and tune it. In many government teams that line is blurred, and that is fine, as long as someone owns both the strategic and the tactical view.</p>
-      <p><b>The business architect</b> maps capabilities, processes, and how the organisation is structured. You need to understand their work, because you cannot design a sound solution without the business context, but they own the business model and you own the solution design. <b>The data architect</b> owns data models, flows, governance, and quality. In government, where data sharing across departments is both vital and politically charged, their decisions shape what you can and cannot do.</p>
-      <p>As the Solution Architect,ou are not the deepest specialist in any one of these areas, and you do not need to be. You are the integrator. Your value is seeing how the strategy, the process, the data, the security, and the implementation fit together, and naming the places where they do not.</p>
+      <p><strong>Enterprise Architects</strong> work across the organisation. They connect business strategy with change and technical delivery, and develop enterprise architecture visions, strategies, roadmaps, principles and standards.</p>
+      <p><strong>Technical Architects</strong> provide technical leadership and architectural design. They often work closer to implementation and help teams resolve detailed technical issues, apply patterns and ensure technical designs fit the wider strategy.</p>
+      <p><strong>Business Architects</strong> develop integrated views of an organisation or business area and use them to help implement strategy. Their work can include capabilities, organisational structures, processes and relationships between different parts of the business.</p>
+      <p><strong>Data Architects</strong> shape how an organisation designs and manages data so that it supports organisational needs. Their work can include data models, metadata, standards and the relationship between data and wider system design.</p>
+      <p>The Solution Architect works across these concerns for a particular solution or problem. You may contribute to each area, but specialist architects can provide deeper expertise where the complexity or risk warrants it.</p>
+      <p>On a small team one person may cover several of these responsibilities. The job titles matter less than making sure important architectural concerns have an appropriate owner.</p>
 
-      <h2>The four hats you wear</h2>
-      <p>On any given day you are wearing at least one of four hats, often more than one at the same time. In my experience most architects lean towards one or two of them and quietly neglect the rest.</p>
+      <h2>Four useful ways to think about the work</h2>
+      <p>There is no official set of "four hats" for Solution Architects, but the following model is a useful way to think about the different kinds of work involved.</p>
 
       <figure>
         <img src="images/lesson1-image3.png" alt="Diagram: the four hats a Solution Architect wears, translator, decision-maker, risk manager and quality guardian.">
         <!--<figcaption>The four core responsibilities you balance, often several at once.</figcaption>-->
       </figure>
 
-      <p>As <b>translator</b> you move between worlds. Policy talks in outcomes and legislation, delivery in sprints and story points, security in threats and controls, commercial in contracts and service levels, leadership in risk and value. Your job is to get these groups understanding each other well enough to decide together, which means finding the right level of abstraction for each one rather than dumbing anything down.</p>
-      <p>As <b>decision-maker</b> you choose between options, and every choice you make becomes a constraint on someone else. Good architects make those choices explicit and write them down. Poor architects make them by accident, forget them, and later wonder how the system ended up the way it did.</p>
-      <p>As <b>risk manager</b> you deal with the fact that every decision carries risk. New technology brings adoption risk, old technology brings obsolescence risk, building brings maintenance risk, buying brings lock-in. You will not eliminate any of it, so the work is to name it, size it where you can, and make sure the right people accept it with their eyes open.</p>
-      <p>As <b>quality guardian</b> you hold the line on what good enough means. Not as a gatekeeper who blocks everything, which only breeds resentment, but as the person who pushes back when a team wants to cut corners on performance, security and resilience, or when a vendor claims their product does everything, or when delivery pressure turns documentation into a someday job. It takes courage and tact in roughly equal measure.</p>
+      <h3>Translator</h3>
+      <p>Architecture brings together people who describe the same problem differently. Policy may focus on outcomes and legislation, security on threats and controls, commercial teams on contracts, and engineers on implementation.</p>
+      <p>The architect needs to translate between those perspectives without removing the detail that matters.</p>
 
-      <h2>What good architecture looks like in government</h2>
-      <p>Good architecture in government is not the same animal as good architecture in a startup or a bank. A startup can move fast and break things. You cannot, because the things break on citizens. You are handling people's data and building services they rely on to heat their homes, claim what they are owed, or prove who they are.</p>
-      <p>So the first quality is that it serves users. The Service Standard exists for a reason. However elegant the technical design, if it does not enable a service that meets a real user need, simply and reliably, it has failed.</p>
-      <p>The second, and the one I've seen separate experienced government architects from newcomers, is proportionality. Government services run from a single form that collects some data to platforms spanning several departments and moving millions of transactions. Good architecture matches the weight of the solution to the weight of the problem. Building a microservices estate for a service with, say, two hundred users and fifty transactions a day is as much a failure as under-building the critical one.</p>
-      <p>The rest follows from those two. Good government architecture is honest about its trade-offs and makes sure the right people have accepted them. It works within real constraints rather than wishing them away, and government has plenty: procurement rules, security classifications, accessibility duties, Welsh language obligations, dependencies on other departments, ministerial priorities. It can be operated and evolved by whoever inherits it, because in government people move, contracts end, and the team in two years will not be the team today. And it fits the wider estate, reusing the cross-government building blocks like GOV.UK Notify, GOV.UK Pay and GOV.UK One Login rather than rebuilding them badly.</p>
-      <blockquote>Good government architecture is proportionate. It matches the weight of the solution to the weight of the problem.</blockquote>
+      <h3>Decision maker and adviser</h3>
+      <p>Architects make some decisions themselves and advise on others. The important part is understanding who has authority to make the decision, what evidence is needed and who will be affected by it.</p>
 
-      <h2>The Technology Code of Practice and Service Standard</h2>
-      <p>Two documents shape how you work more than any others. The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice"target="_blank">Technology Code of Practice</a> is a set of 13 criteria that government technology projects are measured against. They run from defining user needs and making things accessible and inclusive, through open source, open standards, Cloud First, security, privacy, reuse, integration and better use of data, to purchasing strategy and sustainability. Point 13 is meeting the Service Standard, which is why the two documents are really one lens rather than two.</p> <p>The <a href="https://www.gov.uk/service-manual/service-standard"target="_blank">Service Standard</a> provides 14 principles of building a good service. If you are developing a transactional service in central government you must have it <a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard"target="_blank">assessed</a> against them, and that applies even when the service is internal and only civil servants will ever use it. Assessments happen at the end of alpha and beta, and each point is now rated red, amber or green rather than met or not met.</p>
-      <p>Treat neither as policy you read once and file away. They are the lens your work gets judged through at assessment. Choose to build custom instead of reusing a government component and you will need to explain why. Propose hosting it in your own data centre and you will need to justify that against Cloud First. The practical test is simple. For every significant decision you make, you should be able to say how it lines up with the Code of Practice. If you cannot, either the decision is wrong or you have not finished thinking it through.</p>
-      <p>One caveat on all of this. In July 2026 GDS set out plans to move the Service Standard away from a one-off assessment model towards a "living standard" covering the whole life of a service. The 14 points still apply today, but expect the framing around assessments to change. GDS set out its plans in <a href="https://gds.blog.gov.uk/2026/07/02/evolving-the-service-standard-for-the-future-of-public-services/"target="_blank">a blog post on evolving the Service Standard.</a></p>
+      <h3>Risk manager</h3>
+      <p>Every option introduces risk. A new technology may create skills or maturity risks. An established platform may constrain future change. Building software creates maintenance responsibilities, while buying a product introduces commercial and supplier dependencies.</p>
+      <p>The aim is not to eliminate all risk. It is to understand the material risks, reduce them where sensible and make sure remaining risks are visible to the people responsible for accepting them.</p>
 
-      <h2>Common misconceptions about the role</h2>
-      <p>A few myths trip up new architects, and they are worth naming plainly.</p>
+      <h3>Design and assurance</h3>
+      <p>The architect also helps the team check that the design continues to meet its requirements and constraints as it evolves. That can involve security, resilience, integration, performance, accessibility, supportability, cost and other quality concerns relevant to the service.</p>
+      <p>Assurance should be proportionate. A low-risk internal tool should not automatically receive the same architectural process as a high-volume service handling sensitive information.</p>
 
-      <p class="myth">"The architect is just a senior developer who draws diagrams."</p>
-      <p>Technical depth helps, but the role lives in decision-making, communication, and synthesis. A brilliant coder who cannot explain a choice to a stakeholder from outside the technical team will struggle in the chair.</p>
+      <h2>What changes in UK government</h2>
+      <p>Government architecture has additional standards, policies and assurance processes that affect technology decisions. Which ones apply depends on the organisation, service and type of change.</p>
+
+      <h3>Technology Code of Practice</h3>
+      <p>The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener">Technology Code of Practice</a> contains 13 points for designing, building and buying government technology. They cover areas including user needs, accessibility, openness, open standards, cloud, security, privacy, reuse, integration, data, commercial strategy, sustainability and the Service Standard.</p>
+      <p>The useful architecture question is not simply whether a design can be labelled "compliant". Consider how each relevant point affects the options you are evaluating and record important exceptions or constraints.</p>
+
+      <h3>Service Standard</h3>
+      <p>The <a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener">GOV.UK Service Standard</a> contains 14 points covering how government services should be designed and operated.</p>
+      <p>For central government, transactional services must normally have a <a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard" target="_blank" rel="noopener">service assessment</a> even when the service is internal and used only by civil servants. Other services can still use the Standard, and organisations may have their own assurance arrangements.</p>
+      <p>Architecture contributes to several parts of the Standard, including security and privacy, technology choices, open standards and common components, and reliable operation. Meeting it is a multidisciplinary responsibility rather than an architecture task alone.</p>
+
+      <h3>Cloud and common government platforms</h3>
+      <p>Central government's <a href="https://www.gov.uk/guidance/managing-technical-lock-in-in-the-cloud" target="_blank" rel="noopener">Cloud First</a> policy means cloud solutions should be evaluated before other hosting options. It does not remove the need to assess security, cost, operational capability, legacy dependencies, lock-in and other requirements. Where another hosting model is chosen, the reasoning should be evidence-based.</p>
+      <p>Government teams should also consider existing platforms and reusable components before creating alternatives. GOV.UK Notify, GOV.UK Pay, GOV.UK Forms and GOV.UK One Login are examples, but applicability depends on the service. In particular, current government guidance requires applicable public-facing services that need users to sign in and prove their identity to use <a href="https://www.sign-in.service.gov.uk/" target="_blank" rel="noopener">GOV.UK One Login</a>, subject to the stated scope and exceptions.</p>
+
+      <h3>Other constraints</h3>
+      <p>Depending on the service, architecture decisions may also be affected by data protection, security requirements, accessibility obligations, commercial arrangements, records management, sustainability requirements and organisational technology standards.</p>
+      <p>Welsh-language requirements may also apply to organisations and services operating in Wales. The exact obligation depends on the organisation and the standards that apply to it, so this should be established rather than assumed.</p>
+      <p>These are inputs to the architecture decision. They should help define the requirements and evaluation criteria rather than being checked only after a technology has been selected.</p>
+
+      <h2>Common misconceptions</h2>
+
+      <p class="myth">"A Solution Architect is a senior developer who draws diagrams."</p>
+      <p>Technical experience can be valuable, but the role also requires problem definition, option analysis, communication, architectural decision-making and an understanding of the wider organisational context.</p>
 
       <p class="myth">"The architect designs the solution and hands it over."</p>
-      <p>Architecture has no end date. The design keeps moving as requirements evolve and as reality intrudes on the plan, and you move with it.</p>
+      <p>Architecture usually continues through delivery because requirements, risks and technical understanding change. Designs should be reviewed and adapted when new evidence justifies it.</p>
 
-      <p class="myth">"The architect has the final say on everything technical."</p>
-      <p>You own the significant, hard-to-reverse decisions. The day-to-day technical calls belong to the team. Try to control all of it and you become the bottleneck everyone routes around.</p>
+      <p class="myth">"The architect has the final say on technical decisions."</p>
+      <p>Authority depends on the organisation and the decision. Teams should make decisions at the lowest appropriate level while escalating decisions whose risk, cost or wider impact requires broader agreement or governance.</p>
 
-      <p class="myth">"Architecture is mostly about choosing technologies."</p>
-      <p>Technology selection is a small slice of it. The larger part is understanding the problem, setting the approach, and managing the trade-offs so the whole thing holds together.</p>
+      <p class="myth">"Architecture means choosing technologies."</p>
+      <p>Technology selection is only one part of the work. Choosing a product or cloud service before understanding the problem, criteria and alternatives is usually a sign that the architecture process has started too late.</p>
 
-      <p class="myth">"You need to know everything."</p>
-      <p>You do not. You need to know enough to ask the right questions and recognise a good answer when you get one. Beyond that, you need to know when to bring in a specialist. Some of the most credible architects I've worked with are the ones comfortable saying they want the security lead in the room before they commit.</p>
+      <p class="myth">"A Solution Architect needs to know everything."</p>
+      <p>The role requires enough breadth to identify important questions, dependencies and risks. It also requires knowing when specialist expertise is needed. Security, networking, data, accessibility and other areas can become too specialised for one architect to cover in sufficient depth.</p>
 
-      <h2>What separates competent from excellent</h2>
-      <p>A competent architect designs a solution that works. An excellent one does a few things beyond that.</p>
-      <p>They anticipate, asking what happens when this scales before the scaling problem arrives, and what happens when this vendor folds before the contract is signed. They simplify, because anyone can design something complicated and it takes real skill to design something simple that still meets every requirement. They communicate, explaining the same architecture to a minister in two minutes and a developer in two hours, and writing documents people actually read. And they build trust slowly, by being honest about what they know and do not know, admitting when they are wrong, and pushing back firmly but well when they watch a bad decision forming.</p>
-      <p>Underneath all of it sits one habit. Excellent architects care about outcomes rather than outputs. They do not count the documents they produced or the diagrams they drew. They look at whether the service works for the people using it, whether the team can keep it running, and whether the public got value for the money spent.</p>
+      <h2>Questions to ask on a real project</h2>
+      <p>When you are unsure what the Solution Architect should be doing, start with these questions:</p>
+      <ul>
+        <li>What problem are we solving and what outcome are we trying to achieve?</li>
+        <li>Who are the users and what evidence do we have about their needs?</li>
+        <li>Which requirements and constraints genuinely affect the solution?</li>
+        <li>What criteria will we use to compare the available approaches?</li>
+        <li>What credible options have we considered?</li>
+        <li>What do we gain and give up with each option?</li>
+        <li>What risks and assumptions could change the decision?</li>
+        <li>Who has authority to make or approve the decision?</li>
+        <li>What evidence should we record so someone can understand the reasoning later?</li>
+        <li>What would cause us to revisit the decision?</li>
+      </ul>
+      <p>If you can answer those questions clearly, the diagrams, architecture documents and decision records become much easier to produce because they are describing reasoning that has already taken place.</p>
       
 
       <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
         <p style="margin: 0 0 0.4rem;"><em>This is one practising architect's account of the role in UK central government, not official guidance. Local government and the NHS work differently.</em></p>
         <p style="margin: 0 0 0.6rem;"><em>Last reviewed August 2026 against the primary sources below. Government policy changes; check the source before relying on this.</em></p>
         <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://ddat-capability-framework.service.gov.uk/role/solution-architect" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Digital and Data Profession Capability Framework: Solution Architect</a></li>
           <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice</a></li>
           <li><a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard</a></li>
           <li><a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service assessments</a></li>
