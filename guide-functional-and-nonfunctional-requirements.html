@@ -42,7 +42,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Functional and non functional requirements</h1>
-        <p class="lesson-hero__description">What a system does barely shapes its architecture; how it has to behave shapes almost everything. This guide is about those behavioural demands, the non functional requirements, and why they, not the feature list, decide most of what you build.</p>
+        <p class="lesson-hero__description">Once you understand the problem and the people around it, you need to turn that evidence into requirements that can guide design. Functional requirements describe the capabilities a service needs. Non-functional requirements describe the qualities it needs to exhibit and the conditions in which it must work. Both can shape the architecture.</p>
       </div>
     </section>
 
@@ -50,271 +50,166 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>Why non functional requirements drive architecture decisions more than the feature list does.</li>
-          <li>How to pin down performance, scalability, availability and security as targets you can test.</li>
-          <li>Why accessibility and security are designed in from the start, never added at the end.</li>
-          <li>A method for writing requirements that are specific, measurable and verifiable.</li>
+          <li>A clear distinction between capabilities, quality requirements and constraints.</li>
+          <li>A practical way to write requirements that are specific enough to guide and test a design.</li>
+          <li>Questions for performance, resilience, security, accessibility, operability and change.</li>
+          <li>A method for turning requirements into evaluation criteria without jumping to a technology.</li>
         </ul>
       </div>
 
-      <p>Requirements do two different jobs. Functional requirements describe what a service needs to do. Non-functional requirements describe how well it needs to do it and the conditions it has to work within.</p>
+      <p>Once you understand the problem and the people around it, you need to turn that evidence into requirements that can guide design. Functional requirements describe the capabilities a service needs. Non-functional requirements describe the qualities it needs to exhibit and the conditions in which it must work. Both can shape the architecture.</p>
 
-      <p>As a solution architect, you need both. Functional requirements tell you which capabilities the service needs. Non-functional requirements, usually shortened to NFRs, help you work out which designs can deliver those capabilities at the required level of performance, security, reliability and supportability.</p>
+      <h2>Requirements turn evidence into design inputs</h2>
+      <p>A functional requirement describes something a user, another system or a business process needs to achieve. For an online reporting service, this might include signing in, saving a draft, submitting a report, amending a submission or receiving confirmation.</p>
+      <p>A non-functional requirement describes a quality or condition that applies to those capabilities. The same reporting service may need to remain usable during a deadline-day peak, recover within an agreed time after a disruption, protect particular information and work with assistive technology.</p>
+      <p>"Non-functional" does not mean optional or less important. You may also hear terms such as <em>quality requirement</em> or <em>quality attribute</em>. The <a href="https://www.iso.org/standard/78176.html" target="_blank" rel="noopener">ISO/IEC 25010 product quality model</a> provides one recognised set of quality characteristics, but a service may also have legal, policy, commercial, operational and organisational requirements beyond that model.</p>
+      <p>The distinction is useful, but it is not a rigid taxonomy. A requirement to exchange data with an existing register could be described as functional, while the mandated interface might be recorded as a constraint. What matters is that the need, its source and its effect on the design are clear.</p>
+      <blockquote>Functional requirements describe the capabilities needed. Quality requirements describe how well those capabilities must work and in what conditions.</blockquote>
 
-      <p>This guide looks at the difference between the two, the main NFRs you are likely to encounter, how to make them measurable, and how to use them when making architecture decisions.</p>
-
-      <h2>Functional and non-functional requirements</h2>
-      <p>A functional requirement describes something the service must allow a user, another system or a business process to do.</p>
-      <p>For an online reporting service, functional requirements might include allowing a user to sign in, submit a report, save a draft, amend a submission or receive confirmation that it has been accepted.</p>
-      <p>An NFR describes a quality or constraint that applies to those functions.</p>
-      <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Type</th>
-            <th scope="col">Question it answers</th>
-            <th scope="col">Example</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Functional</td>
-            <td>What must the service do?</td>
-            <td>Allow a business to submit its annual energy report.</td>
-          </tr>
-          <tr>
-            <td>Non-functional</td>
-            <td>How well must it do it, and under what conditions?</td>
-            <td>Continue to accept submissions during the expected deadline-day traffic peak.</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <p>The distinction is useful, but do not get too hung up on taxonomy. You may also encounter business constraints, technical constraints, policy requirements and standards. A requirement to use an organisation's existing cloud platform, for example, can be treated as an organisational or technical constraint rather than a service-quality NFR.</p>
-      <p>What matters to the architect is that these requirements are identified early enough to influence the design.</p>
-
-      <h2>Why NFRs matter to architecture</h2>
-      <p>Imagine a government service that allows businesses to submit an annual energy report.</p>
-      <p>Its basic functions are straightforward: a user signs in, completes a form, the service validates the information, stores the submission and sends confirmation.</p>
-      <p>There are many ways you could build that. A conventional web application could provide those functions. So could a serverless design or a set of independently deployed services. The functional requirements alone do not give you enough information to choose between them.</p>
-      <p>Now add some operational context. Around 50,000 reports are expected in a two-week submission window, with a sharp increase close to the deadline. The service needs to remain available while that deadline is open. It must be accessible. The information is classified OFFICIAL, with some information potentially requiring the -SENSITIVE marking. A small team will support the service, and the reporting rules are likely to change each year.</p>
+      <h2>Functional requirements can shape architecture too</h2>
+      <p>The feature list does not usually distinguish between all credible architectures, but it can still contain decisions with major architectural consequences. A service that must take payments, exchange data with several public bodies, support delegated authority or continue a process across online and offline channels needs capabilities that affect boundaries, integrations, data, identity and failure handling.</p>
+      <p>Quality requirements then help the team judge which approaches can provide those capabilities at the required level. A deadline-driven peak, a small support team, a demanding recovery objective or a need to change policy rules frequently may each favour or rule out different approaches.</p>
       <figure>
-        <img src="images/lesson5-image1.png" alt="Four candidate architectures, monolith, microservices, serverless and spreadsheet, all meet the functional requirements and pass into a teal funnel labelled non functional requirements: fifty thousand submissions in two weeks, 99.9 percent uptime, WCAG 2.2 AA, run by a team of three. Out of the bottom comes a single teal box, the few that actually fit.">
+        <img src="images/lesson5-image1.png" alt="Candidate architectures, monolith, microservices, serverless and spreadsheet, all meet the functional requirements and pass into a teal funnel labelled non functional requirements: submission volume in a two-week window, availability during the deadline, WCAG 2.2 AA, run by a small team. Out of the bottom come the few options that actually fit.">
         <!--<figcaption>The feature list lets almost anything through. The behavioural demands do the narrowing.</figcaption>-->
       </figure>
-      <p>You still have not selected an architecture, but you now have useful criteria for comparing the options.</p>
-      <p>A design that is difficult for a small team to operate may be a poor fit. A design that cannot handle the deadline peak needs a different scaling approach. A platform or component that makes accessibility difficult introduces risk that another option may avoid.</p>
-      <p>This is where NFRs become useful to an architect. They turn general expectations into criteria you can use when comparing designs and explaining trade-offs.</p>
+      <p>The diagram is a useful simplification: quality requirements narrow and differentiate credible options. They rarely select one architecture by themselves. Cost, delivery risk, existing capabilities, constraints and evidence about the team and service still matter.</p>
 
-      <h2>The main NFR areas</h2>
-      <p>There is no universal list that fits every service. The following categories are a useful starting point when you are working through a design.</p>
-      <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Area</th>
-            <th scope="col">Questions to ask</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Performance</td>
-            <td>How quickly does the service need to respond? Which transactions are most sensitive to delay?</td>
-          </tr>
-          <tr>
-            <td>Scalability</td>
-            <td>How much demand is expected? Is growth steady, seasonal or concentrated around deadlines?</td>
-          </tr>
-          <tr>
-            <td>Availability and resilience</td>
-            <td>When must the service be available? How quickly must it recover? How much data loss is acceptable?</td>
-          </tr>
-          <tr>
-            <td>Security and privacy</td>
-            <td>What information and functions need protecting? Who needs access? What threats and legal obligations apply?</td>
-          </tr>
-          <tr>
-            <td>Accessibility</td>
-            <td>Who needs to use the service? What accessibility standards apply? How will they be tested?</td>
-          </tr>
-          <tr>
-            <td>Operability</td>
-            <td>How will the service be monitored, supported, deployed and recovered when something goes wrong?</td>
-          </tr>
-          <tr>
-            <td>Maintainability</td>
-            <td>How often is the service likely to change? How quickly must changes be made safely?</td>
-          </tr>
-          <tr>
-            <td>Compliance and data</td>
-            <td>What legislation, government policy, retention rules, audit requirements or information standards apply?</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <p>Treat the list as a prompt for discussion rather than a template to fill in mechanically. An internal reporting tool and a national transactional service will not need the same targets.</p>
-
-      <h2>Turn vague expectations into requirements</h2>
-      <p>The difficult part is rarely recognising that performance or availability matters. The difficult part is defining what "good enough" means for this particular service.</p>
-      <p>A practical way to make an NFR useful is to capture four things:</p>
+      <h2>Write requirements around a real scenario</h2>
+      <p>Category labels such as "performance" or "security" are prompts, not requirements. A useful requirement usually makes five things clear:</p>
       <ol>
-        <li>the quality you care about</li>
-        <li>a target</li>
-        <li>the conditions under which the target applies</li>
-        <li>a way to verify it</li>
+        <li><strong>Scope:</strong> which user, transaction, component, data or service the requirement applies to.</li>
+        <li><strong>Expected response or quality:</strong> what needs to happen or how the service needs to behave.</li>
+        <li><strong>Conditions:</strong> the demand, failure, device, operating period or other situation in which it applies.</li>
+        <li><strong>Acceptance measure:</strong> how good is good enough, where a meaningful measure is possible.</li>
+        <li><strong>Evidence and verification:</strong> why the requirement exists and how the team will establish that it has been met.</li>
       </ol>
-      <p>For example, "the service must be fast" gives a delivery team very little to work with.</p>
-      <p>A requirement such as "95% of submission requests should complete within two seconds while the service is handling the expected peak concurrent load" is much more useful, provided you have evidence for the numbers and a plan to test them.</p>
-      <p>The figures in examples like this are illustrative. They are not default targets. The right number comes from the service you are designing.</p>
-      <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Vague</th>
-            <th scope="col">More useful</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>The service must be fast.</td>
-            <td>Define a response target for an important transaction and state the load at which it must be met.</td>
-          </tr>
-          <tr>
-            <td>The service must be highly available.</td>
-            <td>Define when the service must be available, how availability is measured and what recovery time is acceptable.</td>
-          </tr>
-          <tr>
-            <td>The service must be secure.</td>
-            <td>Define the security outcomes and controls needed for the information, users and threats involved.</td>
-          </tr>
-          <tr>
-            <td>The service must scale.</td>
-            <td>Define expected normal demand, expected peak demand and any growth assumptions.</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
+      <p>"The service must be fast" is too vague to guide design. A more useful requirement might say:</p>
+      <blockquote>During the expected submission peak, 95% of completed submission requests should receive confirmation within two seconds, measured from the service boundary, under the agreed load profile.</blockquote>
+      <p>That example is illustrative, not a default target. The percentile, time, measurement point and load profile need evidence from the service. The requirement should also identify how it will be tested.</p>
+      <p>Not every useful requirement needs a number. A legal rule, data-sharing condition or security outcome may be expressed in words, but it should still be precise enough for the team to determine whether the design satisfies it. "Comply with all applicable law" and "the service must be secure" simply move the unanswered question elsewhere.</p>
 
-      <h2>Performance and demand</h2>
-      <p>Performance covers more than page speed. Depending on the service, you may need to consider response time, transaction throughput, integration latency, batch processing windows or the time taken to complete a long-running process.</p>
-      <p>Frontend performance is another concern. <a href="https://www.gov.uk/service-manual/technology/how-to-test-frontend-performance" target="_blank" rel="noopener">GDS guidance</a> recommends setting a performance budget for page characteristics such as load time, number of requests and page size. That is different from setting response-time targets for an API or back-end process, so it is useful to capture them separately.</p>
-      <p>Pay particular attention to the shape of demand. An annual average can hide the period that actually matters.</p>
+      <h2>Use categories as prompts, not a form to complete</h2>
+      <p>There is no universal NFR list for every service. Use the areas below to start conversations, then spend effort where the risk, uncertainty and design impact justify it:</p>
+      <ul>
+        <li><strong>Performance and demand:</strong> Which journeys or processes are sensitive to delay? What are the normal, peak and forecast volumes?</li>
+        <li><strong>Availability and resilience:</strong> When must the service be usable? Which capabilities are critical? How quickly must they recover and how much recent data loss could be tolerated?</li>
+        <li><strong>Security and privacy:</strong> What information, functions and people need protection? What threats, harms, legal duties and departmental controls apply?</li>
+        <li><strong>Accessibility and usability:</strong> Who needs to use the service, in which contexts and with which access needs, devices or channels?</li>
+        <li><strong>Interoperability and data:</strong> Which organisations, systems, standards and data sources must work together? Who owns the data and its quality?</li>
+        <li><strong>Operability and support:</strong> Who will monitor, deploy, support and recover the service, during which hours and with what skills and tooling?</li>
+        <li><strong>Maintainability and change:</strong> What is likely to change, how often and how quickly must a safe change be made?</li>
+        <li><strong>Cost and sustainability:</strong> Which whole-life costs, budgets, resource limits or sustainability outcomes could distinguish the options?</li>
+      </ul>
+      <p>An internal tool used during office hours and a national service with a statutory deadline will not need the same targets or assurance. Do not create a large NFR catalogue merely because a template contains one.</p>
+
+      <h2>Performance starts with the shape of demand</h2>
+      <p>Performance can include page loading, response time, transaction throughput, integration latency, batch windows and the duration of long-running work. Define the part of the service being measured and the experience or process that the measure protects.</p>
+      <p>Average demand can hide the period that changes the design. Regulatory returns, grants and other government services may have sharp peaks near a deadline. Use analytics and monitoring from the current service where possible. For a new service, record forecasts as assumptions and test them as evidence improves.</p>
       <figure>
         <img src="images/lesson5-image2.png" alt="A chart of load over time. Load sits low and almost flat near the average line for most of the period, then climbs steeply to a high peak as the deadline approaches. The peak is marked in teal as the level to design for.">
         <!--<figcaption>Design for the peak, optimise for the norm.</figcaption>-->
       </figure>
-      <p>Some government services have predictable peaks around tax dates, grant deadlines, regulatory returns or policy events. If a large proportion of transactions arrive near a deadline, designing only for average demand can give you the wrong capacity assumption.</p>
-      <p>Use evidence from the existing service where it is available: transaction volumes, monitoring data, peak-to-average ratios and known busy periods. For a new service, document the assumptions you are making and test them as the service develops.</p>
+      <p>Frontend performance needs its own evidence. The <a href="https://www.gov.uk/service-manual/technology/how-to-test-frontend-performance" target="_blank" rel="noopener">Service Manual guidance on frontend performance</a> recommends setting a performance budget for measures such as load time, number of requests and page size, then measuring throughout development. Test on the devices and connections users actually have, not only a developer's laptop.</p>
 
-      <h2>Availability and resilience</h2>
-      <p>Availability is about whether the service is usable when people need it. The percentage on its own does not tell you enough.</p>
-      <p>You also need to know the period over which availability is measured, whether the target applies 24 hours a day or only during defined service hours, how planned maintenance is treated and what happens when part of the service fails.</p>
-      <p>Recovery requirements are useful here. Recovery time objective, or RTO, describes the target time within which a service or capability should be restored after a disruption. Recovery point objective, or RPO, describes the point in time to which data should be recoverable after a disruption and therefore indicates the amount of recent data loss that may be tolerated.</p>
-      <p>Those values should come from the impact of an outage. A service with a statutory deadline may need a different resilience approach from an internal application that can tolerate periods of unavailability outside working hours.</p>
+      <h2>Availability percentages need context</h2>
+      <p>"99.9% available" is incomplete unless the team knows what counts as available, where it is measured, the measurement period, the service hours, how planned maintenance is treated and what happens when only part of the journey fails.</p>
+      <p>Recovery requirements help describe the effect of disruption. A recovery time objective describes the target time for restoring a service or capability. A recovery point objective describes the point in time to which data needs to be recovered and therefore the amount of recent data loss that may be tolerated. Set both from business impact and user need, then test that the service and its dependencies can meet them.</p>
+      <p>A statutory deadline may justify a different resilience approach from an internal service that can tolerate planned downtime outside working hours. That does not automatically mean multiple regions, active-active infrastructure or another named pattern. Compare the cost, failure behaviour, operational capability and recovery evidence of credible options.</p>
 
-      <h2>Security and privacy</h2>
-      <p>Security requirements should be identified while the service is being designed. The government's <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/" target="_blank" rel="noopener">Secure by Design</a> approach expects cyber security risks to be considered from the start and managed throughout the service lifecycle.</p>
-      <p>Start with the information and the risks around it. Understand the government security classification, any additional markings, the people and systems that need access, the likely threats and the consequences of compromise.</p>
-      <p>Those requirements feed into decisions about identity, authorisation, network boundaries, encryption, audit, secrets management and how data is stored or shared.</p>
+      <h2>Security and privacy requirements start with risk</h2>
+      <p>The government's <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/" target="_blank" rel="noopener">Secure by Design</a> approach requires central government departments and arm's-length bodies to incorporate effective security practices into digital delivery. Other public sector organisations can adopt the approach voluntarily. It treats security as work throughout the lifecycle rather than a check at the end.</p>
+      <p>Start with the information, users, service functions, threats and potential harm. Establish the applicable classification, additional markings, law, departmental policy and risk ownership. Those inputs may create requirements for identity, authorisation, audit, encryption, monitoring, data handling, incident response and other controls, but they do not prescribe the same design for every service.</p>
       <figure>
-        <img src="images/lesson5-image3.png" alt="Four stacked grey layers of control, perimeter and edge, network controls, application controls, and identity and access, sit above a teal box holding OFFICIAL-SENSITIVE data. An arrow down the left shows an attacker must pass every layer to reach it.">
+        <img src="images/lesson5-image3.png" alt="Stacked layers of control, perimeter and edge, network controls, application controls, and identity and access, sit above a teal box holding OFFICIAL-SENSITIVE data, illustrating defence in depth.">
         <!--<figcaption>No single layer is the defence. The stack of them is.</figcaption>-->
       </figure>
-      <p>OFFICIAL-SENSITIVE is worth being precise about. Under the <a href="https://www.gov.uk/government/publications/government-security-classifications" target="_blank" rel="noopener">Government Security Classifications Policy</a>, OFFICIAL is one of the three classification tiers. The -SENSITIVE marking is an additional marking that can be applied to certain OFFICIAL information; it is not a separate classification tier. Additional markings indicate where additional protective controls or security behaviours are required.</p>
-      <p>Privacy requirements need the same early attention. If personal data is involved, the architecture may need to support requirements around data minimisation, retention, access, deletion and audit. Where processing is likely to result in a high risk to people's rights and freedoms, a <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/" target="_blank" rel="noopener">Data Protection Impact Assessment</a> may be required.</p>
-      <p>The aim is to understand the actual risks and apply controls that are proportionate to them.</p>
+      <p>The existing diagram illustrates defence in depth; it is not an official control stack. Effective controls do not always form a simple perimeter-to-data sequence, and their strength should follow the threats and consequences involved.</p>
+      <p>Under the <a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-html" target="_blank" rel="noopener">Government Security Classifications Policy</a>, OFFICIAL is a classification tier. The <em>-SENSITIVE</em> marking can be added to some OFFICIAL information and is not a separate tier. Departments must also apply their own information security and classifications policies.</p>
+      <p>Privacy needs the same precision. Identify the purpose and <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/a-guide-to-lawful-basis/" target="_blank" rel="noopener">lawful basis</a> for processing, the personal data needed, retention, sharing, access, correction or deletion requirements, and the risks to people. A <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/" target="_blank" rel="noopener">data protection impact assessment is required</a> where processing is likely to result in a high risk to people's rights and freedoms. Work with data protection and security specialists rather than turning "secure" or "GDPR compliant" into untestable catch-all requirements.</p>
 
-      <h2>Accessibility</h2>
-      <p>Accessibility can influence technology choices, component design, content management and the formats a service produces.</p>
-      <p>Public sector websites and public-facing mobile apps are generally required to meet WCAG 2.2 AA and publish an accessibility statement, although the <a href="https://www.gov.uk/guidance/accessibility-requirements-for-public-sector-websites-and-apps" target="_blank" rel="noopener">regulations</a> contain exemptions, exclusions for some content and provisions for disproportionate burden.</p>
-      <p>For an architect, the useful question is what the technical design needs to support. That may include accessible authentication journeys, keyboard operation, screen-reader compatibility, semantic content, accessible form components and an appropriate choice of document format.</p>
-      <p>A particular technology is not automatically accessible or inaccessible. The important thing is to understand what the service needs and make sure the design allows the team to meet and test those requirements.</p>
+      <h2>Accessibility is wider than a technical checklist</h2>
+      <p>For public sector bodies within scope of the 2018 accessibility regulations, websites and mobile apps need to meet the applicable accessibility requirements and publish an accessibility statement. Current government guidance uses WCAG 2.2 AA, while also explaining exemptions, excluded content and the assessment required to claim disproportionate burden. Intranets and extranets are covered; the scope for mobile apps is more limited, so check the current guidance rather than relying on "public-facing" as a complete test.</p>
+      <p>The architecture may need to support semantic content, keyboard operation, accessible authentication and error handling, responsive journeys, assistive technology and accessible document formats. A product or framework does not make the completed service automatically accessible.</p>
+      <p>Automated checks find only some barriers. Plan manual testing, testing with assistive technology and research with disabled users where appropriate. Accessibility should influence design choices and acceptance criteria from the start, not become a late audit of a largely fixed interface.</p>
 
-      <h2>Operability and maintainability</h2>
-      <p>Once a service goes live, it still needs to be operated, supported and changed, so the support model belongs in the architecture discussion.</p>
-      <p>Find out who will run the service, what skills they have, when support is available and how much operational overhead the team can reasonably take on.</p>
-      <p>Operability requirements can cover monitoring, logging, alerting, deployment, rollback, incident investigation, backup and recovery. Maintainability requirements are concerned with how safely and quickly the service can change.</p>
-      <p>If policy rules change several times a year, for example, the time and effort needed to implement a policy change may be an important requirement. If releases need to happen frequently, deployment and rollback need to be routine enough to support that.</p>
-      <p>These requirements can materially affect architecture choices. Splitting a system into many independently deployed services might make some changes easier, while increasing the number of components a small operations team has to monitor and support. A simpler deployment model may be easier to operate but introduce different trade-offs elsewhere.</p>
+      <h2>Operability, dependencies and change belong in the design</h2>
+      <p>A live service needs people, processes and tooling to operate it. Find out who will support it, when support is available, which skills they have and what operational overhead they can sustain. Requirements may cover monitoring, logging, alerting, deployment, rollback, incident investigation, backup, recovery and manual workarounds.</p>
+      <p>Dependencies need explicit requirements too. Establish interface behaviour, ownership, data quality, support hours, expected volumes, failure handling and change processes. A service cannot meet an end-to-end availability or response target if a critical dependency cannot support it and no suitable fallback exists.</p>
+      <p>Maintainability is about the service's credible pattern of change. If policy rules change several times a year, the time and effort needed to make, test and release those changes may distinguish the options. Do not add flexibility for every imaginable future. Use evidence about likely change and revisit the design when that evidence changes.</p>
 
-      <h2>Where should the numbers come from?</h2>
-      <p>Architects should not invent NFR targets because they sound sensible.</p>
-      <p>Useful evidence can come from existing service analytics, monitoring data, user research, expected transaction volumes, business deadlines, legislation, security assessments, support arrangements and the impact of the service being unavailable.</p>
-      <p>Sometimes the evidence does not exist yet. That is normal during discovery and early alpha. In that case, record the value as an assumption, explain where it came from and decide how you are going to test it.</p>
-      <p>It is also worth recording why a target exists. Six months later, another architect should be able to tell whether a requirement is driven by a user need, a legal obligation, a policy decision, an operational limitation or an assumption that can now be revisited.</p>
+      <h2>Make the source and uncertainty visible</h2>
+      <p>Architects should not invent targets because they sound sensible. Evidence may come from user research, service analytics, monitoring, incident records, transaction forecasts, policy, legislation, business-impact analysis, support arrangements, contracts, security and privacy assessment, or experiments in alpha.</p>
+      <p>When evidence is missing, record an assumption rather than disguising it as fact. State its source, owner, effect on the design, how it will be tested and when it needs to be resolved. A provisional target can still support an experiment, provided the team knows it is provisional.</p>
+      <p>Requirements also change as the team learns. Keep enough traceability to explain why an important requirement exists and who can agree a change to it. The level of record-keeping should be proportionate: a high-impact legal, resilience or supplier requirement needs stronger evidence and control than a low-risk, reversible preference.</p>
 
-      <h2>Use NFRs to compare architecture options</h2>
-      <p>Once the important requirements are understood, use them as part of your architecture evaluation rather than jumping straight to a preferred technology.</p>
-      <p>Returning to the energy-reporting example, the requirements might lead to considerations like these:</p>
-      <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Requirement</th>
-            <th scope="col">What it means for the architecture</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Large deadline-driven traffic peak</td>
-            <td>The design needs a credible way to add capacity and handle peak demand.</td>
-          </tr>
-          <tr>
-            <td>Small support team</td>
-            <td>Operational complexity and the number of components to support matter when comparing options.</td>
-          </tr>
-          <tr>
-            <td>Annual changes to reporting rules</td>
-            <td>Ease of change, testing and release becomes part of the evaluation.</td>
-          </tr>
-          <tr>
-            <td>Government information requiring appropriate protection</td>
-            <td>Hosting, identity, access, audit and data controls must satisfy the relevant security requirements.</td>
-          </tr>
-          <tr>
-            <td>Accessibility requirements</td>
-            <td>Frontend technology and service components need to support accessible implementation and testing.</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <p>Notice that none of these requirements says "use microservices", "use serverless" or "use Kubernetes". Those are possible design choices.</p>
-      <p>Requirements give you the criteria against which those choices can be assessed.</p>
+      <h2>Use requirements to compare options</h2>
+      <p>Requirements should become evaluation criteria, not hidden instructions to use a preferred product or pattern. For the reporting service:</p>
+      <ul>
+        <li>A deadline-driven peak makes capacity, queuing, degradation and recovery behaviour important.</li>
+        <li>A small support team makes operational complexity and supplier support important.</li>
+        <li>Frequent changes to reporting rules make safe change and release effort important.</li>
+        <li>Personal or sensitive information makes identity, access, audit, handling and privacy controls important.</li>
+        <li>Accessibility requirements make the behaviour of the complete journey and its components important.</li>
+      </ul>
+      <p>None of those statements means "use microservices", "use serverless" or "use Kubernetes". They tell the team what evidence to seek and how to compare credible approaches. One option may handle demand efficiently but create operational complexity; another may be easier to support but require earlier capacity planning. The recommendation should explain those trade-offs.</p>
 
-      <h2>Plan how each requirement will be verified</h2>
-      <p>A measurable requirement is only useful if the team knows how it will be checked.</p>
-      <p>Performance and scaling requirements may need load or stress testing. Availability can be measured through production monitoring. Security requirements may be verified through technical testing, threat modelling, configuration review and penetration testing. Accessibility needs a combination of automated and manual testing, including testing with assistive technology.</p>
-      <p>Thinking about verification while you write the requirement is a useful test of whether it is specific enough. If nobody can explain how they would know that the requirement has been met, it probably needs more work.</p>
+      <h2>Validate the requirement and verify the solution</h2>
+      <p>Terminology varies, but two separate checks are useful:</p>
+      <ul>
+        <li><strong>Validate the requirement:</strong> confirm that it reflects a real need or obligation, has credible evidence, applies to the stated scope and is feasible enough to guide the work.</li>
+        <li><strong>Verify the solution:</strong> establish through testing, inspection, monitoring, rehearsal or other evidence that the implemented service meets it.</li>
+      </ul>
+      <p>Functional behaviour may be checked through acceptance tests and user research. Performance and scaling may require representative load tests. Resilience may require recovery or failover exercises. Security evidence can include threat modelling, design and configuration review, automated testing, penetration testing and operational monitoring. Accessibility needs a combination of automated and manual evaluation. No single test proves that a service is secure, accessible or resilient.</p>
+      <p>Plan verification while writing the requirement. If the team cannot explain how it would know the requirement has been met, the requirement probably needs more work.</p>
 
-      <h2>NFRs and the Service Standard</h2>
-      <p>In government, several points in the Service Standard overlap directly with the areas covered by NFRs.</p>
+      <h2>How this relates to the Service Standard</h2>
+      <p>Quality requirements support the whole service, not just an architecture document. Several current <a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener">Service Standard</a> points have particularly direct links:</p>
       <figure>
         <img src="images/lesson5-image4.png" alt="Four teal boxes, your NFRs, connect across to four grey Service Standard points. Accessibility to point 5, everyone can use it. Security and privacy to point 9. Technology choices to point 11, right tools. Reliability to point 14, a reliable service.">
         <!--<figcaption>The qualities you captured as requirements are the ones assessors come to check.</figcaption>-->
       </figure>
       <ul>
-        <li>Point 5 covers making sure everyone can use the service.</li>
-        <li>Point 9 covers security and privacy.</li>
-        <li>Point 11 covers choosing appropriate tools and technology.</li>
-        <li>Point 14 covers operating a reliable service.</li>
+        <li>Point 5: make sure everyone can use the service.</li>
+        <li>Point 9: create a secure service which protects users' privacy.</li>
+        <li>Point 11: choose the right tools and technology.</li>
+        <li>Point 14: operate a reliable service.</li>
       </ul>
-      <p>If you are developing a transactional service for central government, you must get it assessed unless a stated exception applies. This includes transactional services used internally by civil servants. Services that do not meet the criteria for mandatory assessment can still arrange a voluntary assessment.</p>
-      <p>The assessment should not be the reason you define NFRs. It is another reason to make sure the decisions behind the service can be explained with evidence.</p>
+      <p>The diagram highlights those four points, but requirements also support other parts of the Standard, including understanding users, solving a whole problem and iterating safely.</p>
+      <p>Current Service Manual guidance says transactional services developed for central government must be assessed, including internal services used only by civil servants, subject to the published criteria and exceptions. Other services can still use the Standard or arrange a voluntary assessment, and departments may have their own assurance. Assessment is not the reason to define good requirements; it is one place where the team may need to explain the evidence and decisions behind them.</p>
 
-      <h2>A practical NFR checklist</h2>
-      <p>Before you settle on an architecture, check that:</p>
+      <h2>Questions to ask before choosing an architecture</h2>
       <ul>
-        <li>the important functional capabilities are understood</li>
-        <li>the relevant NFR categories have been considered</li>
-        <li>targets are based on evidence where evidence is available</li>
-        <li>assumptions are clearly identified where evidence is missing</li>
-        <li>the conditions under which each target applies are clear</li>
-        <li>the team knows how each important requirement will be verified</li>
-        <li>business and technical constraints are separated from architecture decisions</li>
-        <li>important trade-offs and the reasons for them are recorded</li>
+        <li>Which capabilities are essential to the user and policy outcome?</li>
+        <li>Which quality requirements could materially change the design or rule out an option?</li>
+        <li>What evidence supports each important target, and what remains an assumption?</li>
+        <li>Under which demand, failure, device or operating conditions must the target be met?</li>
+        <li>Which statements are genuine requirements or constraints, and which are proposed solutions or preferences?</li>
+        <li>Who owns the need, risk or obligation, and who can agree a change?</li>
+        <li>How will the team validate the requirement and verify the service?</li>
+        <li>What new evidence would cause the requirement or architecture decision to be revisited?</li>
       </ul>
-      <p>You do not need every NFR to be final in discovery. They should become more precise as the team learns more about the service.</p>
-      <p>What you do need is enough evidence to recognise the requirements that could change the design. Those are the ones worth finding early.</p>
+      <blockquote>A requirement is useful when it changes what you investigate, how you compare options or how you prove the service is good enough.</blockquote>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This is a practitioner guide to solution architecture in UK central government, not an official requirements framework. Terminology, responsibilities and assurance arrangements vary by organisation and service.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary sources below. Standards and government guidance change; check the source before relying on them.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.iso.org/standard/72089.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ISO/IEC/IEEE 29148:2018: Requirements engineering</a></li>
+          <li><a href="https://www.iso.org/standard/78176.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ISO/IEC 25010:2023: Product quality model</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/how-to-test-frontend-performance" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: how to test frontend performance</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">UK Government Security: Secure by Design</a></li>
+          <li><a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Security Classifications Policy</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/a-guide-to-lawful-basis/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: a guide to lawful basis</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: when a DPIA is required</a></li>
+          <li><a href="https://www.gov.uk/guidance/accessibility-requirements-for-public-sector-websites-and-apps" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Understanding accessibility requirements for public sector bodies</a></li>
+          <li><a href="https://www.w3.org/WAI/test-evaluate/tools/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">W3C Web Accessibility Initiative: evaluation tools</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Standard</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Check if you need to meet the Service Standard or get an assessment</a></li>
+          <li><a href="https://csrc.nist.gov/glossary/term/recovery_time_objective" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NIST glossary: recovery time objective</a></li>
+          <li><a href="https://csrc.nist.gov/glossary/term/recovery_point_objective" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NIST glossary: recovery point objective</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
