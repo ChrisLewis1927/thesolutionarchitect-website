@@ -5,11 +5,11 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="What architecture principles are, how the Technology Code of Practice and your own project principles form a hierarchy, frameworks for defensible choices, and how to capture decisions in ADRs.">
-  <meta property="og:title" content="Architecture principles and decision making &mdash; Architect's Library">
-  <meta property="og:description" content="What architecture principles are, how the Technology Code of Practice and your own project principles form a hierarchy, frameworks for defensible choices, and how to capture decisions in ADRs.">
+  <meta name="description" content="How architecture decisions actually get made: moving from evidence to a defensible choice, the role of principles and standards, decision authority and governance, and recording decisions.">
+  <meta property="og:title" content="How architecture decisions actually get made &mdash; Architect's Library">
+  <meta property="og:description" content="Moving from requirements and constraints to a defensible architecture decision, the role of principles and standards, proportionate governance, and recording decisions.">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <title>Architecture principles and decision making &mdash; Architect's Library</title>
+  <title>How architecture decisions actually get made &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -41,8 +41,8 @@
   <main id="main">
     <section class="lesson-hero">
       <div class="container">
-        <h1 class="lesson-hero__title">Architecture principles and decision making</h1>
-        <p class="lesson-hero__description">Architecture is decision making. Every day you choose between options, accept trade-offs, and set constraints that shape the solution. Without something to guide those choices, each one is made in isolation, and isolated decisions add up to an incoherent system. Principles are the thread that ties hundreds of small decisions into one whole, and good records are how anyone later understands why you chose what you did. In government, neither is optional.</p>
+        <h1 class="lesson-hero__title">How architecture decisions actually get made</h1>
+        <p class="lesson-hero__description">Once you understand the problem, the people around it and the requirements that matter, you can start making architecture decisions. A sound decision connects that evidence to credible options, explains the trade-offs and makes clear who has authority to decide. Principles and decision records support that work, but neither can replace it.</p>
       </div>
     </section>
 
@@ -50,82 +50,154 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>What an architecture principle is, and what it isn't: a rule, a goal, or a technology choice.</li>
-          <li>How the Technology Code of Practice and your own project principles fit into one hierarchy.</li>
-          <li>Decision frameworks that produce defensible choices, including matching effort to how reversible a decision is.</li>
-          <li>How to capture decisions in Architecture Decision Records that survive scrutiny and staff turnover.</li>
+          <li>A practical way to move from requirements and constraints to a defensible decision.</li>
+          <li>A clear distinction between principles, standards, preferences and decisions.</li>
+          <li>A proportionate approach to decision authority, evidence, challenge and governance.</li>
+          <li>A simple way to record important decisions and revisit them when the context changes.</li>
         </ul>
       </div>
 
-      <h2>What an architecture principle is</h2>
-      <p>An architecture principle is a fundamental statement of belief that guides a decision. The good ones are stable, so they don't change with every project; directional, so they point at a preferred approach; and actionable, so they actually help you choose. It's easier to pin down by saying what a principle isn't. It isn't a rule. A rule is absolute: all data must be encrypted at rest. A principle is directional: we prefer open standards to proprietary formats, and you can deviate if you can justify it. It isn't a goal, either. A goal is an outcome you want, like cutting processing time by half; a principle is how you'll approach getting there, like designing for automation over manual steps. And it isn't a technology choice. "We use AWS" is a decision. "We prefer cloud hosted services to running our own infrastructure" is a principle, and on a given day it might lead to AWS, Azure or GCP.</p>
-      <p>A principle worth having carries four things with it: a statement ("design for change"), a rationale (government policy moves constantly, and systems that resist change become expensive liabilities), the implications in practice (separate business rules from application logic, prefer configuration to hard coded values, build modular components with clear interfaces), and the exceptions (a short lived prototype might trade modularity for speed of learning). The test is simple. Does it help you decide? If it never rules anything out, like "we build good systems", it's useless. If it only ever fits one situation, like "we use PostgreSQL for all relational data", it's a decision wearing a principle's clothes. The useful ones sit in between, specific enough to steer a choice and general enough to apply to many.</p>
-      <blockquote>If a principle never rules anything out, it isn't doing any work.</blockquote>
-
-      <h2>Principles come in a hierarchy</h2>
-      <p>You don't write most of your principles. You inherit them. They stack up in a hierarchy, and your job is to know where yours sit in it.</p>
-      <figure>
-        <img src="images/lesson6-image1.svg" alt="Three tiers narrowing downward. At the top, widest, the Technology Code of Practice, applying across all government. In the middle, departmental strategy, direction for your organisation. At the bottom in teal, narrowest, project principles, authored by you for this service.">
-        <figcaption>Most of your principles are inherited. You author the bottom tier.</figcaption>
-      </figure>
-      <p>At the top is the Technology Code of Practice, the principles every government technology decision is meant to align with. They repay reading through an architecture lens rather than reciting. Define user needs means the option that serves users better wins, even when it's the less elegant one. Make things accessible means WCAG 2.2 AA is a constraint on your front end, your document generation and your error handling, designed in from the start. Be open and use open source means preferring open standards like REST, JSON and OAuth, reusing open source where it fits, and publishing your own code unless there's reason not to. Make use of cloud means cloud is the default and running your own infrastructure needs a real justification. Make things secure means threat modelling, secure defaults, least privilege and defence in depth at every layer. Integrate and adapt means designing for integration through APIs and replaceable parts rather than a monolith you can't unpick. Make better use of data means treating data as a shared asset other services might need. And share and reuse means checking what already exists, the common GOV.UK components like Notify, Pay and One Login, before you build anything new.</p>
-      <p>These don't always agree. Be open can pull against make things secure when the most secure option is proprietary. Make use of cloud can pull against share and reuse when the reusable component runs on someone else's infrastructure. When principles collide you make a judgment, document the trade-off, and make sure the call is defensible. More on that below.</p>
-
-      <h2>Writing your own project principles</h2>
-      <p>The Code and your department take you most of the way, but every project has a context they don't address, and that's where you write a few of your own. Project principles sit beneath the inherited ones and add specificity rather than contradicting them. If the Code says make use of cloud, yours might say use serverless where usage is intermittent, to keep the cost down. They should answer your project's actual challenges: a lot of legacy to integrate might give you "isolate legacy behind adapters so its changes don't propagate", a small operations team might give you "prefer managed services to anything self hosted". They only work if the team agrees them, so write them with the team, not at it. And keep them few, because nobody remembers twelve. A reasonable set for a service might read:</p>
+      <h2>Start by stating the decision</h2>
+      <p>Architecture discussions often begin with a proposed answer: "Should we use serverless?", "Which database should we choose?" or "Can we buy this product?" Before comparing technologies, state the decision in terms of the outcome and boundaries.</p>
+      <blockquote>How should the service process an unpredictable submission workload while meeting its recovery, security, support and cost requirements?</blockquote>
+      <p>That wording keeps several approaches open. It also exposes the information needed to make the choice. The team can now examine demand, recovery objectives, data sensitivity, support capability, whole-life cost and the consequences of dependency on a platform or supplier.</p>
+      <p>A useful decision statement identifies:</p>
       <ul>
-        <li>User needs first. Decisions are justified by user needs, not technology preference.</li>
-        <li>Cloud native by default. Managed services unless there's a specific reason to self host.</li>
-        <li>Progressive enhancement. The service works without JavaScript; JavaScript improves it.</li>
-        <li>Configuration over code. Rules that move with policy live in configuration, not the codebase.</li>
-        <li>Observable by design. Every component emits the logs, metrics and health checks operations need.</li>
-        <li>Reuse before build. Check for existing government components and services first.</li>
-        <li>Data minimisation. Collect and keep only the data the service genuinely needs.</li>
+        <li>the outcome or problem the decision needs to address</li>
+        <li>the scope and affected parts of the service</li>
+        <li>the requirements, constraints and assumptions that matter</li>
+        <li>the person or forum with authority to decide</li>
+        <li>when the decision is needed and what happens if it is delayed</li>
       </ul>
-      <p>Give each one a rationale and its implications, the same way the Code does, and revisit them as the project moves. A principle that no longer serves the work should be retired, not left to gather dust.</p>
 
-      <h2>Frameworks for making the call</h2>
-      <p>Principles steer a decision; you still need a way to actually make it. A few frameworks travel well in government. A weighted decision matrix, options as columns and criteria as weighted rows, is transparent and easy to explain to a non technical board, as long as you don't fall for false precision: a 7.3 against a 7.1 is a tie, not a winner, so use it to separate the clearly strong from the clearly weak. A cost, benefit and risk view suits programme boards because it's how they already think, provided you're honest about the costs and risks of your recommended option, not only the rejected ones. The reversibility test is the one I reach for most.</p>
+      <h2>Use principles to guide the choice, not make it for you</h2>
+      <p>An architecture principle is a general guide for making related decisions consistently. It expresses a preferred direction and explains why that direction matters. It is different from a legal duty, mandatory standard, project constraint or technology choice.</p>
+      <ul>
+        <li><strong>Principle:</strong> prefer open standards where they meet the service need, to support interoperability and future change.</li>
+        <li><strong>Mandatory requirement:</strong> the service must meet a particular legal or departmental control within its stated scope.</li>
+        <li><strong>Constraint:</strong> the first release must exchange data through an existing interface that cannot change before the delivery date.</li>
+        <li><strong>Preference:</strong> the team would like to use a technology it already knows.</li>
+        <li><strong>Decision:</strong> use a particular interface standard for this integration, for the reasons recorded.</li>
+      </ul>
+      <p>The distinction matters. A preference should not become a false "must", while a mandatory requirement cannot be traded away as though it were only a preference.</p>
+      <p>The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener">Technology Code of Practice</a> is a cross-government standard containing 13 points for designing, building and buying technology. It should inform relevant decisions, but it is not a complete set of architecture principles and its points do not automatically select an option. The current guidance says to consider each point, align with the mandatory points and follow as many of the others as practical. Applicability still needs to be established for the organisation, service and decision.</p>
+      <p>Departmental strategies, approved patterns, security policies, platform constraints and service-specific principles may also affect the choice. They do not form one universal hierarchy. Record the source, scope and authority of each one so the team knows whether it is mandatory, preferred or open to exception.</p>
+      <p>If a service needs its own principles, agree only those that address repeated decisions or important tensions. A useful principle has:</p>
+      <ul>
+        <li>a short statement of the preferred direction</li>
+        <li>a rationale linked to the service or organisational context</li>
+        <li>practical implications for design and delivery</li>
+        <li>an owner and a route for agreeing an exception</li>
+        <li>a reason to review or retire it</li>
+      </ul>
+      <p>"Use serverless for intermittent workloads" is too close to a solution and ignores other requirements. "Match capacity and cost to evidenced demand" is more useful because it can guide a comparison of managed services, containers, serverless functions and other credible approaches.</p>
+
+      <h2>Be clear about who makes the decision</h2>
+      <p>A Solution Architect may make some decisions, recommend others, facilitate agreement or provide assurance. The role does not carry automatic authority over every technical, commercial, security, data or service decision.</p>
+      <p>Before doing detailed analysis, establish:</p>
+      <ul>
+        <li><strong>Decision owner:</strong> the person or forum accountable for the choice.</li>
+        <li><strong>Contributors:</strong> the people with evidence, expertise or an affected dependency.</li>
+        <li><strong>Risk owners:</strong> the people authorised to accept relevant security, operational, financial or delivery risks.</li>
+        <li><strong>Assurance and approval:</strong> any independent challenge or formal permission required before proceeding.</li>
+      </ul>
+      <p>The <a href="https://www.gov.uk/service-manual/agile-delivery/governance-principles-for-agile-service-delivery" target="_blank" rel="noopener">Service Manual governance principles</a> say decisions should be evidence-based, focused on user needs and made at the right level, with teams clear about the boundaries of their authority. The <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook</a>, in force from 1 April 2026, similarly places more accountability with delivery teams and organisations while retaining proportionate assurance and HM Treasury approval for decisions above an organisation's delegated authority or considered novel, contentious or repercussive.</p>
+      <p>Governance should improve the decision by bringing the right evidence and challenge. It should not be treated as a final presentation after the practical choice has already been made.</p>
+
+      <h2>Move from evidence to a recommendation</h2>
+      <p>The decision process continues the sequence used throughout this series:</p>
+      <ol>
+        <li><strong>Frame the decision and outcome.</strong> State what needs to be decided, for whom and by when.</li>
+        <li><strong>Confirm requirements and constraints.</strong> Separate mandatory obligations from assumptions and preferences.</li>
+        <li><strong>Agree evaluation criteria.</strong> Derive them from user needs, service outcomes, quality requirements, risks and constraints before choosing an option.</li>
+        <li><strong>Develop credible options.</strong> Include approaches that could genuinely meet the need, described at a consistent level of detail.</li>
+        <li><strong>Gather evidence.</strong> Use research, service data, prototypes, technical investigation, costs, operational experience and specialist advice.</li>
+        <li><strong>Compare trade-offs.</strong> Explain what each option improves, weakens, costs, risks or makes harder to change.</li>
+        <li><strong>Recommend or decide.</strong> State the preferred option, why it is preferred, the uncertainty that remains and who owns the decision.</li>
+        <li><strong>Record and review.</strong> Preserve enough context to understand the choice and define what evidence would cause it to be reconsidered.</li>
+      </ol>
+      <p>A decision matrix can help organise criteria and evidence, but its result is not automatically objective. Scores and weightings contain judgements, and small numerical differences can disguise uncertainty or weak evidence. Show the reasoning and sensitivity behind the numbers rather than treating the highest total as the answer.</p>
+      <p>For major government investment decisions, use the applicable business-case and appraisal guidance with finance and economic specialists. The <a href="https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government/the-green-book-2026" target="_blank" rel="noopener">2026 Green Book</a> warns against simple multi-criteria analysis based on weighting and scoring without an objective basis. It distinguishes that from properly facilitated multi-criteria decision analysis and requires appraisal to be proportionate to the proposal.</p>
+
+      <h2>Match the effort to the consequences</h2>
+      <p>Not every decision needs a workshop, options paper and governance board. The work should be proportionate to the decision's risk, cost, sensitivity, novelty, dependencies, reach and difficulty to reverse.</p>
       <figure>
         <img src="images/lesson6-image2.svg" alt="A horizontal spectrum from easy to reverse on the left, decide fast, to hard to reverse on the right, analyse carefully. Logging framework and component library sit on the easy end in grey; database and cloud provider sit on the hard end in teal.">
         <figcaption>Spend your analysis where the decision is hard to undo.</figcaption>
       </figure>
-      <p>It asks a single question: how hard is this to undo? Cheap, reversible decisions like a logging library or a component kit deserve a quick choice and no more. Expensive, sticky ones like your cloud provider, your database or your integration pattern deserve real analysis. Spend your effort in proportion. Two more are worth keeping to hand. Regret minimisation, asking which option you'll regret least in two years, helps when the data is ambiguous and nothing clearly wins. And for team decisions, aim for consent rather than consensus: "does anyone have a strong objection?" gets you moving, where "does everyone agree this is best?" rarely does.</p>
-      <blockquote>Spend three hours choosing your cloud provider and three weeks choosing a logging library, and you've got it exactly backwards.</blockquote>
-
-      <h2>Architecture decision records</h2>
-      <p>A decision you can't explain later is a decision you'll defend badly. An Architecture Decision Record is a short document, a page or two, that captures one decision: what you decided, why, what else you considered, and what it costs you. They're among the most useful things an architect produces and among the most neglected. They hold the context that evaporates over time, because in six months nobody remembers why you chose PostgreSQL over DynamoDB. They make implicit decisions explicit, instead of a technology quietly becoming the default because someone started using it. They let a decision be challenged and revised rather than excavated. And they protect you when an auditor, an assessor or a committee asks why. A good one is short and has a familiar shape:</p>
+      <p>Reversibility is a useful prompt, not a complete classification. A library may be easy to replace in one service but embedded across hundreds of components in another. A database or cloud service may be easier to leave if the design, contract, data model and migration path support it. Ask what reversal would actually require rather than assigning a technology to a permanent category.</p>
+      <p>Spend more time where a choice:</p>
       <ul>
-        <li>Title: a short, descriptive name for the decision.</li>
-        <li>Status: proposed, accepted, deprecated or superseded, so its place in the lifecycle is clear.</li>
-        <li>Context: the situation, constraints and requirements that prompted it, enough for a newcomer to follow.</li>
-        <li>Decision: what was decided, stated plainly.</li>
-        <li>Alternatives considered: what else was on the table and why it lost, which shows the decision was made, not stumbled into.</li>
-        <li>Consequences: the good and the bad, honestly, because every decision has both.</li>
-        <li>Review date: when, if ever, this should be looked at again.</li>
+        <li>could cause material harm or service failure</li>
+        <li>affects several teams, services or organisations</li>
+        <li>creates a long-term commercial, data or supplier dependency</li>
+        <li>has high whole-life cost or a difficult migration path</li>
+        <li>rests on uncertain demand, policy, technology or delivery capability</li>
+        <li>needs formal risk acceptance, assurance or approval</li>
+      </ul>
+      <p>A low-risk and easily reversible choice may need a short discussion and a brief entry in a decision log. A cross-government dependency or long-term commercial commitment needs broader evidence and more formal challenge.</p>
+
+      <h2>Record architecturally significant decisions</h2>
+      <p>An Architecture Decision Record, or ADR, captures one architecturally significant decision and its rationale. A collection of ADRs forms a decision log. ADRs are a useful practice, not a universal government requirement, and the format should fit the team and the importance of the decision.</p>
+      <p>A decision is likely to be architecturally significant when it materially affects the structure of the solution, an important quality requirement, a published interface, a major dependency, cost or risk, or the ability to change the service later. Recording every routine implementation choice creates noise and makes important decisions harder to find.</p>
+      <p>At minimum, a useful record explains:</p>
+      <ul>
+        <li><strong>Title and status:</strong> what the decision concerns and whether it is proposed, accepted or no longer current.</li>
+        <li><strong>Context:</strong> the problem, scope, relevant requirements, constraints, assumptions and evidence.</li>
+        <li><strong>Options:</strong> the credible alternatives considered and the criteria used to compare them.</li>
+        <li><strong>Decision and owner:</strong> what was decided, by whom and when.</li>
+        <li><strong>Consequences:</strong> the benefits, drawbacks, costs, risks and follow-on work.</li>
+        <li><strong>Review triggers:</strong> the change in evidence or context that would justify reconsidering the decision.</li>
+        <li><strong>Links:</strong> relevant requirements, principles, investigations, approvals and any record that it replaces.</li>
       </ul>
       <figure>
         <img src="images/lesson6-image3.svg" alt="A decision record moves from proposed, under review, to accepted, the live decision in teal, and from there either to deprecated, no longer applies, or to superseded, replaced by a newer record.">
         <figcaption>Superseded records stay on the file. A replacement links back and says what changed.</figcaption>
       </figure>
-      <p>Store them with the code or somewhere the team can always reach, number them in sequence, and never delete one, because a superseded record still has value. This matters more in government than almost anywhere, because the decisions get read by people you'll never meet. Assessors treat a clean set of records as evidence the architecture was thought through. Spend control submissions lean on them to justify the choices and their costs. Auditors use them as the trail showing decisions were made with the information available at the time. And the next architect, after the contractors have gone and the civil servants have moved on, uses them to understand the system instead of reverse engineering its rationale or, worse, breaking a decision they never knew was there. Write them as you decide, not months later; keep them in plain language a board member could follow; and link each one to the principle it serves, so the decision reads as principled rather than arbitrary.</p>
+      <p>There is no single mandatory set of ADR statuses. Choose a small lifecycle the team understands. When an accepted decision changes, preserve the history and create or link to the replacement rather than silently rewriting the old rationale. Apply the organisation's records-management, security and access requirements to where records are held and how long they are kept.</p>
+      <p>Store the record where the people who make, implement, assure and maintain the decision can find it. A source-code repository may suit software design decisions. Commercial, policy or cross-service decisions may need a wider repository. The tool matters less than clear ownership, accessibility and maintenance.</p>
 
-      <h2>When principles conflict</h2>
-      <p>The hard decisions are the ones where your principles disagree. Be open against make things secure when the safest option is proprietary. Make use of cloud against share and reuse when the reusable thing runs on premises. Design for change against keep it simple when modularity buys flexibility at the price of complexity. There's a way through that keeps the choice defensible. Name the conflict out loud rather than pretending it isn't there: in this case our principle of openness is pulling against our principle of security, so we have a trade-off to make. Weigh their importance in this specific context, because principles don't carry fixed priorities; for sensitive personal data security outweighs openness, while for a small, stable user base simplicity might outweigh scalability. Look hard for a third option, because sometimes the conflict is false and a different design satisfies both. Then make the call, write it in an ADR with the reasoning and the consequences, and set a date to revisit it, especially if you traded away something like maintainability to hit a deadline.</p>
-      <p>A real example. A DESNZ programme needed to share commercially sensitive data with a partner. Openness argued for an open API with standard authentication. Security argued for stronger controls because of the data. Simplicity argued against anything elaborate to maintain. The resolution used an open API standard, satisfying openness, with mutual TLS and IP allow listing for security, accepting the extra operational complexity as the price, and it went into an ADR with a review six months out to check the controls were still proportionate to the risk. That's the whole job in miniature: a defensible choice rather than a perfect one, made with the consequences in full view.</p>
-
-      <h2>Building a decision making culture</h2>
-      <p>Individual decisions matter, but the bigger win is a team where good decisions happen by default. A handful of habits get you there:</p>
+      <h2>Revisit a decision when the evidence changes</h2>
+      <p>A decision was made in a particular context. New evidence can make it reasonable to choose differently without making the earlier decision irrational.</p>
+      <p>Useful review triggers include:</p>
       <ul>
-        <li>Make them visible. A decision log or ADR repository the whole team can reach, so "why do we do it this way?" takes minutes to answer, not hours.</li>
-        <li>Make them timely. A deferred decision is expensive, because the team either waits or guesses. Set a deadline; if you're missing information, name what you need and when you'll have it.</li>
-        <li>Make them reversible where you can. Interfaces and abstractions that let components be swapped lower the cost of being wrong, which lets you decide more boldly.</li>
-        <li>Make them inclusive. Developers, testers, operations and business people see risks you won't. Inclusive isn't democratic, though: you decide, informed by them.</li>
-        <li>Make them learnable. Review your big decisions after each project, what worked, what you'd change, what you learned. That's how judgment is built.</li>
-        <li>Welcome challenge. Treat a questioned decision as a chance to strengthen it, not an attack. The best architects want their decisions tested.</li>
+        <li>demand or performance moving outside the range used in the decision</li>
+        <li>a change in policy, legislation, threat, classification or user need</li>
+        <li>a supplier changing its price, service, contract or product direction</li>
+        <li>an assumption failing during a prototype or live operation</li>
+        <li>the team's support capability or organisational strategy changing</li>
+        <li>an incident exposing a consequence that the original evidence did not reveal</li>
       </ul>
-      <p>In government, where scrutiny is constant and accountability is real, this is about the cheapest insurance you can buy.</p>
-      <blockquote>When every decision is principled, documented and defensible, no review can catch you out.</blockquote>
+      <p>A review date can be useful where change is expected, but a fixed date is not a substitute for a meaningful trigger. Review the decision when the evidence that supported it changes enough to affect the trade-off.</p>
+
+      <h2>Questions to ask on a real project</h2>
+      <ul>
+        <li>What exactly needs to be decided, and what outcome should it support?</li>
+        <li>Which requirements and constraints materially distinguish the options?</li>
+        <li>Which statements are mandatory, and who or what gives them that authority?</li>
+        <li>What credible options have been considered at the same level of detail?</li>
+        <li>What evidence supports the criteria, scores, costs and risk judgements?</li>
+        <li>What does each option improve, and what does it make worse or harder to change?</li>
+        <li>Who can recommend, decide, assure, approve and accept the remaining risks?</li>
+        <li>Is the amount of analysis proportionate to the consequences and reversibility?</li>
+        <li>What needs to be recorded so another person can understand the reasoning?</li>
+        <li>What change in evidence would cause the decision to be revisited?</li>
+      </ul>
+      <blockquote>A defensible architecture decision makes the route from evidence to choice visible, including the trade-offs and uncertainty.</blockquote>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This is a practitioner guide to architecture decision-making in UK central government, not official guidance. Decision authority, assurance and records-management requirements vary by organisation, service, risk and type of decision.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary and authoritative sources below. Government policy and organisational processes change; check the source and your department's current assurance route before relying on them.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/governance-principles-for-agile-service-delivery" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Governance principles for agile service delivery</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/choosing-technology-an-introduction" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Choosing technology</a></li>
+          <li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Digital Assurance Playbook</a></li>
+          <li><a href="https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government/the-green-book-2026" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">The Green Book 2026</a></li>
+          <li><a href="https://adr.github.io/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Architectural Decision Records</a></li>
+          <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/adr-process.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">AWS Prescriptive Guidance: Architectural decision record process</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
