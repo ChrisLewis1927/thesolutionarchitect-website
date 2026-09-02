@@ -123,8 +123,8 @@
       <h2>Match the effort to the consequences</h2>
       <p>Not every decision needs a workshop, options paper and governance board. The work should be proportionate to the decision's risk, cost, sensitivity, novelty, dependencies, reach and difficulty to reverse.</p>
       <figure>
-        <img src="images/lesson6-image2.svg" alt="A horizontal spectrum from easy to reverse on the left, decide fast, to hard to reverse on the right, analyse carefully. Logging framework and component library sit on the easy end in grey; database and cloud provider sit on the hard end in teal.">
-        <figcaption>Spend your analysis where the decision is hard to undo.</figcaption>
+        <img src="images/lesson6-image2.png" alt="A horizontal spectrum from easy to reverse on the left, decide fast, to hard to reverse on the right, analyse carefully. Logging framework and component library sit on the easy end in grey; database and cloud provider sit on the hard end in teal.">
+        <!--<figcaption>Spend your analysis where the decision is hard to undo.</figcaption>-->
       </figure>
       <p>Reversibility is a useful prompt, not a complete classification. A library may be easy to replace in one service but embedded across hundreds of components in another. A database or cloud service may be easier to leave if the design, contract, data model and migration path support it. Ask what reversal would actually require rather than assigning a technology to a permanent category.</p>
       <p>Spend more time where a choice:</p>
@@ -152,8 +152,8 @@
         <li><strong>Links:</strong> relevant requirements, principles, investigations, approvals and any record that it replaces.</li>
       </ul>
       <figure>
-        <img src="images/lesson6-image3.svg" alt="A decision record moves from proposed, under review, to accepted, the live decision in teal, and from there either to deprecated, no longer applies, or to superseded, replaced by a newer record.">
-        <figcaption>Superseded records stay on the file. A replacement links back and says what changed.</figcaption>
+        <img src="images/lesson6-image3.png" alt="A decision record moves from proposed, under review, to accepted, the live decision in teal, and from there either to deprecated, no longer applies, or to superseded, replaced by a newer record.">
+        <!--<figcaption>Superseded records stay on the file. A replacement links back and says what changed.</figcaption>-->
       </figure>
       <p>There is no single mandatory set of ADR statuses. Choose a small lifecycle the team understands. When an accepted decision changes, preserve the history and create or link to the replacement rather than silently rewriting the old rationale. Apply the organisation's records-management, security and access requirements to where records are held and how long they are kept.</p>
       <p>Store the record where the people who make, implement, assure and maintain the decision can find it. A source-code repository may suit software design decisions. Commercial, policy or cross-service decisions may need a wider repository. The tool matters less than clear ownership, accessibility and maintenance.</p>
