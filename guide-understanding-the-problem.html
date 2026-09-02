@@ -42,7 +42,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Understanding the problem before you design the solution</h1>
-        <p class="lesson-hero__description">The most expensive mistake in solution architecture is solving the wrong problem, and in government it is also the hardest to undo. This guide is about the work that comes before design: framing the real problem, running a discovery that earns its keep, and knowing when you understand enough to start.</p>
+        <p class="lesson-hero__description">The quickest way to waste time in solution architecture is to design a good answer to the wrong problem. This guide covers the work that comes before solution design: turning a request into a problem you can investigate, understanding the evidence and constraints around it, and deciding whether you know enough to move forward.</p>
       </div>
     </section>
 
@@ -50,86 +50,106 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>A way to catch premature solutioning in yourself and work back to the real problem.</li>
-          <li>Framing techniques that hold up against a vague brief, from the five whys to surfacing assumptions.</li>
-          <li>What discovery is for in government, and the failure modes that quietly wreck it.</li>
-          <li>A short test for whether you're ready to design, or just keen to.</li>
+          <li>A way to separate a requested solution from the problem it is meant to address.</li>
+          <li>A practical view of what discovery should establish, and how a Solution Architect contributes.</li>
+          <li>A method for distinguishing evidence, assumptions, constraints and decisions.</li>
+          <li>A proportionate test for whether the team understands enough to explore solutions in alpha.</li>
         </ul>
       </div>
 
-      <h2>The most expensive mistake is solving the wrong problem</h2>
-      <p>Premature solutioning is the occupational hazard of anyone technical. Someone starts describing a problem and by the second sentence your brain is already sketching the fix. It feels productive. It is almost always a mistake, because the first framing you hear is rarely the right one. The person in front of you is describing their experience of the problem, their symptoms and their guess at what would fix it, not the root cause or the full set of people affected.</p>
+      <h2>Start with the problem, not the request</h2>
+      <p>Work often arrives in the language of a solution: "we need a new case management system", "move this to the cloud" or "build us a database". The request may be sensible, and it may contain useful clues, but it is not yet a problem statement. If you accept it without examining the need behind it, you narrow the options before you understand what success requires.</p>
       <figure>
         <img src="images/lesson3-image1.png" alt="A grey box, stated request, build us a database, with an arrow to a teal box, understand the problem, what's the actual goal, then an arrow to a grey box, solution, fits the real need. A dashed arc labelled premature solutioning arches straight from the request to the solution, skipping the middle step.">
         <!--<figcaption>The architect's job is to insist on the middle step the shortcut skips.</figcaption>-->
       </figure>
-      <p>You see this in government constantly. A policy team asks for a database to track energy performance certificates. What they actually need is to answer questions like how many commercial buildings in the North East have an EPC rating below C. Accept the database framing and you might build something that works and still misses the point, duplicating data that already exists, or fixing storage when the real trouble is data quality. The discipline is to work backwards from the request to the need. Ask what they are trying to achieve, not what they want you to build. Ask what happens today, not what the system should do. This is not slowing things down. In government, where changing direction halfway through is brutally expensive, getting the problem right is the highest value thing you do.</p>
-      <blockquote>When someone hands you a solution, your first job is to find the problem it was meant to solve.</blockquote>
+      <p>Imagine that a policy team asks for a database so analysts can report on building energy performance. Several different problems could sit behind that request. The data may be spread across systems, difficult to access, inconsistent, incomplete or structured for transactions rather than analysis. A new database might help with some of those problems and duplicate them in another place for others.</p>
+      <p>Begin by asking what people are trying to achieve, who is affected, what happens today and what evidence shows that the current position is a problem. A useful working structure is:</p>
+      <blockquote>[Users or affected group] cannot [complete a task or achieve an outcome] because [evidenced cause or obstacle], which results in [measurable or observable impact].</blockquote>
+      <p>This is a teaching aid, not an official government template. Its value is that it makes gaps visible. If you cannot name the affected people, the impact or the supporting evidence, you have identified something to investigate rather than something to fill with a guess.</p>
+      <blockquote>When someone hands you a solution, work back to the need it is meant to meet.</blockquote>
 
-      <h2>Work back to the problem</h2>
-      <p>Framing a problem well is a skill, not an instinct, and a few techniques do most of the heavy lifting. The plainest is to write a single sentence naming who is affected, what they experience, what it costs them and what evidence you have. For the energy example: say the analysts cannot reliably see the energy performance of commercial buildings by region, so they cannot target retrofit incentives well, and the evidence is a three-month delay in producing last year's regional analysis. Written that way, the conversation moves from build us a database to help us answer questions by region, and the solution space opens right up.</p>
-      <p>When you need to get past the symptoms, the five whys still works, but in government you have to be ready to follow the chain somewhere uncomfortable. The root cause is often a policy decision, an organisational boundary or an old procurement choice rather than anything technical.</p>
+      <h2>Treat the first explanation as a hypothesis</h2>
+      <p>The first description of a problem is neither automatically right nor automatically wrong. It is a starting hypothesis. People usually describe the part they can see: a slow screen, a delayed report, a manual workaround or an expiring contract. Those are genuine observations, but several causes may produce the same symptom.</p>
+      <p>Ask what evidence would support or challenge each possible explanation. Useful evidence can include user research, service analytics, operational data, process observation, incident records, contract information and technical measurements. Compare sources rather than relying on the loudest account in the room.</p>
       <figure>
         <img src="images/lesson3-image2.png" alt="A vertical chain of five boxes joined by why arrows. Top, the symptom: analysts can't answer regional EPC questions. Then: the data sits in three separate systems; three programmes collected it at different times; each policy change made a new store and none was retired. Bottom, in teal, the root cause: no one owns the data over its lifecycle.">
         <!--<figcaption>Five whys turns a request for a database into a data governance problem.</figcaption>-->
       </figure>
-      <p>The last technique is to surface assumptions and test them, because every brief arrives loaded with them. When someone asks for real-time data, ask what they mean: it is often within a day, not within a second. When someone says all users, count them, because it might be twelve people rather than twelve thousand. When someone says it must integrate with system X, ask why, because the integration may be a workaround for a problem you could solve another way. Each assumption you surface either confirms a genuine constraint, which is useful, or reveals a false one, which is better still, because it widens what you are allowed to consider.</p>
-
-      <h2>Discovery is where you earn the right to design</h2>
-      <p><p>The <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works"target="_blank">Service Manual</a> calls discovery the phase where you learn about the problem you are solving. It is not a formality. It is the foundation everything else stands on. You are not running the user research yourself, but you have to engage with what it finds, because users working around a system with spreadsheets and phone calls are telling you exactly what the real one needs to do. You map who has a stake, which in government is always more people than you first think: policy, operations, legal, data protection, security, commercial, the assessors, sometimes a minister's private office. You work out what already exists, what data is available and what contracts box you in. And you separate the hard constraints, the legal and security and accessibility boundaries that do not move, from the soft ones like budget and timeline that shape your trade-offs.</p>
-      <p>Your job in discovery is specific. You are not designing the solution. You are making sure the problem is understood well enough that a good one can be designed. The usual way it goes wrong is impatience, and it shows up in a handful of recognisable traps:</p>
-      <ul>
-        <li>Confirmation bias. You arrive with a solution in mind and quietly collect the evidence that agrees with it. The fix is to ask what would make you abandon your current hypothesis, then go looking for exactly that.</li>
-        <li>Stakeholder capture. The loudest or most senior voice defines the problem and goes unchallenged, often the policy team because they are seen as the customer. Make sure you also hear the operational staff and the people who actually use the service.</li>
-        <li>Scope creep. Discovery shows the problem is bigger than anyone thought, so the team tries to solve all of it at once. Decide what the smallest problem worth solving first is, and let the rest wait.</li>
-        <li>Analysis paralysis. Understanding the problem quietly becomes the whole project. Timebox it, and commit to deciding with what you have.</li>
-        <li>The technology hammer. The team recently adopted something new, and now every problem looks like a reason to use it. Keep technology out of discovery altogether.</li>
-      </ul>
-      <p>Discovery is where you earn the right to design well. Skip it and you pay later, in rework and in a solution that fits a problem nobody actually had.</p>
-
-      <h2>The stated problem and the real one</h2>
-      <p>Most experienced architects I have worked with collect stories where the stated problem and the real one had almost nothing in common. The stated problem is what you are told: we need a new case management system, the database is slow, we need to move to the cloud. The real problem is what is actually causing the pain, and it is usually quieter and less exciting.</p>
+      <p>A chain of "why" questions can help you move beyond a symptom, but it does not prove that you have found one definitive root cause. Real services often have several interacting causes. Treat the chain as a set of hypotheses to test, and stop when further questioning no longer changes the decision in front of you. Chapter 7 looks more closely at discovery-question techniques.</p>
       <figure>
         <img src="images/lesson3-image3.png" alt="A grey box at the top, stated problem, the database is too slow, sits above a dashed line marking what you're told from what's causing the pain. Below it a teal box, real problem, the data model doesn't match how the data is used.">
         <figcaption>The named problem is rarely the one doing the damage.</figcaption>
       </figure>
-      <p>The case management system is fine; the trouble is three teams running three processes who cannot see each other's work. The database is not slow; the queries are inefficient because the model does not match how the data is used. The cloud move is not a technical need; the data centre contract is expiring. Three habits find the real problem reliably. Follow the pain: ask what frustrates people about how things work today, not what they want the new system to do, and when everyone names the same thing you have your signal. Watch the workarounds: the spreadsheets, email chains and shadow IT show you precisely what the current system should do and does not. And challenge the brief, respectfully, which takes some nerve in a hierarchy. Asking for a week to understand why the current system is failing before anyone designs a new one is not obstruction. It is being careful with public money, and more often than people expect, the existing system turns out to be fixable for a fraction of the cost of replacing it.</p>
-      <blockquote>The best architects save their organisations from expensive solutions to cheap problems.</blockquote>
+      <p>The aim is not to replace a stakeholder's wording with a more impressive version of your own. It is to reach a shared account of the need that is supported by enough evidence to guide the next step.</p>
 
-      <h2>Policy intent is the hidden driver</h2>
-      <p>Most government digital services exist to implement policy, and that is a real difference from the private sector. The Service Manual <a href="https://www.gov.uk/service-manual/design/understanding-and-meeting-policy-intent"target="_blank">treats it as a starting point</a>: teams are expected to find the statement of policy intent behind their work, or reconstruct it from legislation, policy papers and ministerial commitments where none exists.If you do not understand the policy intent behind a service, you cannot design it well, because intent is the why behind the why. A policy team wants to collect energy performance data because <a href="https://www.legislation.gov.uk/uksi/2019/1056/article/2/made"target="_blank">the Climate Change Act 2008 was amended in 2019</a> to require net UK emissions to be 100% below the 1990 baseline by 2050, and the government needs to know the state of the building stock to target interventions Hold only the stated need and you might build a tidy data collection form. Understand the intent and you see that the data has to be analytically useful, comparable across regions and years, linkable to ownership and grants and planning records, and reachable by several teams across government. Same request, completely different architecture.</p>
-      <p>You uncover intent by asking what legislation or commitment drives the work, what outcome the policy is chasing, how success will be measured, what decisions the outputs will feed, and how the policy itself might move over the next three to five years. That last one matters most. Policy changes constantly, and a service built tight to today's version that cannot bend to tomorrow's will need replacing sooner than anyone wants. Policy colleagues will not always hand you this in technical terms, because they think in policy, not systems. Translating between the two is the job. When someone says we need to incentivise building owners to improve efficiency, you are the one who hears data collection, eligibility checks, payments, compliance monitoring, reporting and audit.</p>
-
-      <h2>Tools for thinking, not documents to file</h2>
-      <p>A handful of structured methods help you analyse a problem without turning discovery into paperwork. Impact mapping keeps you honest about outcomes: start from the goal, name the actors who can help or hinder, the behaviours that need to change, and only then the things you might build. Wardley mapping earns its place in government because it shows the maturity of each component, so you buy or reuse the commodity parts and save custom build for the genuinely novel ones, which is the reverse of the usual mistake. A PESTLE pass, adapted for architecture, makes you check the political, economic, social, technological, legal and environmental forces around the work before you commit to anything.</p>
-      <p>The one worth pausing on is <a href="https://thecynefin.co/cynefin-st-davids-day-2021-1-of-3/"target="_blank">Cynefin</a>, because it tells you what kind of problem you are holding in the first place, and that changes how you should approach it. There is a fifth domain at the centre, which Snowden now calls aporetic or confused: you do not yet know which of the four you are in. That is where most discoveries start, and admitting it is the point.</p>
-      <figure>
-        <img src="images/lesson3-image4.png" alt="Four domains around a central fifth. Top row in teal: complicated, where cause and effect are found with expertise and good practice applies; and complex, where cause and effect are clear only in hindsight, so you probe, sense and respond. Bottom row in grey: clear, with self-evident cause and effect and best practice; and chaotic, with no cause and effect yet, where you act first to stabilise. At the centre, the aporetic or confused domain, where you do not yet know which of the four you are in.">
-       <!-- <figcaption>Most government work sits in the two teal quadrants.</figcaption>-->
-      </figure>
-      <p>Treat a complex problem as if it were merely complicated, reaching for a standard pattern instead of probing and learning, and you are setting yourself up to fail. In my experience most government work sits in the complicated and complex domains, which is exactly why a pattern lifted from somewhere else so often disappoints. The point of all these methods is the same. They are tools for thinking, not exhibits. A problem understood on a whiteboard beats a problem buried in a fifty page report every time.</p>
-
-      <h2>Knowing when you're ready to design</h2>
-      <p>Discovery does not produce an architecture. It produces the understanding that makes a good architecture possible. You are ready to design when you can answer a short set of questions honestly:</p>
+      <h2>Discovery builds the evidence for what happens next</h2>
+      <p>The <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener">GOV.UK Service Manual guidance on discovery</a> says teams should understand users and what they are trying to achieve, the constraints on changing the service, the underlying policy intent and opportunities to improve the situation before committing to build. What the team learns should inform whether it is worth moving to alpha.</p>
+      <p>Discovery is multidisciplinary work. User researchers lead research with users; policy colleagues explain the intended outcomes and legal context; business analysts and service designers help map needs, processes and journeys; delivery, commercial, data, security and operational specialists contribute their evidence. Responsibilities vary between organisations and teams.</p>
+      <p>The Solution Architect's contribution is to connect that evidence to the technical and organisational landscape. This commonly includes:</p>
       <ul>
-        <li>What problem are we solving, and for whom? In a sentence or two, with no jargon.</li>
-        <li>What does success look like, stated as outcomes you can measure?</li>
-        <li>What are the hard constraints, the legal, security, accessibility and political boundaries that do not move?</li>
-        <li>What already exists, across systems, data, services and contracts?</li>
-        <li>What are the main risks, and how likely and how damaging is each?</li>
-        <li>Who are the stakeholders, and what does each of them actually need?</li>
-        <li>What do we still not know, and how will we close those gaps?</li>
+        <li>understanding the existing systems, data, integrations, contracts and operational capabilities that shape the problem</li>
+        <li>identifying technical, security, privacy and delivery assumptions that need testing</li>
+        <li>checking whether an apparent constraint is genuine, who owns it and what evidence supports it</li>
+        <li>exploring whether existing services, components or non-technical changes could meet the need</li>
+        <li>making uncertainty and significant risks visible before they harden into design decisions</li>
       </ul>
-      <p>If you cannot answer these, you are not ready, and pressing on anyway is premature solutioning wearing the costume of progress. The output should be short and usable: a one or two page brief covering the problem, constraints, estate, risks and approach is worth more than a hundred pages of requirements. The aim was never to remove all uncertainty, which is impossible. It is to reduce it enough to make sound decisions and keep adapting as you learn, which in government, with its new ministers and shifting priorities, is worth as much as the ability to plan.</p>
-      <blockquote>You're ready to design when you can say what the problem is without naming a single piece of technology.</blockquote>
+      <p>The Service Manual says not to start building the service in discovery. That does not mean ignoring technology. Its <a href="https://www.gov.uk/service-manual/technology/choosing-technology-an-introduction" target="_blank" rel="noopener">technology guidance</a> asks teams to understand existing systems and data, security threats, available components and changing technical constraints. Early prototypes can also test hypotheses. The distinction is between learning about feasibility and prematurely committing to a product or architecture.</p>
+      <p>Discovery effort should be proportionate to the uncertainty, risk, cost and impact of the work. The Service Manual says there is no fixed duration, although four to eight weeks is typical. A well-understood change to a small internal service may need less investigation than a new public service spanning several organisations. The important question is what the team needs to learn, not whether it has produced a standard set of documents.</p>
+
+      <h2>Separate evidence, assumptions, constraints and decisions</h2>
+      <p>Problem framing becomes unreliable when different kinds of information are mixed together. Keep four categories distinct:</p>
+      <ul>
+        <li><strong>Evidence:</strong> something observed or supported by a credible source, such as research findings, transaction data, legislation, a signed contract or measured system behaviour.</li>
+        <li><strong>Assumption:</strong> something currently treated as true but not yet supported well enough, such as an estimated user volume or a belief that a named integration is essential.</li>
+        <li><strong>Constraint:</strong> a boundary that limits credible options, such as legislation, an existing contract, an immovable dependency or the capability of the team that will operate the service.</li>
+        <li><strong>Decision:</strong> a choice made by someone with the authority to make it, with reasons, consequences and any conditions recorded.</li>
+      </ul>
+      <p>Do not label a constraint "hard" simply because it appears in the brief. The Service Manual distinguishes constraints that are difficult to change, such as primary legislation, from existing processes that teams may need to challenge. Budgets and dates can be fixed in one context and negotiable in another. Security, privacy and accessibility create obligations, but they do not usually prescribe one technical solution.</p>
+      <p>For every significant constraint, record its source, scope, owner and effect on the work. For every important assumption, record the evidence needed, who will obtain it and when it must be resolved. This prevents a convenient belief from quietly becoming an architecture decision.</p>
+
+      <h2>Understand users and policy intent together</h2>
+      <p>The first point of the <a href="https://www.gov.uk/service-manual/service-standard/point-1-understand-user-needs" target="_blank" rel="noopener">Service Standard</a> asks teams to develop a deep understanding of users and the problem they need the service to solve. This includes the wider context, not only the moment when someone interacts with a government website. Research, analytics and quick prototypes can all contribute evidence.</p>
+      <p>User needs sit alongside policy intent. The Service Manual describes policy intent as what government wants to change or achieve through a policy. A statement of policy intent should explain the intended outcome and may also explain what must not change. Where no clear statement exists, the team may need to work with policy colleagues and those who commissioned the work to establish a shared understanding from policy documents, legislation, commitments and other evidence.</p>
+      <p>For architecture, the useful questions are:</p>
+      <ul>
+        <li>What outcome is government trying to achieve?</li>
+        <li>Who is affected, including people who may not use the digital service directly?</li>
+        <li>How will success be measured?</li>
+        <li>Which parts of the approach are required by legislation or an authorised policy decision, and which remain open?</li>
+        <li>What changes in policy, evidence or operating context would cause the problem or scope to be reviewed?</li>
+      </ul>
+      <p>Understanding policy intent does not mean converting every policy idea directly into a feature. The <a href="https://www.gov.uk/service-manual/design/understanding-and-meeting-policy-intent" target="_blank" rel="noopener">Service Manual guidance on policy intent</a> says teams should still examine whether a largely prescribed solution will achieve the intended outcomes, explore alternatives and explain their benefits and consequences. The architect contributes evidence and recommendations; the final authority depends on the decision, governance and role.</p>
+
+      <h2>Set a useful boundary around the problem</h2>
+      <p>A problem can be framed too narrowly or too broadly. If you define it around one system or team, you may miss the user's wider journey and move the failure somewhere else. If you try to fix every related policy, process and platform at once, the work becomes too large to learn from or deliver.</p>
+      <p>The Service Standard asks teams to work towards solving a <a href="https://www.gov.uk/service-manual/service-standard/point-2-solve-a-whole-problem" target="_blank" rel="noopener">whole problem for users</a>, including working across organisational boundaries where needed. It also warns against creating a service that tries to do too much and supports making incremental improvements. Those points belong together: understand the whole journey, then choose a manageable scope that improves it without pretending the rest does not exist.</p>
+      <p>Write down what is in scope, what is outside the current scope, the dependencies that cross the boundary and who owns them. Treat the boundary as a decision that may be revisited when evidence changes. This gives the team a clear place to start without turning today's delivery scope into a permanent definition of the problem.</p>
+
+      <h2>Know when you understand enough to move forward</h2>
+      <p>Discovery is not complete because every question has an answer. It is complete when the remaining uncertainty is understood well enough for the appropriate decision-makers to choose what happens next. Depending on the evidence, that may be an alpha, further research, a change to policy or process, reuse of something that already exists, or stopping the work.</p>
+      <p>Before recommending a move into alpha, check whether the team can answer these questions:</p>
+      <ul>
+        <li>What problem are we trying to solve, for whom, and what evidence shows that it matters?</li>
+        <li>What outcome and policy intent should the work support, and how will success be measured?</li>
+        <li>What is inside and outside the current scope, and how does it fit into the wider user journey?</li>
+        <li>What relevant services, systems, data, processes and contracts already exist?</li>
+        <li>Which constraints are genuine, what is their source, and how do they affect the options?</li>
+        <li>What important assumptions and risks remain, and how will alpha test or reduce them?</li>
+        <li>Is the likely value of learning more about the problem worth the cost of an alpha?</li>
+      </ul>
+      <p>This is a readiness check, not a mandatory document or a claim that uncertainty has disappeared. Record the answers at the level of detail justified by the work. A concise problem brief may be enough for a low-risk change; a sensitive, costly or cross-government service will need stronger evidence and broader assurance.</p>
+      <blockquote>You understand enough to explore solutions when you can explain the problem, evidence and uncertainty without relying on the name of a technology.</blockquote>
 
       <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
-        <p style="margin: 0 0 0.4rem;"><em>This is one practitioner's account of moving into solution architecture in UK government, not official guidance. It does not cover enterprise architecture, security architecture, or architecture outside central government.</em></p>
-        <p style="margin: 0 0 0.6rem;"><em>Last reviewed August 2026 against the primary sources below. Government policy changes; check the source before relying on this.</em></p>
+        <p style="margin: 0 0 0.4rem;"><em>This is one practitioner's account of how a Solution Architect contributes to problem framing and discovery in UK central government. It does not replace the Service Manual, departmental governance or the responsibilities of the wider multidisciplinary team.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary sources below. Government guidance changes; check the source before relying on it.</em></p>
         <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
           <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: how the discovery phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-1-understand-user-needs" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard point 1: understand users and their needs</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-2-solve-a-whole-problem" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard point 2: solve a whole problem for users</a></li>
           <li><a href="https://www.gov.uk/service-manual/design/understanding-and-meeting-policy-intent" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: understanding and meeting policy intent</a></li>
-          <li><a href="https://thecynefin.co/cynefin-st-davids-day-2021-1-of-3/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Cynefin framework</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/choosing-technology-an-introduction" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: choosing technology</a></li>
         </ul>
       </div>
 
