@@ -42,7 +42,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Users, stakeholders and the people around your design</h1>
-        <p class="lesson-hero__description">No architecture exists in a vacuum. Every solution sits among people: users, funders, builders, and the leaders who answer for it. Design without understanding them and you'll produce something technically elegant and organisationally undeliverable. In government the cast is unusually large, and reading it well is part of the job, not someone else's.</p>
+        <p class="lesson-hero__description">Once you understand the problem, the next question is who can explain it, who is affected by it and who can change or constrain the response. Architecture decisions sit inside a network of users, service teams, decision-makers, specialists, suppliers and dependent services. If you understand only the technology, you understand only part of the design.</p>
       </div>
     </section>
 
@@ -50,90 +50,136 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>Why stakeholder understanding is an architecture skill, not the delivery manager's problem.</li>
-          <li>How to map the people around a government design, from the obvious to the political.</li>
-          <li>A way to decide who gets your attention, using power and interest.</li>
-          <li>How to hold the line on user needs, and make competing demands explicit instead of pretending they aren't there.</li>
+          <li>A practical way to map the people and organisations around a design.</li>
+          <li>A more careful way to use power and interest without overlooking users or operational knowledge.</li>
+          <li>A method for turning different concerns into requirements, constraints, evidence and decisions.</li>
+          <li>Ways to handle disagreement without assuming that the architect has the final say.</li>
         </ul>
       </div>
 
-      <h2>Stakeholder understanding is an architecture skill</h2>
-      <p>Plenty of architects treat stakeholder management as someone else's job, the delivery manager's or the business analyst's. In my experience, that habit produces architecture failures. The pattern is always the same. You design to the requirements as written, but those requirements came from one group and miss what the others needed. The security team finds the design doesn't meet their standards three months into build. Operations realise they can't support it after it's built. The minister's private office discovers at launch that the service can't produce the report the minister wants. Every one of those is an architecture failure, not a project management one.</p>
-      <p>The reason is plain. Architecture decisions affect people, and people affect architecture decisions. The security team's requirements shape your technology choices. Operations' capabilities constrain your deployment model. The policy team's future plans drive how extensible you make things. The minister's priorities set your timeline and scope. Miss those influences and you're designing blind. The <a href="https://ddat-capability-framework.service.gov.uk/role/solution-architect" target="_blank" rel="noopener">Government Digital and Data Profession Capability Framework</a> (renamed from the DDaT framework in 2023) lists 'architecture communication' as a named skill for solution architects, and at Lead and Principal level it goes beyond basic communication. It expects you to mediate difficult architectural discussions and gain support from stakeholders for initiatives carrying high risk, impact and complexity.</p>
-      <blockquote>Architecture decisions affect people, and people affect architecture decisions. Miss that and you're designing blind.</blockquote>
+      <h2>Stakeholder understanding is part of architecture</h2>
+      <p>A technically sound design can still fail if operations cannot support it, another service cannot provide its data, a control excludes some users or the person accountable for the service will not accept the risk.</p>
+      <p>Stakeholder management is not the architect's sole responsibility. Product, delivery, analysis and user-centred design roles all contribute. The architect brings a particular question: <em>how do these people's needs, authority, knowledge and dependencies affect the design and its decisions?</em></p>
+      <p>The <a href="https://ddat-capability-framework.service.gov.uk/role/solution-architect" target="_blank" rel="noopener">Government Digital and Data Profession Capability Framework</a> expects Solution Architects to communicate and work effectively with stakeholders, manage risks and decisions transparently, and understand how other teams contribute to outcomes. The level of responsibility changes with the seniority of the role and the risk and complexity of the work.</p>
+      <blockquote>Architecture decisions affect people, and people provide the evidence, authority and capability needed to make those decisions work.</blockquote>
 
-      <h2>Mapping the people around your design</h2>
-      <p>Mapping is where the work starts, and in government the map has more layers than most private sector work does. It helps to picture them as rings around your design, widening from the people everyone names to the ones nobody thinks of until it's too late.</p>
+      <h2>Map the landscape before you prioritise it</h2>
+      <p>Start with the people who use or deliver the service, then work outwards. The exact groups will vary, but a government service may involve:</p>
+      <ul>
+        <li><strong>Users and frontline staff:</strong> people trying to achieve an outcome, processing the work or handling exceptions.</li>
+        <li><strong>The service team:</strong> product, delivery, user-centred design, engineering, data, operations and support.</li>
+        <li><strong>Owners and decision-makers:</strong> service, policy, budget and risk owners, and relevant governance forums.</li>
+        <li><strong>Specialists and assurance:</strong> security, data protection, legal, commercial, accessibility, records, finance and architecture.</li>
+        <li><strong>Dependencies and partners:</strong> teams, suppliers and public bodies that own a system, data, platform or process the service relies on.</li>
+        <li><strong>The wider context:</strong> ministers, private offices, communications teams or scrutiny bodies where they genuinely affect the work.</li>
+      </ul>
       <figure>
         <img src="images/lesson4-image1.png" alt="Concentric rings around a central teal box, your design. From the inside out: obvious stakeholders such as sponsor, delivery, policy and users; governance, including assessors, the SIRO and the DPO; operational teams who run the service; adjacent teams who own integrations and data; and an outer political ring of private office, press and scrutiny.">
        <!-- <figcaption>The failures rarely come from the inner ring. They come from forgetting the outer ones.</figcaption>-->
       </figure>
-      <p>The mistake is seldom missing the obvious people. It's stopping at them. The failures that surface deep into delivery all live further out: the governance bodies who can block you, the operations teams who inherit what you build, the adjacent teams whose systems and data you depend on, the political actors who can turn a quiet decision into a headline. For each person worth tracking, capture a few things:</p>
+      <p>The aim is not the largest possible list. Capture enough to understand who is affected, who holds evidence, who owns a dependency or risk, and who can recommend, decide, assure or approve. The person advising on a security risk may not be authorised to accept it, and the architect may recommend a design without owning the final decision.</p>
+      <p>For the people or groups that matter to the decision, record:</p>
       <ul>
-        <li>Name and role, specifically. Not "the security team" but the names of the people in it.</li>
-        <li>What they care about in relation to your architecture.</li>
-        <li>How much power they have to shape or block a decision.</li>
-        <li>Whether they're supportive, neutral or resistant today.</li>
-        <li>How, and how often, you'll engage them.</li>
-        <li>What actually worries them about the work.</li>
+        <li>their role and how the design may affect them;</li>
+        <li>what evidence, outcome, risk or dependency they own;</li>
+        <li>their authority and its boundaries; and</li>
+        <li>when and how they need to be involved.</li>
       </ul>
-      <p>And keep it live. Stakeholder maps go stale fast, because people move, priorities shift, and new actors appear as the work progresses. Revisit it monthly at least, and whenever the project or the organisation changes shape.</p>
+      <p>Keep the map proportionate and revisit it when the scope, phase, ownership, risk or external context changes. A fixed monthly review is unnecessary for some work and far too slow for other work.</p>
 
-      <h2>Power and interest</h2>
-      <p>Once you have the list, you have to decide where your attention goes, and the power and interest grid is the quickest way to do it. Plot each person by how much they can influence or block the work, and how much they actually care about the outcome.</p>
+      <h2>Use power and interest carefully</h2>
+      <p>A power-and-interest grid is a quick way to plan engagement. Its familiar categories &mdash; manage closely, keep satisfied, keep informed and monitor &mdash; can help prevent every stakeholder receiving the same level of attention.</p>
       <figure>
         <img src="images/lesson4-image2.png" alt="A two by two grid with power on the vertical axis and interest on the horizontal. Top left, high power low interest: keep satisfied, CTO, spend control, private office. Top right in teal, high power high interest: manage closely, SRO, policy lead, SIRO. Bottom left, low power low interest: monitor. Bottom right, low power high interest: keep informed, operational staff and end users.">
         <!--<figcaption>A planning tool, not a fixed map. Positions move when a minister asks a question.</figcaption>-->
       </figure>
-      <p>High power and high interest is where your real engagement goes: the SRO, the policy lead, the SIRO on a service handling sensitive data. If any of them is surprised by something, that's a sign your engagement has slipped. High power and low interest, often the departmental CTO, spend control or a private office, you keep satisfied with a light, regular brief so nothing reaches them cold. High interest but low power, the operational staff and the end users, you keep informed and genuinely listen to, because their insight is good even when their sign off isn't required. The rest you monitor. Two warnings. Power in government is fluid, and a low power stakeholder turns critical the moment a minister asks them a question or an FOI request lands. And don't confuse low organisational power with low knowledge. In my experience, the caseworker who processes applications all day holds more useful detail than most people in the room, and dismissing them because they're junior is a mistake I've seen made more than once.</p>
-
-      <h2>User needs and stakeholder wants</h2>
-      <p>The <a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener">Service Standard</a> starts with user needs, which sounds obvious and creates one of the sharpest tensions you'll face. (GDS announced in July 2026 it's moving the Standard from a static, assessment-led model to a "living standard" &mdash; the 14 points below are current as of this review; check the source before relying on the detail.) User needs are observable. They come out of research: watching someone try to finish a task, hearing where they get stuck. "I need to report my building's energy data without having to understand technical classifications" is a user need. Stakeholder wants are aspirational, born of organisational priorities and personal preference. "I want one platform that captures every possible data point, with real time analytics and machine learning predictions" is a want.</p>
-      <p>Both are legitimate inputs. They don't carry equal weight. User needs define what the service has to do to be any use; wants describe what the organisation would like on top. When they conflict (and they will) user needs should generally win. That's harder than it sounds, because the person with the want is often more senior and better connected than the users who just want to submit their data and move on. Holding the line takes evidence, nerve and tact. Your job is to make the tension visible and help resolve it well: show the research, show what happens when user needs lose, in poor take up, workarounds, complaints and failed assessments, and put numbers on it. "We can add those fifteen fields, but say each one drops completion by three percent; is that a trade we want?" In my experience, the architects who find a shape that serves both sides get further than the ones who pick a side.</p>
-      <blockquote>User needs are what the service must do to be useful. Everything else is what the organisation would like on top.</blockquote>
-
-      <h2>What the design principles and Service Standard ask of your architecture</h2>
-      <p>The <a href="https://www.gov.uk/guidance/government-design-principles" target="_blank" rel="noopener">Government Design Principles</a> and the <a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener">Service Standard</a> aren't abstract ideals. Four of the five points below come straight from those documents. Each lands as a concrete demand on your architecture.</p>
+      <p>It is a prompt, not a complete stakeholder strategy. Used carelessly, it can hide exactly the people you need to hear:</p>
       <ul>
-        <li>Start with user needs (Design Principle 1). If users think in "my application" while the department thinks in "cases", your architecture carries that translation, presenting a user view over the departmental model underneath.</li>
-        <li>Solve the whole problem (Service Standard point 2). Users live a service made of forms, phone calls, letters and waiting, so you integrate with contact centres, letter generation, appointments and cross channel status, not only the online form.</li>
-        <li>Make sure everyone can use the service (Service Standard point 5). WCAG 2.2 AA is a constraint that shapes how content is structured, how forms are built and how errors are handled, and it can decide real choices, such as when a single page app raises barriers a multi page approach would avoid.</li>
-        <li>Iterate and improve frequently (Service Standard point 8). That means designing for change: modular components, clear interfaces, feature flags, pipelines that make releases frequent and low risk. In my experience, a six month release cycle struggles to do this.</li>
-        <li>Be open and honest. This one's mine, not an official point: your documentation should make sense to non technical stakeholders, and your trade-offs should be on the table even when the truth is awkward.</li>
+        <li>Users and frontline staff may have little formal authority but hold essential evidence.</li>
+        <li>A specialist may show little interest but own a control, risk or approval that matters to one decision.</li>
+        <li>Groups such as "users" are not uniform, and power changes by decision and over time.</li>
       </ul>
-      <p>Treat user research as someone else's problem and you'll keep producing architectures that frustrate users and fall over at assessment.</p>
+      <p>Use the grid alongside a view of decision authority, user impact, expertise and dependencies. Do not use low organisational power as a reason to discount someone's needs or knowledge.</p>
 
-      <h2>Managing competing demands</h2>
-      <p>Competing demands are the normal state in government. Policy wants the most data, users want the least effort, security wants the most control, delivery wants the most speed, operations wants the most simplicity, finance wants the least cost. Your job is to find the architecture that balances them, and to make the trade-offs explicit rather than quietly choosing for everyone.</p>
+      <h2>Separate user needs, organisational needs and preferences</h2>
+      <p>The <a href="https://www.gov.uk/guidance/government-design-principles" target="_blank" rel="noopener">Government Design Principles</a> say to start with user needs. The <a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener">Service Standard</a> goes further: understand users and their needs, solve a whole problem, provide a joined-up experience across channels and make sure everyone can use the service.</p>
+      <p>A user need describes something a person needs to achieve in context. It should be grounded in research and service evidence, not assumed from what a stakeholder says users want. "I need to report my building's energy data without understanding the department's internal classifications" could be a user need if research supports it. "Build a single platform with real-time analytics" is a proposed solution.</p>
+      <p>Stakeholders also bring legitimate organisational needs: implementing policy, protecting information, preventing fraud, operating the service, meeting legal duties, controlling cost or producing evidence for decisions. A preference is different again. It may reflect experience, but it remains open to challenge until the reason and evidence behind it are clear.</p>
+      <p>Starting with users does not mean accepting every request or overriding legislation, policy intent, security or other people's rights. It means using evidence about users as a foundation and making conflicts visible. The answer may be to change a process or control rather than choose one stakeholder's position.</p>
+
+      <h2>Turn concerns into architecture inputs</h2>
+      <p>A stakeholder statement starts an investigation; it is not necessarily a requirement. Ask what sits behind it and what evidence would make it precise enough to influence the design.</p>
+      <ul>
+        <li><strong>Policy:</strong> What outcome and rules must the service implement? Which rules are fixed in legislation, which are policy choices and how often might they change?</li>
+        <li><strong>Users and frontline staff:</strong> What tasks, barriers, workarounds and failure points appear in research and service data?</li>
+        <li><strong>Operations:</strong> Who will support the service, during which hours, with what skills and tooling? What happens when an automated step fails?</li>
+        <li><strong>Security and privacy:</strong> What information, threats, harms and duties are relevant? Who owns the risks and controls?</li>
+        <li><strong>Commercial:</strong> What contract, service-level, exit, intellectual-property or supplier dependencies affect the options?</li>
+        <li><strong>Other teams and services:</strong> Which interfaces, data, release schedules and ownership boundaries could constrain delivery or operation?</li>
+      </ul>
+      <p>The result might be a requirement, constraint, assumption, risk, evaluation criterion or dependency. Keeping those categories separate prevents a senior preference becoming an unquestioned "must".</p>
+
+      <h2>Make competing demands into explicit decisions</h2>
+      <p>Stakeholder positions rarely align neatly. Policy may ask for more information while research shows a longer journey creates barriers. Security may identify a credible threat while operations cannot run the proposed control. A dependency team may be unable to provide an interface by the required date.</p>
       <figure>
         <img src="images/lesson4-image3.png" alt="A central teal box, your architecture, the balance you strike, with six grey boxes pressing in on it: policy wanting maximum data, users minimum effort, security maximum control, delivery maximum speed, operations maximum simplicity, and finance minimum cost.">
         <figcaption>Six groups, six definitions of a good outcome. You design the balance between them.</figcaption>
       </figure>
-      <p>A few moves make this manageable. Put the demands side by side in plain sight, because written down together the conflicts and the possible compromises both become obvious. Separate the genuine non negotiables, the legal duties, security classifications and accessibility standards, from the preferences dressed up as requirements. Quantify the trade-off instead of waving at it. Saying "there's a tension between security and usability" helps no one; saying "two factor authentication raises security but could drop completion by, say, fifteen percent for users over sixty five &mdash; here are three options that balance the two differently" gives people something to decide on. Offer the options and let the people with authority choose with the consequences in front of them. Write the decision down, who decided, why, and what was traded away, so that in a year nobody has to guess why the service works the way it does. And revisit it, because the balance moves: a low priority security worry becomes urgent the week after a breach somewhere else. The architect who tries to please everyone pleases no one. The one who makes the trade-offs explicit earns trust.</p>
+      <p>The architect should not quietly choose which concern wins. Work with the team to:</p>
+      <ol>
+        <li>State the decision and the outcome it is meant to support.</li>
+        <li>Separate legal duties and agreed constraints from assumptions and preferences.</li>
+        <li>Identify the decision owner, affected people and specialist risk owners.</li>
+        <li>Agree criteria and compare credible options at the same level of detail.</li>
+        <li>Test important uncertainties with research, prototypes, technical investigation, cost evidence or operational analysis.</li>
+        <li>Recommend or make the decision at the appropriate level, then record the reasoning, trade-offs, conditions and review triggers.</li>
+      </ol>
+      <p>Do not invent a percentage to claim that extra form fields will reduce completion. Use current analytics, research a prototype or run a controlled test. Options might include collecting less information, pre-populating trusted data or asking for lower-priority information later. Evidence turns competing opinions into an examinable decision.</p>
+      <p>The Service Manual's <a href="https://www.gov.uk/service-manual/agile-delivery/governance-principles-for-agile-service-delivery" target="_blank" rel="noopener">governance principles for agile delivery</a> say decisions should be evidence-based, focused on user needs and made at the right level. The service owner and team should have authority within clear boundaries, escalating decisions outside them. The architect, the most senior person or a governance forum does not automatically own every choice.</p>
 
-      <h2>The political reality you design inside</h2>
-      <p>Government architecture sits in a political reality with no real private sector parallel, and ignoring it doesn't make it go away. It just means it blindsides you. A ministerial announcement turns a launch date into a commitment, which may mean designing a phased launch, core function by the political deadline and the rest later, rather than holding out for the technically ideal timeline. Budgets are annual and reviewed, so a multi year programme can lose its funding halfway through, which is the argument for each phase delivering something usable rather than laying foundations that only pay off at the end. Data sharing that makes perfect technical sense can be blocked by cross departmental politics. Public scrutiny, through FOI, the National Audit Office, the Public Accounts Committee and the press, means your decisions have to be defensible: "we chose this because it best balanced user needs, security and value for money, and here is the options appraisal" survives daylight in a way that "the architect preferred this technology" does not. And an election can change policy direction overnight, which rewards architectures that keep policy rules separate from the technical plumbing. None of this asks you to become a political operator. It asks you to be politically literate, to know the forces around you and to know when to push back and when to settle for a pragmatic compromise.</p>
+      <h2>Understand the government context without designing by headline</h2>
+      <p>Government services can be shaped by legislation, policy intent, published commitments, funding, spending controls and public scrutiny. These may affect scope, sequencing, evidence and risk appetite, but their importance depends on the service.</p>
+      <p>Establish what is genuinely fixed. A date announced publicly may create a significant commitment, but the team still needs to understand what must be delivered by then, who owns the commitment and what quality or risk boundaries remain. A phased approach may be sensible if each phase delivers a usable service; it is not a licence to postpone security, accessibility or operational readiness.</p>
+      <p>Recorded information held by a public authority can be requested under <a href="https://www.gov.uk/make-a-freedom-of-information-request" target="_blank" rel="noopener">freedom of information law</a>, although exemptions and other access regimes may apply. Keep design records factual and professional, but remember their main purpose: teams, approvers and future maintainers need to understand the evidence and consequences. "We preferred this technology" is weak reasoning in any organisation.</p>
+      <p>Design for plausible change, not every imaginable event. If policy rules change often, separating them from slower-changing technical capabilities may reduce the cost of change. Without evidence that variation is likely, extra flexibility may only add cost and complexity.</p>
 
-      <h2>Building the engagement habit</h2>
-      <p>Stakeholder engagement is a practice you build over a project and a career, not a one off. A handful of habits carry most of it:</p>
+      <h2>Build engagement into the work</h2>
+      <p>Good engagement is part of discovery, design, delivery and operation. A few habits make it useful:</p>
       <ul>
-        <li>Start by listening. Before you present anything, ask what they're worried about and what success looks like to them. The answers tell you how to frame the architecture so it lands.</li>
-        <li>Tailor the message. The same decision goes to the SRO as risk, cost and timeline; to security as threat and compliance; to the delivery team as approach and implementation; to a private office as user impact and messaging. That isn't manipulation, it's being understood.</li>
-        <li>Build relationships before you need them. Meet the security team before you need their sign off. People back an architecture they helped shape far more readily than one dropped on them finished.</li>
-        <li>Be honest about bad news early. If the design has a weakness or a timeline is unrealistic, say so before someone else finds it. Honesty is the currency of these relationships.</li>
-        <li>Keep a stakeholder journal. After each significant conversation, note what you learned, what was raised and what you promised, then follow through. Broken promises wreck trust fast.</li>
-        <li>Know when to escalate. Some conflicts can't be settled at your level. When two senior people have genuinely incompatible requirements and neither will move, take it to the SRO or the board with the conflict, the options and the trade-offs laid out. Don't try to solve a political problem with technical cleverness; it rarely works and usually makes things worse.</li>
+        <li><strong>Listen before presenting.</strong> Ask what outcome, evidence, risk or dependency the person owns.</li>
+        <li><strong>Involve people while options are open.</strong> An early option gives people room to improve it.</li>
+        <li><strong>Adapt the representation.</strong> A service owner may need outcomes, cost, risk and a decision. Engineers may need interfaces, failure behaviour and constraints. Both should see the same underlying reasoning.</li>
+        <li><strong>Bring specialists in according to risk.</strong> Involve them early where their concern could materially change the options.</li>
+        <li><strong>Close the loop.</strong> Record actions, confirm what changed and explain the result.</li>
+        <li><strong>Escalate a decision, not a disagreement.</strong> Give the decision-maker the options, evidence, trade-offs and consequences rather than asking them to untangle an unresolved conversation.</li>
       </ul>
-      <p>All of this rests on one idea. Architecture is as much about the people as the systems, and the sooner you treat the two as one job, the better your designs get.</p>
-      <blockquote>Half of architecture is the systems. The other half is the people who fund it, run it and live with it.</blockquote>
+      <p>Engagement should be proportionate. A reversible, low-risk change may need a short conversation with a few people. A high-impact service crossing organisational boundaries may need sustained work with users, owners, specialists and delivery partners.</p>
+
+      <h2>Questions to ask on a real project</h2>
+      <ul>
+        <li>Who uses the service, who is affected by it and whose voice is missing?</li>
+        <li>Who owns the outcome, funding, data, dependencies and material risks?</li>
+        <li>Who can recommend, decide, assure, approve or accept risk for this choice?</li>
+        <li>What does each stakeholder know, and what evidence supports their position?</li>
+        <li>Which statements are requirements or constraints, and which are assumptions or preferences?</li>
+        <li>Where do needs conflict, and what credible options address the conflict differently?</li>
+        <li>Who will build, operate, support and change the service?</li>
+        <li>What change in scope, policy, risk, ownership or evidence would make us revisit the map or decision?</li>
+      </ul>
+      <blockquote>A stakeholder map is useful only if it changes who you involve, what evidence you gather or how a decision is made.</blockquote>
 
       <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
-        <p style="margin: 0 0 0.4rem;"><em>This is one practitioner's account of moving into solution architecture in UK government, not official guidance. It does not cover enterprise architecture, security architecture, or architecture outside central government.</em></p>
-        <p style="margin: 0 0 0.6rem;"><em>Last reviewed August 2026 against the primary sources below. Government policy changes; check the source before relying on this.</em></p>
+        <p style="margin: 0 0 0.4rem;"><em>This is a practitioner guide to solution architecture in UK central government, not official guidance. Roles, decision authority and assurance arrangements vary by organisation, service and risk.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary sources below. Government guidance changes; check the source before relying on it.</em></p>
         <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
           <li><a href="https://ddat-capability-framework.service.gov.uk/role/solution-architect" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Digital and Data Profession Capability Framework: Solution Architect</a></li>
           <li><a href="https://www.gov.uk/guidance/government-design-principles" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Design Principles</a></li>
-          <li><a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Standard</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-1-understand-user-needs" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard point 1: Understand users and their needs</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-2-solve-a-whole-problem" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard point 2: Solve a whole problem for users</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/governance-principles-for-agile-service-delivery" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Governance principles for agile service delivery</a></li>
+          <li><a href="https://www.gov.uk/guidance/accessibility-requirements-for-public-sector-websites-and-apps" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Understanding accessibility requirements for public sector bodies</a></li>
+          <li><a href="https://www.gov.uk/make-a-freedom-of-information-request" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">How to make a freedom of information request</a></li>
         </ul>
       </div>
 
