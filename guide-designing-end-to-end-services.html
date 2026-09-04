@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Designing end to end services</h1>
-        <p class="lesson-hero__description">Most architects design systems. The better ones design services. A system is a set of components that perform functions; a service is the whole experience a user goes through to reach an outcome, and the system is only one part of it. Design the system without understanding the service and you end up with something that works in the demo and struggles the moment real people and real operations hit it.</p>
+        <p class="lesson-hero__description">Connect the user journey, supporting systems and operations into one coherent service.</p>
       </div>
     </section>
 
@@ -55,107 +55,146 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>The difference between service thinking and system thinking, and why most architectures only cover part of the job</li>
-          <li>How to turn a user journey into components, data, integrations and the failures you have to handle</li>
-          <li>A practical way to design the front stage and back stage as connected but separable parts</li>
-          <li>What operational design, support and the service lifecycle demand from your architecture before go live</li>
+          <li>A way to define the service around a user outcome rather than a system boundary.</li>
+          <li>A method for connecting journey steps to processes, data, integrations and failure handling.</li>
+          <li>A practical view of front-stage and back-stage architecture across the channels users need.</li>
+          <li>Questions that bring operation, support, change and retirement into the design.</li>
         </ul>
       </div>
 
-      <h2>Service thinking versus system thinking</h2>
+      <h2>Start with the service boundary</h2>
 
-      <p>Here is the uncomfortable arithmetic. An architect who designs the form, the database, the API and the workflow engine for a grant application has built something that works. They have also designed maybe a third of the service. The rest never made it onto the diagram: the guidance that helps someone work out whether they qualify, the confirmation email, the way they check progress three weeks later, the caseworker screen, the management reporting, the payment run, and the helpline that picks up when all of that fails.</p>
+      <p>End-to-end service design begins by defining what the service must achieve and where its responsibility begins and ends.</p>
+
+      <p>A system boundary shows what a technical solution contains. A service boundary starts with the outcome a user is trying to achieve and follows what must happen from beginning to end. Both views matter, but they answer different questions.</p>
+
+      <p>Someone applying for a grant may need to find the service, understand whether it is suitable, apply, provide evidence, receive a decision, challenge it where applicable and receive the outcome. Staff may need to assess the case, manage exceptions, communicate with the applicant and complete downstream work. Suppliers and other public bodies may provide parts of the journey.</p>
+
+      <p>The GOV.UK Service Manual describes good services as working from beginning to end, from front to back and across the channels users need. The Service Standard asks teams to work towards solving a whole problem for users and to provide a joined-up experience across the necessary channels. This does not mean one team must own every part. It means the boundaries, hand-offs and dependencies must be understood.</p>
 
       <figure>
         <img src="images/lesson10-image1.png" alt="A six step user journey from finding the service to getting paid, with the designed system covering only the apply online step and a get help step hanging beneath the whole journey." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Two ways of framing the same problem, and what one of them quietly leaves out.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Two ways of framing the same problem, and what one of them quietly leaves out.</figcaption>-->
       </figure>
 
-      <p>System thinking asks what components you need and how they connect, and it answers that question well. The trouble is that users do not experience components. Someone applying for an energy efficiency grant experiences a journey that starts on a GOV.UK search result and ends, weeks later, with money in their account. If your architecture only accounts for the part where they press submit, it is technically correct and operationally incomplete, and the second of those is the one that generates angry letters to MPs.</p>
+      <blockquote>The technical solution is part of the service, not the boundary of it.</blockquote>
 
-      <blockquote>The work users never see is usually the work that decides whether the service succeeds.</blockquote>
+      <h2>Map the journey to architecture evidence</h2>
 
-      <h2>Mapping user journeys through architecture</h2>
+      <p>Start with evidence from user research, service design, policy, operations and how the service works today. A journey map is useful, but it should not become an invented happy path that nobody has observed.</p>
 
-      <p>The journey map is the primary input to service design because it catches the things a component diagram hides. Start from the user researcher's map if one exists, and walk every step with the same short interrogation:</p>
+      <p>For each significant step, ask:</p>
       <ul>
-        <li>what component supports this step</li>
-        <li>where the data comes from and where it has to go</li>
-        <li>what it integrates with</li>
-        <li>what happens when it fails</li>
-        <li>which non functional requirements bite here</li>
+        <li>What is the user trying to achieve, and through which channel?</li>
+        <li>Which person, team or organisation is responsible?</li>
+        <li>What process, system and data support the step?</li>
+        <li>Which hand-offs or external dependencies are involved?</li>
+        <li>What requirements and constraints apply here?</li>
+        <li>What can fail, and what happens to the user and the service when it does?</li>
+        <li>What evidence or measure would show that the step works?</li>
       </ul>
 
-      <p>That fourth question is the one most architectures skip. It is easy to design the happy path where the form validates, the payment clears and the email sends. The expensive work sits behind the step that just says "user waits for a decision", because under it you find a caseworker system, a status that has to be visible without a phone call, and a notification that has to fire whether the answer is yes or no.</p>
+      <p>Follow status changes and waiting periods as carefully as screens. "User waits for a decision" may hide queues, evidence checks, case allocation, supplier responses, notifications and escalation. Those activities often create the data, integration and operational requirements that a component diagram alone will not reveal.</p>
 
-      <p>Map the journey honestly and these requirements announce themselves. Skip it and you meet them in private beta, when a researcher watches someone refresh an empty status page for the fourth time.</p>
+      <h2>Connect front stage and back stage</h2>
 
-      <h2>Front stage and back stage architecture</h2>
-
-      <p>The theatre metaphor does real work here. The audience sees the performance; they never see the stage management that makes it possible, and they should not have to. Front stage is the part users touch, so it lives or dies on whether someone can actually finish their task. Back stage is where the caseworkers, the workflow rules and the reporting sit, and it lives or dies on whether the people running the service can do their jobs without fighting the tools.</p>
+      <p>A useful service-design model separates the front stage, which users experience directly, from the back stage of staff activity, processes, rules, systems and data. This is a teaching model rather than a prescribed government architecture framework.</p>
 
       <figure>
         <img src="images/lesson10-image2.png" alt="The public above a row of front stage components, a dashed line of visibility, then a row of back stage components used by caseworkers, support agents and operations staff." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Both halves are your architecture. Only one of them is on show.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Both halves are your architecture. Only one of them is on show.</figcaption>-->
       </figure>
 
-      <p><em style="color: #4a4f4b;">"The public are the users. Everyone else inside just needs an admin screen."</em></p>
+      <p>Caseworkers, support staff and operational teams are users of the tools they need to perform their roles. Understand their tasks, volumes, exception cases, accessibility needs and decision authority. A slow or unclear internal process can delay the public outcome even when the public-facing transaction works well.</p>
 
-      <p>Caseworkers are users. Support agents are users. A service with a polished public front end and a caseworker screen that takes nine clicks to approve an application will pass its assessment and then fall apart under load, because the people behind the line of visibility cannot keep up. Design their tools with the same care you give the part the public sees.</p>
+      <p>Decide what crosses the line of visibility. Users may need a clear status, expected timescale, decision explanation or route to challenge. Staff may need case history, evidence and safe actions. Privacy, security and need-to-know access still apply, so visibility should follow user needs and role responsibilities rather than a general rule that everyone should see everything.</p>
 
-      <p>The other half of the work is deciding what crosses that line. Users should see that their application is under review and roughly how long it takes. They should not see the internal assessment notes, the individual caseworker's name, or the fact that the queue is four hundred deep. Where you draw the line of visibility is an architecture decision, and one worth making deliberately.</p>
+      <h2>Join channels without forcing one implementation</h2>
 
-      <h2>Operational design: the forgotten architecture</h2>
+      <p>The Service Standard says teams should work towards meeting users' needs across the channels they need, which could include online, telephone, paper and face to face. It does not require every service to offer every channel all the time.</p>
 
-      <p>This is the part of the job that gets squeezed when the deadline tightens, and it is the part that generates the three in the morning phone call six months later. Operational design is everything that decides how the service behaves once it is live and the project team has moved on. A service with no monitoring does not tell you when it breaks; it waits for a user to tell you, which means your first warning is a complaint.</p>
-
-      <p>The questions are unglamorous and they all carry architecture consequences. How do you know it is working. Who gets the alert and what do they do with it. Can you ship a fix on a Friday afternoon without taking the whole thing down. Can a support agent retry a failed payment, and if so, what stops them retrying it five times.</p>
-
-      <p>None of this can be retrofitted cheaply. Structured logging, correlation IDs, health checks and a deployment pipeline that can roll back are decisions you make while designing, or scars you carry afterwards. Treat the readiness checklist as a gate rather than a wish list. A service that does everything the user needs and cannot be operated safely is not ready, however good the demo looked.</p>
-
-      <blockquote>A feature complete service is not live ready until someone can run it, watch it, fix it and recover it.</blockquote>
-
-      <h2>The service beyond the screen</h2>
-
-      <p>The Service Standard asks you to solve a whole problem for users, and the whole problem is rarely confined to a screen. Plenty of people who use government services cannot or will not do everything online. They phone the helpline, they need a formal decision on paper because the law requires it, they get help from a support agent because English is their second language or the form simply defeats them. Your architecture has to hold all of it.</p>
+      <p>Users should receive a coherent service when they move between channels. Statuses, decisions and important information should mean the same thing. Staff supporting another channel need enough accurate information to continue the journey without making the user start again.</p>
 
       <figure>
         <img src="images/lesson10-image3.png" alt="Five channels, the website, the helpline, assisted digital, letters and paper forms, all connected to one shared service layer holding the business rules, case record and workflow." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One set of rules and one case record, serving every channel.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One set of rules and one case record, serving every channel.</figcaption>-->
       </figure>
 
-      <p>The pattern that pays off most is keeping the business logic and data separate from the channel, so the same eligibility rules and the same case record serve the website, the phone agent and the letter generator without three copies drifting out of step. The other one worth insisting on is a single view of the case. When someone rings the helpline, the agent should see the application they started online, the previous call, and the letter that went out last week, in one place, without flipping between four systems.</p>
+      <p>A shared rules, case and workflow layer is one way to improve consistency, but it is not automatically the right architecture. Existing systems, resilience, latency, security, ownership and migration constraints may justify another approach. The requirement is a joined-up experience; the implementation still needs option appraisal.</p>
 
-      <p>Design for the journey people actually take, which involves starting online, getting stuck, calling for help and finishing online, rather than the tidy digital path that exists only in the slide deck.</p>
+      <p>Assisted digital support has a more specific meaning: helping people use the online parts of a service when they cannot or will not complete them independently. Its channels, staffing, funding, privacy controls and performance measures should be based on user research. It should not be treated as another name for every offline route.</p>
 
-      <h2>Support model design</h2>
+      <h2>Design the hand-offs and failure paths</h2>
 
-      <p>Support is a set of architecture requirements wearing a different hat. Decide early how problems get handled, because that decision tells you what to build. If users are meant to resolve most issues themselves, they need guidance they can find, error messages they can act on and a status page that answers the question before they pick up the phone. If first line agents are going to handle the common queries, they need a screen that shows a user's record and a small set of safe actions like resending a confirmation or correcting contact details. If second line staff are going to investigate the strange cases, they need logging they can actually search and a way to trace one user's request through every component it touched.</p>
+      <p>Map transitions between people, teams, systems and organisations. For each hand-off, make the owner, data, status and expected response clear. Identify what happens when information is incomplete, an external service is unavailable, a message is duplicated, a notification fails or a case needs manual review.</p>
 
-      <p>This is where some architecture choices come back to bite. A spread of microservices can be more flexible and considerably harder to debug at two in the morning, because the question "which service failed and where in the chain" is genuinely difficult to answer without correlation IDs threaded through the lot. Build that traceability in from the start. The teams who leave support tooling until after launch always discover the same thing: the architecture does not give the support team what it needs, and adding it later is slow, costly and disruptive to a service that is now carrying real users.</p>
+      <p>The response depends on impact and context. It might involve retrying safely, queuing work, reconciling later, giving staff a controlled action, switching to a fallback process or telling the user what to do next. Record where responsibility passes to another organisation and how the team will know whether that part of the journey has completed.</p>
 
-      <h2>Service lifecycle and architecture evolution</h2>
+      <p>Design negative outcomes too. Rejection, ineligibility, withdrawal, expiry and challenge can have their own evidence, communication, retention and audit requirements. They are part of the service when real users encounter them.</p>
 
-      <p>A service is not a project, and the architecture that treats it like one ages badly. Government services live for years, sometimes decades, and across that span the policy changes, the user numbers grow, the technology underneath shifts and the organisation reorganises itself more than once. The architecture that earns its keep is the one that absorbs all of that without a rebuild.</p>
+      <h2>Make the service operable and supportable</h2>
 
-      <p>In discovery and alpha, keep things light and disposable, because you are testing whether the service idea holds. Beta is where the real decisions get made and written down. Live is where the work becomes running it well and changing it safely. And retirement, the phase everyone forgets, is where data has to be archived or migrated and users moved to whatever replaces the service, so plan for it at the start rather than improvising it under pressure later.</p>
+      <p>Operational requirements should influence the architecture before live service. Establish service hours, support responsibilities, recovery needs, acceptable degradation and the impact of failure. Then design the monitoring, alerting, logging, audit, deployment, rollback, backup, recovery and support controls needed to meet them.</p>
 
-      <p>The single most useful habit is keeping policy rules out of the code. When the eligibility threshold changes because a minister announced it, and it will, you want to edit a configuration value rather than raise a change request that ships through three environments over a fortnight.</p>
+      <p>The Service Standard requires appropriate monitoring and a proportionate, sustainable plan for responding to problems. That does not mean every service needs 24-hour human support or the same operational tooling. The response should reflect user impact, service criticality and the agreed requirements.</p>
 
-      <h2>Bringing it all together: the service architecture view</h2>
+      <p>Support staff need information they can understand and actions they are authorised to take. This may require searchable logs, correlation identifiers, case history, diagnostic views or controlled ways to resend a notification and retry work. Protect personal data, restrict privileged actions and keep an audit trail.</p>
 
-      <p>A technical diagram shows you the systems and how they connect, and it is genuinely useful, but it hides the things this guide has been about: the touchpoints, the non digital channels, the operational tooling, the parts of the service that are not a box with an API. A service architecture view puts them back. It runs the user journey across the top, hangs the front stage components under each touchpoint, draws the line of visibility, and shows the back stage, the integrations and the operational capabilities underneath.</p>
+      <blockquote>A service is not ready for live operation until the organisation can monitor, support, recover and change it safely.</blockquote>
+
+      <h2>Design for change through the lifecycle</h2>
+
+      <p>The architecture develops as the evidence changes. Discovery establishes the outcome, wider journey, constraints and uncertainty. Alpha tests the riskiest assumptions with prototypes that need not cover the whole journey or become production code. Beta builds the service for real, integrates it with existing services and prepares for live operation. Live combines sustainable support with continued research and improvement.</p>
+
+      <p>Design decisions can be made and revised in every phase. Record significant decisions, assumptions and review triggers rather than suggesting that architecture is fixed during beta.</p>
+
+      <p>Separate rules that are likely to change when doing so makes change safer and easier. Configuration or a rules component may help, but it also needs validation, versioning, testing, access control and audit. Do not add flexibility for imagined changes that have no evidence behind them.</p>
+
+      <p>Retirement is also a service change. Plan how users will continue to meet their need, how API consumers and support channels will be handled, what happens to information, and how contracts, integrations and infrastructure will be closed. The detail can develop later, but early choices should not make safe exit unnecessarily difficult.</p>
+
+      <h2>Build views that expose gaps</h2>
+
+      <p>A service architecture view can connect the journey, channels, front-stage components, back-stage work, data, external dependencies and operational capabilities. It is not a mandatory government artefact, and one large diagram is not always the clearest answer. A service blueprint, process model, context diagram and focused technical views may work better together.</p>
 
       <figure>
         <img src="images/lesson10-image4.png" alt="A single artefact with the user journey across the top, front stage components beneath each touchpoint, the line of visibility, back stage components, external integrations and an operations strip at the base." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The whole service in one artefact, from the search result to the support tooling.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The whole service in one artefact, from the search result to the support tooling.</figcaption>-->
       </figure>
 
-      <p>Its real value is that it makes omissions visible before they get expensive. You can see, at a glance, the touchpoint with no component behind it, the operational need with no tool, the handoff between systems that nobody owns. Build it with the whole team in the room, including the operations lead, the support manager and the policy owner, because all of them need to recognise the service in it.</p>
+      <p>Use the view to find missing ownership, unsupported touchpoints, inconsistent statuses, duplicated rules, unmonitored dependencies and failure paths with no recovery. Build and review it with the people who understand the service, including users, operations, support, policy, product, delivery and relevant specialists.</p>
 
-      <p>And keep it alive. In government, where people rotate through teams faster than the services they run, a current answer to "how does this service actually work" is worth more than almost any other artefact you will produce.</p>
+      <p>Keep only the detail that helps people understand or decide something. Give each useful view an owner and update it when the service changes. A diagram that no longer reflects the service creates false confidence.</p>
 
-      <blockquote>The gaps a service architecture view exposes are far cheaper to fix on the diagram than in production.</blockquote>
+      <h2>Questions to ask on a real service</h2>
+
+      <ul>
+        <li>What outcome is the user trying to achieve, and where does the journey begin and end?</li>
+        <li>Which organisations, teams, suppliers and existing services contribute to it?</li>
+        <li>What happens before, after and between the screens we are designing?</li>
+        <li>Which online, telephone, paper, face-to-face or assisted digital routes do users need?</li>
+        <li>Can a user move between those routes without losing progress or repeating information unnecessarily?</li>
+        <li>What do staff need to complete their work safely and efficiently?</li>
+        <li>Where are the hand-offs, waiting periods, exceptions and failure paths?</li>
+        <li>How will the organisation monitor, support, recover and improve the service?</li>
+        <li>Which assumptions about policy, demand, technology or operations could change the design?</li>
+        <li>How will user needs, information and dependencies be handled when the service retires?</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical ways for Solution Architects to contribute to end-to-end service design. Service design is multidisciplinary, and the models and architecture questions used here are teaching aids rather than an official government method.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary guidance below. Government policy and guidance change, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/service-manual/design/introduction-designing-government-services" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Designing good government services</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-2-solve-a-whole-problem" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Solve a whole problem for users</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-3-join-up-across-channels" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Provide a joined-up experience across all channels</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-14-operate-a-reliable-service" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Operate a reliable service</a></li>
+          <li><a href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/designing-assisted-digital" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Designing assisted digital support</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-alpha-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: How the alpha phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-beta-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: How the beta phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-live-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: How the live phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/retiring-your-service" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Retiring your service</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
@@ -165,7 +204,7 @@
         <div>
           <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
           <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
-            <li style="margin-bottom: 0.25rem;"><a href="guide-stakeholders-and-landscape.html">Users, stakeholders and the landscape</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-solution-options-and-appraisal.html">Solution options and option appraisal</a></li>
             <li style="margin-bottom: 0.25rem;"><a href="guide-assessing-current-state.html">Assessing the current state</a></li>
             <li style="margin-bottom: 0.25rem;"><a href="lifecycle.html">Government project lifecycle</a></li>
           </ul>
