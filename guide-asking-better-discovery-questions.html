@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Asking better discovery questions</h1>
-        <p class="lesson-hero__description">Architecture is fundamentally about decisions, and good decisions come from good questions. Discovery is where you ask them, and the quality of your architecture tracks the quality of your questions almost exactly. Most architects never build this skill on purpose, so they lean on instinct, ask the same handful of questions, and miss the same things. In government the gap between what you're told and what you need to know is wide, because policy teams talk in outcomes and delivery teams talk in solutions, and neither describes the actual problem. Your questions are the bridge.</p>
+        <p class="lesson-hero__description">Better questions expose the real problem, hidden constraints and risky assumptions before they shape the design.</p>
       </div>
     </section>
 
@@ -55,93 +55,217 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>The main question types, and the moment each one earns its place.</li>
-          <li>How to tailor your questions to policy, operations, security, technical and leadership stakeholders.</li>
-          <li>Ways to surface the constraints nobody thinks to mention.</li>
-          <li>How the Five Whys works in government, and where it parts company with the textbook.</li>
-          <li>A method for telling real requirements from assumed ones.</li>
+          <li>the main types of discovery question and when each is useful</li>
+          <li>ways to adapt your questions to different stakeholders and perspectives</li>
+          <li>techniques for uncovering constraints, assumptions and gaps in the evidence</li>
+          <li>a practical way to test what has been presented as a requirement</li>
+          <li>a method for turning discovery conversations into useful architecture evidence</li>
         </ul>
       </div>
 
       <h2>Question types and when to use them</h2>
 
-      <p>Not every question does the same job, and the strongest discovery conversations move through several kinds in a deliberate order.</p>
+      <p>Discovery is not about working through a standard questionnaire. You are trying to understand the problem, the people affected by it, the constraints around it and what the team still does not know. GOV.UK discovery guidance explicitly recommends breaking down assumptions and asking questions before committing to a solution.</p>
+
+      <p>One useful way to prepare is to think about the different jobs a question can do. This is a practical teaching model rather than an official framework, and you will move between the question types as the conversation develops.</p>
 
       <figure style="margin: 1rem 0 0.5rem;">
         <img src="images/lesson7-image1.png" alt="Six question types in sequence: open to explore, probing to go deeper, clarifying to confirm, challenging to test, hypothetical to stretch, and scaling to gauge." style="width: 100%; border-radius: 8px; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic; margin-top: 0.5rem;">Open to explore, then narrow down to test and stretch the edges.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic; margin-top: 0.5rem;">Open to explore, then narrow down to test and stretch the edges.</figcaption>-->
       </figure>
 
-      <p>Open questions invite a wide answer and belong early, while you're still working out how things fit together. "Tell me how the current process works" or "what happens when an application is rejected" give people room to tell you what you didn't know to ask about. Probing questions chase something specific they've already said: you mentioned it takes six weeks, so where does most of that time actually go. That is usually where the real insight sits. Clarifying questions guard against the most dangerous assumption of all, that you understood when you didn't: when someone says real time, do they mean within a second or the same day, and when they say all users, how many people is that. Challenging questions test the thinking and take a little courage, like asking whether something is a legal requirement or a preference; frame them as curiosity rather than criticism and they land far better. Hypothetical questions like "what if the deadline moved a month" and scaling questions like "on a scale of one to ten, how firm are these requirements" pull out priorities and risk tolerance that direct questions miss. Run them roughly in that order: open to explore, probing to deepen, clarifying to confirm, challenging to test, then hypothetical and scaling to push on the edges.</p>
+      <p><strong>Open questions</strong> give people room to describe what happens in their own terms. Questions such as "Talk me through what happens when an application arrives" are useful while you are still learning how the service works.</p>
 
-      <blockquote>The right question at the right time reveals what matters. Everything downstream depends on it.</blockquote>
+      <p><strong>Probing questions</strong> follow something worth investigating. If someone says a process takes six weeks, ask where that time goes, what causes delay and what evidence exists for it.</p>
+
+      <p><strong>Clarifying questions</strong> remove ambiguity. "Real time", "high volume", "all users" and "business critical" can mean very different things to different people. Ask what they mean in this service and how the team would recognise whether the requirement had been met.</p>
+
+      <p><strong>Challenging questions</strong> test assumptions without treating them as mistakes. Ask what makes a deadline fixed, where a requirement originated, what would happen if it were not met, or whether an existing process genuinely has to remain unchanged.</p>
+
+      <p><strong>Hypothetical questions</strong> test the edges. What happens if demand doubles, the supplier is unavailable, the policy changes or a dependency is late? They are particularly useful for exposing risks and assumptions.</p>
+
+      <p><strong>Prioritising questions</strong> help when everything has been described as important. Rather than relying only on numerical scores, ask what must be protected if time or money becomes constrained, what can be traded off and who has authority to make that choice.</p>
+
+      <p>There is no required order. Start broadly when you need context, go deeper where the evidence is weak, and challenge assumptions when they begin to restrict the available options.</p>
 
       <h2>Different stakeholders hold different pieces</h2>
 
-      <p>No single person sees the whole service, so your questions have to change with who's in the room.</p>
+      <p>No single stakeholder is likely to have the complete picture. Discovery works better when you compare perspectives rather than treating one person's account as the definitive version of the service.</p>
 
       <figure style="margin: 1rem 0 0.5rem;">
         <img src="images/lesson7-image2.png" alt="Five stakeholder boxes, each holding a different piece: policy holds intent and law, operations the daily reality, security the limits, technical the estate, leadership the priorities. Arrows converge into a box where the architect connects the answers." style="width: 100%; border-radius: 8px; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic; margin-top: 0.5rem;">Each group holds one piece. The architect's job is to connect them.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic; margin-top: 0.5rem;">Each group holds one piece. The architect's job is to connect them.</figcaption>-->
       </figure>
 
-      <p>Policy teams hold the intent and the legal context, so ask what outcome the policy is chasing, how it might shift over the next two or three years, what legislation sits underneath, and what happens when someone fails to comply. Operational teams hold the reality: walk me through a typical day, what causes the most frustration, what workarounds you've built and why, because those workarounds describe the real problem better than any process map. Security teams hold the limits, the data classification, the threats to design against, the approved patterns and the route to sign off. Technical teams hold the current estate, the debt, the interfaces you can integrate with and the skills the team actually has. Senior leaders hold the priorities and the risk appetite, so ask what success looks like for them personally, where the political sensitivities are, whether the timeline is the announced one or the achievable one, and whether they'd rather deliver late or deliver the wrong thing. Then do the part that matters most, which is comparing the answers and looking hard at the gaps between them.</p>
+      <p>Policy colleagues can help explain the intended outcome, the policy background and where legislation or ministerial commitments may affect the work. Ask what government is trying to change, what is genuinely fixed and which parts of the current approach are simply how the policy happens to be implemented today.</p>
 
-      <h2>The constraints nobody mentions</h2>
+      <p>Operational colleagues can show you what happens in practice. Ask them to walk through normal cases, difficult cases, exceptions, delays and workarounds. Where the documented process differs from reality, understand why.</p>
 
-      <p>The constraints that hurt you are rarely the ones in the brief. They're the ones so baked into how the organisation works that nobody thinks to say them out loud. Procurement is a common one: you can only use suppliers on a certain framework, or an existing contract ties you to a platform for three years, or anything over a threshold triggers a fresh procurement exercise, and any of those can quietly remove half your options. Organisational constraints shape how you build and run: operations works Monday to Friday only, nobody knows Kubernetes, the change board meets monthly and wants two weeks notice. Political constraints shape your appetite for risk: the minister has announced the date, the last attempt failed in public, another department tried something similar and got criticised by the NAO. Data constraints block more projects than almost anything: the data you need is owned by another department that won't share it, or it's in a format that won't migrate, or three systems hold three versions of the same thing. The way to find all of these is simple and takes discipline. For every assumption in your design, ask what could stop this being true, then go and find out rather than guess.</p>
+      <p>Security, privacy and information-assurance specialists can help identify threats, obligations, sensitive information, organisational controls and evidence needed for assurance. Do not assume that one team owns every security decision; responsibilities vary between organisations.</p>
 
-      <h2>The Five Whys, government style</h2>
+      <p>Technical and service-management colleagues can explain existing systems, interfaces, operational constraints, technical debt, support arrangements and team capability. Ask what is difficult to change, what commonly fails and what the evidence says about current performance.</p>
 
-      <p>The Five Whys is the habit of asking why several times to trace a problem to its root. The textbook version stays close to the process: the report is late because the data wasn't ready, because it arrived in the wrong format, because submitters used different templates, because the guidance was ambiguous, because the person who wrote it didn't understand the data requirements. The root cause is that the data team and the guidance team weren't talking to each other. In government the chain usually runs somewhere less technical. Ask why often enough and you tend to land on something organisational, political or historical: a system can't produce the reports a minister now wants, because it was never designed for analytical queries, because that need didn't exist when it was procured, because the procurement locked in a fixed set of features with no room to change. The fix might be technical, but the lesson is about designing for change and steering clear of contracts that freeze the requirements. A few adaptations help. Go easy on blame, and ask what led to this rather than who decided this. Follow the chain across team and department boundaries even when it leaves your scope. Accept that some root causes sit outside your control, where the value is understanding the constraint well enough to design around it. And treat five as a guideline: sometimes two whys are enough, sometimes you need seven.</p>
+      <p>Product, delivery, commercial and senior stakeholders may hold evidence about priorities, funding, contracts, delivery commitments and organisational risk. Ask what is genuinely fixed, what could change and who has authority to make those decisions.</p>
 
-      <h2>Real requirements or assumed ones</h2>
+      <p>The useful insight often appears when two accounts do not quite agree. Treat that difference as something to investigate rather than deciding immediately which person is right.</p>
 
-      <p>A surprising share of what arrives labelled a requirement is really an assumption nobody has checked. Six questions sort one from the other:</p>
+      <h2>Find the constraints nobody thinks to mention</h2>
+
+      <p>Some constraints appear clearly in a brief. Others are so familiar to the organisation that nobody thinks to mention them.</p>
+
+      <p>Commercial constraints might include an existing contract, conditions attached to a framework or other procurement route, licensing commitments, supplier lead times or approvals needed before money can be spent.</p>
+
+      <p>Operational constraints might include limited support hours, specialist skills that are difficult to obtain, release windows or dependencies on teams with their own priorities.</p>
+
+      <p>Data constraints might concern ownership, quality, access, retention, legal basis, interfaces or uncertainty about which source is authoritative. Policy and legislative constraints may determine what the service must achieve while still leaving several ways of implementing it.</p>
+
+      <p>Do not classify a constraint as hard simply because somebody says "we have always done it this way". Ask where it comes from, who can change it, what would be involved and what evidence shows that it genuinely limits the options.</p>
+
+      <p>GOV.UK discovery guidance makes a similar distinction between hard constraints that are difficult to change and softer constraints such as existing processes that teams may be able to challenge.</p>
+
+      <h2>Use the Five Whys carefully</h2>
+
+      <p>The Five Whys is a simple root-cause technique: take an observed problem, ask why it happened and then continue investigating the answer until you reach causes that are useful to act on.</p>
+
+      <p>Despite the name, five is not a target. A useful investigation might stop earlier, continue further or branch because several causes contributed to the problem.</p>
+
+      <p>For example, suppose reports regularly arrive late. Asking why might reveal that data arrives late, because contributors submit it in different formats, because different teams follow different guidance. That is more useful than starting with "we need a new reporting system".</p>
+
+      <p>The important part is evidence. Each answer should be something you can substantiate or investigate. If the chain turns into a sequence of plausible guesses, you have created another set of assumptions rather than found a cause.</p>
+
+      <p>Complex government services are also rarely explained by one neat causal chain. Policy, process, technology, suppliers, users and organisational structures can interact. Use Five Whys as a prompt to investigate further, not as proof that you have found the single root cause.</p>
+
+      <h2>Test what has been presented as a requirement</h2>
+
+      <p>Discovery often starts with statements already labelled as requirements. Some will be well evidenced. Others will contain assumptions about the solution.</p>
+
+      <p>Before designing around one, ask:</p>
 
       <ul>
-        <li>Origin: where did this come from? If someone mentioned it in a meeting, treat it as an assumption. If it comes from legislation or user research, it's more likely real.</li>
-        <li>Consequence: what happens if we leave it out? If the service breaks or you're in breach of the law, it's real. If it would just be nice, it isn't.</li>
-        <li>Evidence: what proof is there that it's needed? Research, usage data and operational experience beat opinion and precedent every time.</li>
-        <li>Specificity: can you be more precise? "User friendly" is almost always an assumption; "users can complete the form in under fifteen minutes" is something you can design and test against.</li>
-        <li>Priority: if we could deliver only five of these twenty, which five? Forced to choose, people drop what they merely wanted.</li>
-        <li>Stability: how likely is this to change within a year? Anything volatile is often a guess about the future dressed up as a fact.</li>
+        <li><strong>Source:</strong> where did it come from: legislation, policy, user research, operational evidence, a security assessment, a contract, an organisational standard or someone's preference?</li>
+        <li><strong>Outcome:</strong> what need, obligation or problem is it trying to address?</li>
+        <li><strong>Evidence:</strong> what demonstrates that it matters, and how reliable is that evidence?</li>
+        <li><strong>Consequence:</strong> what happens if it is not met?</li>
+        <li><strong>Precision:</strong> is it clear enough to evaluate or test?</li>
+        <li><strong>Priority:</strong> what could be traded off if time, cost or another requirement conflicts with it?</li>
+        <li><strong>Stability:</strong> what assumptions could change it, and how likely are they to change?</li>
       </ul>
 
-      <p>A worked example makes it concrete. A policy team asks for real time validation against the Companies House register. Walk it through the tests: the origin is a kick off meeting, the consequence of not doing it is manually checking around twenty applications a day, which is perfectly manageable, and the evidence is an assumption that it would be more efficient. The real requirement is to confirm the company exists and is active before processing. The real time part was never needed, and that distinction matters, because a nightly batch check is simple and resilient while a live integration is complex and a dependency you then manage forever.</p>
+      <p>Be particularly careful to separate an obligation from an implementation choice. Legislation might require the service to verify something, but that does not automatically tell you when verification must happen or which technology must perform it.</p>
 
-      <blockquote>Half of what arrives labelled a requirement is an assumption nobody has tested yet.</blockquote>
+      <p>Suppose a team says:</p>
 
-      <h2>Asking the hard questions well</h2>
+      <blockquote>We need real-time validation against the Companies House register.</blockquote>
 
-      <p>Some of the questions that matter most are the ones that feel awkward, because they challenge an assumption or expose a risk. A few framings let you ask them honestly without putting people on the defensive. Instead of "why are you doing it that way", which sounds like an accusation, try "help me understand the thinking behind this". Instead of "this won't work", try "what would happen if", and let the other person find the problem themselves. Instead of "you're making a mistake", try "I saw something similar go badly on another project, how do we avoid that here". The devil's advocate framing lets people raise concerns without owning them: if someone wanted to attack this approach, what would they say. The premortem is better still. Imagine it's a year from now and the project has failed, what went wrong; people will tell you things in that frame that they'd never otherwise volunteer. Two more habits earn their keep. After you ask a question, stay quiet and let the silence work, because the most useful thing someone says often comes after the pause. And every so often, play back what you've heard to check it: so the main issue is X, caused by Y, with an impact of Z, have I got that right.</p>
+      <p>Start by asking what outcome requires validation, how current the information needs to be, what happens when validation is unavailable, expected volumes, how exceptions are handled and what evidence supports the required response time.</p>
+
+      <p>The resulting requirement might be that the service must establish that an organisation meets particular conditions before a defined point in the process. Live API validation, scheduled checks and manual handling could then be assessed as credible options if they satisfy that requirement.</p>
+
+      <p>Discovery should narrow the problem and strengthen the evidence without choosing an implementation before the relevant trade-offs have been examined.</p>
+
+      <h2>Ask difficult questions without creating defensiveness</h2>
+
+      <p>Some valuable questions challenge decisions that people have already invested time in. How you ask them matters.</p>
+
+      <p>"Why are we doing it that way?" can sound like a judgement. "What led us to this approach?" asks for the same information without assuming the decision was wrong.</p>
+
+      <p>Instead of declaring that an approach will fail, ask what would happen under the condition you are concerned about. If you think an assumption is weak, ask what evidence would confirm it.</p>
+
+      <p>A premortem can also help expose risk. Ask the group to imagine that the service has gone wrong and identify what could plausibly have caused it. Treat the answers as hypotheses to investigate rather than predictions.</p>
+
+      <p>Finally, play important points back. "I think I heard that the deadline is fixed because the legislation takes effect in April, but the current process could change. Is that right?" gives people an opportunity to correct your understanding before it becomes an architecture assumption.</p>
 
       <h2>A discovery question bank</h2>
 
-      <p>Experienced architects keep a personal stock of questions that have earned their place, and it helps to organise them by what you're trying to understand:</p>
+      <p>A question bank is useful as a prompt, not a script. Choose questions that fit the problem and the evidence you already have.</p>
 
+      <p><strong>The problem</strong></p>
       <ul>
-        <li>The problem: what are we actually trying to solve rather than build, who feels it, how is it handled today, and how will we know it's fixed?</li>
-        <li>The users: who are they really rather than who we imagine, what range of digital confidence do they have, what devices and connectivity, and what frame of mind are they in when they reach the service?</li>
-        <li>The constraints: what's the real deadline and what's driving it, how firm is the budget, what must you integrate with, and who will run the thing in production?</li>
-        <li>The risks: what's the worst outcome, what has failed before on similar work, what are you most uncertain about, and what would make a minister start asking questions?</li>
-        <li>The future: how might the policy move over the next few years, is the user base set to grow or shrink, and how long is this service expected to last?</li>
+        <li>What outcome are we trying to achieve?</li>
+        <li>Who experiences the problem and how do we know?</li>
+        <li>How is it handled today?</li>
+        <li>What evidence shows that it is worth solving?</li>
+        <li>How would we recognise an improvement?</li>
       </ul>
 
-      <p>You won't ask all of these every time. Pick the ones that fit, but read the whole list before you start, so you don't skip an entire area by accident. The question you fail to ask is the constraint you fail to discover, right up until it's too late to do anything about it.</p>
+      <p><strong>The users and service</strong></p>
+      <ul>
+        <li>Who are the users and what are they trying to achieve?</li>
+        <li>What happens before and after their interaction with this part of the service?</li>
+        <li>What barriers, accessibility needs or assisted-digital needs have research identified?</li>
+        <li>Which offline processes or other organisations are part of the journey?</li>
+      </ul>
 
-      <h2>From questions to architecture insights</h2>
+      <p><strong>The constraints</strong></p>
+      <ul>
+        <li>What is genuinely fixed, and what evidence makes it fixed?</li>
+        <li>Which legislation, policy, contracts or organisational standards apply?</li>
+        <li>Which existing systems or services must we interact with?</li>
+        <li>Who will operate and support the service?</li>
+        <li>Which constraints could be changed if there were enough value in doing so?</li>
+      </ul>
 
-      <p>Asking well is only half the skill. The other half is turning the answers into something your design can use, and it starts with listening for the signals.</p>
+      <p><strong>The uncertainty and risk</strong></p>
+      <ul>
+        <li>What are we assuming?</li>
+        <li>Which assumption would hurt us most if it were wrong?</li>
+        <li>What has failed before and what evidence do we have about why?</li>
+        <li>Which dependencies are outside the team's control?</li>
+        <li>What would require escalation, service interruption or public explanation?</li>
+      </ul>
+
+      <p><strong>The future</strong></p>
+      <ul>
+        <li>What changes are already expected?</li>
+        <li>Which demand, policy or operational assumptions are uncertain?</li>
+        <li>How long does the organisation expect this service or capability to remain useful?</li>
+        <li>What evidence would cause us to revisit today's decisions?</li>
+      </ul>
+
+      <h2>Turn answers into architecture evidence</h2>
+
+      <p>Discovery answers should not map directly to technologies. They should improve your understanding of the problem and help define requirements, constraints, assumptions and evaluation criteria.</p>
 
       <figure style="margin: 1rem 0 0.5rem;">
         <img src="images/lesson7-image3.png" alt="Four signal boxes mapping to four design decisions: formats keep changing maps to a transformation layer; usage spikes every March to scaling that can flex; the team is three people to keep it simple to run; security is OFFICIAL SENSITIVE to hosting constraints." style="width: 100%; border-radius: 8px; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic; margin-top: 0.5rem;">A signal in the room is the first line of a design decision.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic; margin-top: 0.5rem;">A signal in the room is the first line of a design decision.</figcaption>-->
       </figure>
 
-      <p>When someone says the data arrives in different formats, that points to a transformation layer. When they say usage spikes every March, that points to scaling that can flex. When they say the team is three people, that points to an architecture three people can actually run. Capture every constraint you find and mark it hard or soft: a hard constraint you can't move, and it draws the edges of your solution space; a soft one you can move with good reason, and it shapes the choices inside those edges. Write down the assumptions too, yours and everyone else's, and decide how each will be tested, because "we assume the Companies House API can handle our volume" is something you can check rather than quietly hope holds. Map the dependencies early, since that's where projects come apart: a dependency on another team's system is a risk, one on a system with no API is a bigger risk, and one on a system being switched off is a problem to raise now. Then step back after each session and pull it together: what's the problem, who's affected, what constrains us, what risks are surfacing, what's still open. The best architects connect these threads, so they can see how the reporting need shapes the data model, how the size of the team shapes the deployment, and how the security classification flows through to hosting, then cost, then the business case.</p>
+      <p>Treat the signals in this diagram as prompts for investigation rather than automatic design decisions.</p>
 
-      <blockquote>Gathering the answers is half the skill. Connecting them into a design is the other half.</blockquote>
+      <p>If data arrives in several changing formats, ask how much variation exists, who controls the formats, how quickly they change and where transformation would be best handled. A transformation component may become one option, but the evidence does not select it by itself.</p>
+
+      <p>If usage peaks at a particular time, establish the size and duration of the peak, required service levels, acceptable degradation and what current measurements show. Those facts become evaluation criteria for the available approaches.</p>
+
+      <p>If a small team must operate the service, supportability and operational complexity become important criteria. That does not automatically rule particular technologies in or out.</p>
+
+      <p>Likewise, information sensitivity and government security markings inform the security requirements and risk assessment. They should not be treated as automatic hosting decisions. In particular, OFFICIAL-SENSITIVE is an additional marking within the OFFICIAL classification rather than a separate classification tier.</p>
+
+      <p>After a discovery session, pull the evidence together:</p>
+
+      <ul>
+        <li>what have we learned about the problem and desired outcome?</li>
+        <li>which requirements and constraints are now supported by evidence?</li>
+        <li>which assumptions still need testing?</li>
+        <li>what risks and dependencies have appeared?</li>
+        <li>what remains uncertain?</li>
+        <li>what evidence will we need before comparing or recommending solution options?</li>
+      </ul>
+
+      <p>That gives the next architecture activity something useful to work with. The purpose of discovery questions is not to produce a technology answer in the room. It is to make the later decision better informed and easier to defend.</p>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical discovery techniques for Solution Architects working around UK government services. The question categories and examples are teaching aids rather than an official government framework.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary guidance and supporting sources below. Government policy and guidance change, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: How the discovery phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-1-understand-user-needs" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Standard: Understand users and their needs</a></li>
+          <li><a href="https://www.gov.uk/service-manual/user-research/user-research-in-discovery" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: User research in discovery</a></li>
+          <li><a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Security Classifications Policy</a></li>
+          <li><a href="https://www.gov.uk/government/publications/procurement-act-2023-guidance-documents-define-phase/guidance-thresholds-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Procurement Act 2023 guidance: Thresholds</a></li>
+          <li><a href="https://www.lean.org/lexicon-terms/5-whys/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Lean Enterprise Institute: Five Whys</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
