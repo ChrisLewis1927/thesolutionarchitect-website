@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Assessing the current state</h1>
-        <p class="lesson-hero__description">Every architecture project starts from somewhere, and that somewhere is rarely as tidy as the documentation claims. Before you design anything new, you have to understand what you're really working with. This guide is about doing that honestly: mapping the systems, data and processes that already exist, weighing the debt and the risk without flinching, and telling the pain people feel apart from the causes underneath it.</p>
+        <p class="lesson-hero__description">Map what exists, find the risks and constraints, and use evidence to shape what comes next.</p>
       </div>
     </section>
 
@@ -55,93 +55,138 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>How to map the systems, data and processes that already exist.</li>
-          <li>How to weigh technical debt and integration risk honestly.</li>
-          <li>How to tell pain points apart from the root causes beneath them.</li>
-          <li>How to produce current state documentation that actually changes decisions.</li>
+          <li>How to build a proportionate view of the current state.</li>
+          <li>How to identify technical debt and legacy risks that matter to the work.</li>
+          <li>How to assess integrations and dependencies.</li>
+          <li>How to separate symptoms, assumptions and reported information from verified evidence.</li>
         </ul>
       </div>
 
       <h2>Why current state assessment matters</h2>
 
-      <p>The hardest part of current state work is resisting the urge to skip it. Designing the future state is the interesting part, there's always pressure to get there, and so the current state gets a glance rather than a proper look. Government punishes that shortcut more than most places, because the systems here have piled up over decades, the people who understood them have long since moved on, and the documentation that outlived them was optimistic when it was written and is simply wrong now.</p>
+      <p>A future-state design has to work with the environment around it. Existing systems, data, processes, contracts, skills and dependencies can all constrain the options available or affect how difficult they are to deliver.</p>
+
+      <p>This is particularly important during discovery. Before choosing technology, you need enough understanding of the existing landscape to know what the service depends on, what can change, what cannot easily change and where the important unknowns remain.</p>
+
+      <p>The depth of the assessment should match the work. A small change to an existing service may only require a focused view of the affected components and dependencies. A major replacement or transformation may need a much broader baseline. The aim is to understand enough of the current state to make the next decisions well, rather than document the entire organisation by default.</p>
 
       <figure>
         <img src="images/lesson8-image1.png" alt="Three grey system boxes, a case system, a grants system and reporting, joined by teal lines labelled with what they carry: data, processes and contracts, with people in the middle." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The boxes are the easy part. The lines between them are the work.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The boxes are the easy part. The lines between them are the work.</figcaption>-->
       </figure>
 
-      <p>A list of systems is the easy part. The harder and far more valuable picture is the relationships between them: the data that moves around, the processes that quietly depend on them, the contracts that govern them, and the people who keep them running. Miss one of those and the gap reappears later as a delivery surprise, almost always an expensive one.</p>
+      <p>A system list is only the starting point. The relationships between systems, data, processes, people and suppliers are often where the important constraints appear.</p>
 
-      <blockquote>Treat current state assessment as risk mitigation. Every hour understanding what exists saves several once delivery is under way.</blockquote>
+      <blockquote>Assess the parts of the current state that could change the options, risks or transition approach.</blockquote>
 
       <h2>Mapping existing systems</h2>
 
-      <p>Start with whatever documentation exists, then assume it's lying to you. Not maliciously, just through neglect: a system gets changed without anyone touching the diagram, an integration gets bolted on in a hurry, a component is switched off on paper but keeps running in production. The reality lives with the people who use and operate the systems every day, which is why a conversation beats a register every time. Ask what they actually use, where their data comes from, and what breaks most often. Watch the manual steps especially closely, because the spreadsheet someone pulls from one system every Monday and loads into another is an integration whether or not anyone calls it one. You'll nearly always turn up a system nobody admitted owning: a database sitting on a desktop, a scheduled job no one remembers setting up. Those shadow systems are worth your attention, because each one is a need the official systems failed to meet. Keep the map simple enough that the whole team can read it without a key, because the goal is shared understanding, not a drawing so elaborate it becomes a thing to admire rather than use.</p>
+      <p>Start with the information that already exists: architecture diagrams, service catalogues, configuration records, repositories, support documentation and supplier material. Treat these as evidence to check rather than unquestioned truth or something to dismiss automatically.</p>
+
+      <p>Compare documentation with what is actually running. Depending on the scope, that might mean checking configuration, monitoring, logs, deployment pipelines and support records, or walking through the service with the people who use and operate it. When sources disagree, record the discrepancy rather than quietly choosing the version that looks most plausible.</p>
+
+      <p>For systems that matter to the work, understand enough to explain their purpose, users, ownership, important data, upstream and downstream dependencies, support arrangements and lifecycle position. Capture manual steps too. A spreadsheet export, scheduled file transfer or rekeying process can be an important service dependency even though it is not represented as a formal integration.</p>
+
+      <p>Do not expand the exercise without a reason. If a system cannot affect the problem, proposed options, delivery path or risk, documenting it in detail may add little value.</p>
 
       <h2>Understanding technical debt</h2>
 
-      <p>Technical debt is the bill that eventually arrives for decisions that made sense under pressure at the time. Some of it was deliberate, taken knowingly to hit a deadline with a promise to fix it once things calmed down, and things rarely calm down. Some accumulated quietly as rotating teams of contractors each left their own fingerprints on the codebase. Some is nobody's fault at all, just the slow drift of technology that was current when it was chosen and is now well past its supported life.</p>
+      <p>Technical debt and legacy technology can overlap, but they are not interchangeable. An older system can remain supported and suitable for its purpose, while a relatively new system can already contain significant technical debt. What matters is the effect on the service and the decisions you need to make.</p>
 
       <figure>
         <img src="images/lesson8-image2.png" alt="Above a waterline sit the visible kinds of debt: deliberate debt taken to hit a deadline, and obsolescence past its supported life. Below the line sit the hidden kinds: contractor drift, and deepest of all in teal, knowledge debt that left with the people." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The debt you can point at is rarely the debt that hurts most.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The debt you can point at is rarely the debt that hurts most.</figcaption>-->
       </figure>
 
-      <p>The kind that bites hardest in government is knowledge debt, the understanding that walked out of the building when a key person's contract ended and was never written down. A system nobody fully grasps is slow and frightening to change. Resist the pull to catalogue every last bit of debt, which is a task with no end, and concentrate on the debt that touches your work: what makes integration harder, what makes migration riskier, what leaves a security hole you'll have to answer for. Then put it in language people who don't think in code can act on. Deferred maintenance on a building is the comparison that tends to land: it still stands, but every repair costs more than it should, because you're working around years of problems that were patched over rather than fixed.</p>
+      <p>Look for debt or legacy characteristics that materially affect areas such as security, supportability, reliability, recovery, integration, ability to change, operating cost or access to the skills needed to maintain the service.</p>
+
+      <p>Concentrate on consequences rather than labels. Instead of recording that a component has "bad technical debt", record the evidence and what it means: a dependency is no longer supported, deployments require a manual process known by one person, a database version restricts an upgrade, or changing an interface requires supplier involvement.</p>
+
+      <p>You do not need a complete catalogue of every compromise ever made. Prioritise the items that could influence the solution, increase delivery or operational risk, or require explicit treatment during transition.</p>
 
       <h2>Assessing integration points</h2>
 
-      <p>Integrations are where systems meet, and where projects tend to come unstuck. For each connection you want a few honest answers:</p>
+      <p>Integrations deserve particular attention because they create dependencies between systems and teams. A proposed change may be technically straightforward inside one system but difficult once upstream consumers, downstream services, data contracts or supplier constraints are considered.</p>
+
+      <p>For each material integration, establish the information needed to judge its importance and risk. Depending on the situation, that can include:</p>
       <ul>
-        <li>What kind of interface it is.</li>
-        <li>What data crosses it, how often, and in what volume.</li>
-        <li>What happens when it fails, which is frequently nothing useful, and that is itself a finding worth recording.</li>
-        <li>Who actually owns it.</li>
+        <li>what the integration is for and which systems depend on it</li>
+        <li>what data is exchanged and any relevant sensitivity</li>
+        <li>how often data moves and what volumes or latency matter</li>
+        <li>the interface, protocol or transfer mechanism</li>
+        <li>authentication and other relevant security controls</li>
+        <li>what happens when the integration fails and how it recovers</li>
+        <li>who supports it and who can approve or make changes</li>
+        <li>supplier, licensing, contractual or change-window constraints</li>
       </ul>
 
-      <p>Ownership is where government turns murky. The integration was built years ago by a supplier who has since gone, and now neither team on either side thinks of the thing as theirs. Contracts box you in just as much, with notice periods and change fees that turn a small technical tweak into a procurement exercise. The riskiest items on any assessment are the undocumented ones, the connections held together by knowledge living in a single person's head. A plain matrix of every system to system link against these few criteria gives you one view of the whole estate and shows you where the danger actually sits, rather than where you assumed it would.</p>
+      <p>Use evidence where it exists. API specifications, job configuration, monitoring, incident records and operational logs usually tell you more about behaviour than a line on an old diagram.</p>
+
+      <p>Lack of documentation is a useful warning sign, but it does not tell you the level of risk on its own. Criticality, failure behaviour, recoverability, security, support and ease of change all matter.</p>
 
       <h2>Documenting the current state honestly</h2>
 
-      <p>Current state documentation has one job: to help people make good decisions about the future. That only works if it tells the truth, including the parts that are uncomfortable to say out loud. The failures here are quiet ones. Systems get described as healthier than they are, because the team that built them is still in the room. Problems get noted without naming the cause, because the cause points at a decision someone is still defending. The diagram gets repeated as gospel while operations tell a completely different story. Honest documentation says what actually exists, backs it with evidence, and admits the places you couldn't verify anything. The skill with sensitive findings is to stay on facts and off judgement. Saying a system was built in 2015 on technology that has since reached end of life is a fact nobody can argue with. Saying it was badly built is a verdict that earns you an enemy and changes nothing. Write for the architect who inherits this in two years, because someone will, and they'll need to know what exists, and also why, what works, and what to keep an eye on.</p>
+      <p>Current-state documentation should distinguish between what has been verified and what the team has been told, inferred or has not yet established.</p>
 
-      <blockquote>If the documentation hides the real problems, the future state design quietly inherits every one of them.</blockquote>
+      <p>A useful approach is to make the status clear in the material itself. A finding might be a verified fact, a reported behaviour, an assumption that still needs testing or an open question. Record important sources and dates where they help someone understand how confident to be in the information.</p>
+
+      <p>Avoid judgement disguised as analysis. Terms such as "poor", "brittle", "obsolete" or "unmaintainable" need evidence behind them. "The supplier ended support in March" or "deployments currently depend on a manual step performed by one team" tells the reader what is actually wrong and gives them something they can act on.</p>
+
+      <p>This is especially important when different teams have different views of the same system. Architecture work should make those differences visible and help establish the evidence, rather than decide which team has the better story.</p>
+
+      <blockquote>If an important finding cannot yet be verified, record the uncertainty rather than turning it into a fact.</blockquote>
 
       <h2>Capability mapping</h2>
 
-      <p>Systems are only part of the story. A capability is what the organisation can actually do, and it's always a blend of people, process and the technology that supports them.</p>
+      <p>A system view may still be too narrow when the problem involves how the organisation actually delivers an outcome. Capability mapping can help you look beyond individual applications and consider the people, processes, information and technology involved.</p>
 
       <figure>
         <img src="images/lesson8-image3.png" alt="Three grey boxes, people as caseworkers, process as the assessment process, and technology as the grant system, combine with plus signs and arrows into a single teal box: the capability to process grant applications." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Replace the technology alone, and the capability can still fail.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Replace the technology alone, and the capability can still fail.</figcaption>-->
       </figure>
 
-      <p>Processing grant applications is caseworkers plus an assessment process plus a grant system, and if you only see the system you've missed two thirds of what makes it work. This matters most when you replace something. Swap out the technology without accounting for the skills it demands or the way work really flows, and a technically superior system will still fail in the hands of people it was never shaped around. A simple maturity scale gives you a way to discuss this with people who don't live in architecture. Most government capabilities sit near the bottom of that scale, informal and dependent on particular individuals, and knowing that sets honest expectations: nudging a capability up one level is a real achievement, while promising to vault it from the bottom to the top inside a single project is how programmes end up disappointing everyone. Mapping also exposes where two teams are doing almost the same thing in different tools, which looks like easy consolidation right up until you look closely and find the differences that actually matter.</p>
+      <p>For example, the capability to process grant applications is not provided by a grant system alone. It also depends on the people doing the work, the assessment process, the information they need and the surrounding services they rely on.</p>
+
+      <p>This helps when evaluating change. Replacing the technology may remove one constraint while leaving the process, skills or information problem untouched. It can also reveal similar capabilities being delivered in different parts of the organisation, although similarity alone is not evidence that they should be consolidated.</p>
+
+      <p>If you use a maturity model, define the criteria and the evidence behind each assessment. A maturity score is only useful if people understand what it measures and how it affects the decisions being made.</p>
 
       <h2>Pain points versus symptoms</h2>
 
-      <p>When you ask people about the current state, they tell you what hurts. The system is slow. They can't get the data they need. It doesn't do what they want. Those complaints are real and worth hearing, but they're symptoms, and a single symptom can sit on top of several very different causes.</p>
+      <p>People experiencing the current service are an important source of evidence. When they say a system is slow, information is hard to find or a process repeatedly fails, the problem is real even if the underlying cause is not yet understood.</p>
 
       <figure>
         <img src="images/lesson8-image4.png" alt="A grey box holds the reported symptom, the system is slow. Teal tracing lines fan out to four grey boxes below, each a possible cause: inefficient queries, undersized infrastructure, a saturated link, and heavy reports run at peak." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One complaint, several possible causes. Trace to the one that, if fixed, makes it vanish.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One complaint, several possible causes. Trace to the one that, if fixed, makes it vanish.</figcaption>-->
       </figure>
 
-      <p>Slow might mean inefficient queries, undersized infrastructure, a saturated link to the data centre, or simply users running heavy reports in the busiest hour of the day. Keep asking why until you reach something that, if you fixed it, would make the complaint disappear. Watch for one cause wearing different costumes across teams: when operations say the system is slow, users say the reports take forever, and the developers grumble about the database, they're usually describing one underlying problem from three angles. Design your future state around the symptoms and you'll build something that feels better for a while, then grows the very same problems once the data volume catches up. Trace it back to the cause and the new design improves in substance rather than simply looking newer.</p>
+      <p>Treat the reported pain as the starting point for investigation. A slow service might involve inefficient queries, insufficient capacity, network delay, a dependency performing badly or a workload that peaks at particular times. More than one factor may contribute.</p>
+
+      <p>Test those possibilities using the evidence available: monitoring, traces, query timings, capacity data, incident records, support tickets, user research and observation of the process. The cause may also sit outside the technology, such as a manual approval, duplicated data entry or a policy rule being implemented inefficiently.</p>
+
+      <p>The important distinction is between what people experience and what the evidence shows is causing or contributing to it. Designing around an assumed cause risks solving the wrong problem.</p>
 
       <h2>Documentation that changes decisions</h2>
 
-      <p>All of this is wasted if the documentation ends up in a folder nobody opens. Structure it so the findings that matter reach the people making decisions first.</p>
+      <p>The output should make the implications of the current state easy to find. Depending on the scope, that might include a landscape or context diagram, important data flows and integrations, constraints, material technical debt, operational risks, assumptions and unresolved questions.</p>
 
       <figure>
         <img src="images/lesson8-image5.png" alt="Three stacked tiers narrowing downward. The widest tier at the top, in teal, is the summary of health, biggest risks and constraints, which decision-makers read. Below it, narrower, are the key findings and evidence. Narrowest at the bottom is the full detail, for those who go deeper." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Put the findings that change decisions where decision-makers will actually see them.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Put the findings that change decisions where decision-makers will actually see them.</figcaption>-->
       </figure>
 
-      <p>A short summary up front covers the overall health, the biggest risks, and the constraints the future state has to live within, with the detail behind it for those who need to go deeper. Keep it visual, because a map of the estate or a matrix of integrations communicates faster than paragraphs ever will. Keep it honest, including the findings you'd rather not write down. Keep it current, because systems change and people move, so date it and plan to revisit it if the work runs past a few months. And keep it somewhere the team can find and open without specialist software. There's a simple test for whether any of it was worth the effort. Would the future state design come out any different if you'd skipped the assessment entirely? If the honest answer is no, the work was either unnecessary, which is unlikely, or it didn't go deep enough, which is far more common.</p>
+      <p>Put the findings that affect decisions first. Explain which constraints narrow the options, which existing assets are worth retaining or reusing, which dependencies need protecting, which risks need mitigation and which unknowns need further investigation before a decision can be made.</p>
 
-      <blockquote>Good current state documentation passes one test: it changes what happens next. If the design would look the same without it, dig deeper.</blockquote>
+      <p>Keep the supporting evidence behind those conclusions so another person can understand how they were reached. The current-state view is a snapshot, so date it and revisit the relevant parts when the environment changes or new evidence invalidates an assumption.</p>
+
+      <p>The assessment has done its job when it changes the reasoning that follows: the requirements you refine, the options you consider, the risks you manage or the transition you plan.</p>
+
+      <blockquote>A useful current-state assessment makes the next architecture decision better informed.</blockquote>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0;"><em>This is a practitioner guide to assessing the current state for solution architecture in UK central government, not official guidance. The depth and approach vary by organisation, service and the decision in front of you.</em></p>
+        <p style="margin: 0.4rem 0 0;"><em>Last reviewed September 2026.</em></p>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
