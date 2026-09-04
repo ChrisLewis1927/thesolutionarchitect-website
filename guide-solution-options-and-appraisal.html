@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Solution options and option appraisal</h1>
-        <p class="lesson-hero__description">Option appraisal is where architecture meets accountability. You're spending public money, and every significant technology decision has to stand up to a fair comparison of the alternatives. This guide covers how to do that comparison honestly, in a way that survives a programme board, GDS spend control, and occasionally the National Audit Office.</p>
+        <p class="lesson-hero__description">Generate credible options, compare them fairly and make a defensible recommendation.</p>
       </div>
     </section>
 
@@ -55,114 +55,156 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>How to generate genuinely different options instead of strawmen built to flatter a decision you've already made</li>
-          <li>Evaluation criteria and weightings agreed before scoring starts, not tuned afterwards</li>
-          <li>A government view of buy, build and configure, and why 'do nothing' deserves real analysis</li>
-          <li>How to present options with integrity, including the weaknesses of the one you recommend</li>
+          <li>A way to turn the problem, requirements and current-state evidence into credible options.</li>
+          <li>A clear distinction between an architecture comparison and formal government appraisal.</li>
+          <li>A practical method for comparing trade-offs without hiding them behind a score.</li>
+          <li>A structure for making the recommendation, uncertainty and decision authority clear.</li>
         </ul>
       </div>
 
-      <h2>Generating genuine options</h2>
+      <h2>Start with the decision, not the preferred answer</h2>
 
-      <p>The hardest part of option appraisal is producing options that differ from one another in more than name. The scoring and the cost model come later, and they're mechanical by comparison. Everyone carries preferences, and those preferences shape which options reach the page before you've consciously decided anything.</p>
+      <p>Option appraisal continues the work from the earlier lessons. Use the evidence about the problem, outcomes, stakeholders, requirements, constraints and current state to state the decision before naming products or technologies.</p>
 
-      <p>The classic failure is the strawman. A modern cloud based build sits next to "keep the fifteen year old system exactly as it is" and "rewrite the whole thing from scratch", and the answer you wanted all along looks inevitable. A seasoned board member or a GDS assessor spots the pattern in seconds, and once they do they stop trusting the rest of your analysis. Worse, if strawmen were the only alternatives you considered, a genuinely better answer may never have made the page at all.</p>
+      <p>For example:</p>
 
-      <p>The protection is to start from the problem rather than the solution. "We need a microservices architecture" produces variations on microservices. "We need to process 30,000 grant applications a year with a team of eight" produces approaches that actually differ.</p>
+      <blockquote>How should the organisation replace its case-management capability before support ends, while meeting its user, migration, security, operational and affordability requirements?</blockquote>
+
+      <p>This leaves several approaches open and shows what evidence the comparison needs. "Which case-management product should we buy?" assumes that buying is already the right answer. Also define the boundary: complete service approaches, sourcing models, hosting models and individual components are different levels of decision and are difficult to compare fairly.</p>
+
+      <h2>Know what kind of appraisal you are doing</h2>
+
+      <p>An architecture options paper and a formal government appraisal are related, but they are not the same thing. A team may use a short options paper to decide how to integrate two systems or where a responsibility should sit. The evidence and challenge should be proportionate to the cost, risk, complexity, uncertainty and difficulty of reversing the decision.</p>
+
+      <p>HM Treasury's Green Book is mandatory for UK government departments and arm's-length bodies when developing proposals involving significant public spending. Its appraisal process moves from rationale and objectives through longlist and shortlist appraisal to a preferred option that optimises value for money.</p>
+
+      <p>Architecture evidence can inform feasibility, constraints, integration, security, operability, technology risk and whole-life implications. It cannot replace economic, commercial, financial or delivery analysis. Work with the relevant professions. The Solution Architect may develop or recommend technical options; the appropriate decision-maker or governance body approves the proposal.</p>
+
+      <h2>Generate a broad longlist</h2>
+
+      <p>Begin with different ways of achieving the outcome, not several versions of a favoured approach. The longlist might vary the scope, service model, delivery organisation, implementation approach or sourcing model. Reuse, purchase, configuration, custom build and combinations of these may all be credible.</p>
 
       <figure>
         <img src="images/lesson9-image1.png" alt="A single problem statement connecting to five fundamentally different approaches: build custom, buy off the shelf, configure a platform, reuse a government platform, and do minimum." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Options should differ in fundamental approach, not in implementation detail.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Options should differ in fundamental approach, not in implementation detail.</figcaption>-->
       </figure>
 
-      <p>Force yourself to develop at least one option you don't instinctively like. Research it properly and find its real strengths. That discipline keeps confirmation bias in check, and now and then it reveals that your instinct was wrong. Ask the delivery team, the operations team and the business what options they see; they'll suggest approaches informed by perspectives you don't have. Three to five options is usually right. Fewer than three offers no real choice, and more than five dilutes the analysis and wears the board out.</p>
+      <p>Generate the longlist with people who hold different evidence, including users, operations, commercial and delivery colleagues, specialists and owners of dependent services. Discard an option only for a recorded reason: it cannot meet an objective or mandatory constraint, is not feasible, or evidence shows that another limitation makes it unsuitable. Do not retain a weak option to flatter the preferred one.</p>
 
-      <blockquote>A strawman tells the board you'd rather win the argument than find the right answer.</blockquote>
+      <p>For formal Green Book appraisal, the longlist should be wide enough to avoid overlooking better ways of meeting the objectives. The Green Book recommends, but does not mandate, its options framework filter and says a shortlist should generally contain around five options. That is guidance for this formal process, not a universal rule for every architecture decision.</p>
 
-      <h2>Defining evaluation criteria</h2>
+      <h2>Set the criteria before comparing options</h2>
 
-      <p>Criteria are the dimensions you compare options against, and the most important thing about them is timing. Agree them, and their weightings, before anyone scores anything. Criteria chosen after the fact and tuned to favour a preferred option are among the easiest forms of dishonesty to commit and among the easiest to detect.</p>
+      <p>Trace the criteria to outcomes, user needs, requirements, constraints, current-state risks, organisational strategy and applicable standards. A useful criterion can distinguish between options and affect the recommendation.</p>
 
-      <p>The standard set for government architecture work covers:</p>
+      <p>Typical areas to consider include:</p>
       <ul>
-        <li>strategic alignment with the Technology Code of Practice and departmental strategy</li>
-        <li>how well the option serves the identified user needs</li>
-        <li>total cost of ownership across the expected service lifetime</li>
-        <li>delivery risk, including team capability and procurement timelines</li>
-        <li>operational sustainability with the skills the support team actually has</li>
-        <li>security, compliance and the path to accreditation</li>
-        <li>flexibility when policy or demand changes, which in government it will</li>
-        <li>vendor and technology risk over a service life measured in decades</li>
+        <li>achievement of the intended outcome and user needs</li>
+        <li>functional and quality requirements</li>
+        <li>security, privacy and accessibility</li>
+        <li>data, integration and migration</li>
+        <li>delivery time, dependencies and team capability</li>
+        <li>operability, support and ability to change</li>
+        <li>whole-life cost, affordability and benefits</li>
+        <li>commercial, supplier and exit risk</li>
+        <li>sustainability, strategic fit and applicable government guidance</li>
       </ul>
 
-      <p>They don't all matter equally. A service with a fixed ministerial deadline weights delivery risk heavily. One handling sensitive data lets security dominate. A service run by a three person operations team can't afford to treat sustainability as an afterthought. When stakeholders disagree about the weights, resist the urge to smooth it over. The disagreement is telling you something real about competing priorities, and it's far better surfaced now than discovered at assessment.</p>
+      <p>This is a prompt, not a standard checklist. Separate pass-or-fail conditions from criteria on which an option can perform better or worse. An option that fails a legal obligation or genuinely mandatory requirement should not survive because high scores elsewhere raise its average. If criteria are weighted, agree the weighting before scoring and record who agreed it and why.</p>
 
-      <h2>Scoring and comparing options</h2>
+      <h2>Use scoring as an aid, not the decision</h2>
 
-      <p>Scoring is where appraisal feels objective and quietly stops being so. A weighted numerical model that produces 3.7 against 3.5 looks decisive, but a gap that size is almost always noise dressed as signal. Traffic light scoring is usually more honest for government decisions. Red, amber and green tell a board exactly where an option fails, rather than burying the failure inside an average.</p>
+      <p>A comparison matrix can make evidence and disagreement visible; it does not turn judgement into an objective calculation. Define each score or rating, cite the evidence and explain important differences in words.</p>
 
       <figure>
         <img src="images/lesson9-image2.png" alt="Two options compared as weighted totals of 3.7 and 3.5 on the left, and the same options scored with traffic lights on the right, revealing an outright failure on one criterion that the average concealed." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">An average of 3.5 can hide a criterion the option fails outright.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">An average of 3.5 can hide a criterion the option fails outright.</figcaption>-->
       </figure>
 
-      <p>Reserve numbers for the things that genuinely quantify, such as cost and performance targets, and use narrative to explain the rest. Whatever method you choose, the biases are predictable. You'll anchor on the first option you assess, quietly inflate the one you prefer, let one strong result spread across unrelated criteria, and favour whatever builds on money already spent. The cheapest defence is a second pair of eyes. Have someone score the options independently, compare where you diverge, and talk through why.</p>
+      <p>Apply mandatory gates before calculating totals and show the result by criterion. A weighted score can structure discussion, but a small difference is not decisive when the underlying estimates and judgements are uncertain.</p>
 
-      <h2>Buy, build or configure in government</h2>
+      <p>Red, amber and green ratings can help when their definitions are clear. The Green Book's options framework filter uses them to screen choices during longlist appraisal. Formal shortlist appraisal goes further, using social cost-benefit or social cost-effectiveness analysis and considering unmonetisable effects, public-sector financial impact, distributional effects, risk and uncertainty.</p>
 
-      <p>Whether to buy a commercial product, build something custom or configure an existing platform is one of the most consequential calls you'll make, and in government it carries dimensions the private sector never faces. The Technology Code of Practice says share and reuse before you buy, and buy before you build, so choosing custom build when a suitable product already exists is hard to defend at spend control.</p>
+      <p>Test important assumptions or weights across a credible range. If a minor change reverses the ranking, present the decision as finely balanced and identify the evidence that would help resolve it.</p>
 
-      <p>The useful first question is whether the capability is a commodity or a differentiator. Authentication, notifications and payments are commodities: reach for GOV.UK One Login, GOV.UK Notify or an existing pattern rather than writing your own. A capability that implements unique policy is different, and that's where custom build earns its place. The second question is fit. A product that matches nine tenths of the requirement is worth buying or configuring. Below about seven tenths, the cost of bending it to shape can exceed the cost of building.</p>
+      <blockquote>The matrix should expose the reasoning, not replace it.</blockquote>
+
+      <h2>Compare reuse, buy, configure and build without shortcuts</h2>
+
+      <p>There is no universal order that selects the answer. For spend control, the Technology Code of Practice requires teams to consider all its points. Point 8 asks plans to show that sharing and reuse have been considered. Point 11 asks for the build-or-buy decision process, its connection to user needs or the problem, and compliance with contractual limitations.</p>
+
+      <p>An existing government service may be strongest when the team is eligible and it meets the need. A commercial product may suit common needs with limited adaptation. Configuration can preserve supplier support while fitting the service more closely. A custom build may suit unusual needs, limited market supply or requirements products cannot meet. Many solutions combine these approaches.</p>
 
       <figure>
         <img src="images/lesson9-image3.png" alt="A quadrant plotting commodity versus differentiating capability against low and high product fit, showing where buy or reuse, buy the closest fit, configure and extend, and custom build each belong." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Capability type and product fit do most of the work in this decision.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Capability type and product fit do most of the work in this decision.</figcaption>-->
       </figure>
 
-      <p>Two further questions round the decision out. What can the team actually do? A team without development skills has no business committing to a large custom build, however attractive it looks on paper. And what's the exit strategy? If you buy, you need a route out for when the vendor fails or the price triples. If you build, the code has to be maintainable by a team that isn't the one that wrote it. Watch low code platforms especially carefully. They deploy fast and demo well, and the questions that decide whether you made a good choice, about data portability, maintainability and lock-in, only get answered years later.</p>
+      <p>The diagram is a prompt, not a decision rule. Terms such as "commodity" and "differentiating" can frame the discussion, but product fit has no universal percentage threshold. Test it through requirements analysis, market research, demonstrations, prototypes or trials, including difficult scenarios and integrations.</p>
 
-      <h2>The 'do nothing' option</h2>
+      <p>Compare customisation, migration, accessibility, security, integration, team capability, supplier viability, licensing, contract terms, support, portability and exit. Include the skills and operating model needed after launch.</p>
 
-      <p>Every appraisal needs a 'do nothing' or 'do minimum' option, and it earns its place as the baseline every other option is measured against. Sometimes it's also the honest answer. Including it forces you to articulate the case for change, and if you can't explain clearly why standing still is inadequate, you don't yet have a case strong enough to spend public money on. "The current system works but could be better" will not carry a &pound;5m programme.</p>
+      <h2>Use business as usual as the baseline</h2>
 
-      <p>The cost of doing nothing is rarely zero. There's maintenance, support, licensing, and the hidden cost of every workaround people have built to cope. Understanding that cost gives you the baseline that makes every other option's price meaningful.</p>
+      <p>Business as usual describes what is expected if current arrangements continue. In formal Green Book appraisal it must enter the shortlist as the benchmark, even if it does not meet the proposal's objectives.</p>
 
       <figure>
         <img src="images/lesson9-image4.png" alt="A bar chart of total cost over the service lifetime, where do nothing has a real nonzero cost that sets a dashed baseline against which do minimum and two proposed options are measured." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Do nothing has a cost of its own, and every other option is measured against it.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Do nothing has a cost of its own, and every other option is measured against it.</figcaption>-->
       </figure>
 
-      <p>Separate 'do nothing', which means genuinely no change, from 'do minimum', which means the smallest set of changes that removes the most pressing risks: patching vulnerabilities, adding basic monitoring, fixing the worst of the data quality. Do minimum is often the most proportionate option on the table. It handles the immediate risks without committing to a large programme, it buys time for a more considered decision, and it frequently serves value for money best when the case for a bigger investment isn't yet proven. A board will respect you more for putting it there honestly than for pretending the only real choice is a large new build.</p>
+      <p>Business as usual is not free. Show the expected support, licensing, manual work, incidents, lost benefits, growing risk and eventual replacement or decommissioning costs. Use current-state evidence and explain how the position may change.</p>
 
-      <blockquote>If 'do nothing' looks acceptable in your appraisal, take the hint. The case for change needs more work.</blockquote>
+      <p>Keep "do minimum" separate. It is the least-cost change that can meet the objectives and critical success factors, not another name for doing nothing. It may be proportionate when it addresses the immediate need and a larger investment is not justified.</p>
 
-      <h2>Presenting options honestly</h2>
+      <h2>Compare whole-life effects</h2>
 
-      <p>How you present options matters as much as how you evaluated them, because a board can only decide well from what you actually show them. Set the context first; don't assume anyone remembers the detail from the last meeting. Give the whole picture at a high level before the detail, then work through each option with what it involves, how it scored, its strengths, its weaknesses, and a cost expressed as a range rather than a falsely precise figure.</p>
+      <p>Purchase price or initial build cost is only part of the comparison. Consider discovery, procurement, implementation, integration, migration, parallel running, training, hosting, licences, support, change, exit and decommissioning. Use an appraisal period that fits the proposal and applicable guidance.</p>
 
-      <p>When you reach your recommendation, state it plainly and name the trade-off you're accepting: "we recommend Option B because it balances cost and delivery risk best, accepting that it scores lower on flexibility than Option C". Then do the thing most architects are tempted to skip and set out the risks of the option you're recommending, alongside the mitigations you propose. A board that discovers those risks later, on its own, stops trusting your judgment.</p>
+      <p>Benefits may include better user outcomes, time saved, reduced failure demand, lower risk or improved ability to respond to policy change. Define the recipient, measure and conditions for realisation.</p>
 
-      <p>Separate facts from opinions while you do it. "Option A uses a technology that reaches end of life in two years" is a fact. "Option A is the best choice" is professional judgment. Present the facts first, then the judgment, and respect the board's right to choose differently. If they pick an option you didn't recommend, support it professionally and keep the risks you flagged on the record.</p>
+      <p>Formal Green Book appraisal considers costs and benefits from the perspective of UK society, not only the delivery organisation's budget. Analysts distinguish social value from affordability and calculate the required measures. Architecture provides evidence about feasibility, resource use, service risks, dependencies and lifecycle consequences.</p>
 
-      <h2>Cost, benefit and risk analysis</h2>
+      <p>Use ranges or scenarios where evidence cannot support precision, and state what is included, excluded and assumed. Sunk costs should not determine what happens next, although the opportunity cost of existing assets may matter.</p>
 
-      <p>Cost benefit risk analysis is the standard frame for appraisal in government. It sits alongside HM Treasury's Green Book, and programme boards and spend control teams will expect to see it. Cost means total cost of ownership across the service's life, typically five to ten years: implementation, migration, hosting and licensing, support, the cost of likely change, and decommissioning at the end. Present it as a range and say plainly what's in and what's out. An early estimate carrying 50% uncertainty is more honest stated that way than dressed up as a precise number.</p>
+      <h2>Make a recommendation, not a sales pitch</h2>
 
-      <p>Benefits won't all reduce to cash, and forcing them to helps nobody. Cash savings attract the most scrutiny. Efficiency gains can usually be expressed as time saved. Risk reduction and strategic value often have to be made qualitatively, with as much specificity as you can manage. Then pair every risk with a credible mitigation. A risk on its own is a problem; a risk with a plan attached is a managed concern a board can accept. The whole analysis should tell one clear story: what the option costs, what it delivers, what it puts at risk, and why that balance beats the alternatives.</p>
+      <p>Describe each shortlisted option at a comparable level of detail. Show how it performs against the criteria, with its costs, benefits, risks, dependencies, assumptions and confidence in the evidence.</p>
 
-      <h2>Common pitfalls in option appraisal</h2>
+      <p>Then state the recommendation plainly:</p>
 
-      <p>The arithmetic is rarely what sinks an appraisal. Bias, omission and weak challenge do the damage, and even experienced architects fall into the same traps.</p>
+      <blockquote>We recommend Option B because it meets the mandatory requirements and offers the strongest balance of user benefit, delivery confidence and whole-life cost. It gives up some flexibility compared with Option C, and its supplier dependency will need an agreed exit plan.</blockquote>
 
-      <p><em style="color: #4a4f4b;">"I already know the right answer. The appraisal just writes it up."</em></p>
+      <p>This makes the accepted trade-off visible and separates recommendation from decision. Record the decision-maker, evidence, approval conditions and remaining risks. If the decision differs from the architecture recommendation, record that accurately.</p>
 
-      <p>That's the predetermined conclusion, and it's the most damaging trap in this line of work. The criteria get chosen to favour your option, the scoring bends, and the alternatives shrink into strawmen. The antidote is to develop every option properly before you evaluate any of them, so each one has had a fair chance to change your mind.</p>
+      <p>State what would trigger review: a failed trial, a material change in demand, cost or policy, a supplier event, new security evidence, or an assumption crossing an agreed threshold. A defensible decision is tied to the evidence available at the time.</p>
 
-      <p>Close behind it comes the missing option: the genuinely good approach that never made the page because it was unfamiliar, politically awkward, or needed cooperation from another department. Then there's the asymmetry that gathers around a favourite. You estimate its costs more generously because you understand it better, you spot fewer of its risks, and you let sunk investment flatter it because "we've already spent the money", when that money is gone whatever you decide next. False precision rounds out the set: estimates to the nearest pound and scores to two decimal places, projecting a confidence the evidence can't carry.</p>
+      <h2>Questions to ask before recommending an option</h2>
 
-      <p>You can't reliably see these biases in your own work, which is exactly why peer review is the strongest safeguard you have. Hand the appraisal to another architect before it reaches the board, and ask them to find the bias you can't.</p>
+      <ul>
+        <li>What exact decision are we making, and what is outside its scope?</li>
+        <li>Which outcomes, requirements, constraints and current-state findings shape it?</li>
+        <li>Have we generated genuinely different approaches?</li>
+        <li>Why was each longlist option progressed or rejected?</li>
+        <li>Which conditions are mandatory, and which criteria allow trade-offs?</li>
+        <li>What happens under business as usual, and what does it cost?</li>
+        <li>What are the whole-life costs, benefits, risks and dependencies?</li>
+        <li>Where is the evidence weak, and could credible changes reverse the recommendation?</li>
+        <li>Have the right users, specialists and decision-makers been involved?</li>
+        <li>Who has authority to decide, and what would cause the decision to be revisited?</li>
+      </ul>
 
-      <blockquote>Assume the bias is there, invite the challenge early, and treat peer review as part of the work.</blockquote>
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical option comparison for Solution Architects and explains where it connects to formal UK government appraisal. It is not a substitute for the Green Book, business case guidance or advice from departmental analytical, finance and commercial specialists.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary guidance below. Government policy and guidance change, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government/the-green-book-2026" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">HM Treasury: The Green Book (2026)</a></li>
+          <li><a href="https://www.gov.uk/government/publications/guidance-on-developing-business-cases" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">HM Treasury: Guidance on developing business cases for projects and programmes</a></li>
+          <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: The Technology Code of Practice</a></li>
+          <li><a href="https://www.gov.uk/guidance/share-and-reuse-technology" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Share, reuse and collaborate</a></li>
+          <li><a href="https://www.gov.uk/guidance/define-your-purchasing-strategy" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Define your purchasing strategy</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
