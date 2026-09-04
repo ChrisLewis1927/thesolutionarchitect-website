@@ -877,6 +877,22 @@ h4 { font-size: var(--font-size-xl); }
   line-height: var(--line-height-relaxed);
 }
 
+.lesson-content blockquote {
+  border-left: 4px solid var(--color-accent-blue);
+  background: var(--color-light-bg);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  margin: var(--spacing-xl) 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: var(--line-height-normal);
+  color: var(--color-text-dark);
+}
+
+.lesson-content blockquote p {
+  margin: 0;
+}
+
 .lesson-content table {
   width: 100%;
   border-collapse: collapse;
