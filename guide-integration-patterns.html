@@ -5,9 +5,9 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How to choose integration patterns, manage trade-offs, and handle legacy systems in UK government architecture.">
+  <meta name="description" content="How to choose integration patterns, manage dependencies, contain failure and connect modern services to legacy systems in UK government.">
   <meta property="og:title" content="Integration patterns for government services &mdash; Architect's Library">
-  <meta property="og:description" content="How to choose integration patterns, manage trade-offs, and handle legacy systems in UK government architecture.">
+  <meta property="og:description" content="How to choose integration patterns, manage dependencies, contain failure and connect modern services to legacy systems in UK government.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Integration patterns for government services &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Integration patterns for government services</h1>
-        <p class="lesson-hero__description">Integration is where government architecture quietly comes undone, usually because the cost of connecting systems gets underestimated right up to the point where it bites. This guide walks through the patterns, the trade-offs, and the failure modes you will actually meet.</p>
+        <p class="lesson-hero__description">Connect services without spreading failure, complexity or legacy constraints.</p>
       </div>
     </section>
 
@@ -55,92 +55,167 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>How to choose an integration pattern that fits the context rather than the fashion</li>
-          <li>When synchronous integration helps and when it quietly makes your service fragile</li>
-          <li>How to deal with the legacy systems that government integration always seems to involve</li>
-          <li>How to handle data transformation and errors so failures stay contained</li>
+          <li>A practical way to choose between APIs, messaging, events and batch integration.</li>
+          <li>Questions for assessing timing, availability, data, security and ownership.</li>
+          <li>Ways to contain legacy behaviour and data transformation at service boundaries.</li>
+          <li>Failure controls for retries, duplicates, unavailable dependencies and manual recovery.</li>
         </ul>
       </div>
 
-      <h2>Integration patterns: an overview</h2>
+      <h2>Start with the interaction, not the pattern</h2>
 
-      <p>The patterns themselves are not complicated. What trips people up is choosing one out of habit rather than on the evidence in front of them. Point to point feels sensible when you have two systems to join, and it stays sensible right up until you have eight, at which point the wiring diagram looks like a plate of spaghetti and nobody can change anything without breaking something else. A hub tidies that up by giving everything a single place to connect, but it comes with a quieter cost that rarely makes it into the design document: whoever owns the hub owns everyone else's ability to integrate, which in government is a political fact as much as a technical one.</p>
+      <p>An integration exists because one part of a service needs information or an action from another system. Start by describing that need. What must pass between the systems? Which direction does it travel? What triggers it? How quickly is it needed? Who owns each side?</p>
+
+      <p>Only then compare the available patterns. A direct connection may be proportionate for two stable systems. An API suits interactions where one system requests information or asks another to perform an action. Messaging allows work to wait until the receiving system is ready. An event tells interested systems that something has happened without the sender directing what each one must do. Scheduled files or batch transfers can still be appropriate when immediate processing is unnecessary or a legacy system has limited interfaces.</p>
+
+      <p>The <a href="https://www.gov.uk/guidance/integrate-and-adapt-technology" target="_blank" rel="noopener">Technology Code of Practice guidance on integration</a> asks government teams to show how new technology will work with their organisation's existing technology, processes and infrastructure. It does not prescribe one integration pattern.</p>
 
       <figure>
         <img src="images/lesson11-image1.png" alt="Five small topology sketches showing point to point, hub and spoke, API, messaging, and event-driven integration, arranged from tighter to looser coupling, with your service in teal among other systems in grey." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The shape of each pattern is the trade-off. More coupling on the left, more infrastructure on the right.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Each pattern changes the dependencies, infrastructure and support the service must manage.</figcaption>-->
       </figure>
 
-      <p>APIs give you a clear, on demand interface and suit request and response work, which is why they dominate modern government services and why the Technology Code of Practice keeps pointing at open standards. Messaging decouples sender from receiver so each can run at its own speed. Events loosen things further still: a system announces that something happened, and anything that cares reacts, without the publisher knowing or caring who is listening. Each step towards looser coupling earns its keep as the estate grows, and each one adds infrastructure you then have to run and a team that has to understand it. Start with the interaction you actually need, not the pattern you would most like to put on your CV.</p>
+      <p>Looser coupling can prevent one system from controlling another's processing rate, but it adds queues, brokers, delivery rules and monitoring. A shared hub can reduce repeated connections and apply common controls, but it can also concentrate ownership and become a bottleneck. Choose the simplest pattern that meets the need and handles failure safely.</p>
 
-      <blockquote>Start with the interaction you need and the coupling you can afford. The right pattern falls out of that, not the other way round.</blockquote>
+      <blockquote>Describe the interaction first. The pattern is a response to the need, not the starting point.</blockquote>
 
-      <h2>Synchronous and asynchronous: choosing the model</h2>
+      <h2>Choose when the caller should wait</h2>
 
-      <p>This is the decision people get wrong most often, usually because synchronous feels simpler and simpler feels safer. It is simpler, right until the system you are calling slows down or falls over, at which point your service inherits its problems. Call a back office system that has been running for thirty years and let it have a bad morning, and now your users are having one too.</p>
+      <p>In a synchronous interaction, the caller waits for the other system to respond. This works when an immediate answer is necessary and the dependency can respond within the required time. It also means that slow responses or failures in the dependency can affect the caller and, potentially, the user.</p>
+
+      <p>In an asynchronous interaction, the service accepts and stores the work before processing it later. The caller can receive an acknowledgement or reference without waiting for every downstream step. This can protect the user journey from slow processing, but it creates new requirements for status updates, message handling, monitoring and recovery. <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-integrating-microservices/asynchronous.html" target="_blank" rel="noopener">AWS guidance on asynchronous communication</a> highlights the need for durable acknowledgement, idempotent processing, dead-letter handling and monitoring.</p>
 
       <figure>
         <img src="images/lesson11-image2.png" alt="Two panels comparing a synchronous call, where your service and its user wait for the downstream response, with an asynchronous flow, where your service replies at once with a reference and a queue carries the work to the downstream system." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Whether the caller waits decides how much of someone else's reliability you inherit.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The decision is whether the caller must wait and what happens when the dependency cannot respond.</figcaption>-->
       </figure>
 
-      <p>Asynchronous breaks that chain. You accept the request, hand back a reference number, and do the awkward work out of sight. The price is real. You now have to think about messages that fail to arrive, arrive twice, or turn up in the wrong order, and you have to design the screen that says we will update you shortly without making anyone anxious. As a working rule, stay synchronous when the user genuinely needs an answer before they can proceed, an eligibility check or a payment confirmation, and the downstream system is fast and dependable. Go asynchronous when the processing takes time, the downstream system has moods, or your service needs to stay up when its dependencies are not.</p>
+      <p>Many services need both approaches. A grant service might validate required fields and store an application before confirming receipt. Checks against other systems can then run asynchronously, with the application status updated when they complete. A payment confirmation may need an immediate response, while reconciliation and reporting can happen later.</p>
 
-      <p>Most government services that work well are quietly hybrid. They are synchronous at the front door, where someone is waiting, and asynchronous in the back office, where the slow and unreliable integrations live. A grant service accepts the application and confirms it in seconds, then validates against Companies House, checks for duplicates, and routes to a caseworker in its own time. The user sees a reference number and a promise of an update within five working days, and never sees any of the machinery behind it.</p>
+      <p>Ask these questions before deciding:</p>
+      <ul>
+        <li>Does the user or calling process need the answer before it can continue?</li>
+        <li>What response time is acceptable?</li>
+        <li>What should happen if the receiving system is slow or unavailable?</li>
+        <li>Can the work be stored safely and completed later?</li>
+        <li>Must messages be processed in order?</li>
+        <li>Can the same request be processed more than once without causing harm?</li>
+        <li>How will callers and users check progress or receive the outcome?</li>
+      </ul>
 
-      <h2>Government platforms and common components</h2>
+      <h2>Use standards and shared services where they fit</h2>
 
-      <p>Reaching for a common component before building your own is the right instinct, and it is also what the Technology Code of Practice expects of you. Notify handles email, text messages and letters, including the government specific edges like Welsh language and accessibility. Pay takes card payments and carries the PCI DSS burden so you do not have to. One Login handles identity for citizen-facing services, and Forms can replace custom form development entirely for simple data collection. Beyond the platforms, there are cross-government APIs worth knowing: Companies House for company data, HMRC for tax data with the right authorisation, Land Registry for property, Ordnance Survey for geography. Each has its own authentication, its own rate limits, and its own data quality quirks.</p>
+      <p>The <a href="https://www.gov.uk/service-manual/service-standard/point-13-use-common-standards-components-patterns" target="_blank" rel="noopener">Service Standard</a> asks teams to use open standards and standard government components where possible. The <a href="https://www.gov.uk/service-manual/technology/using-common-components" target="_blank" rel="noopener">Service Manual</a> adds an important qualification: use common platforms when their available features help meet user needs faster and more cost-effectively.</p>
 
-      <p>What the adoption pages tend to skip over is that every component you reuse becomes a dependency you now carry. If Notify has an outage, your service cannot send notifications, and no amount of clever code on your side changes that. Treat these as external systems with their own availability and their own edges. Queue your notifications and retry rather than assuming delivery. Read the service level commitments and set your own availability targets accordingly. And find the boundaries early: Pay handles the common payment flows well and then stops short of the unusual ones, split payments, recurring payments, conditional refunds. You want to discover that during design, when changing your mind is cheap, rather than at a service assessment, when it is not.</p>
+      <p>Useful government services include <a href="https://www.notifications.service.gov.uk/" target="_blank" rel="noopener">GOV.UK Notify</a> for emails, text messages and letters; <a href="https://docs.payments.service.gov.uk/security/" target="_blank" rel="noopener">GOV.UK Pay</a> for card payments; <a href="https://www.sign-in.service.gov.uk/" target="_blank" rel="noopener">GOV.UK One Login</a> for authentication and identity checking in eligible central government services; and <a href="https://www.forms.service.gov.uk/get-started" target="_blank" rel="noopener">GOV.UK Forms</a> for forms that fit the platform's capabilities. Check eligibility, functional limits, data handling, support, availability and integration requirements before selecting any of them.</p>
 
-      <h2>Legacy integration challenges</h2>
+      <p>Do not describe a shared service as removing responsibilities that remain with your organisation. For example, GOV.UK Pay is a PCI DSS Level 1 service provider, but its guidance states that partners and services taking telephone or postal payments may still have PCI DSS obligations. The architecture should show which responsibilities the platform owns and which remain with the service team.</p>
 
-      <p>In government, integrating with something old is most of the job. There will be a system that predates your team, has no API, sends a file once a night, and behaves in ways nobody still employed can fully explain. Data access might mean direct database queries that bypass the business logic, overnight file exports, or screen scraping that breaks whenever someone adjusts a field. Sometimes the protocol is proprietary and the client library only runs on a platform you retired years ago.</p>
+      <p>The <a href="https://www.api.gov.uk/" target="_blank" rel="noopener">UK public sector API Catalogue</a> can help teams find existing APIs. An entry does not guarantee that an API is open to your service or suitable for its needs. Confirm access, licensing, data quality, rate limits, support arrangements and service commitments with the owning organisation.</p>
 
-      <p><em style="color: #4a4f4b;">"The interface is documented, so the integration will be straightforward."</em></p>
+      <p>The <a href="https://www.gov.uk/service-manual/technology/application-programming-interfaces-apis" target="_blank" rel="noopener">Service Manual guidance on APIs</a> warns that depending on another API can tie your service's availability to that provider. Decide in advance whether you will queue the work, offer another route, use an alternative source or explain the interruption to users.</p>
 
-      <p>The documentation describes the system somebody intended to build. The running system has twenty years of undocumented validation rules, error codes that mean one thing on Tuesdays and something else on Wednesdays, and edge cases nobody remembers implementing. You will not find these on paper. You will find them in integration testing, three weeks before go live.</p>
+      <h2>Keep legacy behaviour at the boundary</h2>
+
+      <p>Legacy integration starts with evidence about the running system, not just its documentation. Confirm the interfaces it actually supports, the business rules it applies, the data it produces, its operating windows and the people who understand it. Test assumptions early with representative records and realistic volumes.</p>
+
+      <p>An adapter can translate between the legacy interface and the model used by the new service. This keeps old formats, codes and protocols from spreading through the new design. An <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/acl.html" target="_blank" rel="noopener">anti-corruption layer</a> applies the same principle where systems use different data models or business language.</p>
 
       <figure>
         <img src="images/lesson11-image3.png" alt="Your service and an adapter you own shown in teal, exchanging clean modern data, while the adapter exchanges batch files and odd codes with a grey legacy system, keeping the quirks away from your service." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Whatever you call it, the principle is the same: the old system's strangeness lives in one place you control.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The adapter contains the translation so the rest of the service does not depend on legacy behaviour.</figcaption>-->
       </figure>
 
-      <p>The practical move is to stop fighting this and contain it. Put an adapter between your service and the old world so all the strangeness lives in one component you own and can test, and your new service only ever sees clean, modern data. The literature offers variations on the theme. An anti corruption layer translates at the boundary. A strangler fig routes requests through a new system that delegates to the old one until, feature by feature, there is nothing left to delegate. Scheduled data synchronisation avoids touching the old system in real time at all, if a day of latency is acceptable. Which one you pick matters less than the principle behind them all: the old system's quirks are a design input, and your job is to stop them leaking into everything else.</p>
+      <p>The adapter is not free. It can add latency, introduce another point of failure and become difficult to remove. Decide who owns it, how it will be monitored and whether it is a permanent boundary or part of an incremental migration. If it is temporary, record what must happen before it can be retired.</p>
 
-      <blockquote>Treat the old system's quirks as a design input, not a nasty surprise, and keep them behind the adapter where they belong.</blockquote>
+      <p>Other approaches may fit better. A scheduled extract can avoid real-time dependency when delayed data is acceptable. An API façade can protect consumers from changes to the underlying system. Incremental replacement can move one capability at a time. Direct database access or screen scraping may sometimes be the only available route, but both are fragile because they depend on implementation details rather than a supported contract. Record the risk and the exit plan.</p>
 
-      <h2>Data transformation and mapping</h2>
+      <h2>Agree what the data means</h2>
 
-      <p>Connecting two systems is the straightforward part. Getting them to agree on what the data means is the part that quietly consumes your schedule. One system calls a person an applicant, the next calls them a claimant, a third calls them a customer, and somewhere a fourth has decided gender is recorded as one or two with no surviving note of which is which. One system holds an address as a single text field while another wants it in four parts, so now you are parsing free text and handling every address that refuses to fit. Dates are the classic trap. They look trivial, then a time zone or a daylight saving boundary corrupts a batch and you lose a day working out why.</p>
+      <p>Systems can exchange data successfully and still interpret it differently. Before building the mapping, agree the meaning, format, source and ownership of each important item. Define identifiers, mandatory and optional fields, valid values, units, dates, time zones and how corrections are handled.</p>
+
+      <p>The government's <a href="https://www.gov.uk/guidance/gds-api-technical-and-data-standards" target="_blank" rel="noopener">API technical and data standards</a> cover consistent resources, standard formats, authentication, versioning and error responses. Apply the relevant standards to the interface and document any justified exceptions.</p>
 
       <figure>
         <img src="images/lesson11-image4.png" alt="A teal canonical data model at the centre with four grey external systems around it, each connected by a single two way mapping, so no external system needs to understand another one directly." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One internal model, one mapping per system. Without it, every new system means mapping to every existing one.</figcaption>
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">A shared model can reduce pairwise mappings, but it also creates something that must be owned and governed.</figcaption>-->
       </figure>
 
-      <p>Two disciplines save you. Keep all the mapping in one place at the boundary of your service rather than smeared through the code, so it can be found, tested and versioned when an external format changes, and formats always change. And translate everything to a single internal model, so each external system needs exactly one set of mappings instead of one per neighbour. Then test with real data, including the ugly records. Transformation logic that sails through tidy samples tends to fall over the moment it meets production, because production data contains the edge cases that samples were quietly chosen to avoid. When a record still refuses to transform, log it and queue it for a human rather than dropping it, because in government that record is usually a person.</p>
+      <p>A stable internal representation can stop every external format from spreading through your service. It does not need to become one organisation-wide canonical model. A shared model can help where several systems exchange the same concepts, but it also creates central ownership, versioning and governance work. Choose the scope that matches the problem.</p>
 
-      <h2>Error handling in integrations</h2>
+      <p>Keep each transformation in a clear boundary, with an owner and automated tests. Test using representative data, including incomplete, historic and unusual records. When transformation fails, retain enough information to investigate and recover the record without exposing sensitive data unnecessarily.</p>
 
-      <p>Everything you integrate with will fail at some point, so the useful question is how you respond when it does. A momentary network blip and a permanently rejected record need completely different treatment. Retry the blip with increasing backoff and it resolves itself in seconds. Retry the rejected record forever and you have built a machine for generating load and hiding a problem. The standard patterns exist for exactly this. A circuit breaker stops you hammering a dependency that is clearly down and degrades gracefully instead. A dead letter queue catches messages that repeated retries cannot save, so they wait for a human instead of blocking everything behind them. Idempotency makes retries safe in the first place, so a message handled twice does not become a duplicate application or a second payment landing in someone's account.</p>
+      <h2>Design how each integration will fail</h2>
 
-      <p>In government the stakes are concrete, because a swallowed failure usually has a citizen on the other end of it. A dropped payment is someone who did not receive money they were owed, and that becomes a complaint, then a case, then a headline. So the rules are short and firm:</p>
+      <p>Different failures need different responses. A short network interruption may justify a retry. Invalid data, failed authorisation or a rejected business rule will not be fixed by repeating the same request.</p>
+
+      <p>Use timeouts so callers do not wait indefinitely. For transient failures, use a limited number of retries with increasing delays. The <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/retry-backoff.html" target="_blank" rel="noopener">retry with backoff pattern</a> can improve resilience, but retries can also increase load and must be safe for the operation being repeated. A <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/circuit-breaker.html" target="_blank" rel="noopener">circuit breaker</a> can stop repeated calls to a dependency that is already failing and allow the caller to respond another way.</p>
+
+      <p>For asynchronous processing, assume a message may be delivered more than once unless the chosen service contract guarantees otherwise. Use idempotency to prevent duplicate outcomes. Route messages that cannot be processed to controlled failure handling, alert the responsible team and provide a way to investigate, correct and replay them safely.</p>
+
+      <p>For every integration, decide:</p>
       <ul>
-        <li>Never drop data silently. Every failure is logged, alerted, and eventually resolved.</li>
-        <li>Never show a user the words something went wrong and walk away. Tell them what happened and what to do next.</li>
-        <li>Give support staff the tools to investigate and fix the failures that automation cannot.</li>
-        <li>Watch error rates, not just individual errors. A rising rate is the early warning, and it usually arrives before the incident does.</li>
+        <li>how a request, message or record will be traced from end to end;</li>
+        <li>which failures can be retried and which need correction or human action;</li>
+        <li>what the caller and the user will be told;</li>
+        <li>what will be logged, monitored and alerted without exposing sensitive information;</li>
+        <li>how support staff can recover stuck or failed work safely; and</li>
+        <li>how the team will reconcile records and detect work that never completed.</li>
       </ul>
 
-      <h2>Designing integration architecture for government</h2>
+      <blockquote>An integration is not complete when data can move. It is complete when the team can detect, explain and recover a failed movement.</blockquote>
 
-      <p>Put all of this together and a method appears, and it is reassuringly dull. Map the estate first, because the integration you forget is the one that derails you in month four. Write down every system you exchange data with, what flows, in which direction, how often, through what interface, and who owns it. Classify each one: fast or slow, modern or legacy, inside your department or across a boundary, sensitive or not. The right pattern falls out of the classification rather than out of preference.</p>
+      <h2>Create an integration view that supports decisions</h2>
 
-      <p>Then give the whole lot somewhere to live. A dedicated integration layer handles connection, authentication, transformation, retries, logging and monitoring in one place, so the messiness of the outside world stays out of your core service. Assume each integration will fail and decide now how that failure is spotted, explained and put right. Assume each one will change, because external APIs and data formats always do, and version accordingly. Instrument everything, because integration trouble is usually the first symptom of wider trouble. None of this removes the difficulty of integrating in government. It means you meet that difficulty on purpose, with a plan, rather than discovering it live in production with users watching.</p>
+      <p>Record the integrations the service depends on in a view or catalogue that the team can maintain. For each one, capture:</p>
+      <ul>
+        <li>the provider, consumer and business purpose;</li>
+        <li>the data or action being exchanged and its sensitivity;</li>
+        <li>the trigger, frequency, expected volume and timing requirement;</li>
+        <li>the pattern, protocol, authentication method and trust boundary;</li>
+        <li>the interface version and approach to change;</li>
+        <li>the owners and support contacts on both sides; and</li>
+        <li>the timeout, retry, recovery, monitoring and reconciliation approach.</li>
+      </ul>
 
-      <blockquote>Connecting systems is the easy part to picture. Keeping those connections working while the estate around them keeps shifting is the part that actually defines the architecture.</blockquote>
+      <p>Use the view to identify hidden chains of dependency, duplicated interfaces, unclear ownership, unsupported technology and single points of failure. Review it with the teams that provide and consume each interface, not only with the team building the new service.</p>
+
+      <p>Do not add a central integration layer by default. A gateway, broker, adapter or shared integration service can reduce duplication and apply common controls when several integrations have the same need. It can also concentrate failure, cost and decision-making. Make that choice through option appraisal and give the resulting component clear ownership.</p>
+
+      <h2>Questions to ask on a real service</h2>
+      <ul>
+        <li>What user or business outcome does each integration support?</li>
+        <li>What information or action crosses the boundary, and why?</li>
+        <li>Does the caller need an immediate response, or can the work complete later?</li>
+        <li>What volume, response time, ordering and availability are required?</li>
+        <li>Which government component, existing API or supported interface could meet the need?</li>
+        <li>Who owns the data, interface, credentials and support on each side?</li>
+        <li>How will changes to schemas, versions and business rules be managed?</li>
+        <li>What happens when the dependency is slow, unavailable or returns invalid data?</li>
+        <li>How will duplicate, missing, delayed and out-of-order work be handled?</li>
+        <li>How will the team trace, monitor, reconcile and recover the integration?</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical integration choices for Solution Architects working around UK government services. The pattern descriptions and questions are teaching aids rather than a mandatory government integration framework.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary government guidance and supporting technical sources below. Guidance and platform capabilities change, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/guidance/integrate-and-adapt-technology" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice: Integrate and adapt technology</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-13-use-common-standards-components-patterns" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Use and contribute to open standards, common components and patterns</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/using-common-components" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Using common platforms</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/application-programming-interfaces-apis" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Application programming interfaces</a></li>
+          <li><a href="https://www.gov.uk/guidance/gds-api-technical-and-data-standards" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: API technical and data standards</a></li>
+          <li><a href="https://www.api.gov.uk/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">UK public sector API Catalogue</a></li>
+          <li><a href="https://www.notifications.service.gov.uk/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Notify</a></li>
+          <li><a href="https://docs.payments.service.gov.uk/security/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Pay: Security and compliance</a></li>
+          <li><a href="https://www.sign-in.service.gov.uk/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK One Login</a></li>
+          <li><a href="https://www.forms.service.gov.uk/get-started" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Forms: Check whether the platform meets your needs</a></li>
+          <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-integrating-microservices/asynchronous.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">AWS Prescriptive Guidance: Asynchronous communication</a></li>
+          <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/acl.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">AWS Prescriptive Guidance: Anti-corruption layer pattern</a></li>
+          <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/retry-backoff.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">AWS Prescriptive Guidance: Retry with backoff pattern</a></li>
+          <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/circuit-breaker.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">AWS Prescriptive Guidance: Circuit breaker pattern</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
@@ -150,7 +225,7 @@
         <div>
           <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
           <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
-            <li style="margin-bottom: 0.25rem;"><a href="guide-designing-end-to-end-services.html">Designing the whole service</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-designing-end-to-end-services.html">Designing end to end services</a></li>
             <li style="margin-bottom: 0.25rem;"><a href="guide-assessing-current-state.html">Assessing the current state</a></li>
             <li style="margin-bottom: 0.25rem;"><a href="artifacts.html">Architecture artifacts</a></li>
           </ul>
