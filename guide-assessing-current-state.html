@@ -66,7 +66,7 @@
 
       <p>A future-state design has to work with the environment around it. Existing systems, data, processes, contracts, skills and dependencies can all constrain the options available or affect how difficult they are to deliver.</p>
 
-      <p>This is particularly important during discovery. Before choosing technology, you need enough understanding of the existing landscape to know what the service depends on, what can change, what cannot easily change and where the important unknowns remain.</p>
+      <p>This is particularly important <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener">during discovery</a>. Before choosing technology, you need enough understanding of the <a href="https://www.gov.uk/service-manual/technology/choosing-technology-an-introduction" target="_blank" rel="noopener">existing landscape</a> to know what the service depends on, what can change, what cannot easily change and where the important unknowns remain.</p>
 
       <p>The depth of the assessment should match the work. A small change to an existing service may only require a focused view of the affected components and dependencies. A major replacement or transformation may need a much broader baseline. The aim is to understand enough of the current state to make the next decisions well, rather than document the entire organisation by default.</p>
 
@@ -81,7 +81,7 @@
 
       <h2>Mapping existing systems</h2>
 
-      <p>Start with the information that already exists: architecture diagrams, service catalogues, configuration records, repositories, support documentation and supplier material. Treat these as evidence to check rather than unquestioned truth or something to dismiss automatically.</p>
+      <p>Start with the information that already exists: architecture diagrams, service catalogues, configuration records, repositories, support documentation and supplier material. The <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/activities/documenting-service-assets/" target="_blank" rel="noopener">Secure by Design guidance on documenting service assets</a> similarly recommends using existing organisational tools and records where appropriate. Treat these sources as evidence to check rather than unquestioned truth or something to dismiss automatically.</p>
 
       <p>Compare documentation with what is actually running. Depending on the scope, that might mean checking configuration, monitoring, logs, deployment pipelines and support records, or walking through the service with the people who use and operate it. When sources disagree, record the discrepancy rather than quietly choosing the version that looks most plausible.</p>
 
@@ -91,14 +91,14 @@
 
       <h2>Understanding technical debt</h2>
 
-      <p>Technical debt and legacy technology can overlap, but they are not interchangeable. An older system can remain supported and suitable for its purpose, while a relatively new system can already contain significant technical debt. What matters is the effect on the service and the decisions you need to make.</p>
+      <p>Technical debt and <a href="https://www.gov.uk/service-manual/technology/moving-away-from-legacy-systems" target="_blank" rel="noopener">legacy technology</a> can overlap, but they are not interchangeable. An older system can remain supported and suitable for its purpose, while a relatively new system can already contain significant technical debt. What matters is the effect on the service and the decisions you need to make.</p>
 
       <figure>
         <img src="images/lesson8-image2.png" alt="Above a waterline sit the visible kinds of debt: deliberate debt taken to hit a deadline, and obsolescence past its supported life. Below the line sit the hidden kinds: contractor drift, and deepest of all in teal, knowledge debt that left with the people." style="width: 100%; display: block;">
         <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The debt you can point at is rarely the debt that hurts most.</figcaption>-->
       </figure>
 
-      <p>Look for debt or legacy characteristics that materially affect areas such as security, supportability, reliability, recovery, integration, ability to change, operating cost or access to the skills needed to maintain the service.</p>
+      <p>The <a href="https://www.gov.uk/service-manual/service-standard/point-11-choose-the-right-tools-and-technology" target="_blank" rel="noopener">Service Standard</a> expects teams to manage legacy technology that the service integrates with or depends on. Look for debt or legacy characteristics that materially affect areas such as security, supportability, reliability, recovery, integration, ability to change, operating cost or access to the skills needed to maintain the service.</p>
 
       <p>Concentrate on consequences rather than labels. Instead of recording that a component has "bad technical debt", record the evidence and what it means: a dependency is no longer supported, deployments require a manual process known by one person, a database version restricts an upgrade, or changing an interface requires supplier involvement.</p>
 
@@ -106,7 +106,7 @@
 
       <h2>Assessing integration points</h2>
 
-      <p>Integrations deserve particular attention because they create dependencies between systems and teams. A proposed change may be technically straightforward inside one system but difficult once upstream consumers, downstream services, data contracts or supplier constraints are considered.</p>
+      <p><a href="https://www.gov.uk/guidance/integrate-and-adapt-technology" target="_blank" rel="noopener">Integrations</a> deserve particular attention because they create dependencies between systems and teams. A proposed change may be technically straightforward inside one system but difficult once upstream consumers, downstream services, data contracts or supplier constraints are considered.</p>
 
       <p>For each material integration, establish the information needed to judge its importance and risk. Depending on the situation, that can include:</p>
       <ul>
@@ -122,7 +122,7 @@
 
       <p>Use evidence where it exists. API specifications, job configuration, monitoring, incident records and operational logs usually tell you more about behaviour than a line on an old diagram.</p>
 
-      <p>Lack of documentation is a useful warning sign, but it does not tell you the level of risk on its own. Criticality, failure behaviour, recoverability, security, support and ease of change all matter.</p>
+      <p>Lack of documentation is a useful warning sign, but it does not tell you the level of risk on its own. The <a href="https://www.gov.uk/service-manual/technology/uptime-and-availability-keeping-your-service-online" target="_blank" rel="noopener">dependency chain</a>, criticality, failure behaviour, recoverability, security, support and ease of change all matter.</p>
 
       <h2>Documenting the current state honestly</h2>
 
@@ -185,7 +185,16 @@
 
       <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
         <p style="margin: 0;"><em>This is a practitioner guide to assessing the current state for solution architecture in UK central government, not official guidance. The depth and approach vary by organisation, service and the decision in front of you.</em></p>
-        <p style="margin: 0.4rem 0 0;"><em>Last reviewed September 2026.</em></p>
+        <p style="margin: 0.4rem 0 0.6rem;"><em>Last reviewed September 2026 against the primary guidance below. Government policy and guidance change, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: How the discovery phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/choosing-technology-an-introduction" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Choosing technology</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/activities/documenting-service-assets/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Secure by Design: Documenting service assets</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/moving-away-from-legacy-systems" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Moving away from legacy systems</a></li>
+          <li><a href="https://www.gov.uk/guidance/integrate-and-adapt-technology" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice: Integrate and adapt technology</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/uptime-and-availability-keeping-your-service-online" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Uptime and availability</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-11-choose-the-right-tools-and-technology" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Choose the right tools and technology</a></li>
+        </ul>
       </div>
 
       <!-- Related guides -->

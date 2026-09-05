@@ -70,7 +70,7 @@
 
       <p>Someone applying for a grant may need to find the service, understand whether it is suitable, apply, provide evidence, receive a decision, challenge it where applicable and receive the outcome. Staff may need to assess the case, manage exceptions, communicate with the applicant and complete downstream work. Suppliers and other public bodies may provide parts of the journey.</p>
 
-      <p>The GOV.UK Service Manual describes good services as working from beginning to end, from front to back and across the channels users need. The Service Standard asks teams to work towards solving a whole problem for users and to provide a joined-up experience across the necessary channels. This does not mean one team must own every part. It means the boundaries, hand-offs and dependencies must be understood.</p>
+      <p>The <a href="https://www.gov.uk/service-manual/design/introduction-designing-government-services" target="_blank" rel="noopener">GOV.UK Service Manual</a> describes good services as working from beginning to end, from front to back and across the channels users need. The Service Standard asks teams to work towards <a href="https://www.gov.uk/service-manual/service-standard/point-2-solve-a-whole-problem" target="_blank" rel="noopener">solving a whole problem for users</a> and to <a href="https://www.gov.uk/service-manual/service-standard/point-3-join-up-across-channels" target="_blank" rel="noopener">provide a joined-up experience across the necessary channels</a>. This does not mean one team must own every part. It means the boundaries, hand-offs and dependencies must be understood.</p>
 
       <figure>
         <img src="images/lesson10-image1.png" alt="A six step user journey from finding the service to getting paid, with the designed system covering only the apply online step and a get help step hanging beneath the whole journey." style="width: 100%; display: block;">
@@ -122,7 +122,7 @@
 
       <p>A shared rules, case and workflow layer is one way to improve consistency, but it is not automatically the right architecture. Existing systems, resilience, latency, security, ownership and migration constraints may justify another approach. The requirement is a joined-up experience; the implementation still needs option appraisal.</p>
 
-      <p>Assisted digital support has a more specific meaning: helping people use the online parts of a service when they cannot or will not complete them independently. Its channels, staffing, funding, privacy controls and performance measures should be based on user research. It should not be treated as another name for every offline route.</p>
+      <p><a href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/designing-assisted-digital" target="_blank" rel="noopener">Assisted digital support</a> has a more specific meaning: helping people use the online parts of a service when they cannot or will not complete them independently. Its channels, staffing, funding, privacy controls and performance measures should be based on user research. It should not be treated as another name for every offline route.</p>
 
       <h2>Design the hand-offs and failure paths</h2>
 
@@ -136,7 +136,7 @@
 
       <p>Operational requirements should influence the architecture before live service. Establish service hours, support responsibilities, recovery needs, acceptable degradation and the impact of failure. Then design the monitoring, alerting, logging, audit, deployment, rollback, backup, recovery and support controls needed to meet them.</p>
 
-      <p>The Service Standard requires appropriate monitoring and a proportionate, sustainable plan for responding to problems. That does not mean every service needs 24-hour human support or the same operational tooling. The response should reflect user impact, service criticality and the agreed requirements.</p>
+      <p>The <a href="https://www.gov.uk/service-manual/service-standard/point-14-operate-a-reliable-service" target="_blank" rel="noopener">Service Standard</a> requires appropriate monitoring and a proportionate, sustainable plan for responding to problems. That does not mean every service needs 24-hour human support or the same operational tooling. The response should reflect user impact, service criticality and the agreed requirements.</p>
 
       <p>Support staff need information they can understand and actions they are authorised to take. This may require searchable logs, correlation identifiers, case history, diagnostic views or controlled ways to resend a notification and retry work. Protect personal data, restrict privileged actions and keep an audit trail.</p>
 
@@ -144,13 +144,13 @@
 
       <h2>Design for change through the lifecycle</h2>
 
-      <p>The architecture develops as the evidence changes. Discovery establishes the outcome, wider journey, constraints and uncertainty. Alpha tests the riskiest assumptions with prototypes that need not cover the whole journey or become production code. Beta builds the service for real, integrates it with existing services and prepares for live operation. Live combines sustainable support with continued research and improvement.</p>
+      <p>The architecture develops as the evidence changes. <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener">Discovery</a> establishes the outcome, wider journey, constraints and uncertainty. <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-alpha-phase-works" target="_blank" rel="noopener">Alpha</a> tests the riskiest assumptions with prototypes that need not cover the whole journey or become production code. <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-beta-phase-works" target="_blank" rel="noopener">Beta</a> builds the service for real, integrates it with existing services and prepares for live operation. <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-live-phase-works" target="_blank" rel="noopener">Live</a> combines sustainable support with continued research and improvement.</p>
 
       <p>Design decisions can be made and revised in every phase. Record significant decisions, assumptions and review triggers rather than suggesting that architecture is fixed during beta.</p>
 
       <p>Separate rules that are likely to change when doing so makes change safer and easier. Configuration or a rules component may help, but it also needs validation, versioning, testing, access control and audit. Do not add flexibility for imagined changes that have no evidence behind them.</p>
 
-      <p>Retirement is also a service change. Plan how users will continue to meet their need, how API consumers and support channels will be handled, what happens to information, and how contracts, integrations and infrastructure will be closed. The detail can develop later, but early choices should not make safe exit unnecessarily difficult.</p>
+      <p><a href="https://www.gov.uk/service-manual/agile-delivery/retiring-your-service" target="_blank" rel="noopener">Retirement</a> is also a service change. Plan how users will continue to meet their need, how API consumers and support channels will be handled, what happens to information, and how contracts, integrations and infrastructure will be closed. The detail can develop later, but early choices should not make safe exit unnecessarily difficult.</p>
 
       <h2>Build views that expose gaps</h2>
 
@@ -185,6 +185,7 @@
         <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary guidance below. Government policy and guidance change, so check the source before relying on it.</em></p>
         <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
           <li><a href="https://www.gov.uk/service-manual/design/introduction-designing-government-services" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Designing good government services</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: How the discovery phase works</a></li>
           <li><a href="https://www.gov.uk/service-manual/service-standard/point-2-solve-a-whole-problem" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Solve a whole problem for users</a></li>
           <li><a href="https://www.gov.uk/service-manual/service-standard/point-3-join-up-across-channels" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Provide a joined-up experience across all channels</a></li>
           <li><a href="https://www.gov.uk/service-manual/service-standard/point-14-operate-a-reliable-service" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Operate a reliable service</a></li>
