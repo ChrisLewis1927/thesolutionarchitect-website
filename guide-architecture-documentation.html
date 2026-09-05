@@ -5,9 +5,9 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How to write architecture documentation people actually read: know your audience, structure around decisions, use the C4 model, and know when not to write at all.">
+  <meta name="description" content="How to create concise, useful architecture documentation for decisions, delivery, assurance and operation.">
   <meta property="og:title" content="Architecture documentation that people actually read &mdash; Architect's Library">
-  <meta property="og:description" content="How to write architecture documentation people actually read: know your audience, structure around decisions, use the C4 model, and know when not to write at all.">
+  <meta property="og:description" content="How to create concise, useful architecture documentation for decisions, delivery, assurance and operation.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Architecture documentation that people actually read &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Architecture documentation that people actually read</h1>
-        <p class="lesson-hero__description">Most architecture documentation goes unread. This guide shows you how to write the kind that earns its readers, because it tells them what they need to know, when they need it.</p>
+        <p class="lesson-hero__description">Create documentation that helps people decide, build and operate.</p>
       </div>
     </section>
 
@@ -55,136 +55,164 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>Why most architecture documents fail, and the habits that sink them</li>
-          <li>How to shape any document around context, decisions and consequences</li>
-          <li>How to use the C4 model to draw diagrams that communicate rather than confuse</li>
-          <li>How to judge the minimum viable documentation and keep it alive over time</li>
+          <li>How to define the reader and purpose before choosing a format</li>
+          <li>A clear structure for explaining context, decisions and consequences</li>
+          <li>How to use C4 and other diagrams at the right level</li>
+          <li>Ways to keep documentation useful without duplicating every detail</li>
         </ul>
       </div>
 
-      <h2>Why most architecture documentation goes unread</h2>
+      <h2>Documentation should help someone act</h2>
 
-      <p>Be honest about the starting point. Teams produce 60 page Solution Architecture Documents that nobody opens after the initial review meeting. They draw Visio diagrams so dense with boxes and lines that they communicate nothing. They write prose so abstract it could describe any system ever built. The effort is wasted, the decisions are lost, and six months later someone asks why the system was built this way and nobody can answer.</p>
+      <p>Architecture documentation is useful when it helps someone understand the service, make a decision, build the intended design, assess a risk or operate the result. Producing a document is not the outcome. The outcome is shared understanding and a traceable basis for action.</p>
 
-      <p>That matters because documentation, done well, is the main mechanism through which architecture decisions are communicated, challenged and preserved. It is how the team building the system understands the design intent. It is how the team that inherits the system maintains it without reverse engineering everything. It is how you defend your decisions when they are questioned at spend control or a service assessment. When it fails, it usually fails for one of five reasons.</p>
+      <p>The <a href="https://www.gov.uk/service-manual/service-standard/point-11-choose-the-right-tools-and-technology" target="_blank" rel="noopener">Service Standard</a> expects teams to show that they have made good technology decisions. The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener">Technology Code of Practice</a> provides criteria for designing, building and buying government technology. Documentation can provide evidence for both, but no single template proves that a design is sound.</p>
 
-      <p>Length comes first. A 60 page document is a compliance artefact produced because a governance process demands it. Nobody reads it cover to cover, and the moment a document exceeds what someone can absorb in one sitting, most of the audience is gone.</p>
-
-      <p>Then abstraction. Too many documents read as if the author has never seen the actual system. They mention the integration layer without saying what integrates with what. They reference the security model without explaining what is protected and how. Readers finish them knowing nothing they could not have guessed.</p>
-
-      <p>Then timing. A document written at the start of a project describes a system that does not yet exist. One written at the end describes a system everyone already understands. The useful window is during design and delivery, but most teams treat documentation as a one off activity rather than a living practice.</p>
-
-      <p>Then audience confusion. A single document trying to serve the programme board, the development team, the security assessor and the operations team serves none of them well, because each needs different information at a different depth.</p>
-
-      <p>And finally honesty. Plenty of documents exist to justify decisions already made. They present the chosen option as obviously correct and the rejected ones as obviously flawed. Readers sense it, stop trusting the document, and from that point it is wallpaper.</p>
-
-      <p>Few architects fail here because they cannot write. They fail because they write for themselves rather than for their audience, recording what they find interesting rather than what their readers need, and chasing completeness when the reader wants clarity.</p>
-
-      <blockquote>The moment a document exceeds what someone can absorb in one sitting, you have lost most of your audience.</blockquote>
-
-      <h2>Write for your audience</h2>
-
-      <p>The most useful question to ask before writing anything is who will read this and what do they need from it. In government the honest answer is usually six different groups, each wanting something the others do not.</p>
-
-      <figure>
-        <img src="images/lesson13-image1.png" alt="Diagram: your documentation at the centre, connected to six readers, the programme board, development team, security assessor, service assessor, operations team and the team in two years." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Six readers, six sets of needs. No single document serves them all well.</figcaption>
-      </figure>
-
-      <p>The programme board and the SRO want to understand risk, cost and whether the architecture supports delivery. They do not care which message broker you chose. They want to know whether the system will work, what could go wrong, and which decisions need their input. The development team wants the design intent, the boundaries, the integration contracts and the constraints they must work within, with enough clarity to build the right thing without guessing what you meant. Philosophy does not help them.</p>
-
-      <p>Assessors want specifics. The security assessor wants the threat model, the data classification, the trust boundaries and the actual controls, and reassurance counts for nothing with them. The service assessor wants evidence that the architecture supports the Service Standard and the Technology Code of Practice, which means evidence of sound decision making, since good technology choices alone do not pass an assessment. The operations team wants to know how to deploy, monitor, scale and recover the system. And the team that inherits it in two years wants the reasoning behind the decisions, because the decisions themselves will be visible in the code and the reasoning will not.</p>
-
-      <p>Once you know your reader, format, length and depth choose themselves. A one page brief for the programme board is a different artefact from a component design for the development team. Both are valid. Neither replaces the other.</p>
-
-      <h2>The minimum viable document</h2>
-
-      <p><em style="color: #4a4f4b;">"More documentation means better architecture."</em></p>
-
-      <p>It usually means more unread documentation. The minimum viable document is the smallest artefact that achieves its communication purpose. For some contexts that is a single page. For others it is a detailed specification. The discipline is to start minimal and add detail only where it earns its place.</p>
-
-      <p>For a discovery or alpha phase, four pages will usually do it:</p>
+      <p>Documentation loses value when it:</p>
       <ul>
-        <li>A context diagram showing the system boundary and the external dependencies</li>
-        <li>The key architecture decisions, each with a brief rationale</li>
-        <li>A statement of constraints and assumptions</li>
-        <li>The identified risks and where each one currently stands</li>
+        <li>has no clear reader, question or decision</li>
+        <li>describes generic layers without naming real systems and responsibilities</li>
+        <li>mixes overview, design detail and operational instruction on one page</li>
+        <li>presents the chosen approach without its constraints or trade-offs</li>
+        <li>duplicates information that changes elsewhere and becomes stale</li>
       </ul>
 
-      <p>Four pages. The team can start building, the programme board can make funding decisions, and the assessor can see you are thinking clearly. Beta and live need more, but the test stays the same for every section: does this earn its place? If you removed it, would anyone notice? Would anyone make a worse decision? If the answer is no, delete it.</p>
+      <p>Length is not the problem by itself. A short document can omit the evidence a reader needs, while a detailed design may need substantial depth. The test is whether each section has a purpose and whether the reader can find the important information quickly.</p>
 
-      <p>Government adds its own pressure here, because governance and assurance processes appear to reward volume, and the temptation to pad is real. Resist it. Assessors are experienced professionals who can tell substance from padding, and a concise document that answers the right questions impresses them far more than a bloated one that buries the important information in noise.</p>
+      <blockquote>A document earns its place when a named reader can use it for a named purpose.</blockquote>
 
-      <blockquote>If you cannot say what a section is for and who will read it, that section should not exist.</blockquote>
+      <h2>Write for a reader and a purpose</h2>
 
-      <h2>Context, decisions, consequences</h2>
-
-      <p>The most effective architecture documents follow one structural principle. Tell the reader where we are, what we decided, and what it means. Context grounds the reader in reality before the design appears: the problem, the constraints, what has already been settled. Decisions is the core, covering what you chose, why, which options you considered and which trade-offs you accepted. A document without clear decisions is a description of a system rather than an explanation of one. Consequences closes the loop: the risks you have taken on, the capabilities gained and lost, and what will need revisiting later.</p>
+      <p>Start by asking who needs the information, what they need to do with it and when they will use it. Those answers determine the format, language and level of detail.</p>
 
       <figure>
-        <img src="images/lesson13-image2.png" alt="Diagram: a three step flow from context to decisions to consequences." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One structure, three questions, any scale.</figcaption>
+        <img src="images/lesson13-image1.png" alt="Architecture documentation connected to six potential readers: the programme board, development team, security assessor, service assessor, operations team and a future team." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Different readers need different views of the same architecture.</figcaption>-->
       </figure>
 
-      <p>The shape works because it mirrors how people take in information, and it works at every scale. A one page brief can follow it. A detailed design can follow it. An Architecture Decision Record already does. Contrast it with the typical template: introduction, scope, assumptions, principles, then a march through logical, physical, security, data, integration, deployment and operational architecture. That structure is organised by topic, so a reader has to hunt through half the document to understand a single decision, and it rewards completeness over clarity.</p>
+      <p>Senior decision-makers may need the outcome, cost, dependencies, major risks and decisions requiring authority. Delivery teams need boundaries, responsibilities, interfaces, constraints and enough detail to build without guessing. Security and privacy specialists need data flows, trust boundaries, classifications, threats and controls. Operations teams need deployment, monitoring, support and recovery information. Future teams need the reasoning, current status and known limitations.</p>
 
-      <p>If your organisation mandates a template like that, you can still apply the principle beneath each heading. The template dictates the headings. You control what sits under them.</p>
+      <p>This does not mean writing a separate document for every group. Use a concise overview for the shared picture, then link to details such as decision records, interface specifications, threat models and runbooks. State the intended audience at the start and make the route to supporting material obvious.</p>
 
-      <h2>Diagrams that communicate</h2>
+      <h2>Create the smallest useful set</h2>
 
-      <p>Diagrams are the most powerful communication tool you have, and the most frequently misused. A good diagram communicates one thing clearly. A bad one tries to communicate everything and communicates nothing. The difference has little to do with artistic skill. It is clarity of purpose.</p>
+      <p>Minimum viable documentation is not a fixed page count. It is the smallest set of reliable information that supports the work and meets applicable governance, assurance and operational needs.</p>
 
-      <p>Four failures turn up again and again in government:</p>
+      <p>A useful architecture overview will often cover:</p>
       <ul>
-        <li>The everything diagram, showing every system, integration, data flow and user on a single page. It looks impressive on a wall and tells a reader nothing.</li>
-        <li>The boxes and lines diagram, where every box carries a generic label like application server or integration layer and every line is unlabelled, so nobody can tell what actually flows where.</li>
-        <li>The Visio masterpiece, with 47 shapes, colours and line styles and a legend taking up half the page. The visual complexity drowns the information.</li>
-        <li>The aspirational diagram, showing a clean target state while ignoring the messy current state the team actually has to deal with.</li>
+        <li>the purpose, scope and system boundary</li>
+        <li>important user needs, requirements and quality expectations</li>
+        <li>constraints, assumptions and unresolved questions</li>
+        <li>the main components, data, integrations and deployment environment</li>
+        <li>significant decisions, options considered and accepted trade-offs</li>
+        <li>security, privacy, resilience and operational implications</li>
+        <li>risks, owners, dependencies and next decisions</li>
+        <li>document owner, status and last verified date</li>
       </ul>
 
-      <p>Good diagrams share the same habits. A clear title stating what the diagram shows. A notation the reader can learn in seconds. Only the elements relevant to the diagram's purpose. Relationships labelled with verbs that say what happens between components. An explicit scope, so the reader knows what has been deliberately left out. And underneath all of it, one practical rule: if you cannot say what your diagram shows in one sentence, it is trying to show too much. Split it into several diagrams, each with a purpose of its own.</p>
+      <p>Not every item must sit in one file. Link to an authoritative source instead of copying it. For example, keep interface detail in the API specification, operating procedures in the runbook and significant decisions in Architecture Decision Records. The government's <a href="https://www.gov.uk/government/publications/architectural-decision-record-framework/architectural-decision-record-framework" target="_blank" rel="noopener">Architectural Decision Record framework</a> uses context, decision and consequences to make important choices visible and traceable.</p>
 
-      <h2>The C4 model in practice</h2>
+      <p>If your organisation mandates a template, use it without padding empty sections. Mark an item as not applicable and explain why, or link to the source that owns the detail. Concision should remove duplication and filler, not evidence.</p>
 
-      <p>The C4 model, created by Simon Brown, gives you a structured way to draw architecture, and it suits government work particularly well. Four levels of abstraction, each serving a different audience, each zooming into the one above.</p>
+      <blockquote>If a section has no reader, purpose or decision behind it, question why it exists.</blockquote>
 
-      <figure>
-        <img src="images/lesson13-image3.png" alt="Diagram: the four levels of the C4 model stacked as a zoom, from system context down to code." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Progressive detail: start wide and zoom only where the audience needs it.</figcaption>
-      </figure>
+      <h2>Organise around context, decisions and consequences</h2>
 
-      <p>Level 1, system context, shows your system as a single box surrounded by the users and systems it interacts with. In government this is where the relationship to GOV.UK, the shared platforms, other departmental systems and external parties becomes visible, and it is the diagram for your board, your SRO and anyone who needs the big picture without technical detail. Level 2, container, zooms in to the major technical building blocks: web applications, APIs, databases, queues, file stores. This is where you show which components run on which cloud platform, what sits behind the department's API gateway and where data is stored, and it is the diagram for anyone making technology decisions.</p>
-
-      <p>Level 3, component, opens up a single container to show its internal structure. It earns its place during design discussions and for genuinely complex components, but most government documentation does not need it formally. Level 4, code, changes too often to draw by hand. Let the code carry it.</p>
-
-      <p>The power of C4 sits in the principle of progressive detail rather than in any particular notation. You start wide and zoom only where a reader needs you to, and each level has an audience of its own. In practice most government documentation needs levels 1 and 2, which keeps the diagram set small and every diagram purposeful.</p>
-
-      <h2>Keep it alive or watch it rot</h2>
-
-      <p>The hardest problem in architecture documentation is keeping it current, because rot is the natural state. The moment you finish writing, the system starts diverging from what you described. Requirements move, decisions get revised, integrations get added. Left alone, the document becomes actively misleading, which is worse than having no document at all, because it creates false confidence. People make decisions on stale information. New joiners learn the wrong things.</p>
+      <p>A simple structure works at several levels of detail:</p>
+      <ul>
+        <li><strong>Context:</strong> What problem are we solving? What is in scope? Which requirements, constraints and assumptions shape the choice?</li>
+        <li><strong>Decision:</strong> What has been chosen, by whom and on what evidence? Which credible alternatives were considered?</li>
+        <li><strong>Consequences:</strong> What becomes easier or harder? Which costs, risks, dependencies and future actions follow?</li>
+      </ul>
 
       <figure>
-        <img src="images/lesson13-image4.png" alt="Diagram: a flat line showing what the document says and a curve climbing away from it showing what the system actually is, with the gap between them labelled as the one readers fall into." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Every change that ships unrecorded widens the gap.</figcaption>
+        <img src="images/lesson13-image2.png" alt="A three-step flow from context to decisions to consequences." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Explain where the decision came from, what was chosen and what follows from it.</figcaption>-->
       </figure>
 
-      <p>There are two honest ways to deal with it. The first keeps documentation minimal and close to the code. Decisions live as Architecture Decision Records in the same repository as the source, so they get updated as part of the normal development flow, and diagrams are generated from code or configuration with tools like Structurizr, PlantUML or Mermaid, so they stay current on their own. This suits teams with strong engineering practice. The second accepts that some documents will go stale and designs for it: a last verified date on every document, a named owner responsible for review, a documentation check built into sprint ceremonies or quarterly planning, and a firm cycle for the documents that matter most, the context diagram, the key decisions and the security architecture, even if the rest slips.</p>
+      <p>A description tells the reader what the architecture contains. A decision explains why it has that shape. Both matter, but they answer different questions. Keep the overview readable by summarising significant decisions and linking to the full records.</p>
 
-      <p>What does not work is pretending the problem away. In government, where teams change often and programmes run for years, stale documentation is a genuine operational risk. The practical mitigation is to keep formal documentation thin and focused on what changes slowly, the context, the principles and the key decisions, while detailed technical material lives with the code and is maintained by the team.</p>
+      <p>The <a href="https://gds-way.digital.cabinet-office.gov.uk/standards/architecture-decisions.html" target="_blank" rel="noopener">GDS guidance on documenting architecture decisions</a> recommends keeping decisions in version control and preserving their context and consequences. When a later decision replaces one that has already been implemented, retain the history rather than rewriting the old record as though the first decision never happened.</p>
 
-      <p>One discipline beats every tool. When a decision changes the documented design, update the document the same week. Not next sprint. Not before the next assessment. This week. If you cannot manage that, your documentation is too heavy.</p>
+      <h2>Draw diagrams with one clear purpose</h2>
 
-      <h2>When not to document</h2>
+      <p>A diagram should answer a specific question. Decide whether it shows scope, structure, data movement, runtime behaviour, deployment, security boundaries or something else. Combining all of these usually makes the result harder to read.</p>
 
-      <p>This may be the most useful judgment in the whole lesson. Knowing when to leave the keyboard alone matters as much as writing well.</p>
+      <p>The NCSC's guidance on <a href="https://www.ncsc.gov.uk/blog-post/drawing-good-architecture-diagrams" target="_blank" rel="noopener">drawing good architecture diagrams</a> recommends simple views, clear language, logical grouping and a shared authoritative source. Apply those ideas by:</p>
+      <ul>
+        <li>using a title that states the purpose and viewpoint</li>
+        <li>showing the boundary and identifying what is outside the scope</li>
+        <li>naming real components and their responsibilities</li>
+        <li>labelling relationships with what moves or happens</li>
+        <li>using a small, consistent notation and explaining unfamiliar symbols</li>
+        <li>separating current, interim and target states</li>
+      </ul>
 
-      <p>Do not document the obvious. If your department has a standard approach to authentication and you are using it unchanged, one sentence referencing the standard beats a page defending it. Do not document what changes daily. Deployment configuration, feature flags and environment settings belong in code and configuration management, because by the time you have written them down they are wrong. Do not document for completeness. If a template section adds nothing for any reader, leave it out or write not applicable with a line of reasoning; an empty section with a clear rationale is more honest than a padded one. And do not duplicate what the code already says. Well structured code with clear naming and good tests documents itself at the implementation level, and your job is the why and the shape above it.</p>
+      <p>Do not rely on colour alone to convey meaning. The <a href="https://design-system.service.gov.uk/styles/images/" target="_blank" rel="noopener">GOV.UK Design System guidance on images</a> explains that complex diagrams need short alternative text and a longer description that makes the same information available in text.</p>
 
-      <p>Before writing anything, ask three questions. Who needs this? When will they read it? What decision will it inform? If you cannot answer them, you are writing for yourself.</p>
+      <h2>Use the C4 model where it helps</h2>
 
-      <p>It takes confidence to tell a programme that something does not need a document, especially in a culture that treats artefacts as evidence of work. Have the confidence anyway. Your teams will thank you for it.</p>
+      <p>The <a href="https://c4model.com/diagrams" target="_blank" rel="noopener">C4 model</a>, created by Simon Brown, provides four levels of zoom for software architecture:</p>
+      <ul>
+        <li><strong>System context:</strong> the system, its users and the other systems around it.</li>
+        <li><strong>Container:</strong> the major applications and data stores inside the system, their responsibilities and communication.</li>
+        <li><strong>Component:</strong> the main components inside one container and how they work together.</li>
+        <li><strong>Code:</strong> implementation detail for a component, where a code-level diagram adds value.</li>
+      </ul>
 
-      <blockquote>The best architects produce less documentation of higher quality.</blockquote>
+      <figure>
+        <img src="images/lesson13-image3.png" alt="The four C4 levels shown as progressive zoom from system context through containers and components to code." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Start with the wider context and add detail only where a reader needs it.</figcaption>-->
+      </figure>
+
+      <p>You do not need all four levels. The C4 guidance says system context and container diagrams are sufficient for most software development teams. Add component or code diagrams only when they explain something that is otherwise difficult to understand.</p>
+
+      <p>C4 describes static software structure. It also offers supporting dynamic and deployment diagrams, but it does not replace every view. A service may still need data flows, user journeys, network views or operational sequences. Choose the view from the question, not from the diagramming method.</p>
+
+      <h2>Keep documentation aligned with the service</h2>
+
+      <p>Documentation becomes unreliable when the service changes and the explanation does not. A stale diagram can be more damaging than a missing one because readers may treat it as current.</p>
+
+      <figure>
+        <img src="images/lesson13-image4.png" alt="A line representing documented architecture and another representing the changing service, with the gap between them growing over time." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Unrecorded changes widen the gap between the documented and implemented architecture.</figcaption>-->
+      </figure>
+
+      <p>Give important documentation an owner, status and last verified date. Define the events that require review, such as a changed decision, new integration, material security finding, deployment change or revised operating model. Tie the update to the delivery workflow rather than relying only on a calendar reminder.</p>
+
+      <p>Keep each kind of detail with the source best able to maintain it. Version-controlled documentation can sit near the code it explains. Runtime configuration should remain in controlled configuration, API contracts in an interface specification and operational procedures in a runbook. The architecture overview should connect these sources and explain their significance.</p>
+
+      <p><a href="https://gds-way.digital.cabinet-office.gov.uk/standards/diagrams-as-code.html" target="_blank" rel="noopener">Diagrams as code</a> can make changes easier to review, version and reproduce. It does not guarantee that a diagram matches the running service; the team must still update and verify its source. Whatever the tool, keep one discoverable authoritative version and archive or label superseded views clearly.</p>
+
+      <h2>Questions to ask before publishing</h2>
+
+      <ul>
+        <li>Who is the primary reader and what will they use this for?</li>
+        <li>Can they find the scope, status and important decisions quickly?</li>
+        <li>Does the document name the real systems, interfaces and owners?</li>
+        <li>Are requirements, assumptions, decisions and open questions clearly separated?</li>
+        <li>Do the diagrams each have one purpose, clear labels and an accessible explanation?</li>
+        <li>Are current, interim and target states easy to distinguish?</li>
+        <li>Have duplicated details been replaced with links to authoritative sources?</li>
+        <li>Are significant trade-offs, risks and consequences visible?</li>
+        <li>Who will maintain the document and what changes will trigger a review?</li>
+        <li>Can anything be removed without losing evidence or making a decision harder?</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical architecture documentation for Solution Architects working around UK government services. The suggested structure and questions are teaching aids rather than a mandatory document template.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the government and primary technical guidance below. Guidance changes, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-11-choose-the-right-tools-and-technology" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Choose the right tools and technology</a></li>
+          <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: The Technology Code of Practice</a></li>
+          <li><a href="https://www.gov.uk/government/publications/architectural-decision-record-framework/architectural-decision-record-framework" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Architectural Decision Record framework</a></li>
+          <li><a href="https://gds-way.digital.cabinet-office.gov.uk/standards/architecture-decisions.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">The GDS Way: Documenting architecture decisions</a></li>
+          <li><a href="https://www.ncsc.gov.uk/blog-post/drawing-good-architecture-diagrams" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Drawing good architecture diagrams</a></li>
+          <li><a href="https://design-system.service.gov.uk/styles/images/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Design System: Images and accessibility</a></li>
+          <li><a href="https://c4model.com/diagrams" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">C4 model: Diagram levels and supporting views</a></li>
+          <li><a href="https://gds-way.digital.cabinet-office.gov.uk/standards/diagrams-as-code.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">The GDS Way: Diagrams as code</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
