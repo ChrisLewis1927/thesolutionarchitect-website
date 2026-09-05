@@ -5,9 +5,9 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How to make security and privacy part of how you design government services, not a gate you clear before go live.">
+  <meta name="description" content="How to make security, privacy and trust part of every architecture decision for government services.">
   <meta property="og:title" content="Security, privacy and trust by design &mdash; Architect's Library">
-  <meta property="og:description" content="How to make security and privacy part of how you design government services, not a gate you clear before go live.">
+  <meta property="og:description" content="How to make security, privacy and trust part of every architecture decision for government services.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Security, privacy and trust by design &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Security, privacy and trust by design</h1>
-        <p class="lesson-hero__description">Security and privacy get treated as things you check near the end, when they should be shaping decisions from the first whiteboard sketch. In government the stakes make that worse, because you are handling citizens' data and public money, and a failure becomes a headline rather than a private embarrassment. This guide is about making security and privacy part of how you design, not a gate you clear before go live.</p>
+        <p class="lesson-hero__description">Make security, privacy and trust part of every design decision.</p>
       </div>
     </section>
 
@@ -55,102 +55,182 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>How to treat security as a design constraint rather than a late testing activity</li>
-          <li>A lightweight way to threat model a government service, and why data classification drives your controls</li>
-          <li>How to embed privacy and DPIA thinking into design decisions</li>
-          <li>Identity, access and zero trust patterns that suit public services</li>
+          <li>How to identify security and privacy risks before selecting controls</li>
+          <li>A practical way to threat-model a service and its data flows</li>
+          <li>How classification, privacy obligations, identity and access shape architecture</li>
+          <li>Questions for selecting proportionate controls and recording the evidence</li>
         </ul>
       </div>
 
-      <h2>Secure by design: what it means for architects</h2>
+      <h2>Start with harm, responsibility and evidence</h2>
 
-      <p>The cheapest security flaw is the one you catch on a whiteboard. The most expensive is the one a penetration test finds three weeks before go live, because by then it is baked into the data model and the only honest fix is a redesign nobody has time for. That gap is the whole argument for secure by design.</p>
+      <p>Security by design means considering cyber security from the start and throughout the service lifecycle. The government's <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/" target="_blank" rel="noopener">Secure by Design principles</a> put responsibility, risk and usable controls at the centre of that work.</p>
 
-      <figure>
-        <img src="images/lesson12-image1.png" alt="Bar chart showing the cost of fixing the same security flaw rising across five lifecycle stages, from a conversation at the whiteboard to a redesign once the service is live." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The same flaw, priced at each stage it could have been caught.</figcaption>
-      </figure>
+      <p>Begin with the harm the service could cause if it fails or is misused. Could someone see information they should not see, change a decision, stop an essential service or use the service to harm another person? Which users, staff, organisations or public outcomes would be affected? This gives the team a reason for each control and a way to judge whether it is proportionate.</p>
 
-      <p>Pen testing is good at catching implementation bugs like injection flaws and missing headers, but it rarely catches the architectural mistakes: a database every service can write to, an audit log that can be quietly edited, an access model that made sense for ten users and falls apart at ten thousand. Those decisions get made early and without much ceremony, which is exactly why security needs to sit in the room when you choose hosting, shape the data model and pick how people authenticate. Ask what an attacker would do with each component while it is still cheap to change the answer.</p>
-
-      <blockquote>Security is a design constraint, the same as performance or accessibility. If it only shows up in testing, you have already lost the cheap options.</blockquote>
-
-      <h2>Threat modelling for government services</h2>
-
-      <p>Threat modelling has a reputation for being a heavyweight process owned by a specialist team, and that reputation puts people off doing it at all. It does not need to be any of that. At its simplest it is a couple of hours with a whiteboard, your architect, a developer and someone from security, working through how data actually moves and asking what an attacker would want to do at each step.</p>
-
-      <p>STRIDE gives you the prompts so you are not relying on inspiration: could someone pretend to be another user, change data in flight, deny they did something, see data they should not, knock the service over, or quietly give themselves more access than they are owed.</p>
-
-      <figure>
-        <img src="images/lesson12-image2.png" alt="A data flow from citizen through the service front end and processing to the data store, with the six STRIDE prompts beneath it: spoofing, tampering, repudiation, disclosure, denial of service and privilege." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Draw how the data moves, then apply the prompts at every hop.</figcaption>
-      </figure>
-
-      <p>The real value is in the adversarial habit. Defensive thinking designs the happy path, and an attacker has no interest in the happy path. The documented output earns its keep later too, because it is the evidence a service assessor or security reviewer asks for when they want proof you thought about this properly.</p>
-
-      <h2>Data classification in government</h2>
-
-      <p>Classification is the quiet decision that sets the cost and shape of everything else in your security architecture, and it is the one people most often get wrong by reflex. The reflex is to mark everything as sensitive to be safe, which feels responsible and is really just expensive. Most government data is plain OFFICIAL and needs sensible, standard controls. OFFICIAL SENSITIVE is a handling caveat for the data that would cause harm if it leaked, things like health records, criminal history or a company's bid figures, and it earns the extra access controls, audit and monitoring that come with it.</p>
-
-      <figure>
-        <img src="images/lesson12-image3.png" alt="Two panels comparing classification approaches. On the left, enhanced controls wrap all of the OFFICIAL data by reflex, which costs more and protects no better. On the right, enhanced controls ring only the OFFICIAL SENSITIVE subset." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Ring the subset that earns the controls, not the whole estate.</figcaption>
-      </figure>
-
-      <p>The trap to watch is granularity. A service that handles mostly OFFICIAL data with a small sensitive subset should protect that subset properly rather than drag every component up to the same level because that was easier than thinking about it. Settle the classification with the information asset owner before you design controls, because everything downstream hangs off it, from encryption to data residency to how hard your IT Health Check is going to be.</p>
-
-      <h2>Privacy by design and DPIA awareness</h2>
-
-      <p>Privacy is mostly won or lost in decisions that look boring at the time. Three disciplines carry most of the weight:</p>
+      <p>Keep three ideas separate:</p>
       <ul>
-        <li>Collect less. The safest data is the field you never asked for. When a stakeholder wants an extra field because it might be useful later, ask what specific purpose it serves and whether the outcome works without it.</li>
-        <li>Keep it briefly. Retention is an architecture decision rather than an operational chore you bolt on afterwards. Build deletion or anonymisation into the design and let it run automatically when the clock runs out.</li>
-        <li>Be able to hand it back. If someone asks for everything you hold on them, you need to find it, export it and erase it without the request turning into a manual archaeology project. If your data model cannot do that, subject access requests will hurt.</li>
+        <li><strong>Security</strong> protects the service and its information from unauthorised access, change, disclosure and disruption.</li>
+        <li><strong>Privacy</strong> concerns how personal information is collected, used, shared, retained and removed, and how people's rights are supported.</li>
+        <li><strong>Trust</strong> is earned when the service behaves as promised, explains how information is used and can demonstrate that important actions are controlled and accountable.</li>
       </ul>
 
-      <p>A DPIA is where a lot of this gets pinned down, and it is far more useful than its reputation as paperwork suggests. Treat it as a structured way to surface privacy risks early, give it real technical input on what you collect and where it lives, then make sure the controls it identifies actually appear in the build.</p>
-
-      <h2>Identity and access patterns</h2>
-
-      <p>Identity is one of those decisions that quietly shapes your security, your user experience and half your integration work, so it rewards some thought up front. The first instinct of a team under pressure is to build their own login and roll their own admin roles because it feels quicker, and it almost always leaves behind a duplicate user store and a pile of risk that someone else inherits. For citizen-facing services, GOV.UK One Login already solves identity verification and authentication, including the awkward parts like document checking, so reuse it. For internal users, integrate with the departmental identity provider rather than minting your own accounts.</p>
-
-      <blockquote>Authentication gets people through the door. Authorisation decides which rooms they can walk into. Confusing the two is how services end up either leaky or unusable.</blockquote>
-
-      <p>Keep those two jobs clearly separate in your head: one proves who someone is, the other decides what they are allowed to do once they are in. RBAC handles stable, well understood roles, and ABAC is the one to reach for when access depends on context, like a caseworker who should only see applications from their own region. And do not add a login to a service that has no need of one, because a public eligibility checker with a mandatory account is friction with no security payoff.</p>
-
-      <h2>Zero trust introduction</h2>
-
-      <p>The old model trusted anything inside the network and treated the perimeter as the wall that kept attackers out. That model has been quietly falling apart for years. Staff work from home and from other buildings, data sits in cloud services well outside any departmental network, and trusted suppliers have turned out to be a dependable way in. Zero trust starts from the opposite assumption: a request being on the internal network proves nothing, so verify every one of them on its own merits using identity, device health, location and what is actually being accessed.</p>
+      <p>Security specialists can help the team understand threats and select controls. They do not own every risk. A named business or service owner must understand the remaining risk and be accountable for accepting it.</p>
 
       <figure>
-        <img src="images/lesson12-image4.png" alt="Two panels. The perimeter model trusts everything inside a dashed boundary around the web tier, service and data store. The zero trust model verifies every connection between the same components." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Trust by location on the left, trust earned per request on the right.</figcaption>
+        <img src="images/lesson12-image1.png" alt="Bar chart illustrating how the effort needed to correct a security flaw can rise as a service moves from early design into live operation." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">An illustrative reminder: decisions are usually easier to change before they are built into the service.</figcaption>-->
       </figure>
 
-      <p>The mindset that matters most here is assume breach. Design as though an attacker is already inside, segment the architecture so a compromised web tier cannot stroll straight into the database, and encrypt data internally rather than trusting the network to keep it private. Nobody flips a switch and becomes zero trust on a Tuesday. It is a direction of travel, so start with your highest risk components and chip away at the implicit trust over time.</p>
+      <blockquote>Good security does not begin with a list of controls. It begins with a clear account of what could go wrong, who could be harmed and who owns the decision.</blockquote>
 
-      <h2>NCSC guidance and government security standards</h2>
+      <h2>Threat-model the service</h2>
 
-      <p>Nobody expects you to carry the NCSC's entire library in your head, and trying to is a waste of effort. What matters is knowing the guidance exists, knowing where it lives, and reaching for it at the point you are making a security relevant decision rather than after the fact. When you are choosing a cloud platform, the NCSC Cloud Security Principles give you a structured way to assess it instead of trusting a vendor's reassurance. When you are designing authentication, the guidance is refreshingly sensible: support multi factor, protect against brute force and credential stuffing, and stop enforcing the arbitrary password complexity rules that irritate users without making anything safer. Reference the guidance you relied on in your ADRs and HLDs so the reasoning is traceable later.</p>
+      <p>A threat model helps the team understand how someone could misuse or disrupt the service. It should be based on the real architecture, not an idealised diagram. Map the users, staff roles, external organisations, service components, data stores, interfaces and administration routes. Show where data moves and where it crosses a trust boundary.</p>
 
-      <p><em style="color: #4a4f4b;">"The security team are the people who say no at the end."</em></p>
+      <p>The government guidance on <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/activities/performing-threat-modelling/" target="_blank" rel="noopener">performing threat modelling</a> treats it as work that develops with the service. Run it early enough to influence the design, then revisit it when the architecture, threats or operating context change.</p>
 
-      <p>Only if you leave them until the end. Bring them in early and treat their input as a constraint that makes the design better, and you get something secure and usable. Keep them at arm's length until the final review and they become a gate that turns your architecture into rework. They are a design partner, and the best time to make them one is the first design session.</p>
-
-      <h2>Bringing security and privacy together in architecture</h2>
-
-      <p>Security and privacy get talked about together so often that it is worth keeping the distinction clear. Security keeps data away from people who should not have it. Privacy makes sure the data you are entitled to hold is used properly and that people keep their rights over it. Good architecture has to do both, and the practical way to check is to walk the design layer by layer:</p>
+      <p><a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats" target="_blank" rel="noopener">STRIDE</a> is one useful set of prompts. It asks whether someone could:</p>
       <ul>
-        <li>Data: is it classified, encrypted, minimised and set to delete itself when its time is up?</li>
-        <li>Application: does it authenticate appropriately, authorise with least privilege and validate what users send it?</li>
-        <li>Network: is traffic encrypted in transit, is the public-facing edge protected, and is the internal network segmented where that earns its keep?</li>
-        <li>Operations: are you logging who did what and when, and is anyone watching those logs?</li>
-        <li>Governance: do your threat model, DPIA and risk register tell the same story rather than three unconnected ones?</li>
+        <li>pretend to be another user or system</li>
+        <li>change data, messages or code</li>
+        <li>deny an action because the evidence is weak</li>
+        <li>see information they should not see</li>
+        <li>make the service unavailable</li>
+        <li>gain more access than they should have</li>
       </ul>
 
-      <p>The aim is never perfect security, which does not exist. It is proportionate security, matched to how sensitive the data really is and what the organisation can sensibly carry. Over engineer it and you burn money and create friction. Under engineer it and you carry risk you cannot see. Finding that balance is the job.</p>
+      <figure>
+        <img src="images/lesson12-image2.png" alt="A data flow from a user through the service front end and processing component to a data store, with the six STRIDE threat prompts beneath it." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Draw how data moves, mark the trust boundaries, then use prompts such as STRIDE to examine each part.</figcaption>-->
+      </figure>
 
-      <blockquote>Perfect security is a myth, and chasing it just wastes money. Proportionate security, matched to the data and the real risk, is the thing worth designing for.</blockquote>
+      <p>STRIDE is a prompt set, not a complete risk method and not the only way to threat-model a service. Add threats that follow from the service's users, purpose, policy, technology and operating environment. Include misuse by authorised users, mistakes, compromised suppliers and dependencies that fail.</p>
+
+      <p>Record enough to support a decision. For each important threat, note the affected asset or user, the harm, existing controls, gaps, proposed response, owner and evidence required. Keep accepted risks visible. A risk does not disappear because the team chose not to change the design.</p>
+
+      <h2>Classify information before selecting controls</h2>
+
+      <p>Classification helps the team understand the sensitivity of government information and the harm that compromise could cause. The <a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-quick-read-html" target="_blank" rel="noopener">Government Security Classifications Policy</a> has three tiers: OFFICIAL, SECRET and TOP SECRET. Most information created or processed by the public sector is OFFICIAL.</p>
+
+      <p><strong>OFFICIAL-SENSITIVE is not a separate classification tier.</strong> It is an additional marking for OFFICIAL information that needs limited distribution on a need-to-know basis. Do not apply it to every record that feels sensitive. Work with the information asset owner and security specialists to apply the policy and the organisation's handling rules correctly.</p>
+
+      <figure>
+        <img src="images/lesson12-image3.png" alt="Two panels comparing blanket enhanced controls around all OFFICIAL information with targeted controls around the OFFICIAL information marked SENSITIVE." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Identify information that needs additional handling rather than applying the same enhanced controls to everything by default.</figcaption>-->
+      </figure>
+
+      <p>Classification informs the baseline, but it does not select every technical control for you. Also consider the threat, likely harm, volume, aggregation, legal duties, user needs and local policy. A large combined dataset may create risks that are not obvious from a single record. The architecture should show where sensitive information enters the service, where it is stored, who can access it, where it is shared and how it is removed.</p>
+
+      <p>Avoid raising the cost of the whole service simply because one part holds more sensitive information. Separate data or components where that produces a clearer boundary and reduces exposure. Do not force separation where it adds complexity without reducing risk. Record the reasoning either way.</p>
+
+      <h2>Build privacy into the data lifecycle</h2>
+
+      <p>The ICO's guidance on <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/data-protection-by-design-and-by-default/" target="_blank" rel="noopener">data protection by design and by default</a> requires privacy to be considered at the start and throughout the processing lifecycle. For an architect, that means turning privacy decisions into the data model, interfaces, retention rules, access controls and operational processes.</p>
+
+      <p>For each item of personal information, establish:</p>
+      <ul>
+        <li>the specific purpose for collecting it and the lawful basis confirmed with the right specialist</li>
+        <li>whether the service can meet the need with less information or a less identifying form</li>
+        <li>where it comes from, where it is stored and which organisations receive it</li>
+        <li>who can see or change it, including support staff, suppliers and system accounts</li>
+        <li>how long it is needed and what deletion, anonymisation or archival action follows</li>
+        <li>how the organisation will find, provide and correct the information when an individual exercises an applicable right</li>
+      </ul>
+
+      <p>Design retention rather than relying on someone to remember it later. Define when the clock starts, what event changes it and how deletion works across replicas, search indexes, exports, analytics stores and backups. A backup may follow a different deletion process, but that process still needs to be understood and controlled.</p>
+
+      <p>The right of access allows people to obtain a copy of their personal information and supporting information about its use. Other rights can include correction, restriction or erasure, depending on the circumstances. The <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/right-of-access/" target="_blank" rel="noopener">ICO's right of access guidance</a> explains the obligation. Do not design on the assumption that every request requires erasure, or that erasure is always available. Make it possible to locate and act on the relevant records without a manual search across disconnected systems.</p>
+
+      <p>A Data Protection Impact Assessment is more than a document for approval. It connects the purpose, data flows, risks to people and measures used to reduce those risks. A <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/" target="_blank" rel="noopener">DPIA is required when processing is likely to create a high risk to people's rights and freedoms</a>. Involve the data protection officer or privacy specialist early, and ensure the architecture reflects the measures agreed in the DPIA.</p>
+
+      <h2>Separate identity, authentication and authorisation</h2>
+
+      <p>These decisions solve different problems:</p>
+      <ul>
+        <li><strong>Identity proofing</strong> establishes confidence that a person is who they claim to be.</li>
+        <li><strong>Authentication</strong> checks the credential used to access the service.</li>
+        <li><strong>Authorisation</strong> decides what that person, device or service may do.</li>
+      </ul>
+
+      <p>Match each step to the risk. A public information service may not need an account. A service that makes a high-impact decision may need stronger identity evidence. Do not collect identity evidence simply because the technology makes it possible.</p>
+
+      <p><a href="https://www.sign-in.service.gov.uk/getting-started" target="_blank" rel="noopener">GOV.UK One Login</a> can provide sign-in and identity checking for eligible central government services. It does not decide whether a person is entitled to use a particular service or action. The service must still own its eligibility rules and authorisation decisions. For staff, reuse the departmental identity provider where it meets the need rather than creating another account store.</p>
+
+      <p>Role-based access control works well when permissions follow stable job roles. Attribute-based access control can help when a decision depends on context such as case ownership, region, device state or transaction value. Neither is automatically better. Choose the simplest model that expresses the rules correctly and can be understood, tested and audited.</p>
+
+      <p>The NCSC guidance on <a href="https://www.ncsc.gov.uk/collection/cyber-assessment-framework/caf-objective-b/principle-b2-identity-and-access-control" target="_blank" rel="noopener">identity and access control</a> covers people, devices and automated functions. Give each the minimum access needed, review that access and remove it when it is no longer required. Apply stronger controls to privileged activity and record who or what performed important actions.</p>
+
+      <blockquote>Authentication gets someone through the door. Authorisation decides which rooms they can enter and what they can do inside them.</blockquote>
+
+      <h2>Apply zero trust as an architecture approach</h2>
+
+      <p>Traditional perimeter security assumes that being inside a network makes a request more trustworthy. That is a weak basis for modern services spread across cloud platforms, organisational boundaries and remote devices.</p>
+
+      <p>The NCSC defines <a href="https://www.ncsc.gov.uk/collection/zero-trust/architecture-design-principles" target="_blank" rel="noopener">zero trust</a> as an architectural approach that removes inherent trust in the network, assumes the network is hostile and verifies each request against an access policy. It is not a single product and it is not achieved by adding one gateway.</p>
+
+      <figure>
+        <img src="images/lesson12-image4.png" alt="Two panels comparing a perimeter model that trusts connections inside a network boundary with a zero trust model that evaluates connections between users, services and data stores." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Network location alone should not decide whether a request is trusted.</figcaption>-->
+      </figure>
+
+      <p>Start by knowing the users, devices, services and data in the architecture. Authenticate and authorise access using signals that are relevant to the risk. Protect communications over networks, including internal ones. Limit how far a compromised identity or component can reach, and monitor the behaviour of users, devices and services so the team can detect a change in risk.</p>
+
+      <p>Apply the approach in proportion to the service. Begin with the most important data, privileged paths and high-impact actions. Legacy systems may not support every principle immediately, so record the gap, contain the risk and set out how implicit trust will be reduced over time.</p>
+
+      <h2>Turn risks into controls and evidence</h2>
+
+      <p>A good control has a clear job. Preventative controls reduce the chance of an event. Detective controls reveal that it has happened or is developing. Corrective controls limit the harm and support recovery. Important risks often need a combination of all three.</p>
+
+      <p>Walk through the architecture and cover each layer:</p>
+      <ul>
+        <li><strong>Data:</strong> minimisation, classification, encryption, access, retention, deletion and recovery.</li>
+        <li><strong>Application:</strong> input handling, permissions, secrets, dependencies and secure change.</li>
+        <li><strong>Identity:</strong> proofing, authentication, authorisation, privileged access and service accounts.</li>
+        <li><strong>Integration:</strong> trust boundaries, credentials, validation, rate limits and failure behaviour.</li>
+        <li><strong>Infrastructure:</strong> configuration, isolation, patching, network protection and resilience.</li>
+        <li><strong>Operations:</strong> logging, alerting, incident response, backup, recovery and support access.</li>
+        <li><strong>Supply chain:</strong> supplier access, shared responsibilities, assurance evidence and exit arrangements.</li>
+      </ul>
+
+      <p>When selecting a cloud service, use the NCSC's <a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles" target="_blank" rel="noopener">Cloud Security Principles</a> to examine the service and its provider. Supplier assurance does not remove the team's responsibility to configure the service securely and operate its part of the shared model.</p>
+
+      <p>For each significant risk, record the threat or failure, affected user or asset, selected controls, owner, evidence, residual risk and review trigger. Evidence might include configuration, test results, access reviews, monitoring records, recovery exercises or supplier assurance. A penetration test can provide useful evidence about an implementation, but it does not replace sound architecture, threat modelling or operational testing.</p>
+
+      <p>Trust also needs evidence. Give users clear information about why data is needed and what will happen to it. Make important decisions explainable. Keep audit records that support investigation and redress. Design failures so people know what happened and what they can do next.</p>
+
+      <h2>Questions to ask on a real service</h2>
+
+      <ul>
+        <li>What harm could result from disclosure, alteration, loss or unavailability?</li>
+        <li>Which users, assets, data flows and trust boundaries are in scope?</li>
+        <li>Who owns each important risk and who can accept the residual risk?</li>
+        <li>How is the information classified, and what additional handling rules apply?</li>
+        <li>What personal information is necessary, for which purpose and for how long?</li>
+        <li>How will applicable information rights be supported across every copy and store?</li>
+        <li>How are people, devices and services authenticated and authorised?</li>
+        <li>What could a compromised user, component or supplier reach next?</li>
+        <li>Which controls prevent, detect and correct each significant risk?</li>
+        <li>What evidence shows the controls work, and what change would trigger another review?</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical security, privacy and trust considerations for Solution Architects working around UK government services. The models and questions are teaching aids rather than a complete risk method, legal opinion or mandatory controls framework.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary government, NCSC and ICO guidance and supporting technical source below. Policy and guidance change, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">UK Government Security: Secure by Design principles</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/activities/performing-threat-modelling/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">UK Government Security: Performing threat modelling</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Microsoft Learn: STRIDE threat categories</a></li>
+          <li><a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-quick-read-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Government Security Classifications Policy quick read</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/data-protection-by-design-and-by-default/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: Data protection by design and by default</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/right-of-access/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: Right of access</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: When a DPIA is required</a></li>
+          <li><a href="https://www.sign-in.service.gov.uk/getting-started" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK One Login: Get started</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/cyber-assessment-framework/caf-objective-b/principle-b2-identity-and-access-control" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Identity and access control</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/zero-trust/architecture-design-principles" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Zero trust architecture design principles</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Cloud Security Principles</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
