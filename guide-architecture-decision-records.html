@@ -5,9 +5,9 @@
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How to write, manage and use Architecture Decision Records in UK government: honest options, the status lifecycle, and evidence for spend controls and assessments.">
+  <meta name="description" content="How to record significant architecture decisions, their evidence, trade-offs, ownership and consequences.">
   <meta property="og:title" content="Architecture decision records in practice &mdash; Architect's Library">
-  <meta property="og:description" content="How to write, manage and use Architecture Decision Records in UK government: honest options, the status lifecycle, and evidence for spend controls and assessments.">
+  <meta property="og:description" content="How to record significant architecture decisions, their evidence, trade-offs, ownership and consequences.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Architecture decision records in practice &mdash; Architect's Library</title>
   <link rel="stylesheet" href="css/style.css">
@@ -47,7 +47,7 @@
     <section class="lesson-hero">
       <div class="container">
         <h1 class="lesson-hero__title">Architecture decision records in practice</h1>
-        <p class="lesson-hero__description">Every architecture is the sum of its decisions. This guide shows you how to capture them so the reasoning outlives the people who made it.</p>
+        <p class="lesson-hero__description">Record important decisions so their reasoning remains clear.</p>
       </div>
     </section>
 
@@ -55,139 +55,173 @@
       <div class="info-box mb-2xl">
         <p><strong>You'll come away with:</strong></p>
         <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
-          <li>What an ADR captures and why twenty minutes of writing saves weeks of confusion later</li>
-          <li>The structure of a good record and how to present options honestly</li>
-          <li>Where the line sits between decisions that warrant an ADR and those that do not</li>
-          <li>How your ADR set supports spend controls, service assessments and audit</li>
+          <li>How to decide which architecture choices need a record</li>
+          <li>A practical structure for context, evidence, decision and consequences</li>
+          <li>How to manage status, ownership, approval and superseded decisions</li>
+          <li>Ways to keep ADRs concise, discoverable and useful as evidence</li>
         </ul>
       </div>
 
-      <h2>What an ADR is and why it matters</h2>
+      <h2>What an ADR records</h2>
 
-      <p>An Architecture Decision Record is a short document that captures a single significant architecture decision. Michael Nygard popularised the idea in 2011, and it has spread across UK government since, for a simple reason. It fixes a problem every programme has.</p>
+      <p>An Architecture Decision Record, or ADR, captures one significant architecture decision and the reasoning behind it. The government's <a href="https://www.gov.uk/government/publications/architectural-decision-record-framework/architectural-decision-record-framework" target="_blank" rel="noopener">Architectural Decision Record framework</a> defines an architecture decision as a choice that affects a system's structure, quality attributes or behaviour.</p>
 
-      <p>The problem is memory. Government programmes run for years and staff rotate every eighteen months to two years on average. The decisions that shape a system, the technology choices, the integration patterns, the trade-offs accepted and the options rejected, usually live only in the heads of the people who made them. When those people move on, and in the civil service they always do, the reasoning leaves with them. New teams inherit systems they do not understand, repeat mistakes that were already made once, and reverse decisions without knowing why they were made in the first place.</p>
+      <p>The record helps later readers understand the context in which the choice was made. They can see which constraints applied, who was involved, what was decided and which consequences followed. This matters when the team changes or the service needs to revisit the decision.</p>
 
-      <p>An ADR fixes this cheaply. When you make a decision that is significant, hard-to-reverse, or likely to be questioned later, you write it down in a structured record: the context, the options considered, the decision, and the consequences. Twenty minutes of writing. A dedicated, findable, dated record, rather than a meeting note that gets lost, a Slack message that scrolls away, or a memory that resigns.</p>
+      <p><a href="https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions" target="_blank" rel="noopener">Michael Nygard's 2011 article</a> popularised the ADR format. Its central idea remains useful: keep each record short, write it for a future team member and include negative and neutral consequences as well as positive ones.</p>
 
-      <p>The payoff goes beyond institutional memory. Writing the record sharpens the decision itself, because if you cannot articulate in writing why you chose Option A over Option B, you have not thought it through carefully enough. It gives you an audit trail, which matters in government where technology spending faces spend controls, service assessments, internal audit and the occasional National Audit Office review. Treat that as professional accountability rather than paperwork.</p>
+      <p>An ADR is not the complete architecture, a substitute for an options appraisal or proof that a good decision was made. It records the decision and points to the evidence needed to understand it.</p>
 
-      <p>It also keeps disagreement professional. When a decision sits in a record with its full context and trade-offs, people can challenge it constructively. They can say the context has changed since this was decided, or that a new option exists that did not exist then. Without the record, disagreements about old decisions turn personal, because there is nothing else to argue with.</p>
+      <blockquote>The value of an ADR is not the choice alone. It is the context that allows someone to judge whether the choice still fits.</blockquote>
 
-      <blockquote>The reasoning leaves when the people do. An ADR is how you keep it.</blockquote>
+      <h2>Use a structure that fits the decision</h2>
 
-      <h2>The anatomy of a good record</h2>
-
-      <p>Several templates exist, and most of them work. The one that serves government use best runs to seven sections, and each one earns its place.</p>
+      <p>There is no single mandatory ADR template for every government decision. Nygard's original format uses title, status, context, decision and consequences. The government framework also includes the date, stakeholders consulted and links to supporting documents. Use the agreed template for your organisation and add detail only when it helps the decision.</p>
 
       <figure>
-        <img src="images/lesson14-image1.png" alt="Diagram: the seven sections of an ADR, title, status, date, context, options considered, decision and consequences, each annotated with what it carries." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One decision, one record: the seven sections and the job each one does.</figcaption>
+        <img src="images/lesson14-image1.png" alt="An example ADR structure containing title, status, date, context, options considered, decision and consequences." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One useful structure. Adapt it to the decision and your organisation's governance.</figcaption>-->
       </figure>
 
-      <p>The title makes the decision findable. Write "ADR 014: Use PostgreSQL for the applicant data store", never "ADR 014: Database decision". A reader scanning the index should know what was decided without opening a single file. The status tells them whether the decision still stands, and the date matters because context shifts. A choice that was right in 2021 may need revisiting now, and the date is what prompts that question.</p>
-
-      <p>Context is where you describe the situation that forced the decision. What problem were you solving, what constraints existed, what had already been decided that shaped your options. Be specific, and include the political and organisational context as well as the technical. In government, decisions are shaped by procurement timelines, spending review cycles, ministerial priorities and cross departmental dependencies. Capture them, because a future reader who does not know about the constraint will not understand the choice.</p>
-
-      <p>Options considered lists the alternatives you evaluated, each with its genuine advantages and disadvantages. The decision itself should be one or two clear sentences, with any conditions or caveats stated alongside. Consequences is where you show you thought past the immediate choice: what becomes easier, what becomes harder, what risk you have accepted, and what this decision forces or enables elsewhere.</p>
-
-      <p>If you want more, add decision-makers, links to related records, and a review date. But those are extras. The seven core sections are the record.</p>
-
-      <h2>When to write one and when not to</h2>
-
-      <p>Not every decision deserves a record. Write too many and you dilute their value and create maintenance you will resent. Write too few and the reasoning that mattered is lost. The skill is knowing where the threshold sits, and two questions find it: how much does this decision matter, and how expensive is it to reverse.</p>
-
-      <figure>
-        <img src="images/lesson14-image2.png" alt="Diagram: a quadrant plotting impact against cost to reverse. High impact, hard-to-reverse decisions get an ADR. Low impact, easily reversed decisions do not. The remaining quadrants are judgement calls." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Two questions find the threshold: how much it matters, and what it costs to undo.</figcaption>
-      </figure>
-
-      <p>The clear cases sit in the top right. Your primary database, your hosting platform, your integration pattern, your authentication approach. These choices shape the system for months or years and reversing them is expensive, so they get a record every time. Beyond that quadrant, a few other signals push a decision over the line:</p>
+      <p>A practical record can contain:</p>
       <ul>
-        <li>It will be questioned later. If you can predict someone asking why in six months, write the record now while the reasoning is fresh. In government that covers anything likely to surface at a spend control, a service assessment or an audit.</li>
-        <li>There was genuine disagreement. If the team debated it, capture the debate and how it was resolved. That stops the same argument recurring every quarter.</li>
-        <li>It affects other teams. If your choice constrains or enables someone else's work, a record gives them the context without needing you in a meeting.</li>
+        <li><strong>Title:</strong> state the decision so it can be found in an index.</li>
+        <li><strong>Date and status:</strong> show when it was decided and whether it still applies.</li>
+        <li><strong>Context:</strong> describe the problem, requirements, constraints and assumptions that shaped the choice.</li>
+        <li><strong>Options and evidence:</strong> summarise credible alternatives, evaluation criteria and important findings, or link to the detailed appraisal.</li>
+        <li><strong>Decision:</strong> state what was chosen, any conditions and the scope to which it applies.</li>
+        <li><strong>Consequences:</strong> record benefits, costs, risks, dependencies and follow-on work.</li>
+        <li><strong>Ownership:</strong> identify the decision owner, decision authority and relevant contributors.</li>
+        <li><strong>Links:</strong> connect requirements, diagrams, prototypes, risks and related decisions.</li>
       </ul>
 
-      <p>Equally, know what to leave out. Standard, obvious or trivial choices need no record: using your department's standard pipeline unchanged, or picking between two equivalent JSON libraries. Neither do implementation details. The choice between two ways of structuring a module belongs in a code review, and anything you could reverse in a day of work rarely deserves the ceremony.</p>
+      <p>Keep facts, assumptions and judgements distinct. A future reader should be able to see which evidence existed at the time and which parts depended on uncertainty.</p>
 
-      <p>A working heuristic: if the decision would appear in a solution architecture document, it probably warrants an ADR. If it would only appear in a code review comment, it probably does not.</p>
+      <h2>Decide when an ADR is warranted</h2>
 
-      <h2>Honest context, honest options</h2>
-
-      <p>The most common failure in ADRs is dishonesty. Rarely deliberate lying, but the unconscious pull towards presenting the chosen option as obviously correct and the rejected ones as obviously flawed. Give in to it and the record becomes worthless, because it no longer tells future readers what the real trade-offs were.</p>
-
-      <p>Honest context means writing down the real situation, including the uncomfortable parts. If a procurement framework limited your options to one vendor, say so. If you chose the simpler architecture because the team lacked the skills for the sophisticated one, say so. If the timeline forced you into the more expensive route, say so. Future readers need the real constraints, and an idealised version will only mislead them.</p>
-
-      <p>Honest options means presenting every alternative fairly. Each option you considered had genuine advantages, or you would not have considered it. State them clearly, including for the options you rejected. And the option you chose has disadvantages, so state those too. A record that presents the winning option as having no downsides is not credible, and assessors notice.</p>
-
-      <p>You can tell the difference at a glance. The dishonest version describes the chosen option as modern, scalable and aligned with strategy, then dismisses the rejected ones as legacy, expensive and risky. That is advocacy dressed as analysis, and every rejected option has been set up as a straw man. The honest version reads differently. The managed service brings lower operational overhead and automatic scaling, at the cost of a higher unit price and a dependency on one cloud provider. The self hosted alternative avoids licence costs and lock-in, but demands an operations team you do not currently have. The emerging platform fits the use case best on paper, with a thin production track record and no government adoption to point at.</p>
-
-      <p>The second version is the useful one. It lets future readers reassess when the context changes, and it shows assessors and auditors that the thinking was rigorous rather than retrofitted.</p>
-
-      <blockquote>Give the chosen option no downsides and the record reads as advocacy. Nobody is fooled for long.</blockquote>
-
-      <h2>The status lifecycle</h2>
-
-      <p>ADRs are living records. In a programme that runs for years, decisions get made, revisited and replaced, and the status field is how the record set keeps up with reality.</p>
+      <p>Do not record every technical choice. Use an ADR when losing the reasoning would make future change, governance or operation materially harder.</p>
 
       <figure>
-        <img src="images/lesson14-image3.png" alt="Diagram: the four ADR statuses in sequence. Proposed leads to Accepted, which can move through Deprecated to Superseded or be replaced in one step. Accepted is the only active state." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Four statuses cover almost every situation. Accepted is the only active one.</figcaption>
+        <img src="images/lesson14-image2.png" alt="A decision-recording matrix comparing the impact of a choice with the effort or risk involved in reversing it." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Impact and reversibility are useful prompts, not a mechanical rule.</figcaption>-->
       </figure>
 
-      <p>Proposed means the decision has been drafted but not yet agreed. It is useful when you want to circulate a decision for review before committing, and in government, where sign off often spans several stakeholders, it gives people a window to challenge before the decision becomes official. Accepted is the normal active state: the decision is agreed and the system is being built or run according to it.</p>
+      <p>A record is more likely to be useful when the decision:</p>
+      <ul>
+        <li>changes the structure, behaviour or important quality characteristics of the service</li>
+        <li>is costly, risky or disruptive to reverse</li>
+        <li>affects several teams, services or a shared platform</li>
+        <li>creates a long-term dependency, contractual commitment or precedent</li>
+        <li>accepts a material security, privacy, resilience or operational trade-off</li>
+        <li>involves genuine disagreement or is likely to be revisited</li>
+      </ul>
 
-      <p>Deprecated means the decision is still technically in effect but no longer the recommended approach. New work should not follow it, though existing implementations need not change immediately. This state is common in government, where legacy decisions coexist with newer approaches through long transition periods. Superseded means the decision has been replaced, and the record should link to its successor. Never delete a superseded ADR. It is part of the decision history, and it shows how the thinking evolved.</p>
+      <p>Routine implementation details can stay in code review, delivery tickets or technical documentation. A choice is not automatically significant because it involves a database, cloud service or integration. Judge its effect in the context of the service.</p>
 
-      <p>Some teams add Rejected or Under Review. Resist the urge to invent more. The four core statuses cover almost everything, and a simple scheme gets used where an elaborate one gets ignored.</p>
+      <h2>Record the real context and trade-offs</h2>
 
-      <p>The discipline that makes the lifecycle work is updating status when it changes. A record left in Accepted long after it was superseded confuses everyone who finds it, because they now hold two contradictory active decisions. When a new decision changes an old one, update both records the same day. And expect the set to accumulate superseded entries over a long programme. That is healthy. It means the architecture is responding to changing context rather than frozen in a design that no longer fits.</p>
+      <p>Write the context as it existed when the decision was made. Include relevant user needs, requirements, constraints, deadlines, skills, commercial limits and dependencies. Keep the account factual and proportionate; an ADR is not the place for speculation or unnecessary commentary about individuals.</p>
 
-      <h2>Storing them where people will find them</h2>
+      <p>Present credible options fairly. Use the same criteria and a comparable level of detail for each. State the advantages of rejected options and the disadvantages of the chosen one. If only one option was genuinely available, explain the constraint rather than inventing weak alternatives.</p>
 
-      <p>Where you store ADRs matters as much as what you write in them. A record nobody can find might as well not exist.</p>
+      <p>The decision should be direct: what will be done, where it applies and any conditions. The consequences should then explain what the choice enables, what it makes harder, which risks remain and what work follows. This is where an honest record differs from a retrospective justification.</p>
 
-      <p>The strongest home is the version control repository alongside the code the decisions relate to. The records get versioned with the code, they surface in pull requests when decisions change, anyone with repository access can find them, and they pass through the same review process as everything else. A typical layout is a decisions directory in the repository root, with files numbered in sequence and named from the title, so the directory listing reads as a chronological index of every choice made.</p>
+      <p>Do not rewrite an old record to make the outcome look inevitable. Correct a factual mistake transparently. If new evidence or changed context leads to a different choice after implementation has started, create a new decision and link the records.</p>
 
-      <p>Programmes with several repositories face a choice, and the answer mirrors how decisions actually work. Keep component specific records in the repository they belong to, and hold a central repository for the cross cutting decisions that shape the whole platform. Some decisions are local, some are global, and the storage should say which is which.</p>
+      <blockquote>A credible ADR makes the chosen option understandable, not flawless.</blockquote>
 
-      <p>Confluence, SharePoint and other wiki tools are weaker homes. They lack version control, they make it awkward to link a decision to the code change that implemented it, and they drift into disorder over time. But if your team lives in Confluence and will not adopt repository based documentation, Confluence ADRs beat no ADRs. Pragmatism beats purity.</p>
+      <h2>Use a clear status lifecycle</h2>
 
-      <p>Wherever they live, make them discoverable. A new team member needs to find the relevant records without reading all of them, so keep an index file listing every ADR with its status and a one line summary, and cross reference related records. In government, where staff rotate constantly, the first thing a new architect should do on joining a programme is read that index. It compresses years of decision history into twenty minutes, and it saves weeks of asking questions and guessing at answers.</p>
-
-      <h2>Where ADRs earn their keep in government</h2>
-
-      <p>ADRs are worth having anywhere, but the governance and assurance that surrounds government technology gives them particular value. The same set of records serves several audiences at once, and each of them would otherwise cost you days of retrospective writing.</p>
+      <p>Status tells the reader whether a decision is still current. The vocabulary is not universal, so define it once and use it consistently.</p>
 
       <figure>
-        <img src="images/lesson14-image4.png" alt="Diagram: the ADR set at the centre, serving five audiences, spend controls, service assessments, audit and the NAO, political challenge and FOI, and new team members." style="width: 100%; display: block;">
-        <figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One set of records, written once, serving every audience that will ever ask why.</figcaption>
+        <img src="images/lesson14-image3.png" alt="An example ADR lifecycle moving from proposed to accepted, with accepted decisions later deprecated or superseded." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">An example lifecycle rather than a mandatory set of statuses.</figcaption>-->
       </figure>
 
-      <p>Spend controls require you to show the Central Digital and Data Office that you considered alternatives, chose rationally, and understood the implications. A set of well written ADRs is exactly that evidence. Rather than drafting a retrospective justification for the panel, you point at decisions captured in real time with their full context, which is more credible and far less effort.</p>
+      <p>A simple scheme might use:</p>
+      <ul>
+        <li><strong>Proposed:</strong> the choice is being reviewed and has not yet been accepted.</li>
+        <li><strong>Accepted:</strong> the authorised decision is current.</li>
+        <li><strong>Rejected:</strong> the proposal was considered but not adopted, if retaining rejected proposals is useful.</li>
+        <li><strong>Deprecated:</strong> existing use may remain, but the approach is no longer preferred for new work.</li>
+        <li><strong>Superseded:</strong> a later ADR has replaced the decision.</li>
+      </ul>
 
-      <p>Service assessments look for the same thing through a different lens. Assessors want evidence that options were weighed, trade-offs understood, and choices aligned with the Technology Code of Practice. Your ADRs are the most direct evidence you can hand them, and an assessor who can read your reasoning will trust your architecture far more than one who has to extract it by questioning.</p>
+      <p>The <a href="https://gds-way.digital.cabinet-office.gov.uk/standards/architecture-decisions.html" target="_blank" rel="noopener">GDS guidance on documenting architecture decisions</a> uses proposed, accepted and superseded states and recommends linking a superseded record to its replacement. It also distinguishes minor clarification from a new decision after implementation. Follow your local lifecycle rather than assuming every organisation uses the same states.</p>
 
-      <p>Internal audit and the National Audit Office turn up occasionally, usually on programmes that have overspent or underdelivered. When they do, a clear decision trail is worth a great deal. The records show that choices were made deliberately, with proper consideration, at identifiable points in time. The alternative is reconstructing history from memory and old meeting notes, months or years later, and it is as unreliable as it sounds.</p>
+      <p>Status describes the decision record, not whether every implementation task is complete. Track delivery separately and link it where useful. Do not delete superseded records; preserving them maintains the decision history.</p>
 
-      <p>There is a defensive value too. Government decisions get challenged politically. A minister asks why that technology was chosen, a select committee questions the cost, a Freedom of Information request demands the rationale. An ADR gives you a professional answer written at the time of the decision rather than assembled under pressure after the fact. Treat the habit as protection for you, your team and your programme, because the twenty minutes you spend writing a record today can save you days of justification later.</p>
+      <h2>Store records where people can find them</h2>
 
-      <h2>How the practice goes wrong</h2>
+      <p>The right location is one that the intended readers can access, search and maintain. It needs version history, stable links, suitable permissions and a clear owner.</p>
 
-      <p>Having argued for ADRs, it is only fair to be honest about how they fail.</p>
+      <p>GDS recommends keeping application-specific ADRs in version control with the relevant code and using a central documentation repository for broader decisions where appropriate. This works well when the readers already use those repositories. A governed wiki or document platform can also work if it provides reliable history, ownership and discoverability.</p>
 
-      <p>The commonest failure is length. A record should run to one or two pages, and if yours is longer you are packing too much into a single decision. Split it, or move the detailed analysis into a separate options paper the record references. The second failure is timing. A retrospective ADR beats nothing, but it loses the honesty of capture in the moment. Write one weeks after the event and you rationalise without meaning to: the options you briefly weighed and dropped disappear, and the outcome reads as more inevitable than it ever was. Write at the time of the decision, or as close to it as you can manage.</p>
+      <p>Maintain an index containing the identifier, title, date, status and link for each record. Group or tag decisions when several services share the same collection. Cross-link related and superseding records so readers do not have to reconstruct the sequence themselves.</p>
 
-      <p><em style="color: #4a4f4b;">"An ADR is a form you fill in to get a decision approved."</em></p>
+      <p>Apply the correct access controls and information handling. A record should be available to the people who need it, but it should not expose sensitive security, commercial or personal information more widely than necessary.</p>
 
-      <p>This misunderstanding kills the practice faster than anything else. An ADR records a decision. It does not authorise one, and it is not a change request awaiting six signatures. If your process demands formal approval from multiple boards before a decision can even be written down, you have turned a lightweight habit into heavyweight governance, and teams will quietly stop doing it.</p>
+      <h2>Use ADRs as evidence, not proof</h2>
 
-      <p>Two more failures are quieter but just as corrosive. Stale status, where superseded records still read as Accepted, leaves new joiners holding contradictory decisions and wondering which to trust. Make the status update part of making the new decision. And inconsistent adoption undermines the whole set: if only some decisions get records, nobody can rely on the collection being complete, and they are back to asking around. A consistent set of plain records is worth more than an occasional brilliant one.</p>
+      <p>The <a href="https://www.gov.uk/service-manual/service-standard/point-11-choose-the-right-tools-and-technology" target="_blank" rel="noopener">Service Standard</a> expects teams to show that they have made good decisions about technology. Relevant ADRs can help explain those choices during assurance, governance or a service assessment. They are supporting evidence, not a replacement for prototypes, research, cost analysis, risk work or the running service.</p>
 
-      <p>Which points to the right way to start. Start light. Title, status, context, decision, consequences, in a markdown file, is enough. Add options considered, decision-makers and review dates as the habit matures. If writing a record takes more than half an hour, something is wrong: either the decision is too big for one record and needs splitting, or the format has grown heavier than the thinking it captures.</p>
+      <p>The government assurance process changed in 2026. The <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook</a> states that central digital and technology spend controls were removed from 1 April 2026. Departments are now responsible for most digital and technology spending decisions, with functional assurance and further approval where required. ADRs may support that process, but the relevant assurance team determines the evidence and route.</p>
 
-      <blockquote>A simple record written every time beats a perfect template nobody uses.</blockquote>
+      <figure>
+        <img src="images/lesson14-image4.png" alt="An ADR collection connected to possible readers including assurance teams, service assessors, auditors, information request teams and new team members." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">One decision history can support several readers, but each may require additional evidence.</figcaption>-->
+      </figure>
+
+      <p>An ADR does not create decision authority. Record who owns the decision and which body or role accepted it, then follow the applicable governance process. The government ADR framework sets different decision levels and escalation routes according to the scope and impact of the choice.</p>
+
+      <p>ADRs held by a public authority are recorded information and may be relevant to an information request. That does not mean every record must be released unchanged: applicable exemptions and information-handling procedures still apply. The <a href="https://ico.org.uk/for-organisations/foi/freedom-of-information-and-environmental-information-regulations/the-right-to-recorded-information-and-requests-for-documents/" target="_blank" rel="noopener">ICO guidance on recorded information</a> explains that requests concern information wherever and however it is recorded. Write accurate, professional records and involve the appropriate information governance specialists when handling a request.</p>
+
+      <h2>Keep the practice lightweight and reliable</h2>
+
+      <p>Draft the ADR while the decision is being considered or soon after it is made. Record the evidence available at that point. If the decision must be reconstructed later, label the record as retrospective and confirm the account with people who were involved.</p>
+
+      <p>Keep one significant decision per record. Nygard's original format suggests one or two pages, but useful length depends on the decision. Summarise the reasoning and link detailed research or appraisal rather than copying it into the ADR.</p>
+
+      <p>Common failure modes include:</p>
+      <ul>
+        <li>using the ADR as an approval form without explaining the reasoning</li>
+        <li>combining several decisions so none has a clear boundary</li>
+        <li>recording only the chosen option and its benefits</li>
+        <li>leaving the owner, authority or status unclear</li>
+        <li>allowing links, statuses or indexes to become stale</li>
+        <li>writing records inconsistently so the collection cannot be trusted</li>
+      </ul>
+
+      <p>Start with a small template and a clear threshold. Add fields only when they solve a recurring problem. A lightweight record is valuable because it is accurate and used, not merely because it is short.</p>
+
+      <h2>Questions to ask before accepting an ADR</h2>
+
+      <ul>
+        <li>Is this a significant architecture decision rather than an implementation detail?</li>
+        <li>Does the title state the decision clearly?</li>
+        <li>Are the scope, requirements, constraints and assumptions explicit?</li>
+        <li>Were credible options assessed against relevant criteria?</li>
+        <li>Does the chosen option include its disadvantages and remaining risks?</li>
+        <li>Are the decision owner, authority and contributors clear?</li>
+        <li>Do the consequences include dependencies and follow-on actions?</li>
+        <li>Is the status defined and consistent with the rest of the collection?</li>
+        <li>Can intended readers find the supporting evidence and related records?</li>
+        <li>What change in context would cause the decision to be reviewed?</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical use of Architecture Decision Records for Solution Architects working around UK government services. Its threshold, structure and lifecycle are teaching aids rather than a mandatory template or approval process. The GDS Way describes GDS practice and should not be treated as a cross-government mandate.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary government, GDS, ICO and original ADR sources below. Guidance changes, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/government/publications/architectural-decision-record-framework/architectural-decision-record-framework" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Architectural Decision Record framework</a></li>
+          <li><a href="https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Michael Nygard: Documenting Architecture Decisions</a></li>
+          <li><a href="https://gds-way.digital.cabinet-office.gov.uk/standards/architecture-decisions.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">The GDS Way: Documenting architecture decisions</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-11-choose-the-right-tools-and-technology" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Choose the right tools and technology</a></li>
+          <li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Digital Assurance Playbook</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/foi/freedom-of-information-and-environmental-information-regulations/the-right-to-recorded-information-and-requests-for-documents/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: The right to recorded information and requests for documents</a></li>
+        </ul>
+      </div>
 
       <!-- Related guides -->
       <nav class="lesson-nav" aria-label="Related guides">
