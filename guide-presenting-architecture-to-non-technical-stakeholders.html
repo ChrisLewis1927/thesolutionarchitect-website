@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to explain architecture in plain language, present options and trade-offs, use purposeful visuals and support clear decisions.">
+  <meta property="og:title" content="Presenting architecture to non-technical stakeholders &mdash; Architect's Library">
+  <meta property="og:description" content="How to explain architecture in plain language, present options and trade-offs, use purposeful visuals and support clear decisions.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Presenting architecture to non-technical stakeholders &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Presenting architecture to non-technical stakeholders</h1>
+        <p class="lesson-hero__description">Turn technical detail into clear decisions, trade-offs and action.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How to identify the audience's decision and the detail they need</li>
+          <li>A clear way to lead with a recommendation and support it with evidence</li>
+          <li>How to explain options, trade-offs and uncertainty without hiding behind jargon</li>
+          <li>Ways to use diagrams, one-page briefs and questions effectively</li>
+        </ul>
+      </div>
+
+      <h2>Start with the decision, not the diagram</h2>
+
+      <p>A non-technical stakeholder is not someone who cannot understand architecture. They are someone whose expertise and responsibilities lie elsewhere. They may own the policy outcome, funding, delivery, operations or risk. Your explanation should give them enough understanding to act in that role.</p>
+
+      <p>The <a href="https://projectdelivery.gov.uk/library-products/government-functional-standard-govs-002-project-delivery/" target="_blank" rel="noopener">Government Functional Standard for Project Delivery</a> says communications should match stakeholders' needs and put the right message before the right audience at the right time. Before preparing a paper or presentation, ask:</p>
+      <ul>
+        <li>Who will receive it, and what authority do they have?</li>
+        <li>What decision, steer or action is needed?</li>
+        <li>Which outcomes, costs, timescales, dependencies and risks matter to that decision?</li>
+        <li>Which evidence is reliable, and where is there uncertainty?</li>
+        <li>What detail belongs in the main message, and what should remain available behind it?</li>
+      </ul>
+
+      <figure>
+        <img src="images/lesson15-image1.png" alt="One architecture connected to four example audiences. A Senior Responsible Owner asks about outcomes and risk, a programme board asks what decision is needed, a policy lead asks whether policy intent will be delivered, and a finance lead asks about whole-life cost and certainty." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The questions vary by role, decision and organisation.</figcaption>-->
+      </figure>
+
+      <p>Do not assume that a role always asks one fixed question. A finance lead may challenge delivery risk; a policy lead may need to understand data quality. Confirm what the people in this meeting need rather than presenting to a stereotype.</p>
+
+      <p>Start with the consequence of the design. Instead of saying, “This service uses asynchronous messaging,” explain what that means here: “The service can accept a request while the case system is temporarily unavailable. Processing may be delayed, so queued work must be monitored and failures handled.” The technical term can remain when it matters, but define it and connect it to an outcome, cost or risk.</p>
+
+      <p>Clear explanation does not itself approve a design or transfer responsibility. Decisions and risk acceptance must still follow the organisation's governance and delegated authority. Record what was decided, by whom, under which conditions and with which follow-on actions.</p>
+
+      <blockquote>Pitch the explanation at the decision the audience must make, not at the detail you happen to know.</blockquote>
+
+      <h2>Lead with the answer, then show the reasoning</h2>
+
+      <p>For a decision paper or short presentation, state the recommendation early. <a href="https://www.barbaraminto.com/" target="_blank" rel="noopener">Barbara Minto's Pyramid Principle</a> organises supporting ideas beneath one main point. It is a useful communication structure, not a mandatory government format, and it is less suitable when the purpose is open exploration rather than a decision.</p>
+
+      <p>A practical opening can contain:</p>
+      <ul>
+        <li>the recommendation or current position</li>
+        <li>the outcome it supports and why action is needed now</li>
+        <li>the strongest reasons and evidence</li>
+        <li>the material trade-offs, risks and uncertainties</li>
+        <li>the decision or action required, from whom and by when</li>
+      </ul>
+
+      <p>For example: “We recommend reusing the department's existing notification service because it meets the confirmed requirements and avoids creating another service to support. The main unresolved issue is the supplier onboarding date. We need a decision today on the approach and a named owner to confirm the date before delivery is committed.”</p>
+
+      <figure>
+        <img src="images/lesson15-image2.png" alt="Two ways to order the same material. An analysis-first order moves from context through analysis and options to the recommendation. An answer-first order begins with the recommendation, then gives reasons, evidence and supporting detail." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Answer-first communication lets the reader choose how deeply to inspect the evidence.</figcaption>-->
+      </figure>
+
+      <p>Use the same pattern inside the document. Open each section with its point. Give slides titles such as “Reusing the platform avoids duplicate support capability” rather than “Platform option”. Keep detailed evidence and caveats available, but do not make the audience search for the conclusion.</p>
+
+      <p>Answer-first does not mean evidence-free. If a recommendation is not yet justified, say what is known, what remains uncertain and which work or decision should come next.</p>
+
+      <h2>Present options through their consequences</h2>
+
+      <p>Technology labels rarely give a decision-maker enough information to compare options. “Microservices”, “software as a service” and “serverless” describe approaches, not their effect in your context. Explain each option against criteria linked to the requirements and decision.</p>
+
+      <p>Where the <a href="https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government/the-green-book-2026" target="_blank" rel="noopener">Green Book</a> applies, appraisal should help decision-makers understand the costs, benefits, risks and trade-offs of different options. It requires evidence-based, objective and impartial advice, including clear communication of uncertainty. The depth of an architecture comparison should remain proportionate to the choice and its governance route.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Dimension</th>
+              <th scope="col">What to make visible</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Outcome and fit</strong></td>
+              <td>Which requirements and policy or service outcomes the option meets.</td>
+            </tr>
+            <tr>
+              <td><strong>Whole-life cost</strong></td>
+              <td>Setup, running, change and exit costs, with assumptions and ranges.</td>
+            </tr>
+            <tr>
+              <td><strong>Delivery</strong></td>
+              <td>Timescale, critical dependencies, skills and confidence in the plan.</td>
+            </tr>
+            <tr>
+              <td><strong>Operation</strong></td>
+              <td>Support model, service ownership, monitoring, recovery and change burden.</td>
+            </tr>
+            <tr>
+              <td><strong>Risk and uncertainty</strong></td>
+              <td>Material exposure, controls, owners, residual risk and weak evidence.</td>
+            </tr>
+            <tr>
+              <td><strong>Dependency and exit</strong></td>
+              <td>Supplier or platform commitments, interoperability and the cost of changing course.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Use the same criteria and a comparable level of evidence for every credible option. If you score options, define the scale and show the evidence behind each rating. A comparison in which the preferred option wins every row is a warning to check for biased criteria or uneven evidence.</p>
+
+      <p>Give a recommendation and its reason. The architect advises; the authorised decision-maker decides. If the evidence does not support a preferred option, recommend the next piece of work needed to resolve the uncertainty instead of manufacturing confidence.</p>
+
+      <h2>Use the view that answers the question</h2>
+
+      <p>A detailed architecture diagram may be correct and still be wrong for the meeting. The NCSC's guidance on <a href="https://www.ncsc.gov.uk/blog-post/drawing-good-architecture-diagrams" target="_blank" rel="noopener">drawing good architecture diagrams</a> recommends choosing a lens and level of detail for the reader, starting with a clear overview and separating more detailed views.</p>
+
+      <figure>
+        <img src="images/lesson15-image3.png" alt="The same example service shown through two views. A delivery view shows seven technical components and their connections. A decision view shows four service stages from receiving an application to issuing a decision." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Choose the view from the question being discussed; keep the technical view available when it is relevant.</figcaption>-->
+      </figure>
+
+      <p>Useful views for senior audiences can include a service flow, system context, before-and-after comparison, dependency map, delivery timeline, cost profile or options table. Technical components still belong in the main view when the decision concerns a boundary, control, supplier dependency or operational responsibility. Remove detail because it is irrelevant to the question, not merely because it is technical.</p>
+
+      <p>For each visual:</p>
+      <ul>
+        <li>give it a title that states the point or question</li>
+        <li>include only the elements needed to support that point</li>
+        <li>use plain labels and explain necessary specialist terms</li>
+        <li>label important relationships rather than relying on unexplained lines</li>
+        <li>distinguish current, interim and target states</li>
+        <li>make it understandable when forwarded without your narration</li>
+      </ul>
+
+      <p>Accessibility still applies. The <a href="https://design-system.service.gov.uk/styles/images/" target="_blank" rel="noopener">GOV.UK Design System guidance on images</a> says complex diagrams need short alternative text and a longer description that provides the same information in text. Do not rely on colour alone to distinguish ratings or relationships; <a href="https://www.w3.org/WAI/WCAG22/quickref/#use-of-color" target="_blank" rel="noopener">WCAG 2.2 success criterion 1.4.1</a> requires another visual means of conveying the information.</p>
+
+      <h2>Build a one-page decision brief</h2>
+
+      <p>A one-page brief can help when a decision can be summarised without hiding material evidence. It is a communication technique, not a universal government requirement. Use the organisation's required submission, business case or governance template where one applies.</p>
+
+      <figure>
+        <img src="images/lesson15-image4.png" alt="One possible one-page decision brief containing the topic and purpose, recommendation, evidence summary, material trade-offs and uncertainty, the required response, and document control with links to supporting detail." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">A teaching example rather than a mandatory layout.</figcaption>-->
+      </figure>
+
+      <p>A useful brief normally makes these things easy to find:</p>
+      <ul>
+        <li>the topic, purpose and decision owner</li>
+        <li>the recommendation and the reason for it</li>
+        <li>the outcome or problem being addressed</li>
+        <li>the options and material trade-offs</li>
+        <li>cost, delivery and risk evidence, including assumptions and uncertainty</li>
+        <li>the decision, steer or acknowledgement required</li>
+        <li>the status, date and links to supporting detail</li>
+      </ul>
+
+      <p>The brief should stand alone, but it does not replace the architecture, appraisal or evidence behind it. Link to those sources instead of shrinking the type or removing a material caveat. If the decision cannot be represented safely on one page, use more space.</p>
+
+      <p>For spending proposals within its scope, the Green Book says a business case should begin with an executive summary covering all five dimensions and recommends an appraisal summary table for shortlisted options. A one-page architecture brief can support that process; it does not replace the required business case.</p>
+
+      <h2>Handle questions and uncertainty directly</h2>
+
+      <p>Prepare for the questions the decision makes likely:</p>
+      <ul>
+        <li>What does it cost, what drives the range and what happens after go-live?</li>
+        <li>How long will it take, what is on the critical path and how confident is the estimate?</li>
+        <li>What could prevent the outcome, who owns the risks and what remains after treatment?</li>
+        <li>Why is the recommended option stronger than the alternatives?</li>
+        <li>Which assumptions, suppliers, services or decisions does it depend on?</li>
+        <li>How difficult would it be to change course?</li>
+      </ul>
+
+      <p>When you do not know, do not bluff or hide behind detail. State what you know, what is uncertain, how it will be checked and whether the decision depends on the answer. For example: “I do not have a confirmed figure. I will validate the supplier estimate and return by Thursday. If approval depends on that figure, I recommend that we wait.” Then complete the action when promised.</p>
+
+      <p>Do not assume you know the concern behind a broad question. “What about security?” could mean data exposure, service availability, assurance or personal accountability. Ask which risk the person wants to explore, then answer it plainly or bring in the relevant specialist.</p>
+
+      <p>The <a href="https://www.gov.uk/government/publications/orange-book/the-orange-book-management-of-risk-principles-and-concepts" target="_blank" rel="noopener">Orange Book</a> requires timely, accurate and useful risk reporting to support decision-making. Be explicit about evidence, assumptions and uncertainty. After the discussion, record the decision, conditions, owners, accepted risks and actions through the appropriate governance process.</p>
+
+      <blockquote>Credibility comes from clear evidence, honest uncertainty and reliable follow-through.</blockquote>
+
+      <h2>Use analogies as a bridge, not as evidence</h2>
+
+      <p>An analogy can make one unfamiliar idea easier to enter. It should not become a model for the whole design. For a simple request-and-response interaction, a service counter can illustrate one point: a caller follows an agreed interface and receives a response without needing to know every internal step.</p>
+
+      <figure>
+        <img src="images/lesson15-image5.png" alt="A spectrum showing an analogy moving from useful to strained to misleading as it is pushed beyond the single point it was chosen to explain." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">State the point the analogy explains, mark its limit and then return to the real design.</figcaption>-->
+      </figure>
+
+      <p>The counter analogy does not explain asynchronous messages, identity checks, retries, rate limits or failure handling. Say where the comparison stops, then move to the actual behaviour. Prefer a concrete service example, measured before-and-after result or direct explanation when it is clearer.</p>
+
+      <p>Avoid using an analogy to understate cost, risk or complexity. It can aid understanding; it is not evidence for a recommendation.</p>
+
+      <h2>Questions to ask before presenting</h2>
+
+      <ul>
+        <li>Who is the primary audience, and what authority do they have?</li>
+        <li>What decision, steer or action is required?</li>
+        <li>Does the opening state the recommendation and why it matters now?</li>
+        <li>Are credible options compared against the same relevant criteria?</li>
+        <li>Are costs, timescales, risks and benefits supported by evidence?</li>
+        <li>Are assumptions, ranges and unresolved uncertainties visible?</li>
+        <li>Does each visual answer one question and remain understandable on its own?</li>
+        <li>Is the same information available to people who cannot use the visual?</li>
+        <li>Is supporting detail available without crowding the main message?</li>
+        <li>Will decisions, conditions, risk acceptance and actions be recorded afterwards?</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide gives practical techniques for presenting architecture around UK government services. Except where a source states a requirement within its scope, the structures, examples and questions are teaching aids rather than a mandatory presentation, paper or approval format. Follow the governance and document requirements of the organisation making the decision.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary government, NCSC, W3C and original Pyramid Principle sources below. Guidance changes, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://projectdelivery.gov.uk/library-products/government-functional-standard-govs-002-project-delivery/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Functional Standard GovS 002: Project delivery</a></li>
+          <li><a href="https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government/the-green-book-2026" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">HM Treasury: The Green Book (2026)</a></li>
+          <li><a href="https://www.gov.uk/government/publications/orange-book/the-orange-book-management-of-risk-principles-and-concepts" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">HM Treasury: The Orange Book</a></li>
+          <li><a href="https://www.barbaraminto.com/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Barbara Minto: The Minto Pyramid Principle</a></li>
+          <li><a href="https://www.ncsc.gov.uk/blog-post/drawing-good-architecture-diagrams" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Drawing good architecture diagrams</a></li>
+          <li><a href="https://design-system.service.gov.uk/styles/images/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Design System: Images and accessibility</a></li>
+          <li><a href="https://www.w3.org/WAI/WCAG22/quickref/#use-of-color" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">W3C: WCAG 2.2 use of colour</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-documentation.html">Architecture documentation that people actually read</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-solution-options-and-appraisal.html">Solution options and option appraisal</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decision-records.html">Architecture decision records in practice</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
