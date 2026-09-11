@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to identify technical debt, assess its impact and decide when to reduce, accept or remove it.">
+  <meta property="og:title" content="Managing technical debt &mdash; Architect's Library">
+  <meta property="og:description" content="How to identify technical debt, assess its impact and decide when to reduce, accept or remove it.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Managing technical debt &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Managing technical debt</h1>
+        <p class="lesson-hero__description">Spot technical debt, judge when it matters and decide what to do about it.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>A practical way to distinguish technical debt from old technology or personal preference</li>
+          <li>Ways to find and assess debt across a service</li>
+          <li>A simple approach to recording and prioritising debt</li>
+          <li>How to explain the impact in terms decision makers can act on</li>
+        </ul>
+      </div>
+
+      <h2>What technical debt means</h2>
+
+      <p>Technical debt is a metaphor for technical choices or conditions that make future change or operation harder than it needs to be. Ward Cunningham introduced the debt metaphor in his <a href="https://doi.org/10.1145/157709.157715" target="_blank" rel="noopener">1992 WyCash experience report</a>. The useful idea is the cost that follows a shortcut or incomplete design: you may gain something now, but later work can become harder until the underlying problem is addressed.</p>
+
+      <p>There is no single test that identifies every form of technical debt. For architecture work, use the term when you can point to a technical condition, show the consequence it creates and explain why that consequence matters.</p>
+
+      <figure>
+        <img src="images/lesson18-image1.png" alt="Illustrative chart comparing system age with difficulty of safe change. Both old and new systems can be easy or difficult to change, showing that age alone does not determine technical debt." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Age can be a warning sign, but it is not a measure of technical debt.</figcaption>-->
+      </figure>
+
+      <p>An old system is not automatically debt. Government guidance defines legacy technology using factors such as supplier support, ability to update, cost-effectiveness and risk, rather than age alone. A stable older service may be easier to support than a new service that is poorly understood or difficult to change. <a href="https://www.gov.uk/guidance/managing-legacy-technology" target="_blank" rel="noopener">GOV.UK guidance on managing legacy technology</a> makes the same distinction by focusing on the condition and risk of the technology.</p>
+
+      <p>Preference is not debt either. Disliking a framework, coding style or supplier is not enough. Look for evidence: repeated failures, slow or risky changes, unsupported components, manual workarounds, avoidable support effort or constraints that block a needed outcome.</p>
+
+      <h2>Where technical debt can appear</h2>
+
+      <p>Technical debt is wider than untidy code. It can sit anywhere that makes a service harder to change, operate or support. The areas below are a useful checklist rather than a fixed taxonomy.</p>
+
+      <figure>
+        <img src="images/lesson18-image2.png" alt="Five areas to inspect for technical debt: code and tests, architecture and integration, platforms and dependencies, data, and delivery knowledge and processes." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Look across the service. The visible code problem may only be one part of the constraint.</figcaption>-->
+      </figure>
+
+      <p><strong>Code and test debt</strong> can make a change slower or less predictable because behaviour is difficult to understand or verify. <strong>Architecture and integration debt</strong> appears when coupling, brittle interfaces or earlier structural decisions make a needed change disproportionately difficult.</p>
+
+      <p><strong>Platform and dependency debt</strong> includes technology that is difficult to patch or upgrade, especially when supplier support is ending. The NCSC warns that weaknesses found in unsupported products can remain unpatched, so continued use requires an explicit risk decision and mitigation. <a href="https://www.ncsc.gov.uk/collection/device-security-guidance/managing-deployed-devices/obsolete-products" target="_blank" rel="noopener">NCSC guidance on obsolete products</a> recommends moving away from obsolete systems in the longer term.</p>
+
+      <p>Debt can also sit in <strong>data, knowledge and delivery processes</strong>. Examples include repeated manual data correction, undocumented recovery steps, releases that rely on one person, or a migration that cannot be repeated safely. These are worth recording when they create a real cost, risk or constraint.</p>
+
+      <h2>Assess the impact before you prioritise it</h2>
+
+      <p>Finding debt does not tell you what to fix first. Assess the consequence of leaving it, the urgency of that consequence and the effort or disruption involved in changing it.</p>
+
+      <figure>
+        <img src="images/lesson18-image3.png" alt="An illustrative matrix using risk if left alone and cost to remediate. High-risk low-cost items are addressed first, high-risk high-cost items need planning and funding, lower-risk items may be improved opportunistically or accepted and monitored." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">A simple risk-and-cost matrix can support prioritisation, but the position of each item must come from evidence about your service.</figcaption>-->
+      </figure>
+
+      <p>A small change that removes a material security or reliability risk may deserve immediate attention. A large structural change with the same level of risk may need options, funding and a staged plan. Low-impact debt may be accepted for now, particularly where a service is stable or approaching retirement.</p>
+
+      <p>Do not turn the matrix into a scoring exercise that creates false precision. Record the evidence behind the judgement: support dates, incident history, delivery data, known vulnerabilities, supplier constraints, operational effort or a specific capability that the current design cannot support.</p>
+
+      <h2>Make the impact clear</h2>
+
+      <p>Decision makers do not need a lecture on coupling or test coverage. They need to understand what the technical condition means for the service and what choices are available.</p>
+
+      <figure>
+        <img src="images/lesson18-image4.png" alt="Technical findings such as coupling, weak tests or unsupported technology are translated into delivery, operational, security and cost consequences for decision makers." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Translate technical evidence into consequences the decision owner can assess.</figcaption>-->
+      </figure>
+
+      <p>For example, instead of saying &ldquo;the integration layer is tightly coupled&rdquo;, explain that changing one interface requires coordinated releases across four systems and has delayed the last three changes. Instead of saying &ldquo;the runtime is old&rdquo;, state its support end date, what security updates will stop and what mitigations are available.</p>
+
+      <p>Use numbers only when you can show where they came from. Delivery lead time, incident records, support costs and supplier dates are stronger than invented savings or speculative failure costs.</p>
+
+      <h2>Keep a lightweight debt register</h2>
+
+      <p>A debt register can make important items visible, but it only helps if somebody uses it to make decisions. Ownership does not have to sit with an architecture team: assign each item to the person or team able to manage the consequence and route decisions through the governance that applies to the service.</p>
+
+      <p>For each material item, record:</p>
+      <ul>
+        <li>the technical condition and the evidence for it</li>
+        <li>the consequence of leaving it</li>
+        <li>the affected service, component or outcome</li>
+        <li>the owner and any important dependency or deadline</li>
+        <li>the realistic options, including acceptance where appropriate</li>
+        <li>an indicative effort or cost where it is known</li>
+        <li>the decision, review date or trigger for reconsidering it</li>
+      </ul>
+
+      <p>Do not fill the register with every code smell or improvement idea. Keep items that need visibility beyond normal delivery work. Minor maintainability work can stay in the team backlog if that is where it will actually be managed.</p>
+
+      <h2>Some debt can wait; some gets worse</h2>
+
+      <p>The financial metaphor is useful, but technical debt does not have a literal interest rate. Some items remain broadly stable for a long time. Others become harder or riskier because their circumstances change.</p>
+
+      <figure>
+        <img src="images/lesson18-image5.png" alt="Illustrative chart showing one debt item with broadly stable impact and another whose impact rises after a trigger such as supplier support ending. The curves are illustrative, not forecasts." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Ask what could change the impact: support expiry, growth, new integrations, lost skills or a new service requirement.</figcaption>-->
+      </figure>
+
+      <p>A stable module that rarely changes may be reasonable to leave alone. An unsupported dependency, growing operational workload or architecture that blocks a committed service change may become more urgent. The important question is not &ldquo;how old is this debt?&rdquo; but &ldquo;what happens if we leave it, and what would make that answer change?&rdquo;</p>
+
+      <h2>Deliberate and unplanned debt</h2>
+
+      <p>It is useful to distinguish between a compromise taken deliberately and a problem discovered later. This is a management aid, not a complete classification of technical debt.</p>
+
+      <figure>
+        <img src="images/lesson18-image6.png" alt="Two paths after a technical compromise. Deliberate debt records the reason, consequence, owner and review trigger. Unplanned debt is discovered later and then assessed and assigned an owner." style="width: 100%; display: block;">
+        <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">A deliberate compromise is easier to manage when its consequence, owner and review trigger are recorded.</figcaption>-->
+      </figure>
+
+      <p>A deliberate compromise may be sensible when it protects a more important outcome. For example, a team might choose a simpler implementation for an early release while uncertainty is high. Record why that choice was made, what consequence it creates and what would cause the team to revisit it. An <a href="guide-architecture-decision-records.html">architecture decision record</a> can be appropriate when the compromise is part of an architecture decision.</p>
+
+      <p>Unplanned debt needs the same assessment once it is found. Do not assume it must be removed immediately. Establish the impact, identify an owner and decide whether to reduce it, remove it, contain it or accept it for a defined period.</p>
+
+      <h2>Decide what to do</h2>
+
+      <p>There is no universal percentage of delivery capacity that should be reserved for technical debt. The right response depends on the service, the evidence and the competing priorities.</p>
+
+      <p>Your options usually include improving the problem as part of planned change, funding focused remediation, containing the risk, replacing the affected technology, retiring it, or accepting it with a review trigger. Government guidance explicitly recognises that legacy technology may be retained, retired, re-hosted, repurchased or re-platformed depending on the organisation and the problem. <a href="https://www.gov.uk/guidance/managing-legacy-technology" target="_blank" rel="noopener">Managing legacy technology</a> also recommends continuous improvement to reduce future legacy risk.</p>
+
+      <p>When significant spending is required, present the case as a choice rather than a request to &ldquo;pay down debt&rdquo;. The <a href="https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government/the-green-book-2026" target="_blank" rel="noopener">HM Treasury Green Book</a> requires appraisal to compare options using evidence about objectives, costs, benefits, risks and uncertainty. That means showing what happens under business as usual as well as what the remediation options would achieve.</p>
+
+      <h2>Government services have specific legacy obligations</h2>
+
+      <p>For relevant government digital products and services, technical debt is not only an internal engineering concern. Current cross-government guidance says teams must have a legacy-proofing plan to prevent the build-up of technical debt and future legacy. It also requires associated legacy technology to be assessed through the Legacy IT Risk Assessment Framework. <a href="https://www.gov.uk/guidance/prevent-technical-debt-and-legacy" target="_blank" rel="noopener">GOV.UK guidance on preventing technical debt and legacy</a> sets out the scope and the responsibilities involved.</p>
+
+      <p>The <a href="https://www.gov.uk/service-manual/service-standard/point-11-choose-the-right-tools-and-technology" target="_blank" rel="noopener">Service Standard guidance for choosing technology</a> also expects service teams to understand total cost of ownership, preserve the ability to make different choices and manage legacy technology that the service depends on.</p>
+
+      <h2>What to remember</h2>
+      <ul>
+        <li>Technical debt is about the consequence of a technical condition, not simply the age of the technology.</li>
+        <li>Find the evidence before asking for remediation.</li>
+        <li>Prioritise by impact, urgency and the realistic cost or disruption of action.</li>
+        <li>Record material debt with an owner and a review trigger.</li>
+        <li>Accepting debt can be a valid decision when the consequence is understood and owned.</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical technical-debt considerations for Solution Architects working around UK government services. The categories, matrices and questions are teaching aids rather than a complete classification, scoring method or mandatory process.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the government, NCSC and original source below. Guidance changes, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://doi.org/10.1145/157709.157715" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Ward Cunningham: The WyCash portfolio management system (1992)</a></li>
+          <li><a href="https://www.gov.uk/guidance/managing-legacy-technology" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Managing legacy technology</a></li>
+          <li><a href="https://www.gov.uk/guidance/prevent-technical-debt-and-legacy" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Prevent technical debt and legacy</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-11-choose-the-right-tools-and-technology" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Choose the right tools and technology</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/device-security-guidance/managing-deployed-devices/obsolete-products" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Obsolete products</a></li>
+          <li><a href="https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government/the-green-book-2026" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">HM Treasury: The Green Book (2026)</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decision-records.html">Architecture decision records in practice</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-assessing-current-state.html">Assessing the current state</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-what-a-solution-architect-does.html">What a Solution Architect actually does</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
