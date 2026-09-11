@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to design government data sharing around purpose, legal authority, classification, data protection, quality, interfaces and operational control.">
+  <meta property="og:title" content="Data architecture and data sharing across government &mdash; Architect's Library">
+  <meta property="og:description" content="How to design government data sharing around purpose, legal authority, classification, data protection, quality, interfaces and operational control.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Data architecture and data sharing across government &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Data architecture and data sharing across government</h1>
+        <p class="lesson-hero__description">Make every data flow purposeful, lawful and operable.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How to turn purpose, legal authority and data protection into design constraints</li>
+          <li>How classification, sensitivity and aggregation affect security decisions</li>
+          <li>How to choose and govern APIs, events, batches and analytical data products</li>
+          <li>How identity matching, quality, retention and a DPIA shape the architecture</li>
+        </ul>
+      </div>
+
+      <h2>Start with the purpose and authority</h2>
+
+      <p>Government data sharing is not simply a connection between two systems. It is processing carried out by organisations with defined functions, responsibilities and legal constraints. Before choosing an interface, establish the service outcome, the specific data needed and the authority for each organisation to disclose and use it.</p>
+
+      <p>Avoid saying that a department “owns” personal data or that the data “belongs” to the citizen. Those phrases hide the roles that matter. Identify the controller or controllers, the processors, the organisation responsible for the source and the people the data relates to. Individuals have statutory rights; controllers remain accountable for how and why personal information is used.</p>
+
+      <p>You must identify and document a lawful basis before processing personal information. Public authorities often use the public-task basis for official functions grounded in law, but the correct basis depends on the purpose. Special-category and criminal-offence data can require additional conditions. The current <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/a-guide-to-lawful-basis/" target="_blank" rel="noopener">ICO lawful-basis guidance</a> should be applied with data-protection and legal specialists.</p>
+
+      <p>A data-sharing agreement is good practice because it records purpose, roles, data items, security, retention, individual-rights processes and review arrangements. It is not universally a legal requirement, although a joint-controller arrangement and some sector-specific situations do create particular obligations. Use the <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-sharing/data-sharing-a-code-of-practice/data-sharing-agreements/" target="_blank" rel="noopener">ICO data-sharing agreement guidance</a> and the organisation's required governance route.</p>
+
+      <blockquote>Define why the data may move before deciding how it will move.</blockquote>
+
+      <h2>Treat identity matching as a decision</h2>
+
+      <p>Two services may describe the same person, organisation or location using different identifiers and different evidence. A National Insurance number, NHS number, passport number or local case reference was created for a particular context. Do not assume that one identifier is universal, that every record contains it or that matching values prove two records refer to the same entity.</p>
+
+      <figure>
+        <img src="images/lesson17-image1.png" alt="An identity-matching flow. Source A contains a service identifier and attributes; Source B contains a different identifier and attributes. Matching rules and evidence produce either a confident link, a possible match for review or no match. The result retains provenance, confidence and the rules used." style="width: 100%; display: block;">
+      </figure>
+
+      <p>Make matching rules explicit. Decide which attributes can be used, how inconsistencies are handled, what confidence is sufficient, when a person must review the result and how incorrect links can be challenged and corrected. Retain provenance and the rule or model version used. False matches can expose one person's data to another; missed matches can deny a service or produce the wrong decision.</p>
+
+      <h2>Apply classification without inventing a fourth tier</h2>
+
+      <p>The <a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-html" target="_blank" rel="noopener">Government Security Classifications Policy</a> has three tiers: OFFICIAL, SECRET and TOP SECRET. OFFICIAL-SENSITIVE is an additional marking within OFFICIAL, not a separate classification. It signals that particular care and controls are required for information that meets the policy criteria.</p>
+
+      <figure>
+        <img src="images/lesson17-image2.png" alt="The three Government Security Classification tiers: OFFICIAL, SECRET and TOP SECRET. OFFICIAL-SENSITIVE appears beside OFFICIAL as an additional marking rather than another tier. A separate design assessment combines classification, additional markings, aggregation, threat, impact, law, local policy and service context to select controls." style="width: 100%; display: block;">
+      </figure>
+
+      <p>Classification alone does not approve a hosting model or prescribe one fixed set of product controls. Apply the relevant policy baseline, local security policy and risk assessment. Consider aggregation: a large collection of individually OFFICIAL records may warrant additional controls because compromise could have greater impact. Access should reflect need-to-know and need-to-share, supported by proportionate identity, authorisation, logging, encryption, monitoring and recovery controls.</p>
+
+      <p>Do not classify isolated fields and assume the rest of the service can be treated independently. Assess information assets, flows, derived data, metadata, logs, backups and operational access in context. Separation can reduce exposure when it creates a real security boundary, but it should follow the threat and impact assessment rather than a general rule.</p>
+
+      <h2>Translate data protection into architecture</h2>
+
+      <p>The current UK data-protection framework includes the UK GDPR, the <a href="https://www.legislation.gov.uk/ukpga/2018/12/contents" target="_blank" rel="noopener">Data Protection Act 2018</a> and amendments made by the <a href="https://www.legislation.gov.uk/ukpga/2025/18/contents" target="_blank" rel="noopener">Data (Use and Access) Act 2025</a>. The <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/" target="_blank" rel="noopener">ICO's data-protection principles</a> provide a useful design checklist, but the resulting controls depend on the processing.</p>
+
+      <figure>
+        <img src="images/lesson17-image3.png" alt="Six data-protection design concerns. Purpose and lawful basis map to defined processing and authorised uses; minimisation maps to limited fields and copies; accuracy maps to provenance and correction; storage limitation maps to retention and disposal; security maps to proportionate access and protection; accountability and transparency map to evidence, notices and audit. Individual rights are shown as a cross-cutting process." style="width: 100%; display: block;">
+      </figure>
+
+      <ul>
+        <li><strong>Purpose and lawful basis:</strong> define each processing activity and restrict incompatible or unauthorised use.</li>
+        <li><strong>Data minimisation:</strong> expose, collect and retain only what is necessary for the stated purpose.</li>
+        <li><strong>Accuracy:</strong> retain provenance, support correction and communicate material changes where required.</li>
+        <li><strong>Storage limitation:</strong> implement approved retention and disposal across primary stores, replicas, exports and backups.</li>
+        <li><strong>Security:</strong> use technical and organisational measures proportionate to the risks to people.</li>
+        <li><strong>Accountability and transparency:</strong> retain the decisions, evidence and information needed to explain the processing.</li>
+      </ul>
+
+      <p>The right to erasure is not absolute. It only applies in particular circumstances and has exemptions, including where processing is necessary for a legal obligation or a public task. If a valid request applies, backup data may sometimes remain until overwritten but must be put beyond use. Design a traceable process for relevant rights and use the current <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-erasure/" target="_blank" rel="noopener">ICO erasure guidance</a> rather than promising deletion from every copy in every case.</p>
+
+      <h2>Choose a sharing pattern from the requirements</h2>
+
+      <p>An API, event, batch transfer and analytical data product solve different problems. They do not form a simple scale from modern to legacy or from coupled to decoupled. Start with freshness, volume, availability, consumer needs, replay, correction, security, retention and operational ownership.</p>
+
+      <figure>
+        <img src="images/lesson17-image4.png" alt="Four data-sharing patterns with their typical fit and main design pressure. APIs fit current request-and-response access and require availability, authorisation and versioning. Events fit notification of changes and require ordering, replay and subscriber governance. Batch transfers fit scheduled volumes and require file control, reconciliation and restart. Analytical data products fit combined history and require lineage, quality, access and retention." style="width: 100%; display: block;">
+      </figure>
+
+      <p>For APIs, follow the current <a href="https://www.gov.uk/guidance/gds-api-technical-and-data-standards" target="_blank" rel="noopener">government API technical and data standards</a>: understand consumer needs, check for reusable interfaces, define a specification, control access, log sensitive-data use, version deliberately and operate the service through its lifecycle.</p>
+
+      <p>Events reduce direct runtime dependency when producers publish changes without calling each consumer, but consumers still depend on the event meaning and contract. Define delivery semantics, ordering, replay, correction, schema evolution and the authority under which every subscriber receives the data.</p>
+
+      <p>Batch transfer remains valid for scheduled or high-volume exchange and where source and consumer do not need to be available together. Specify encryption, integrity checking, naming, manifests, duplicate handling, reconciliation, restart, late or missing files and secure disposal. A file transfer without an operational control model is not a complete design.</p>
+
+      <p>An analytical data product can combine or preserve history without loading source systems with analytical queries. It can also create additional copies and responsibilities. Define lineage, transformation rules, access boundaries, quality measures, retention and how corrected source data propagates.</p>
+
+      <h2>Design the contract, not only the connection</h2>
+
+      <p>Every sharing pattern needs an explicit contract. Cover semantics as well as syntax: field meaning, identifiers, optionality, units, time zones, code lists, effective dates, quality expectations and how breaking changes are introduced. State who owns the contract, who supports it and how consumers learn about changes.</p>
+
+      <p>A canonical exchange model can reduce repeated mappings when several systems share stable concepts, but the usual arithmetic is only an illustration. With six systems, a fully connected undirected network has 15 pairwise relationships: 6 &times; 5 &divide; 2 = 15. A shared model may reduce that to six adapters if each system maps once to the common representation. Direction, protocols, separate message types and system-specific exceptions can increase the real count.</p>
+
+      <figure>
+        <img src="images/lesson17-image5.png" alt="A comparison for six systems. The pairwise side shows up to fifteen relationships when every system exchanges directly with every other. The shared-model side shows six adapters to a governed exchange model. A note says these are conceptual relationships, not guaranteed interface counts, and that the shared model introduces central governance and change dependencies." style="width: 100%; display: block;">
+      </figure>
+
+      <p>Use a shared model where the concepts are genuinely common and governance can keep it usable. Do not force every domain into one enterprise schema. A domain-owned contract with shared identifiers, standards and translation at clear boundaries is often easier to evolve.</p>
+
+      <h2>Make quality and provenance operational</h2>
+
+      <p>Do not describe a source as “the single source of truth” without saying for which attribute, purpose and effective time. One organisation may be authoritative for a legal status while another holds the best contact address for its service. Record the source, collection time, transformation and quality state so consumers can judge whether a value is suitable.</p>
+
+      <p>The <a href="https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework" target="_blank" rel="noopener">Government Data Quality Framework</a> uses six dimensions: completeness, uniqueness, consistency, timeliness, validity and accuracy. Select measures that matter to the service rather than reporting every dimension mechanically. Define thresholds, owners, monitoring and what happens when data falls below an acceptable level.</p>
+
+      <p>Plan correction and reconciliation. Decide whether consumers receive corrections automatically, how conflicting values are investigated, whether historical decisions must be revisited and how a downstream team reports a suspected source problem. Quality controls need an operational owner after delivery.</p>
+
+      <h2>Use the DPIA while choices can still change</h2>
+
+      <p>A Data Protection Impact Assessment is mandatory where processing is likely to result in high risk to individuals. It is not required for every government system. Screen major work involving personal data early, document the decision and complete a DPIA before high-risk processing begins. The <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/data-protection-impact-assessments/" target="_blank" rel="noopener">ICO DPIA guidance</a> identifies relevant criteria and activities.</p>
+
+      <figure>
+        <img src="images/lesson17-image6.png" alt="An iterative DPIA design loop. Screen the proposed processing, describe its purpose and flows, assess necessity and risks to people, choose mitigations and architecture controls, then record the outcome and review triggers. A return arrow shows that material changes restart the loop. Unmitigated high risk requires consultation with the ICO before processing." style="width: 100%; display: block;">
+      </figure>
+
+      <p>The DPIA should describe the processing, assess necessity and proportionality, examine risks to people's rights and freedoms and record measures that address them. Its findings should create or change requirements for access, minimisation, transparency, retention, security and rights handling. Ask the Data Protection Officer for advice and record any difference of opinion.</p>
+
+      <p>Keep the assessment under review. A new purpose, dataset, matching method, recipient, supplier, location, retention period or automated decision may change the nature, scope, context or risk of the processing. If high risk remains after mitigation, consult the ICO before starting the processing.</p>
+
+      <h2>Questions to ask before approving a data flow</h2>
+
+      <ul>
+        <li>What outcome and specific purpose require this data?</li>
+        <li>Which organisation is controller, joint controller or processor at each stage?</li>
+        <li>What legal power, lawful basis and additional condition apply?</li>
+        <li>Which fields are necessary, and what prevents wider use?</li>
+        <li>How are identity matches made, reviewed, corrected and explained?</li>
+        <li>What classification, markings, aggregation effects and local policies apply?</li>
+        <li>Which sharing pattern best fits freshness, volume, availability and recovery needs?</li>
+        <li>Who owns the contract, source quality, operation and incident response?</li>
+        <li>Where do derived data, exports, logs, caches and backups go?</li>
+        <li>How are retention, disposal and applicable individual rights carried out?</li>
+        <li>Has DPIA screening happened early enough to influence the design?</li>
+        <li>What change would require the agreement, risk assessment or DPIA to be reviewed?</li>
+      </ul>
+
+      <p>The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener">Technology Code of Practice</a> expects government technology to make better use of data, use open standards and address security and privacy. The architecture should make the evidence behind those choices visible rather than simply stating compliance.</p>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide explains general data-architecture considerations for UK central government. It does not replace legal or data-protection advice, departmental security and information-management policy, records obligations, sector-specific rules or the judgement of accountable specialists.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026. ICO guidance is being updated following the Data (Use and Access) Act 2025, so check the current sources before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/a-guide-to-lawful-basis/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: Lawful basis</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-sharing/data-sharing-a-code-of-practice/data-sharing-agreements/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: Data-sharing agreements</a></li>
+          <li><a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Security Classifications Policy</a></li>
+          <li><a href="https://www.legislation.gov.uk/ukpga/2018/12/contents" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Data Protection Act 2018</a></li>
+          <li><a href="https://www.legislation.gov.uk/ukpga/2025/18/contents" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Data (Use and Access) Act 2025</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: Data-protection principles</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-erasure/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: Right to erasure</a></li>
+          <li><a href="https://www.gov.uk/guidance/gds-api-technical-and-data-standards" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: API technical and data standards</a></li>
+          <li><a href="https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Data Quality Framework</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/data-protection-impact-assessments/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: Data Protection Impact Assessments</a></li>
+          <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-functional-and-nonfunctional-requirements.html">Functional and non-functional requirements</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-security-privacy-trust.html">Security, privacy and trust</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="cloud.html">Cloud fundamentals</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
