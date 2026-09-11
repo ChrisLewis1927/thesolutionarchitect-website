@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="You can run a discovery session, fill a backlog with user stories, and write a requirements catalogue a business analyst would be proud of. Then someone says &quot;great, now design it&quot; and the page stays blank. This is the gap nobody teaches: how to turn a pile of captured requirements into a high-level architecture. Here&#39;s the method, and a starter set of patterns to build from.
+">
+  <meta property="og:title" content="From requirements to design &mdash; The Solution Architect">
+  <meta property="og:description" content="You can run a discovery session, fill a backlog with user stories, and write a requirements catalogue a business analyst would be proud of. Then someone says &quot;great, now design it&quot; and the page stays blank. This is the gap nobody teaches: how to turn a pile of captured requirements into a high-level architecture. Here&#39;s the method, and a starter set of patterns to build from.
+">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="from-requirements-to-design.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>From requirements to design &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Architecture</span>
+        <h1 class="article__title">From requirements to design</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>8 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>There&#39;s a particular kind of stuck that nobody warns you about.</p>
+<p>You can run a good discovery session. You can get the right people in the room, ask sensible questions, separate the must-haves from the nice-to-haves, and write up a requirements catalogue that&#39;s genuinely solid. You understand the business problem better than anyone. And then someone says &quot;great, so what&#39;s the design?&quot; and you realise you have absolutely no idea how to get from the pile of requirements in front of you to a diagram with boxes on it.</p>
+<p>I know that stuck feeling because it was mine. For a long time I could do the front half of the job well and froze at the back half. The requirements were never the problem. The blank canvas was. Nobody had ever shown me the bit in the middle, the actual mechanics of turning &quot;here is what it must do&quot; into &quot;here is how it will be built.&quot;</p>
+<p>It turns out there is a method. It isn&#39;t magic and it isn&#39;t talent you&#39;re born with. This is the part I wish someone had handed me years ago.</p>
+<h4>The design is hiding in the requirements</h4>
+<p>The first thing to unlearn is the idea that you invent a design. You don&#39;t. A good high-level design is mostly assembled from the constraints you&#39;ve already captured. Every meaningful requirement points at a decision, and if you&#39;ve done discovery properly the requirements have quietly made most of the big calls for you. The job is to read them in the right order and let them push you towards the shape.</p>
+<p>Which means the design work starts back in discovery, with the questions you ask. The technical ones matter as much as the functional ones, and they&#39;re the ones business-trained architects tend to skip. How quickly must the service recover if it falls over? How much data can it afford to lose? How spiky is the traffic, and are there several different spikes? How sensitive is the data, and where must it legally live? Who runs this once it&#39;s built, and do they want to manage servers at all? None of those are feature questions. All of them are design questions wearing requirement clothes.</p>
+<p>If a stakeholder can&#39;t answer one of them, that&#39;s not a dead end. That&#39;s a finding. Write down the assumption you&#39;re making and flag it. An unanswered &quot;how fast must it recover&quot; is itself a design input, because it tells you the organisation hasn&#39;t thought about resilience, and now you get to lead that conversation.</p>
+<h4>Read the requirements as decisions</h4>
+<p>Once you have the answers, the trick is to stop reading requirements as a feature list and start reading them as a series of forks in the road.</p>
+<p>&quot;The data is a set of records that link together&quot; is not a feature. It&#39;s a decision: you need a relational database, not a pile of files and not a key-value store. &quot;Customers can change their order until an 11pm cut-off, then we generate a report&quot; tells you there&#39;s a scheduled job and a moment where state freezes. &quot;Sign-ups spike hard whenever we run a TV advert and the site fell over last time&quot; is the single most important sentence in the brief, because it tells you the front door has to absorb a flood without passing it straight through to the database.</p>
+<p>Get into the habit of asking, for every requirement, &quot;what does this force me to choose?&quot; Do it line by line and you&#39;ll find the architecture starts to assemble itself in front of you. Most requirements only point one way once you know what you&#39;re looking at.</p>
+<h4>Lean on patterns instead of starting blank</h4>
+<p>Here&#39;s the part that closes the gap fastest. You almost never design from nothing, because the problem in front of you is nearly always a variation on a problem that has been solved thousands of times. Experienced architects aren&#39;t smarter in the moment. They&#39;ve just seen the shapes before and recognise which one they&#39;re looking at.</p>
+<p>So the fastest way to get good is to learn a small library of common shapes and what each is for. These aren&#39;t a formal standard with a capital S, and you should be honest about that if anyone asks. They&#39;re a practical starter set, the arrangements you&#39;ll meet again and again, and the major cloud providers publish reference architectures for every one of them. Learn these and you have a vocabulary to reach for instead of a blank page.</p>
+<p>The static site. A website with no real back end to speak of: marketing pages, documentation, a brochure. Files in object storage with a content delivery network in front. Cheap, fast, almost nothing to break. The mistake here is over-building it. If the requirements don&#39;t describe logic and data, don&#39;t reach for servers.</p>
+<p>The three-tier web application. The workhorse, and probably 60% of what you&#39;ll ever build. A presentation layer the user touches, an application layer that holds the logic, and a data layer that stores the records, kept in separate tiers so each can scale and be secured on its own. Anything with user accounts, a database and pages that do things tends to start here.</p>
+<p>The serverless application. The same logic as a three-tier app, but instead of running servers that sit there waiting, your code runs only when something calls it, and you pay close to nothing when it&#39;s idle. The natural fit for spiky or unpredictable load, and for small teams who don&#39;t want to babysit infrastructure. The trap is reaching for it reflexively. Steady, predictable, heavy workloads sometimes belong on something more conventional.</p>
+<p>The containerised application. For when you&#39;ve outgrown a simple deployment but want to run the same thing reliably across environments. Containers package an application with everything it needs to run, and an orchestrator keeps the right number of copies healthy. Powerful, and more operational overhead. The requirements should justify it before you choose it.</p>
+<p>The event-driven, decoupled architecture. The answer to that &quot;the site fell over during the advert&quot; problem. Instead of the front door passing every request straight to the back end, requests land in a queue and are processed at a steady pace the system can actually handle. The flood fills the buffer instead of drowning the database. If your requirements mention spikes, bursts, or any rhythm where load arrives faster than it can be dealt with, this is the pattern that saves you.</p>
+<p>The data pipeline. For requirements about reporting, analytics and &quot;we need to see trends.&quot; Data flows from where it&#39;s created into a store designed for querying, gets transformed along the way, and comes out the far end as dashboards. Whenever ops or policy say &quot;we currently spend half of Monday pulling numbers into a spreadsheet by hand,&quot; this is the shape that answers it.</p>
+<p>The hybrid or migration architecture. Real organisations rarely start from a clean sheet. There&#39;s an old system that can&#39;t move yet, a data centre mid-exit, a thing that has to keep talking to a thing. This pattern is about the bridge between old and new, and in government it&#39;s the rule rather than the exception.</p>
+<p>Most real designs are two or three of these stitched together, not one. A grant-application service might be a three-tier app for the portal, a queue to absorb the launch-day rush, a scheduled job for the overnight reporting, and a data pipeline for the dashboards. Recognising which patterns combine is most of the skill.</p>
+<h4>Then harden it before anyone else does</h4>
+<p>A design that works in your head works on a good day. The step that separates a credible architect from a hopeful one is walking the bad day on purpose, before a review board does it for you.</p>
+<p>Point at every box in your diagram and ask what happens when it dies. If the answer is &quot;the service goes down&quot; or &quot;we lose data,&quot; you&#39;ve found a single point of failure to fix or a risk to name out loud. Ask roughly where the money goes, so you can defend value for money without being ambushed. Ask how many separate locked doors stand between an attacker and the sensitive data, because a review will want layers, not one big wall. You don&#39;t need every answer to be perfect. You need to have asked the questions first, and to have a deliberate position on each, including the trade-offs you&#39;re choosing to accept.</p>
+<p>That last part matters more than it sounds. &quot;We&#39;re single-region because the recovery target gives us room and multi-region isn&#39;t worth the cost&quot; is a strong answer. The same design with no explanation is a weakness. The design didn&#39;t change. Whether you&#39;d thought about it did.</p>
+<h4>Where to start if this is you</h4>
+<p>If you recognise yourself in the stuck feeling at the top of this piece, the way out is not more theory. It&#39;s reps. Take a service you already understand and design it end to end: ask the technical questions, read each requirement as a decision, pick the patterns, draw it, then walk the bad day. Do it badly the first time. Do another the week after. The recognition that experienced architects make look like instinct is just a few dozen of these quietly accumulated.</p>
+<p>The requirements were never your weak spot. The blank canvas was, and the blank canvas is beatable. You read the constraints, you reach for a shape you&#39;ve seen before, and you pressure-test it before someone else does. That&#39;s the whole trick, and nobody is born knowing it.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

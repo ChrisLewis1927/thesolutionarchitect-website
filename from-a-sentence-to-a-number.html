@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="You can fill a requirements catalogue a business analyst would envy, then freeze the moment someone says &quot;now design it&quot;. The gap is smaller than it feels. It&#39;s the move from a sentence a stakeholder said to the quality it&#39;s really asking for, and from that quality to a number you can build against. Here&#39;s the move.">
+  <meta property="og:title" content="From a sentence to a number &mdash; The Solution Architect">
+  <meta property="og:description" content="You can fill a requirements catalogue a business analyst would envy, then freeze the moment someone says &quot;now design it&quot;. The gap is smaller than it feels. It&#39;s the move from a sentence a stakeholder said to the quality it&#39;s really asking for, and from that quality to a number you can build against. Here&#39;s the move.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="from-a-sentence-to-a-number.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>From a sentence to a number &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Architecture</span>
+        <h1 class="article__title">From a sentence to a number</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>10 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>There&#39;s a move in this job that no book teaches you, and you don&#39;t notice it&#39;s missing until the moment you need it.</p>
+<p>You can run a good discovery session. You can separate the must-haves from the nice-to-haves and write up a requirements catalogue that a business analyst would be proud of. You understand the problem better than anyone in the room. Then someone says &quot;great, so what&#39;s the design?&quot; and you reach for the patterns you&#39;ve read about a hundred times, and nothing connects. The patterns are all still sitting there in your head. They just won&#39;t attach to the sentences in front of you.</p>
+<p>I know that gap because I lived in it for years. The front half of the job came easily. The requirements were never my problem. What I couldn&#39;t do was get from &quot;it needs to be reliable&quot; to an actual decision, and reading more about three-tier apps never once helped, because the thing I was missing wasn&#39;t in those books.</p>
+<p>Here&#39;s what the books give you. They give you destinations: three-tier, serverless, event-driven, the whole catalogue of shapes. What no book drills is the road that gets you from a sentence a stakeholder said to the right destination. And that road has a middle to it that almost nobody names out loud.</p>
+<h3><strong>There&#39;s a junction in the middle</strong></h3>
+<p>Think of the work as a bridge with three parts. What they say, then what they actually mean, then what you reach for. The first part is the sentence the stakeholder gives you. The third part is the pattern you&#39;ll eventually pick. The part in the middle is a quality attribute, and it&#39;s the part that connects the other two.</p>
+<p>If you&#39;re business-trained, you probably own the first part already. Gathering requirements is the thing you&#39;re good at. And you&#39;ve spent your reading time staring at the third part, trying to memorise the shapes. The middle is the bit that was never installed, which is exactly why the shapes wouldn&#39;t attach. There is no road straight from the sentence to the pattern. You go sentence, then attribute, then pattern, always through the middle. Name the quality first and the shape stops being a guess.</p>
+<h3><strong>Most requirements are a chord, not a note</strong></h3>
+<p>A stakeholder almost never hands you one clean quality. They name one and quietly bury two or three more underneath it.</p>
+<p>&quot;It can&#39;t fall over at our busiest time of year&quot; sounds like a single thing. It&#39;s at least three. It&#39;s availability, because they want it up. It&#39;s scalability, because &quot;busiest time of year&quot; is a seasonal spike and the real design driver is load. And it&#39;s probably durability too, because if it does stumble under that load, nobody wants to lose what people submitted. The junior move is to design for the word they actually said. The experienced move is to hear the whole chord and write down every note, including the ones nobody played out loud.</p>
+<p>So your first reflex on any requirement, before anything else, is to ask which qualities are really in play here. Not just the one in the sentence. The hidden ones are usually where the project lives or dies.</p>
+<h3><strong>The eight you design against</strong></h3>
+<p>Here is the working set I keep in my head. Eight qualities that apply to any system anywhere, whether it&#39;s a bank, a shop or a mobile game. The trick to each one is that it resolves to a question, and the question resolves to a number.</p>
+<p><strong>Availability</strong>. Is it up when someone needs it? The question is what an hour of downtime actually costs, and when it would hurt most. The number is a percentage you&#39;re designing to, paired with a price for being down.</p>
+<p><strong>Scalability</strong>. Does it hold up when load climbs? The question is about volumes and spikes: daily, seasonal, event-driven, and which direction they&#39;re trending. The number is the peak load you must absorb and the shape of the curve getting there.</p>
+<p><strong>Performance</strong>. Is it quick enough? The question is what response time is acceptable, and at what load. The number is a latency target tied to a stated level of demand, because &quot;fast&quot; with no load behind it means nothing.</p>
+<p><strong>Security</strong>. Who is allowed to see and do what, and how is the data protected in flight and at rest? The question is how sensitive the data is and who genuinely needs which access. The output here is a data classification and an access map. Resist the urge to write down the mechanism yet. The access model and the encryption are answers, and they come later.</p>
+<p><strong>Durability</strong>. If you lost the last few minutes of this data, what would break? The question is how much data the organisation can actually afford to lose. The number is an acceptable data-loss window, and it&#39;s the one most people forget to ask for.</p>
+<p><strong>Recoverability</strong>. How fast can you be back after a fall? The question is how long the service can be down before it genuinely hurts. The number is a recovery time. And recoverability is always a pair: a recovery time for the service and a data-loss window for the data. Capture the first and miss the second and you&#39;ve designed half a resilience story.</p>
+<p><strong>Cost</strong>. What&#39;s the budget posture? The question covers the build budget, the run budget, and what you&#39;d be willing to trade away if cost started to bite. The output is a budget and an honest appetite for trade-offs.</p>
+<p><strong>Operability</strong>. Who runs this once it&#39;s live, and what can they handle? The question is whether there&#39;s an internal team, what they want to keep in-house, and what should sit with a managed service. The output is an operating model, not a feature.</p>
+<p>Two of those eight get skipped far more than the rest. Durability and operability are the quiet ones. If you find yourself never reaching for them, that&#39;s worth knowing about yourself, because they don&#39;t go away just because nobody asked.</p>
+<h3><strong>The number is the deliverable, not the pattern</strong></h3>
+<p>Look again at the third part of each attribute above. Every one of them is a question, and the question exists to force out a number. The number is the deliverable. That distinction is the whole game at this stage.</p>
+<p>&quot;It needs to be reliable&quot; is useless to a design. You can&#39;t build against it and you can&#39;t defend it. &quot;Ninety-nine point nine percent, and an hour of downtime costs us tens of thousands in lost applications&quot; designs itself. That single line rules one architecture out and rules another one in, and when a board asks why, you have the figure ready. The conversation that produced it is the conversation you&#39;re already good at. You were just never aiming it at a number.</p>
+<p>So here&#39;s the line worth pinning above your desk. A requirement you can&#39;t put a number on isn&#39;t a requirement yet. It&#39;s a question you haven&#39;t finished asking. The requirement with no number is the one that sinks the project six months later, because everyone assumed a different value for the same word.</p>
+<h3><strong>The tier that sits on top, for public sector</strong></h3>
+<p>The eight are universal. They hold for any system on earth. In government there&#39;s a second tier stacked on top of them, and it behaves differently, so it&#39;s worth keeping the two apart in your head.</p>
+<p><strong>Compliance</strong>. The frameworks and the law you simply have to meet: the Service Standard, the Technology Code of Practice, UK GDPR, plus whatever sector rules apply. This resolves to a list, not a number.</p>
+<p><strong>Accessibility</strong>. WCAG 2.2 AA, and it&#39;s a genuine design driver rather than a box at the end. It pushes you towards semantic markup, real contrast, and nothing that signals meaning by colour alone. It resolves to a standard you meet and can evidence.</p>
+<p><strong>Data residency</strong>. Where can this data legally and physically live? This is the one I&#39;d flag hardest for public sector work. The OFFICIAL and SECRET hosting boundary is a genuine show-stopper. If a dataset turns out to need SECRET-rated hosting, it rewrites your whole region and account strategy, and you want to know that on day one, not at the governance board. It resolves to a boundary.</p>
+<p><strong>Retention</strong>. How long must you keep it, and when are you obliged to delete it? This resolves to periods and rules.</p>
+<p>The two tiers do different jobs, and that&#39;s the point of separating them. Tier one is what you design against, and every item turns into a number that picks a pattern. Tier two is what you must satisfy, and every item turns into a list or a boundary. So if a compliance question produces &quot;I&#39;d want a list of every framework and law in scope,&quot; that&#39;s exactly the right shape of answer for that kind of requirement, even though it never lands on a percentage. Don&#39;t go hunting for a number where a list is what the work actually needs.</p>
+<h3><strong>Security is not a bucket</strong></h3>
+<p>One habit is worth drilling above all the others. &quot;Security&quot; quietly turns into a catch-all, and a lot of requirements end up dumped there that don&#39;t belong.</p>
+<p>Half the time, &quot;the data must be safe&quot; or &quot;we must comply with X&quot; is really a compliance, residency or retention requirement wearing a security coat. And it matters which, because each one sends you to a completely different first action. An access design, an accessibility audit, a residency decision and a retention policy are four separate pieces of work, and they&#39;re nothing like each other. Reach for &quot;security&quot; by reflex and you&#39;ll start designing access control when the real job was an audit or a hosting decision.</p>
+<p>So when a requirement smells like security, stop for a second and run it past that second tier first. Is this confidentiality, or compliance, or accessibility, or residency? Most of the time the honest answer reshuffles where you start.</p>
+<h3><strong>Where to start if this is you</strong></h3>
+<p>If you recognised yourself in the gap at the top of this piece, the way out isn&#39;t more reading. It&#39;s reps.</p>
+<p>Take ten requirements from a service you already understand. For each one, write down four things: the sentence the way the stakeholder would actually say it, the quality or qualities sitting underneath it with the hidden ones included, the question you&#39;d ask to turn it into a number, and the number you&#39;d push for. Try to spread them across the eight attributes, because the gaps will teach you something. The attributes you keep skipping are the blind spots you didn&#39;t know you had.</p>
+<p>You&#39;ll learn more from ten of those than from a shelf of architecture books, and the reason is the same reason the books frustrated you in the first place. The patterns were never the hard part. The translation was, and translation is a skill rather than a talent, which means it answers to practice.</p>
+<p>A sentence comes in. You name the quality underneath it, and the ones hiding behind that. You ask the question that turns it into a number, or into a list if it lives in the second tier. By the time you&#39;ve done that across a whole brief, the design has half-built itself before you&#39;ve drawn a single box. That&#39;s the move nobody hands you, and it&#39;s the one that makes everything after it possible.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

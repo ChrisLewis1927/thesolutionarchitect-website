@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="This post covers the main choices involved in running containerised applications on AWS: how containers differ from virtual machines, how Amazon ECR, ECS, EKS and Fargate fit together, the other compute options available, and how state and observability affect the design.
+
+- Explain the practical difference between a container and a virtual machine.
+- Explain the roles of Amazon ECR, ECS and EKS.
+- Compare managed and self-managed compute options for container workloads.
+- Choose storage and observability approaches from workload requirements rather than service names.
+">
+  <meta property="og:title" content="Designing for containerised workloads on AWS &mdash; The Solution Architect">
+  <meta property="og:description" content="This post covers the main choices involved in running containerised applications on AWS: how containers differ from virtual machines, how Amazon ECR, ECS, EKS and Fargate fit together, the other compute options available, and how state and observability affect the design.
+
+- Explain the practical difference between a container and a virtual machine.
+- Explain the roles of Amazon ECR, ECS and EKS.
+- Compare managed and self-managed compute options for container workloads.
+- Choose storage and observability approaches from workload requirements rather than service names.
+">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="designing-for-containerised-workloads-on-aws.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Designing for containerised workloads on AWS &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Cloud</span>
+        <h1 class="article__title">Designing for containerised workloads on AWS</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>8 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>Containers give you a repeatable way to package and run software, but choosing to use containers does not tell you how the application should be structured or which AWS services it should use. Those decisions still start with the workload.</p>
+<h2>Start with the workload</h2>
+<p>Do not begin by asking whether the application should use ECS, EKS or Fargate. First write down what the workload needs. The answers give you criteria against which the AWS options can be compared.</p>
+<ul>
+<li><strong>Does the organisation already use Kubernetes?</strong> - Existing Kubernetes skills, tooling and platform standards may make EKS a better organisational fit than introducing a second orchestration model.</li>
+<li><strong>Does the workload need specialist compute or host access?</strong> - Requirements such as GPUs, privileged access, particular instance types or host-level software affect which compute options are available.</li>
+<li><strong>Is demand steady, variable or unpredictable?</strong> - The utilisation pattern affects scaling, capacity management and cost.</li>
+<li><strong>What data must survive when a container is replaced?</strong> -This determines whether the application needs a database, object storage, block storage or a shared file system.</li>
+<li><strong>What are the availability and recovery requirements?</strong> - These affect placement, scaling, storage and failure-handling decisions.</li>
+<li><strong>What must be logged, measured and traced?</strong> - Containers are disposable, so operational data normally needs to leave the container.</li>
+</ul>
+<p><em><strong>This is the architecture work. The service choice comes afterwards.</strong></em></p>
+<h2>Containers do not mean microservices</h2>
+<p>Loose coupling is useful because a component can change or fail without every dependent component having to change with it. A load balancer is one way to achieve this when several interchangeable targets serve request traffic. Queues, events, streams and workflows are other ways of reducing direct dependencies.</p>
+<p><img src="/images/blog/1-tight-versus-loose-coupling.png" alt=""></p>
+<p>The important point is the interface between components, not the presence of a particular AWS service.</p>
+<p>The same applies to microservices. A monolith can be containerised, and a containerised application does not need to be decomposed into microservices.</p>
+<p><img src="/images/blog/2-monolith-v-microservices.png" alt=""></p>
+<p>Microservices can allow parts of an application to be deployed and scaled independently, but they also introduce network communication, distributed failure modes, additional security boundaries and more operational components. Use them when those trade-offs are justified by the application&#39;s domain, scaling needs, release model or team structure.</p>
+<h2>What a container is</h2>
+<p>A virtual machine behaves like a separate computer, with its own operating system running on virtualised hardware. A container normally runs as an isolated process while sharing the host operating system kernel with other containers on that host.</p>
+<p><img src="/images/blog/3-virtual-machines-v-containers.png" alt=""></p>
+<p>A container image packages the application with the files, libraries and configuration needed for it to run. Images are usually smaller than complete virtual-machine images, and containers can generally be started with less infrastructure overhead than provisioning a new VM.</p>
+<p>Packaging the runtime environment also improves consistency between environments. It does not make the application completely independent of its surroundings: processor architecture, configuration, networking, identity, storage and external services still matter.</p>
+<h2>Images, layers and Amazon ECR</h2>
+<p>A container image is made from read-only layers. When a container runs, it receives a writable layer for changes made during that container&#39;s lifetime. Removing the container removes that writable layer.</p>
+<p><img src="/images/blog/4-container-image-layers.png" alt=""></p>
+<p>Keep production images focused on what the application actually needs. Smaller images require less storage and network transfer and can reduce the number of unnecessary packages and vulnerabilities shipped with the application.</p>
+<p>Container images commonly use the Open Container Initiative image format. Amazon Elastic Container Registry (ECR) stores Docker and OCI-compatible images and artefacts. Private repositories can be protected with IAM and repository policies, and ECR provides vulnerability-scanning capabilities.</p>
+<p>Image tags are convenient labels, but deployments that require an exact immutable image can identify it by its content digest.</p>
+<p><img src="/images/blog/4.620build20deploy-20pipeline.png" alt=""></p>
+<h2>Choose the orchestrator: ECS or EKS</h2>
+<p>Once there are enough containers that deployment, replacement and scaling need to be coordinated, an orchestrator manages that work.</p>
+<p>Amazon Elastic Container Service (ECS) is AWS&#39;s native container orchestration service. Amazon Elastic Kubernetes Service (EKS) provides managed Kubernetes on AWS.</p>
+<h3>Consider ECS when</h3>
+<ul>
+<li>The team primarily works with AWS services.</li>
+<li>There is no requirement for Kubernetes APIs or tooling.</li>
+<li>You want an AWS-native orchestration model with fewer Kubernetes-specific concepts to operate.</li>
+<li>ECS-specific workload definitions are acceptable.</li>
+</ul>
+<h3>Consider EKS when</h3>
+<ul>
+<li>Kubernetes is already an organisational platform standard.</li>
+<li>Existing workloads or tooling depend on Kubernetes APIs.</li>
+<li>The team already has Kubernetes skills and operating practices.</li>
+<li>The Kubernetes ecosystem provides a specific benefit.</li>
+</ul>
+<p>Kubernetes provides a common orchestration API, although AWS-specific integrations can still reduce portability. EKS also leaves more Kubernetes concepts and lifecycle decisions relevant to the team, although EKS Auto Mode can manage more of the underlying infrastructure.</p>
+<p>Do not choose EKS simply because Kubernetes is widely used. Choose it when Kubernetes itself provides value.</p>
+<h2>Choose where the containers run</h2>
+<p>Orchestration and compute are separate decisions. The available compute models also differ between ECS and EKS.</p>
+<h3>ECS compute options</h3>
+<p><strong>AWS Fargate</strong> runs ECS tasks without requiring you to provision or patch EC2 instances. You specify task CPU and memory, networking and IAM configuration. AWS provides the underlying compute capacity, while you still decide how the application itself scales.</p>
+<p><strong>Amazon ECS Managed Instances</strong> is useful when the workload needs capabilities from the EC2 instance range, such as particular processors, GPUs or other host capabilities, but you still want AWS to manage provisioning, scaling, patching and maintenance of the instances.</p>
+<p><strong>EC2 capacity providers</strong> leave more responsibility with your team. They make sense when you need control that the managed options do not provide, such as custom host configuration or other instance-level requirements.</p>
+<h3>EKS compute options</h3>
+<p>EKS can run workloads on EC2-backed nodes or Fargate. EKS Auto Mode can also manage much of the node lifecycle and associated compute, networking, load-balancing and storage infrastructure.</p>
+<p>Fargate for EKS has limitations that matter when evaluating it. For example, it does not support GPUs, privileged containers, DaemonSets, EBS volumes or Fargate Spot.</p>
+<p>The decision is therefore not simply &quot;managed equals Fargate&quot; and &quot;control equals EC2&quot;. Compare the workload&#39;s host requirements, operational model, scaling pattern and expected utilisation before choosing.</p>
+<h2>Keep persistent state outside disposable containers</h2>
+<p>A container should be replaceable without losing important application state. That does not mean every workload is stateless. It means persistent state should be stored somewhere with the required durability and lifecycle.</p>
+<ul>
+<li><strong>Object storage</strong> - For documents, images, exports and other object data, Amazon S3 may be appropriate.</li>
+<li><strong>Relational or application data</strong> - For persistent relational data, a managed database such as Amazon RDS or Aurora may be appropriate.</li>
+<li><strong>Shared file-system access</strong> - For workloads that need a shared file system, Amazon EFS may be appropriate.</li>
+<li><strong>Persistent block storage</strong> - For workloads that need block storage, Amazon EBS may be appropriate where it is supported by the selected orchestration and compute model.</li>
+<li><strong>Temporary working data</strong> - Ephemeral task, pod or node storage can be used where losing the data is acceptable.</li>
+</ul>
+<p>Storage semantics come before the service name. EFS and EBS are not interchangeable: one provides shared file storage while the other provides block storage, and support differs between ECS, EKS and their compute options.</p>
+<h2>Send logs and metrics somewhere that survives the container</h2>
+<p>Containers can be replaced frequently, so do not rely on files inside a container as the permanent operational record. Applications commonly write logs to standard output and standard error and have the container platform forward them to a logging destination.</p>
+<p>Amazon CloudWatch provides metrics and logs for AWS container workloads. ECS Container Insights with enhanced observability can add task-level and container-level performance information and make it easier to correlate metrics with logs.</p>
+<p>FireLens is an ECS log-routing capability. It can use Fluent Bit or Fluentd to route container logs to supported AWS or partner destinations and can be used with ECS workloads running on Fargate or EC2-based capacity.</p>
+<p>EKS has its own observability choices, including CloudWatch, Prometheus and OpenTelemetry tooling. The right combination depends on what the organisation already operates and which metrics, logs and traces are needed.</p>
+<h2>Summary</h2>
+<p>Containers package an application and its runtime dependencies, but they do not decide the shape of the application around them. Start with the workload and its operational requirements.</p>
+<p>Use ECR to store container images. Choose ECS when its AWS-native orchestration model fits the organisation, or EKS when Kubernetes provides a specific benefit. Then choose a compute model according to the workload&#39;s host requirements, operational responsibility, scaling pattern and cost profile.</p>
+<p>Finally, treat containers as replaceable. Persistent application data and operational evidence should live in services whose lifecycle is independent of an individual container.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

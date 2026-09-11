@@ -31,6 +31,33 @@ function sanitiseHtml(html) {
   return s;
 }
 
+function isExternalHref(href) {
+  if (typeof href !== 'string') return false;
+  // Treat only absolute http(s) URLs as external. Relative links, anchors,
+  // mailto:, tel: etc. stay in the same tab.
+  return /^https?:\/\//i.test(href);
+}
+
+// Custom marked renderer: external links open in a new tab with safe rel.
+// Internal links (relative, #anchors, mailto:) are left untouched.
+function configureMarked() {
+  marked.use({
+    renderer: {
+      link(token) {
+        const href = token.href || '';
+        const titleAttr = token.title ? ` title="${token.title}"` : '';
+        // token.tokens holds the inline content; render it so nested
+        // formatting (bold, code, etc.) is preserved.
+        const text = this.parser.parseInline(token.tokens);
+        if (isExternalHref(href)) {
+          return `<a href="${href}"${titleAttr} target="_blank" rel="noopener noreferrer">${text}</a>`;
+        }
+        return `<a href="${href}"${titleAttr}>${text}</a>`;
+      },
+    },
+  });
+}
+
 function formatDate(dateStr) {
   const [year, month, day] = dateStr.split('-').map(Number);
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -173,6 +200,7 @@ function buildBlog() {
 async function main() {
   const { marked: markedLib } = await import('marked');
   marked = markedLib;
+  configureMarked();
   buildBlog();
 }
 

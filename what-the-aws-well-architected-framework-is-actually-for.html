@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The AWS Well-Architected Framework helps teams assess cloud workloads against six pillars covering operations, security, reliability, performance, cost and sustainability. This guide explains what the framework is, how reviews work, and why trade-offs matter.">
+  <meta property="og:title" content="What the AWS Well-Architected Framework is actually for &mdash; The Solution Architect">
+  <meta property="og:description" content="The AWS Well-Architected Framework helps teams assess cloud workloads against six pillars covering operations, security, reliability, performance, cost and sustainability. This guide explains what the framework is, how reviews work, and why trade-offs matter.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="what-the-aws-well-architected-framework-is-actually-for.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>What the AWS Well-Architected Framework is actually for &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Cloud</span>
+        <h1 class="article__title">What the AWS Well-Architected Framework is actually for</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>6 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>Sooner or later someone on a cloud programme says the design needs to be &quot;well architected&quot;. Heads nod. The phrase turns up in the business case, the architecture review board paper and the supplier&#39;s slide deck, and nobody stops to ask what it would take to prove it.</p>
+<p>The AWS Well-Architected Framework is a structured set of awkward questions about a system, asked before an outage, a breach or an invoice asks them for you. That&#39;s all it is. It&#39;s more useful than it sounds.</p>
+<h2>Where it came from</h2>
+<p>AWS began developing the ideas behind the framework internally in 2012 and <a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/document-revisions.html" target="_blank" rel="noopener noreferrer">publicly released the Well-Architected Framework whitepaper in October 2015</a>.</p>
+<p>It&#39;s a free framework, written by AWS about building on AWS, and it has been revised regularly since. The public version started with four pillars, added operational excellence in 2016, and gained a sixth, sustainability, in December 2021.</p>
+<p>Alongside the framework sits the <a href="https://aws.amazon.com/well-architected-tool/" target="_blank" rel="noopener noreferrer">AWS Well-Architected Tool</a>, a service in the AWS console that helps teams work through the questions, record their answers and build an improvement plan. AWS makes no additional charge for using the tool itself.</p>
+<p>One piece of vocabulary helps. AWS calls the thing being reviewed a workload: <a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/definitions.html" target="_blank" rel="noopener noreferrer">&quot;a set of components that together deliver business value&quot;</a>.</p>
+<p>In government terms, that&#39;s often a service, or a clearly bounded part of one.</p>
+<h2>Six questions in plain English</h2>
+<p>The framework is organised around six pillars. Each contains its own design principles, questions and best practices, but the basic concerns are straightforward.</p>
+<p><img src="/images/blog/slide1.png" alt="AWS Well-Architected Framework showing the six questions to ask about a workload"></p>
+<p>You don&#39;t need to be deeply technical to understand those six concerns.</p>
+<p>A delivery manager can ask whether the service will recover when something fails. A finance business partner can challenge whether the design represents good value. A senior responsible owner can ask what risks are being accepted.</p>
+<p>The technical detail sits underneath, in the design principles and best practices. That&#39;s where architects and engineers need to provide the evidence behind the answers.</p>
+<h2>Trade-offs are the whole point</h2>
+<p>One of the easiest mistakes to make is to treat the six pillars like six scores that all need to be pushed as high as possible.</p>
+<p>They don&#39;t.</p>
+<p>AWS <a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/definitions.html" target="_blank" rel="noopener noreferrer">explicitly says that teams make trade-offs between pillars based on their business context</a>.</p>
+<p>What matters for a development environment may be very different from what matters for a critical public service.</p>
+<p><img src="/images/blog/slide2.png" alt="AWS Well-Architected trade-offs showing that the right balance depends on the workload"></p>
+<p>The important part is that the trade-off is conscious.</p>
+<p>The team should understand what it is giving up, why, what the consequences are and who has the authority to accept them.</p>
+<p>AWS adds an important qualification: security and operational excellence are generally not traded off against the other pillars.</p>
+<p>This is where the framework becomes more than a technical checklist. It gives people a shared vocabulary for discussing priorities and making those decisions explicit.</p>
+<p>When the choice spends public money or accepts risk on someone else&#39;s behalf, that record matters more than the diagram.</p>
+<h2>What a review actually looks like</h2>
+<p>The word &quot;review&quot; can make this sound like an audit or a formal gate.</p>
+<p>AWS describes it differently.</p>
+<p>The framework calls a Well-Architected review <a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener noreferrer">&quot;a constructive conversation about architectural decisions&quot;</a> and says it is not an audit mechanism.</p>
+<p>It should be <a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/the-review-process.html" target="_blank" rel="noopener noreferrer">a lightweight process measured in hours rather than days</a>, using a blame-free approach. You don&#39;t need AWS in the room.</p>
+<p>In practice, you define the workload, work through the framework, identify risks and turn the gaps into improvements.</p>
+<p><img src="/images/blog/slide3.png" alt="AWS Well-Architected Review showing how questions turn into improvements"></p>
+<p>The important bit is the last step: you do it again.</p>
+<p>AWS recommends using the framework throughout the life of the workload rather than saving it for one formal review.</p>
+<p>Timing matters too. AWS recommends reviewing early enough in the design process to avoid difficult one-way-door decisions, and again before go-live.</p>
+<p>A one-way door is a decision that is difficult or expensive to reverse. Many other decisions are two-way doors and can go through a lighter process. Knowing the difference helps teams spend their time on the choices that are actually hard to undo.</p>
+<h2>What happens when you find a problem</h2>
+<p>The AWS Well-Architected Tool can identify high-risk and medium-risk issues.</p>
+<p>AWS describes a <a href="https://docs.aws.amazon.com/wellarchitected/latest/userguide/workloads.html" target="_blank" rel="noopener noreferrer">high risk issue</a> as a choice that might result in significant negative impact to the business. Medium-risk issues have a lower potential impact.</p>
+<p>The tool uses those findings to help build an improvement plan, but it doesn&#39;t make the decision for you.</p>
+<p>Your organisation still has to decide what to address first, what can be accepted for now and who owns that decision.</p>
+<p>That&#39;s an important distinction.</p>
+<p>A framework can identify risk. It cannot accept that risk on behalf of the organisation.</p>
+<h2>Lenses add more context</h2>
+<p>The six pillars form the core framework, but AWS also publishes lenses for particular technologies and sectors.</p>
+<p>These extend the core guidance into areas such as serverless, machine learning, data analytics, financial services and <a href="https://docs.aws.amazon.com/wellarchitected/latest/government-lens/government-lens.html" target="_blank" rel="noopener noreferrer">government</a>.</p>
+<p>The Government Lens is particularly relevant for public-sector architects because it adds government-specific considerations around service outcomes, governance and accountability.</p>
+<p>Organisations can also create <a href="https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-custom.html" target="_blank" rel="noopener noreferrer">custom lenses</a>, giving them a way to bring some of their own standards and governance expectations into the same review process.</p>
+<h2>What it won&#39;t do for you</h2>
+<p>It&#39;s still an AWS framework about AWS.</p>
+<p>The questions travel well, and both <a href="https://learn.microsoft.com/azure/well-architected/" target="_blank" rel="noopener noreferrer">Microsoft</a> and <a href="https://cloud.google.com/architecture/framework" target="_blank" rel="noopener noreferrer">Google</a> publish their own Well-Architected frameworks, but the detailed AWS best practices naturally point towards AWS services and patterns.</p>
+<p>Treat it as one input into the architecture process, not the architecture process itself.</p>
+<p>It also doesn&#39;t replace what government already asks of you.</p>
+<p>The <a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles" target="_blank" rel="noopener noreferrer">NCSC Cloud Security Principles</a>, the <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener noreferrer">Technology Code of Practice</a> and the <a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener noreferrer">Service Standard</a> still apply where relevant.</p>
+<p>A clean Well-Architected review won&#39;t, by itself, carry a service through assurance or a service assessment.</p>
+<p>And it won&#39;t make the decision for you.</p>
+<p>A high-risk issue tells you where to look. Someone with the authority to accept the risk still has to decide what to do about it.</p>
+<p>That person is rarely the architect.</p>
+<h2>The uncomfortable truth</h2>
+<p>Saying a system works today doesn&#39;t tell you whether it is well architected.</p>
+<p>The harder questions are whether you understand the compromises that got you there, whether the risks are visible and whether the right people agreed to them.</p>
+<p>That&#39;s why the framework matters to people who may never open the AWS console.</p>
+<p>At first glance it looks like a technical standard. In practice, much of its value comes from forcing a team to make its decisions, risks and trade-offs explicit.</p>
+<p>The framework won&#39;t make those decisions for you.</p>
+<p>It just makes it much harder to pretend you didn&#39;t make any.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
