@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to make evidence-based cloud strategy decisions in government, covering Cloud First, procurement, security, data location, lock-in, cost and hybrid estates.">
+  <meta property="og:title" content="Cloud strategy in a government context &mdash; Architect's Library">
+  <meta property="og:description" content="How to make evidence-based cloud strategy decisions in government, covering Cloud First, procurement, security, data location, lock-in, cost and hybrid estates.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Cloud strategy in a government context &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Cloud strategy in a government context</h1>
+        <p class="lesson-hero__description">Make cloud choices from policy, evidence and operational reality.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>What Cloud First requires and what it does not decide for you</li>
+          <li>How to compare hosting, provider and service-model options using evidence</li>
+          <li>How to manage lock-in, concentration, data location and shared responsibility</li>
+          <li>Ways to make cloud cost, operations and exit measurable from the start</li>
+        </ul>
+      </div>
+
+      <h2>Start with the need, not the provider</h2>
+
+      <p>A cloud strategy is not simply a declaration that an organisation will use one provider, several providers or a hybrid estate. Government guidance on <a href="https://www.gov.uk/guidance/creating-and-implementing-a-cloud-hosting-strategy" target="_blank" rel="noopener">creating a cloud hosting strategy</a> says to assess the current estate and future requirements before choosing an approach.</p>
+
+      <p>Begin with the outcomes the organisation needs and the constraints it must satisfy. Build a view of:</p>
+      <ul>
+        <li>services, users, demand and criticality</li>
+        <li>current hosting, contracts, dependencies and legacy constraints</li>
+        <li>security, privacy, resilience and data-location requirements</li>
+        <li>delivery, operational and commercial capability</li>
+        <li>whole-life cost, sustainability and exit needs</li>
+      </ul>
+
+      <p>Then decide which hosting and service models fit. A strategy should give teams usable principles, decision criteria, approved patterns, exception routes and measures. It should also distinguish the intended target from a temporary state during migration.</p>
+
+      <blockquote>Cloud is an option to evaluate, not the problem statement and not the outcome.</blockquote>
+
+      <h2>Apply Cloud First accurately</h2>
+
+      <p>The government's <a href="https://www.gov.uk/guidance/use-cloud-first" target="_blank" rel="noopener">Cloud First guidance</a> says plans must show that cloud computing was considered before other options. When government organisations procure or renew services, they must consider and fully evaluate potential cloud solutions first.</p>
+
+      <p>This does not mean every workload must run in public cloud. It means cloud options receive proper consideration before another approach is chosen. The evaluation still needs to address user needs, value for money, security, privacy, service operation, legacy constraints, sustainability and the organisation's governance. If another option is stronger, record the evidence, trade-offs and authorised decision rather than treating a short justification as the whole process.</p>
+
+      <p>The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener">Technology Code of Practice</a> places Cloud First alongside open standards, security, privacy, reuse, purchasing and sustainability. A cloud decision that ignores those other points is incomplete.</p>
+
+      <h2>Join architecture and procurement early</h2>
+
+      <p>Architecture affects what can be bought, while the available commercial route affects what can be delivered. The Technology Code of Practice says a purchasing strategy must cover commercial and technology considerations and contractual limitations.</p>
+
+      <p>G-Cloud is one route for buying cloud hosting, software and support. It is not a blanket route for every technology requirement, and a supplier's presence on a framework is not architecture or security approval. Framework scope, award methods, terms and buying platforms change, so use the current <a href="https://www.gca.gov.uk/agreements/RM1557.15" target="_blank" rel="noopener">Government Commercial Agency G-Cloud guidance</a> and involve commercial colleagues before committing to a product or delivery date.</p>
+
+      <p>Before selecting a route or supplier, confirm:</p>
+      <ul>
+        <li>the service and outcome being bought, including what remains the department's responsibility</li>
+        <li>the permitted award process, contract term and internal approvals</li>
+        <li>pricing assumptions, discounts, minimum commitments and what happens when they end</li>
+        <li>data access, intellectual property, support, subcontractors and audit rights</li>
+        <li>transition, termination, data return and exit costs</li>
+      </ul>
+
+      <p>Commercial, security, operational and architecture decisions should be developed together. A technically suitable service can still be unusable if the contract, assurance evidence or operating model does not meet the requirement.</p>
+
+      <h2>Choose providers and service models from evidence</h2>
+
+      <p>A provider's reputation or an existing organisational preference can inform a shortlist, but neither proves suitability. The NCSC's <a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles" target="_blank" rel="noopener">Cloud Security Principles</a> require each cloud service and its provider to be analysed against the organisation's security needs and the available evidence. Secure configuration must then be considered separately.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Decision area</th>
+              <th scope="col">Evidence to examine</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Service fit</strong></td>
+              <td>Confirmed requirements, service limits, roadmap and integration constraints.</td>
+            </tr>
+            <tr>
+              <td><strong>Security and privacy</strong></td>
+              <td>Control design, assurance scope, configuration responsibilities, incident process and data use.</td>
+            </tr>
+            <tr>
+              <td><strong>Resilience</strong></td>
+              <td>Failure modes, service-level commitments, recovery design, dependencies and tested recovery evidence.</td>
+            </tr>
+            <tr>
+              <td><strong>Delivery and operation</strong></td>
+              <td>Skills, support model, automation, observability and ability to operate the service throughout its life.</td>
+            </tr>
+            <tr>
+              <td><strong>Commercial and cost</strong></td>
+              <td>Whole-life cost, demand assumptions, commitments, licensing, support, transfer and exit charges.</td>
+            </tr>
+            <tr>
+              <td><strong>Portability and exit</strong></td>
+              <td>Data export, interfaces, proprietary dependencies, switching effort and contractual assistance.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Do not assume that a certification covers every service, region or configuration you intend to use. Check its scope and the evidence behind it. Information classification is also an input to the risk assessment, not a provider approval: the <a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-html" target="_blank" rel="noopener">Government Security Classifications Policy</a> requires proportionate controls and local assurance.</p>
+
+      <h2>Make lock-in and exit explicit</h2>
+
+      <p>Some lock-in is unavoidable. Current government guidance on <a href="https://www.gov.uk/guidance/managing-technical-lock-in-in-the-cloud" target="_blank" rel="noopener">managing technical lock-in</a> says its benefits can outweigh its disadvantages, but value and portability must be assessed together. Managed services may reduce operational work or improve delivery while increasing the effort needed to change provider.</p>
+
+      <figure>
+        <img src="images/lesson16-image1.png" alt="Three areas where cloud lock-in can accumulate. Commercial commitments cover contract terms and minimum spend. Service dependencies cover proprietary APIs, runtimes and operational tooling. Data and exit cover formats, volume, transfer, retention and deletion. Each area has a corresponding question to test." style="width: 100%; display: block;">
+      </figure>
+
+      <p>Describe lock-in in concrete terms rather than labelling a design portable or proprietary. Record contractual commitments; provider-specific APIs, identity and operational tooling; data formats and volumes; transfer paths and charges; skills dependencies; and the estimated time and cost of switching.</p>
+
+      <p>Open standards, loose coupling and infrastructure as code can help, but none makes a service portable automatically. Test the parts of an exit that matter: data export and restoration, replacement of critical dependencies, access after termination and secure deletion. Scale the evidence to the impact of being unable to leave.</p>
+
+      <h2>Choose single, hybrid or multi-cloud deliberately</h2>
+
+      <p>Start with needs and risks, then choose the posture. Government hosting-strategy guidance warns against selecting a single, hybrid or multi-cloud label first and designing the strategy around it. It also notes that running an identical service across providers creates significant additional work to secure and operate.</p>
+
+      <figure>
+        <img src="images/lesson16-image2.png" alt="Three cloud postures. One workload across providers may address an exceptional resilience requirement but duplicates engineering and operational work. Different services on different providers can match specialist needs but increase estate-wide governance. A primary provider with justified exceptions concentrates common capability while requiring concentration and exit risks to be managed." style="width: 100%; display: block;">
+      </figure>
+
+      <p>Multi-cloud can mean one workload spanning providers, different services using different providers, or a primary provider with exceptions. These postures have different costs and risks. State which one you mean, at service and portfolio level.</p>
+
+      <p>For resilience, first test whether multiple availability zones or regions within one service meet the requirement. <a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles/principle-2-asset-protection-and-resilience" target="_blank" rel="noopener">The NCSC recommends that approach</a> where possible because ineffective cross-service failover can reduce availability. If a requirement genuinely needs providers to fail independently, model shared dependencies, data consistency, security controls and failover testing rather than assuming a second provider creates resilience.</p>
+
+      <h2>Trace location, access and jurisdiction</h2>
+
+      <p>A selected UK region answers only part of the data-location question. Government's <a href="https://www.gov.uk/government/publications/cloud-guide-for-the-public-sector/cloud-guide-for-the-public-sector" target="_blank" rel="noopener">Cloud guide for the public sector</a> defines offshoring broadly enough to include where a service is managed and who can access UK-hosted data. It says departments must make risk-based decisions about location rather than applying a general prohibition on particular countries.</p>
+
+      <figure>
+        <img src="images/lesson16-image3.png" alt="A selected cloud region surrounded by five verification questions: where primary and derived data are stored and processed; where backups and resilience copies go; where identity, keys and control-plane services operate; who can administer or support the service and from where; and which suppliers, subprocessors and legal jurisdictions apply." style="width: 100%; display: block;">
+      </figure>
+
+      <p><a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles/principle-2-asset-protection-and-resilience" target="_blank" rel="noopener">NCSC Principle 2</a> says to identify where data is stored, processed, managed and supported; who can access it; the provider's rights; and the legal jurisdictions involved. Include credentials, logs, metadata, models, backups and support data—not only the primary database. The region available for one service may not apply to every dependency.</p>
+
+      <p>For personal information, determine whether any arrangement is a restricted international transfer and apply the current <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/" target="_blank" rel="noopener">ICO international-transfer guidance</a>. Involve security, data protection, commercial and legal specialists where the decision depends on their judgement.</p>
+
+      <h2>Define shared responsibility service by service</h2>
+
+      <p>There is no single fixed line between the customer and cloud provider. The NCSC's <a href="https://www.ncsc.gov.uk/collection/cloud/understanding-cloud-services/cloud-security-shared-responsibility-model" target="_blank" rel="noopener">shared responsibility guidance</a> says the allocation changes with the service and deployment model and with how the provider implements it.</p>
+
+      <figure>
+        <img src="images/lesson16-image4.png" alt="A comparison of IaaS, PaaS and SaaS. The provider typically manages progressively more of the technology stack from IaaS to SaaS, while the department always remains responsible for deciding whether the service meets its security needs, securely configuring the controls it owns and deciding what data to use." style="width: 100%; display: block;">
+      </figure>
+
+      <p>The department always remains responsible for selecting a service that can meet its security needs, securely configuring the controls it owns and deciding what data to place in it. For each component, name the control owner, provider commitment, configuration, evidence, monitoring and response. Cover identity and privileged access, network exposure, encryption and keys, secure configuration, vulnerabilities, logging and alerting, backups and recovery, incident handling, and offboarding.</p>
+
+      <p>Provider certifications and published control statements are inputs to assurance. They do not cover your architecture, configuration, identities or operating procedures unless the evidence explicitly says they do.</p>
+
+      <h2>Design cost control into the service</h2>
+
+      <p>Cloud cost is variable because consumption and design choices change. Government guidance on <a href="https://www.gov.uk/guidance/managing-your-spending-in-the-cloud" target="_blank" rel="noopener">managing cloud spending</a> recommends multidisciplinary ownership, spending visibility and regular optimisation. Architects affect cost through service choice, resilience, data transfer, logging, licensing, support and the resources that remain running.</p>
+
+      <p>At design time:</p>
+      <ul>
+        <li>estimate a range using stated demand, growth and retention assumptions</li>
+        <li>identify the main cost drivers and a meaningful unit cost, such as per case or transaction</li>
+        <li>define ownership metadata, budgets, forecasts and alerts using thresholds agreed by the organisation</li>
+        <li>include non-production, security, monitoring, support, backup, recovery and data-transfer costs</li>
+        <li>right-size and schedule resources where service requirements allow</li>
+        <li>use commitments only for stable, understood demand and show the effect of unused commitment</li>
+        <li>review actual cost against forecast and investigate material variance</li>
+      </ul>
+
+      <p>Do not label a service cheap because it is serverless, managed or pay-as-you-go. Model the workload and pricing dimensions. Compare whole-life cost and operational effort, not only the first monthly estimate.</p>
+
+      <h2>Make a hybrid estate intentional</h2>
+
+      <p>A hybrid estate may be necessary because of migration sequencing, legacy constraints, security needs or specific infrastructure requirements. It becomes a strategy only when the environments are deliberately coordinated. Government guidance warns that retrospectively calling an uncoordinated estate hybrid merely describes its current state.</p>
+
+      <figure>
+        <img src="images/lesson16-image5.png" alt="Public cloud, Crown Hosting or co-location, and a departmental estate connected through explicit interfaces and trust boundaries. Four consistent control outcomes span them: identity and access, deployment and configuration, observability and incident response, and governed data flows. The tools may differ between environments." style="width: 100%; display: block;">
+      </figure>
+
+      <p>Define the interfaces, data flows, trust boundaries, service ownership and failure behaviour between environments. Connectivity might use private circuits, virtual private networks or protected public endpoints; select it from security, availability, performance and cost requirements rather than applying a universal rule.</p>
+
+      <p>Aim for consistent control outcomes across the service—access management, configuration, observability, incident response and change governance—without assuming every environment can use one tool or deployment pipeline. Where co-location is appropriate, <a href="https://www.gca.gov.uk/agreements/RM6262" target="_blank" rel="noopener">Crown Hosting II</a> is a current public-sector procurement route for data-centre space, connectivity and related services; it is not public cloud.</p>
+
+      <p>Give the transitional estate owners, measures, target dates and exit conditions. Otherwise a temporary arrangement can become permanent without an explicit decision.</p>
+
+      <h2>Questions to ask before approval</h2>
+
+      <ul>
+        <li>Which user and organisational needs does the strategy address?</li>
+        <li>Which cloud and non-cloud options were evaluated, using what evidence?</li>
+        <li>Which assumptions, constraints and risks could change the decision?</li>
+        <li>Does the commercial route support the required service, term and exit?</li>
+        <li>Where are data and derived data stored, processed, managed and supported?</li>
+        <li>What does the provider control, what do we control and who owns each action?</li>
+        <li>What concentration and lock-in are accepted, and by which authority?</li>
+        <li>How have resilience and recovery been demonstrated?</li>
+        <li>What drives cost, and how will forecast variance be detected and acted on?</li>
+        <li>What makes the hybrid or multi-cloud parts one operable service?</li>
+        <li>What evidence would cause the strategy to be reviewed?</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide explains general cloud-strategy considerations for UK government. It does not replace departmental policy, security assessment, data-protection or legal advice, commercial assurance, the Technology Code of Practice or an applicable spending-control process.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the primary government, Government Commercial Agency, NCSC and ICO sources below. Frameworks and guidance change, so check the current source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/guidance/use-cloud-first" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Use cloud first</a></li>
+          <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Technology Code of Practice</a></li>
+          <li><a href="https://www.gov.uk/guidance/creating-and-implementing-a-cloud-hosting-strategy" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Creating and implementing a cloud hosting strategy</a></li>
+          <li><a href="https://www.gca.gov.uk/agreements/RM1557.15" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Commercial Agency: G-Cloud 15</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Cloud Security Principles</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles/principle-2-asset-protection-and-resilience" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Asset protection and resilience</a></li>
+          <li><a href="https://www.gov.uk/government/publications/government-security-classifications/government-security-classifications-policy-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Security Classifications Policy</a></li>
+          <li><a href="https://www.gov.uk/guidance/managing-technical-lock-in-in-the-cloud" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Managing technical lock-in in the cloud</a></li>
+          <li><a href="https://www.gov.uk/government/publications/cloud-guide-for-the-public-sector/cloud-guide-for-the-public-sector" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Cloud guide for the public sector</a></li>
+          <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">ICO: International transfers</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/cloud/understanding-cloud-services/cloud-security-shared-responsibility-model" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Cloud security shared responsibility model</a></li>
+          <li><a href="https://www.gov.uk/guidance/managing-your-spending-in-the-cloud" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Managing your spending in the cloud</a></li>
+          <li><a href="https://www.gca.gov.uk/agreements/RM6262" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Commercial Agency: Crown Hosting II</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="cloud.html">Cloud fundamentals</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-solution-options-and-appraisal.html">Solution options and option appraisal</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-security-privacy-trust.html">Security, privacy and trust</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
