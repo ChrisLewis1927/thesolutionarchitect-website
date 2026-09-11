@@ -12,7 +12,7 @@ Sooner or later someone on a cloud programme says the design needs to be "well a
 
 The AWS Well-Architected Framework is a structured set of awkward questions about a system, asked before an outage, a breach or an invoice asks them for you. That's all it is. It's more useful than it sounds.
 
-## Where it came from
+#### Where it came from
 
 AWS began developing the ideas behind the framework internally in 2012 and [publicly released the Well-Architected Framework whitepaper in October 2015](https://docs.aws.amazon.com/wellarchitected/latest/framework/document-revisions.html). It's a free framework, written by AWS about building on AWS, and it has been revised regularly since. The public version started with four pillars, added operational excellence in 2016, and gained a sixth, sustainability, in December 2021.
 
@@ -52,7 +52,7 @@ The AWS Well-Architected Tool can identify high-risk and medium-risk issues. AWS
 
 Your organisation still has to decide what to address first, what can be accepted for now and who owns that decision. That's an important distinction, a framework can identify risk. It cannot accept that risk on behalf of the organisation.
 
-## Lenses add more context
+#### Lenses add more context
 
 The six pillars form the core framework, but AWS also publishes lenses for particular technologies and sectors.
 
