@@ -64,7 +64,7 @@
 
       <h2>Start with the purpose and authority</h2>
 
-      <p>Government data sharing is not simply a connection between two systems. It is processing carried out by organisations with defined functions, responsibilities and legal constraints. Before choosing an interface, establish the service outcome, the specific data needed and the authority for each organisation to disclose and use it.</p>
+      <p>Government data sharing is not simply a connection between two systems. It is processing carried out by organisations with defined functions, responsibilities and legal constraints. Before deciding how two systems will exchange data, confirm why the data is needed, which fields are necessary and whether each organisation has the legal authority to share and use it. These decisions should shape the technical design, whether it uses an API, events or file transfer.</p>
 
       <p>Avoid saying that a department “owns” personal data or that the data “belongs” to the citizen. Those phrases hide the roles that matter. Identify the controller or controllers, the processors, the organisation responsible for the source and the people the data relates to. Individuals have statutory rights; controllers remain accountable for how and why personal information is used.</p>
 
@@ -125,17 +125,17 @@
 
       <p>For APIs, follow the current <a href="https://www.gov.uk/guidance/gds-api-technical-and-data-standards" target="_blank" rel="noopener">government API technical and data standards</a>: understand consumer needs, check for reusable interfaces, define a specification, control access, log sensitive-data use, version deliberately and operate the service through its lifecycle.</p>
 
-      <p>Events reduce direct runtime dependency when producers publish changes without calling each consumer, but consumers still depend on the event meaning and contract. Define delivery semantics, ordering, replay, correction, schema evolution and the authority under which every subscriber receives the data.</p>
+      <p>Events allow a source system to publish a change without calling every system that uses the information. This reduces the direct dependency between systems, but consumers still rely on the event having a clear and stable meaning. Decide whether events can be lost or duplicated, whether they must arrive in order, how they can be replayed, how corrections are issued and how the format can change without breaking consumers. You must also confirm that every subscriber is authorised to receive the data.</p>
 
-      <p>Batch transfer remains valid for scheduled or high-volume exchange and where source and consumer do not need to be available together. Specify encryption, integrity checking, naming, manifests, duplicate handling, reconciliation, restart, late or missing files and secure disposal. A file transfer without an operational control model is not a complete design.</p>
+      <p>Batch transfer is still a sensible option for scheduled or high-volume data sharing, especially when the sending and receiving systems do not need to be available at the same time. The design must cover more than moving a file from one place to another. It should explain how files are protected, named, tracked and checked, as well as what happens when a file is late, missing, duplicated or fails during processing. It should also define how records are reconciled, when files are deleted and who is responsible for operating and supporting the transfer.</p>
 
-      <p>An analytical data product can combine or preserve history without loading source systems with analytical queries. It can also create additional copies and responsibilities. Define lineage, transformation rules, access boundaries, quality measures, retention and how corrected source data propagates.</p>
+      <p>An analytical data product is useful when you need to combine information from several sources, retain historical data or run analysis without placing additional demand on operational systems. Because it may create further copies of the data, the design must make clear who is responsible for managing them. It should record where the data came from, how it was transformed, who can access it, how its quality is measured and how long it is retained. It should also show how corrections made in a source system are reflected in the analytical data.</p>
 
       <h2>Design the contract, not only the connection</h2>
 
-      <p>Every sharing pattern needs an explicit contract. Cover semantics as well as syntax: field meaning, identifiers, optionality, units, time zones, code lists, effective dates, quality expectations and how breaking changes are introduced. State who owns the contract, who supports it and how consumers learn about changes.</p>
+      <p>Every data flow needs an agreed definition of what will be exchanged. This should explain what each field means, which identifiers and code lists are used, which fields are optional, and how units, dates and time zones are represented. It should also set expectations for data quality and explain how changes will be introduced without unexpectedly breaking receiving systems. Make clear who maintains this agreement, who supports the data flow and how consumers will be told about changes.</p>
 
-      <p>A canonical exchange model can reduce repeated mappings when several systems share stable concepts, but the usual arithmetic is only an illustration. With six systems, a fully connected undirected network has 15 pairwise relationships: 6 &times; 5 &divide; 2 = 15. A shared model may reduce that to six adapters if each system maps once to the common representation. Direction, protocols, separate message types and system-specific exceptions can increase the real count.</p>
+      <p>A shared exchange model can reduce the number of separate translations needed when several systems use the same concepts. If six systems exchange data directly with one another, there could be as many as 15 separate relationships. If each system translates its data into and out of one shared format, this could be reduced to six adapters. These figures are only illustrative: the actual number will depend on the direction of each flow, the protocols and message types involved, and any exceptions required by individual systems.</p>
 
       <figure>
         <img src="images/lesson17-image5.png" alt="A comparison for six systems. The pairwise side shows up to fifteen relationships when every system exchanges directly with every other. The shared-model side shows six adapters to a governed exchange model. A note says these are conceptual relationships, not guaranteed interface counts, and that the shared model introduces central governance and change dependencies." style="width: 100%; display: block;">
@@ -149,7 +149,7 @@
 
       <p>The <a href="https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework" target="_blank" rel="noopener">Government Data Quality Framework</a> uses six dimensions: completeness, uniqueness, consistency, timeliness, validity and accuracy. Select measures that matter to the service rather than reporting every dimension mechanically. Define thresholds, owners, monitoring and what happens when data falls below an acceptable level.</p>
 
-      <p>Plan correction and reconciliation. Decide whether consumers receive corrections automatically, how conflicting values are investigated, whether historical decisions must be revisited and how a downstream team reports a suspected source problem. Quality controls need an operational owner after delivery.</p>
+      <p>Plan how data-quality problems will be corrected, not just detected. Define how downstream teams report suspected errors, who investigates conflicting values and how corrected data reaches each consumer. If incorrect data may have affected earlier decisions, explain how those decisions will be identified and reviewed. Responsibility for this process must remain clear after the service goes live.</p>
 
       <h2>Use the DPIA while choices can still change</h2>
 
