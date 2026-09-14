@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to design proportionate architecture governance, route decisions to the right level and apply the 2026 government assurance model.">
+  <meta property="og:title" content="Architecture governance that enables rather than blocks &mdash; Architect's Library">
+  <meta property="og:description" content="How to design proportionate architecture governance, route decisions to the right level and apply the 2026 government assurance model.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Architecture governance that enables rather than blocks &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 1.25rem; }
+    .lesson-content figure img { border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Architecture governance that enables rather than blocks</h1>
+        <p class="lesson-hero__description">Set clear decision boundaries, apply proportionate assurance and make governance useful to delivery.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>A clear distinction between governance, assurance and approval</li>
+          <li>A practical way to route architecture decisions to the right level</li>
+          <li>Ways to run architecture review without turning it into a delivery bottleneck</li>
+          <li>How RESET, the Digital Assurance Playbook and the cross-government ADR framework affect government architecture decisions</li>
+        </ul>
+      </div>
+
+      <h2>What architecture governance is for</h2>
+
+      <p>Architecture governance is the way an organisation decides who can make architecture decisions, which choices need wider challenge and how significant decisions are recorded. An Architecture Review Board can be part of that system, but the board is not the governance model.</p>
+
+      <p>The current <a href="https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital/government-functional-standard-govs-005-digital-html" target="_blank" rel="noopener">Government Functional Standard GovS 005: Digital</a> expects governance arrangements, responsibilities and assurance to be proportionate to the work and its risk. For an architect, that means using enough control to improve the decision without sending every design choice through the same route.</p>
+
+      <p>The diagram below separates roles that are often mixed together.</p>
+
+      <figure>
+        <img
+          src="images/lesson19-image1.png"
+          alt="Diagram showing consultation, assurance, approval and delivery around an architecture decision, illustrating that the roles are related but distinct."
+          style="width: 100%; display: block; cursor: pointer;"
+          data-lightbox="images/lesson19-image1.png"
+          data-title="Decision, consultation, assurance and approval"
+          tabindex="0"
+          role="button"
+          aria-label="Click to enlarge: diagram showing consultation, assurance, approval and delivery around an architecture decision."
+        >
+      </figure>
+
+      <p>One person or forum can perform more than one of these roles. What matters is that accountability stays clear. A security specialist may advise or assure without owning the architecture decision. An architecture forum may recommend a direction without having authority to approve the spend. Delivery may surface new evidence that causes a decision to be revisited.</p>
+
+      <blockquote>The point of architecture governance is not to centralise every decision. It is to make clear which decisions can stay local and which need wider authority or challenge.</blockquote>
+
+      <h2>Start with decision rights, not a board</h2>
+
+      <p>The most useful governance question is not &ldquo;Which meeting does this go to?&rdquo; It is &ldquo;Who should be able to decide this, and what would make it need escalation?&rdquo;</p>
+
+      <p>The government's <a href="https://www.gov.uk/government/publications/architectural-decision-record-framework/architectural-decision-record-framework" target="_blank" rel="noopener">Architectural Decision Record framework</a> provides a useful way to think about that boundary. It describes four decision levels, from team or working-group decisions through to cross-government or national decisions.</p>
+
+      <figure>
+        <img
+          src="images/lesson19-image2.png"
+          alt="Four architecture decision levels from team or working group through programme and department to cross-government, with escalation occurring when the consequences cross a decision boundary."
+          style="width: 100%; display: block; cursor: pointer;"
+          data-lightbox="images/lesson19-image2.png"
+          data-title="Architecture decision levels and escalation"
+          tabindex="0"
+          role="button"
+          aria-label="Click to enlarge: architecture decision levels and escalation diagram."
+        >
+      </figure>
+
+      <p>The diagram should not be read as a four-stage approval process. A decision should start and finish at the lowest level that has the authority and context to own its consequences. It moves upward only when its impact crosses that boundary.</p>
+
+      <p>At the cross-government and national level, the framework identifies the Technical Design Council as the decision-making body. The <a href="https://www.gov.uk/government/publications/a-blueprint-for-modern-digital-government/a-blueprint-for-modern-digital-government-html" target="_blank" rel="noopener">Blueprint for Modern Digital Government</a> committed to creating the council to tackle strategic technical decisions with the needs of the wider public sector in mind.</p>
+
+      <p>The framework recommends using ADRs across all levels, but mandates the framework for cross-government and cross-public-sector decisions. Departments still need to define their own forums, delegated authority and escalation routes.</p>
+
+      <h2>What changed on 1 April 2026</h2>
+
+      <p>The biggest recent change is to digital spending and assurance, not the removal of governance. The <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook</a> came into effect on 1 April 2026, when central digital and technology spend controls were removed and departments and organisations took greater ownership of their assurance and approvals.</p>
+
+      <p>The new arrangements follow five RESET principles:</p>
+      <ul>
+        <li>delegate decisions to those closest to delivery</li>
+        <li>focus the centre of government on the biggest strategic risks and cross-cutting priorities</li>
+        <li>embed functional expertise in departments and arm's-length bodies where needed</li>
+        <li>approve decisions once, by those accountable for them, wherever possible</li>
+        <li>base cross-government relationships on trust, openness and collaboration</li>
+      </ul>
+
+      <p>There are still central roles. HM Treasury approval is required for initiatives above an organisation's Delegated Authority Limit and for proposals judged novel, contentious or repercussive. GDS supports organisational assurers with high-risk, novel and complex initiatives and supports work that needs HM Treasury approval. Organisations are also expected to maintain a pipeline of upcoming digital and technology initiatives so assurance and central support can begin early.</p>
+
+      <p>For an architect, the practical change is greater local responsibility. The governance route needs to make decision ownership, evidence and escalation clearer because more of the assurance activity sits within the organisation.</p>
+
+      <h2>Route decisions according to their consequences</h2>
+
+      <p>Do not escalate a decision because the technology sounds important. Escalate it when the scope or consequences exceed the authority of the person or team making it.</p>
+
+      <p>Useful questions include:</p>
+      <ul>
+        <li>Does the decision affect only one service, or several teams and services?</li>
+        <li>Does it create or change a shared platform, integration pattern or departmental standard?</li>
+        <li>Would it set a precedent that other teams are likely to follow?</li>
+        <li>Does it create a material security, privacy, resilience, commercial or operational risk that needs a separate owner?</li>
+        <li>Is it difficult or costly to reverse?</li>
+        <li>Does it require an exception from an established standard or policy?</li>
+        <li>Does it need formal assurance or approval outside the architecture route?</li>
+      </ul>
+
+      <p>The answer does not have to be &ldquo;send it to a board&rdquo;. A local decision may need only peer challenge and a recorded rationale. A cross-team decision may need programme-level architecture governance. A departmental precedent may need a Design Authority or Architecture Review Board. The important part is matching the route to the consequence.</p>
+
+      <h2>Make an Architecture Review Board useful</h2>
+
+      <p>An Architecture Review Board, Design Authority or equivalent is useful when decisions genuinely need wider authority or challenge. It becomes a problem when it is the default destination for every design question.</p>
+
+      <p>Define the forum before asking teams to use it. Its terms of reference should make clear:</p>
+      <ul>
+        <li>which decisions are in scope and which stay with delivery teams</li>
+        <li>what the forum can decide, recommend, assure or escalate</li>
+        <li>who needs to attend for a decision to be valid</li>
+        <li>what evidence is needed before review</li>
+        <li>how exceptions and unresolved disagreements are handled</li>
+        <li>how the outcome is recorded and communicated</li>
+        <li>how quickly a team can expect a response</li>
+      </ul>
+
+      <p>Membership should follow the decision rather than a fixed list of senior job titles. Bring in the people who hold relevant authority or evidence: for example architecture, security, data, commercial, service, operations or platform specialists. Not everyone needs to attend every review.</p>
+
+      <p>A review should also end with an unambiguous outcome. The forum might make the decision where it has authority, recommend an option to the decision owner, ask for specific missing evidence, agree an exception where it is authorised to do so, or escalate the issue. &ldquo;Come back with more detail&rdquo; is not useful unless the missing information and reason are clear.</p>
+
+      <h2>Use ADRs to make the decision visible</h2>
+
+      <p>An ADR is a good input to governance because it forces the decision to be stated clearly before the review. It can capture the context, choice, consequences, people consulted and supporting evidence, then record the governance outcome afterwards.</p>
+
+      <p>The government ADR framework says a record should include a title, date, status, context, decision, consequences, stakeholders consulted and links to supporting material. It also tells teams to identify the correct decision level and involve the relevant stakeholders before submitting the decision to the appropriate body.</p>
+
+      <p>Do not turn the ADR into another approval form. The record explains the decision; it does not create authority by itself. Record who owned the decision and which role or forum accepted or approved it where that was required. For the mechanics of writing and maintaining the record, see <a href="guide-architecture-decision-records.html">Architecture decision records in practice</a>.</p>
+
+      <h2>Fit governance around delivery</h2>
+
+      <p>The <a href="https://www.gov.uk/service-manual/agile-delivery/governance-principles-for-agile-service-delivery" target="_blank" rel="noopener">Service Manual governance principles for agile service delivery</a> say governance should not slow delivery, decisions should be made at the right level when they are needed, and governance should be simple, supportive and based on light-touch verification.</p>
+
+      <p>That leads to a few practical behaviours:</p>
+      <ul>
+        <li><strong>Engage early.</strong> Challenge a decision while options are still open, not after a supplier has been selected or build has started.</li>
+        <li><strong>Use the lightest useful route.</strong> Straightforward decisions may be reviewed asynchronously; complex or contested decisions may need a discussion.</li>
+        <li><strong>Review when the decision is needed.</strong> Do not make a team wait for a ceremonial phase gate if the evidence and decision owner are available now.</li>
+        <li><strong>Separate conditions from re-review.</strong> If the direction is sound but follow-on work is needed, record the condition and owner instead of automatically sending the whole decision through the forum again.</li>
+        <li><strong>Reopen decisions when the evidence changes.</strong> Governance should preserve the reasoning, not freeze a design indefinitely.</li>
+      </ul>
+
+      <p>The Digital Assurance Playbook gives the Ministry of Justice Digital assurance process as one example of change under RESET: an early gateway using an overarching brief, a more detailed second gateway and a third gateway that operates continuously. It is a good-practice example, not a cross-government architecture process to copy unchanged.</p>
+
+      <h2>A worked example: where should this decision go?</h2>
+
+      <p>Imagine a team wants to introduce event streaming into a case-management service. The technology itself does not tell you the governance level. The deciding factor is how far the consequences reach.</p>
+
+      <figure>
+        <img
+          src="images/lesson19-image3.png"
+          alt="Worked example showing how an event-streaming decision can remain with one team or move to programme, departmental or cross-government governance depending on its scope, with security, commercial and spending routes running alongside where required."
+          style="width: 100%; display: block; cursor: pointer;"
+          data-lightbox="images/lesson19-image3.png"
+          data-title="Worked example: where should this decision go?"
+          tabindex="0"
+          role="button"
+          aria-label="Click to enlarge: worked example showing governance routing for an event-streaming decision."
+        >
+      </figure>
+
+      <p>The important lesson is that the same technical choice can belong at different governance levels in different contexts. A team can own it when the impact stays local; wider dependencies, precedents or shared capabilities move the decision to a wider authority.</p>
+
+      <p>Security assurance, commercial activity and spending approval may run alongside that architecture route. They can change the evidence or constrain the available options, but they do not become architecture governance simply because the work happens at the same time.</p>
+
+      <h2>Common governance failure modes</h2>
+
+      <p>The labels below are teaching aids rather than official government categories. They are useful because the symptoms are easy to recognise.</p>
+      <ul>
+        <li><strong>Rubber-stamp governance:</strong> decisions arrive after the real choice has been made. Fix it by engaging earlier and refusing to treat retrospective presentation as meaningful challenge.</li>
+        <li><strong>Bottleneck governance:</strong> more decisions enter the forum than it can process. Fix it by delegating lower-impact choices, clarifying thresholds and using asynchronous review where it is sufficient.</li>
+        <li><strong>Documentation theatre:</strong> teams produce large packs because the process demands them, not because the evidence helps the decision. Fix it by asking for the minimum information needed for that decision.</li>
+        <li><strong>Shadow governance:</strong> important decisions happen in private conversations because the official route is too slow or unclear. Fix the route, then record the decision and authority properly.</li>
+        <li><strong>Scope-creep governance:</strong> the forum starts reviewing implementation detail that belongs to the delivery team. Use the terms of reference to push those choices back to the right level.</li>
+      </ul>
+
+      <h2>Check whether the governance is helping</h2>
+
+      <p>Approval rate alone tells you very little. A forum that approves everything may be efficient, irrelevant or simply too late to change anything. Measure both the value of the challenge and the friction the process creates.</p>
+
+      <p>Useful local signals can include:</p>
+      <ul>
+        <li>time from a decision being ready for review to a clear outcome</li>
+        <li>the age and size of the governance backlog</li>
+        <li>how often decisions are sent to the wrong level and have to be rerouted</li>
+        <li>how often important decisions are discovered only after implementation</li>
+        <li>repeated exceptions that suggest a missing or outdated standard</li>
+        <li>decisions reopened because material evidence or ownership was missing</li>
+        <li>whether teams seek governance early because it helps them make a better decision</li>
+      </ul>
+
+      <p>Review the process as well as the architecture. If the same type of decision repeatedly needs senior attention, the answer may be a clearer standard, reusable pattern or wider delegation rather than more meetings.</p>
+
+      <h2>What to remember</h2>
+      <ul>
+        <li>Governance starts with clear decision rights and escalation boundaries, not with a board.</li>
+        <li>Decision ownership, consultation, assurance and approval are related but different.</li>
+        <li>The 2026 RESET changes devolved most digital and technology spending decisions; they did not remove the need for architecture governance.</li>
+        <li>Use review effort in proportion to the scope, risk and consequences of the decision.</li>
+        <li>An ADR can make the reasoning and outcome visible, but it does not create decision authority.</li>
+        <li>Good governance helps teams decide earlier and more clearly; if it mainly adds delay, redesign the process.</li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide explains practical architecture-governance considerations for Solution Architects working around UK government services. Internal decision rights, review forums, assurance routes and approval thresholds vary by organisation and by the decision being made.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed September 2026 against the current government sources below. Guidance and organisational processes change, so check the source and your organisation's current route before relying on them.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital/government-functional-standard-govs-005-digital-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Functional Standard GovS 005: Digital</a></li>
+          <li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Digital Assurance Playbook</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/governance-principles-for-agile-service-delivery" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Governance principles for agile service delivery</a></li>
+          <li><a href="https://www.gov.uk/government/publications/architectural-decision-record-framework/architectural-decision-record-framework" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Architectural Decision Record Framework</a></li>
+          <li><a href="https://www.gov.uk/government/publications/a-blueprint-for-modern-digital-government/a-blueprint-for-modern-digital-government-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">A blueprint for modern digital government</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decision-records.html">Architecture decision records in practice</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decisions.html">How architecture decisions actually get made</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-presenting-architecture-to-non-technical-stakeholders.html">Presenting architecture to non-technical stakeholders</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="">
+      <p class="lightbox__title"></p>
+    </div>
+  </div>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
