@@ -2,7 +2,9 @@
 title: Designing reliable storage across AWS Regions with Amazon S3
 date: 2026-09-30T16:00:00.000Z
 category: Cloud
-excerpt: Designing reliable storage across AWS Regions with Amazon S3
+excerpt: Learn how S3 permissions, versioning, replication and Multi-Region
+  Access Points work together to protect data and keep applications available
+  across AWS Regions.
 author: The Solution Architect
 ---
 A second copy of your data is not resilience on its own. You also need the right applications to reach it, a way back when the latest copy is wrong, and a plan for moving traffic when a Region is unavailable.
