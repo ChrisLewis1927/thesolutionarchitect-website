@@ -8,19 +8,17 @@ excerpt: Understand how CloudFront, Route 53 and Global Accelerator solve
   and cross-Region failover.
 author: The Solution Architect
 ---
-# Getting traffic to your application with CloudFront, Route 53 and Global Accelerator
-
 Putting an application in AWS does not automatically make it fast everywhere or resilient when an endpoint fails. You still need to decide where users enter, what can be cached, and how traffic moves when something goes wrong.
 
 Imagine a web service running in London. Static files sit in Amazon S3, dynamic requests go to an application behind a load balancer, and users may be anywhere. Three AWS services are often mentioned together, but they solve different problems:
 
-- **CloudFront** handles HTTP and HTTPS requests at AWS edge locations, where it can cache content and forward requests to an origin.
-- **Route 53** answers DNS queries, helping a client find the address it should use.
-- **Global Accelerator** gives applications static anycast IP addresses and routes TCP or UDP traffic through the AWS global network.
+* **CloudFront** handles HTTP and HTTPS requests at AWS edge locations, where it can cache content and forward requests to an origin.
+* **Route 53** answers DNS queries, helping a client find the address it should use.
+* **Global Accelerator** gives applications static anycast IP addresses and routes TCP or UDP traffic through the AWS global network.
 
 Keeping those jobs separate makes the design much easier to reason about.
 
-## Start with CloudFront: move the web front door closer
+#### **Start with CloudFront: move the web front door closer**
 
 CloudFront is a content delivery network. A user connects to a CloudFront edge location, and CloudFront either serves a cached response or sends the request to an **origin** such as S3, an Application Load Balancer or another web server.
 
@@ -28,7 +26,7 @@ Caching is the obvious benefit, but not the only one. CloudFront terminates the 
 
 Dynamic or personalised content can therefore benefit even when caching is disabled. It will not make every application faster, so measure from the places your users actually work.
 
-## Cache only when the same response can safely be reused
+#### **Cache only when the same response can safely be reused**
 
 A **cache key** tells CloudFront when two requests are equivalent for caching. By default, the URL path forms part of that key; a cache policy can also include selected query strings, headers and cookies. If two requests produce the same cache key and a valid cached object exists, CloudFront can return that object without calling the origin.
 
@@ -40,7 +38,7 @@ An **origin request policy** can forward extra headers, cookies or query strings
 
 Check the time-to-live settings as well. A cache policy with a minimum TTL above zero can keep a response cached even when the origin sends `private`, `no-store` or `no-cache`. Setting the minimum, default and maximum TTLs to zero disables caching. [AWS documents these cache-policy rules](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-key-understand-cache-policy.html).
 
-## Protect the origin, not just the public URL
+#### **Protect the origin, not just the public URL**
 
 Putting CloudFront in front of an application is most useful when users cannot simply bypass it and call the origin directly.
 
@@ -50,7 +48,7 @@ For application traffic, **CloudFront VPC origins** can reach an Application Loa
 
 AWS WAF can inspect web requests at CloudFront, while AWS Shield provides DDoS protections for AWS edge services. These controls reduce exposure, but they do not replace the application's own authentication and authorisation.
 
-## Route 53 chooses a DNS answer; traffic does not pass through it
+#### **Route 53 chooses a DNS answer; traffic does not pass through it**
 
 This distinction prevents a lot of confusion. Route 53 is a DNS service. It answers a lookup such as “where should `example.com` go?” The client then connects to the returned destination.
 
@@ -60,7 +58,7 @@ This distinction prevents a lot of confusion. Route 53 is a DNS service. It answ
 
 With **failover routing**, Route 53 can return a secondary destination when the primary is unhealthy. Clients and resolvers may still use a cached answer until its TTL expires, so there is no single failover time for every client. [AWS explains the DNS and TTL trade-offs](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/best-practices-dns.html).
 
-## Global Accelerator keeps the client-facing address stable
+#### **Global Accelerator keeps the client-facing address stable**
 
 A standard Global Accelerator gives the application static anycast IP addresses. Users enter the AWS network at an edge location, and AWS routes TCP or UDP traffic towards a healthy configured endpoint such as an ALB, NLB or EC2 instance.
 
@@ -68,34 +66,20 @@ If an active endpoint becomes unhealthy, Global Accelerator directs **new connec
 
 This is the key difference from DNS failover. Route 53 changes the answer clients receive when they next resolve the name. Global Accelerator keeps the address stable and changes where traffic behind that address is sent. Neither removes the need to decide what happens to sessions, writes and application state during a failure.
 
-## CloudFront origin failover is useful, but know the boundary
+#### **CloudFront origin failover is useful, but know the boundary**
 
 CloudFront can also fail over from a primary to a secondary origin when a qualifying request fails. The important catch is the HTTP method: origin failover applies only to `GET`, `HEAD` and `OPTIONS`, not `POST`, `PUT` or other writes. Serving pages from a secondary origin therefore does not prove that form submissions or orders will survive the same failure. [AWS documents the behaviour](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html).
 
-## Put the pieces together
+#### **Put the pieces together**
 
 A common web pattern is a Route 53 alias pointing to CloudFront. CloudFront can then use different cache behaviours to send static paths to an S3 bucket protected by OAC and dynamic paths to a private Application Load Balancer through a VPC origin. AWS WAF can inspect requests at CloudFront.
 
 That does not mean every design also needs Global Accelerator. Choose it when you specifically need stable anycast addresses, TCP or UDP acceleration, or health-based routing at that layer.
 
-| Question | Service to examine first |
-| --- | --- |
-| Can this HTTP response be served or processed near the user? | CloudFront |
-| Which DNS destination should the client be given? | Route 53 |
-| Do clients need stable anycast IPs and health-based TCP/UDP routing? | Global Accelerator |
+| Question                                                             | Service to examine first |
+| -------------------------------------------------------------------- | ------------------------ |
+| Can this HTTP response be served or processed near the user?         | CloudFront               |
+| Which DNS destination should the client be given?                    | Route 53                 |
+| Do clients need stable anycast IPs and health-based TCP/UDP routing? | Global Accelerator       |
 
 Before calling the design resilient, test the things users actually do: a cache hit, a private request from two different users, an unavailable origin, and a write while the preferred Region or endpoint is down. Those tests expose mistakes that a tidy architecture diagram can hide.
-
-## Sources
-
-- [CloudFront origin connection behaviour](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesOrigin.html)
-- [CloudFront cache and origin request policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-origin-requests.html)
-- [CloudFront cache-policy rules](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-key-understand-cache-policy.html)
-- [Restricting access to an S3 origin with OAC](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
-- [CloudFront VPC origins](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html)
-- [Route 53 geolocation routing](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-geo.html)
-- [Route 53 DNS and TTL guidance](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/best-practices-dns.html)
-- [How AWS Global Accelerator works](https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html)
-- [CloudFront origin failover](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html)
-
-*Last reviewed: September 2026. Technical details checked against current AWS documentation.*
