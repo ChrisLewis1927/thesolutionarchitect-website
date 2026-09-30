@@ -32,7 +32,7 @@ For ECS on Fargate, each task has its own isolation boundary and does not share 
 
 **Build changes into the image.** A reliable deployment process builds and tests a new image, then replaces the old containers. Editing a running container is technically possible, but changes to its writable layer are lost when that container is removed. Persistent application data belongs in storage designed to outlive it. [Docker’s layer model](https://docs.docker.com/get-started/docker-concepts/building-images/understanding-image-layers/) explains why.
 
-## Why image layers make build order matter
+#### Why image layers make build order matter
 
 A container image combines filesystem layers with configuration describing how the container should run. Layers are identified by their content, allowing identical layers to be reused where the local image store or registry supports it. A running container adds a writable layer above the image. [See Docker’s explanation of image layers.](https://docs.docker.com/get-started/docker-concepts/building-images/understanding-image-layers/)
 
@@ -44,7 +44,7 @@ The build cache avoids repeating work whose instructions and relevant inputs hav
 
 In a linear sequence, invalidating one step also invalidates subsequent dependent steps. Independent stages in a more complex build can still reuse their caches. A registry push does not itself trigger a rebuild, and an unchanged package-install command may stay cached even when newer packages become available upstream. Cache reuse and dependency updates therefore need separate consideration. [Docker documents the cache invalidation rules.](https://docs.docker.com/build/cache/invalidation/)
 
-## Where Amazon ECR fits
+#### Where Amazon ECR fits
 
 Amazon Elastic Container Registry, or ECR, stores images for deployment. Its private registries belong to an AWS account and Region, with access controlled through IAM. [The ECR registry documentation](https://docs.aws.amazon.com/AmazonECR/latest/userguide/Registries.html) describes this model.
 
@@ -54,7 +54,7 @@ A pull through cache stores images from supported upstream registries in ECR. On
 
 **Make releases identifiable.** Use an image digest to identify the exact application image being deployed, and retain the images needed for rollback. Immutable release tags can help prevent accidental replacement. Pinning a base image improves build reproducibility, but it does not, by itself, identify the finished application release. [Docker describes the benefits and update trade-offs of digest pinning.](https://docs.docker.com/build/building/best-practices/#pin-base-image-versions)
 
-## How ECS turns an image into a running service
+#### How ECS turns an image into a running service
 
 Amazon Elastic Container Service coordinates containers using a few related objects. A **task definition** describes one or more containers: their images, resource requirements, ports, environment settings, secret references, logging and IAM roles. Each update creates a numbered revision. A **task** is an instance of that definition.
 
@@ -68,7 +68,7 @@ A **capacity provider** connects workloads to a compute option. These include Fa
 
 Containers in one task are placed together. With Linux `awsvpc` networking, they share the task’s network namespace and can communicate through `localhost`. That is useful for an application and a supporting proxy or logging container, often called a sidecar. Shared networking depends on the network mode, rather than simply on being in the same task. [See the ECS task networking documentation.](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html)
 
-## Two IAM roles with different jobs
+#### Two IAM roles with different jobs
 
 The easiest way to distinguish the task execution role from the task role is to ask who needs the permission.
 
@@ -84,7 +84,7 @@ Failure timing gives a useful clue, but it is not a diagnosis. An image pull or 
 
 **Reference secrets instead of writing their values into the task definition.** ECS can inject a referenced secret into the container’s environment at startup. The value still exists in that environment and must be protected. Rotation does not automatically refresh an already running container; start new tasks, or design the application to retrieve updated secrets itself. [AWS documents secret injection and its limitations.](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html)
 
-## Connecting containers to each other
+#### Connecting containers to each other
 
 With `awsvpc`, each ECS task receives its own elastic network interface, and security groups apply to that interface. Tasks can reuse the same security groups; each does not need a uniquely created group. This mode is required for Fargate and is useful on EC2 when you want network rules applied at task level. Plan for subnet address capacity and, on EC2, network interface limits. [AWS’s networking guide](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html) covers the details.
 
@@ -92,7 +92,7 @@ ECS Service Connect is an optional way to connect ECS services using short names
 
 The connection method should fit the caller and protocol. DNS-based discovery can suit simpler needs. An Application Load Balancer is a common entry point for HTTP and HTTPS applications, while other traffic patterns may need different routing or load balancing.
 
-## Choosing the operating model
+#### Choosing the operating model
 
 ECS and EKS are orchestrators. Fargate and EC2 provide compute. Keeping those choices separate makes the comparison more useful: first decide how the team wants to define and operate workloads, then choose infrastructure that meets their requirements.
 
@@ -106,7 +106,7 @@ Amazon EKS is a natural candidate when a team needs the Kubernetes API, existing
 
 EKS Auto Mode reduces infrastructure work by managing capabilities such as node provisioning, scaling, networking, load balancing and block storage integration. Its nodes have a maximum lifetime of 21 days. Managed node groups, self-managed nodes and Fargate offer other ways to run supported workloads, each with different responsibilities and restrictions. [AWS describes Auto Mode’s management responsibilities here.](https://docs.aws.amazon.com/eks/latest/userguide/automode.html)
 
-### When a direct AWS integration is the priority
+#### When a direct AWS integration is the priority
 
 ECS is a useful starting point for teams that want container orchestration without adopting the Kubernetes API and its ecosystem. The compute choice then depends on the workload:
 
@@ -118,7 +118,7 @@ For ECS Linux tasks on Fargate platform version 1.4.0 or later, ephemeral storag
 
 Cost depends on utilisation, resource sizing, purchasing options and the effort of operating the platform. Savings Plans are not exclusive to EC2: Compute Savings Plans also cover eligible Fargate usage. Fargate Spot is available for eligible ECS workloads that can tolerate interruption. [The Fargate FAQs cover both options.](https://aws.amazon.com/fargate/faqs/)
 
-## A simpler route for web applications
+#### A simpler route for web applications
 
 ECS Express Mode automates much of the setup around a Fargate web application or API. You provide an image and the necessary execution and infrastructure roles; it configures the ECS service, HTTPS load balancing, scaling and supporting resources. It supports public and private HTTPS applications. The resources are created in your account and remain accessible for further configuration. There is no separate Express Mode fee, although the underlying resources are billed. [AWS explains Express Mode’s scope here.](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/express-service-overview.html)
 
@@ -126,7 +126,7 @@ Express Mode added [custom task definition support in July 2026](https://aws.ama
 
 AWS App Runner stopped accepting new customers on 30 April 2026. Existing customers can continue using it, including creating new services and resources. AWS recommends evaluating ECS Express Mode as a migration option; it is not a requirement for existing customers to move immediately. [AWS’s availability notice sets out the change.](https://docs.aws.amazon.com/apprunner/latest/dg/apprunner-availability-change.html)
 
-## Batch jobs and workloads outside AWS
+#### Batch jobs and workloads outside AWS
 
 AWS Batch adds job queues and scheduling for work that is submitted, processed and completed. It supports compute environments using ECS on EC2, ECS on Fargate, or EKS on EC2. That makes it a different fit from a continuously running web service. [AWS introduces Batch and its compute choices here.](https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html)
 
