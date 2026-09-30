@@ -51,7 +51,7 @@ ECS natively supports blue/green, canary and linear strategies. A **canary** sen
 
 Choose checks that catch a release which starts successfully but behaves badly, such as a rise in application errors. Enable alarm-based rollback explicitly. Alarms are not the only rollback mechanism: supported failure checks and lifecycle hooks can also stop a bad release. A **bake period** gives the new version time to reveal problems before the old version is retired.
 
-Keep evidence after a task has gone
+#### **Keep evidence after a task has gone**
 
 Logs explain individual events, metrics show patterns over time, and traces follow a request across services. Export them while the application runs so that replacing a task does not remove the evidence you need.
 
