@@ -49,7 +49,8 @@
   --max-width-content: 720px;
   --border-radius: 8px;
   --border-radius-lg: 12px;
-  --transition: all 0.3s ease;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.25s var(--ease-out), transform 0.25s var(--ease-out), top 0.25s var(--ease-out), opacity 0.2s ease;
   --header-height: 72px;
 }
 
@@ -152,7 +153,9 @@ h4 { font-size: var(--font-size-xl); }
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: var(--color-primary-bg);
+  background-color: rgba(26, 26, 46, 0.86);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   height: var(--header-height);
   display: flex;
@@ -1110,13 +1113,15 @@ h4 { font-size: var(--font-size-xl); }
 /* --- Animations --- */
 .fade-in {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  translate: 0 20px;
+  transition: opacity 0.6s var(--ease-out), translate 0.6s var(--ease-out),
+              transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out),
+              border-color 0.2s ease;
 }
 
 .fade-in--visible {
   opacity: 1;
-  transform: translateY(0);
+  translate: 0 0;
 }
 
 /* --- Utility Classes --- */
@@ -1372,4 +1377,40 @@ h4 { font-size: var(--font-size-xl); }
   .section--dark h3 {
     color: #000;
   }
+}
+
+/* ============================================
+   Phase 2: motion, tap targets, header
+   ============================================ */
+
+/* No-JS fallback: pure CSS, no template changes needed */
+@media (scripting: none) {
+  .fade-in { opacity: 1; translate: none; }
+}
+
+/* Press feedback, instant */
+.btn:active { transform: scale(0.97); transition-duration: 0.1s; }
+.lesson-card:active, .blog-card:active { transform: scale(0.985); transition-duration: 0.1s; }
+
+/* Reduced motion: fade only, no lifts */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { translate: none; transition: opacity 0.2s ease; }
+  .btn:hover, .card:hover, .lesson-card:hover, .blog-card:hover { transform: none; }
+}
+
+/* Size-specific tracking and leading */
+h1, .hero__title { letter-spacing: -0.02em; line-height: 1.1; }
+h2 { letter-spacing: -0.01em; }
+
+/* Tap targets of at least 44px (keep existing display values) */
+.nav__toggle { padding: 21px 10px; margin: -13px -2px; }
+.filter-btn { min-height: 44px; }
+.card__link { min-height: 44px; }
+.footer__nav-list a { display: inline-flex; align-items: center; min-height: 44px; }
+.footer__nav-list li { margin-bottom: 0; }
+
+/* Translucent header: solid fallback when transparency is reduced
+   (the translucent background + blur live in the base .header rule) */
+@media (prefers-reduced-transparency: reduce) {
+  .header { background-color: var(--color-primary-bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
