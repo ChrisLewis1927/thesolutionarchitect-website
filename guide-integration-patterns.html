@@ -71,7 +71,7 @@
       <p>The <a href="https://www.gov.uk/guidance/integrate-and-adapt-technology" target="_blank" rel="noopener">Technology Code of Practice guidance on integration</a> asks government teams to show how new technology will work with their organisation's existing technology, processes and infrastructure. It does not prescribe one integration pattern.</p>
 
       <figure>
-        <img src="images/lesson11-image1.png" alt="Five small topology sketches showing point to point, hub and spoke, API, messaging, and event-driven integration, arranged from tighter to looser coupling, with your service in teal among other systems in grey." style="width: 100%; display: block;">
+        <img width="1200" height="565" loading="lazy" decoding="async" src="images/lesson11-image1.png" alt="Five small topology sketches showing point to point, hub and spoke, API, messaging, and event-driven integration, arranged from tighter to looser coupling, with your service in teal among other systems in grey." style="width: 100%; display: block;">
         <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">Each pattern changes the dependencies, infrastructure and support the service must manage.</figcaption>-->
       </figure>
 
@@ -86,7 +86,7 @@
       <p>In an asynchronous interaction, the service accepts and stores the work before processing it later. The caller can receive an acknowledgement or reference without waiting for every downstream step. This can protect the user journey from slow processing, but it creates new requirements for status updates, message handling, monitoring and recovery. <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-integrating-microservices/asynchronous.html" target="_blank" rel="noopener">AWS guidance on asynchronous communication</a> highlights the need for durable acknowledgement, idempotent processing, dead-letter handling and monitoring.</p>
 
       <figure>
-        <img src="images/lesson11-image2.png" alt="Two panels comparing a synchronous call, where your service and its user wait for the downstream response, with an asynchronous flow, where your service replies at once with a reference and a queue carries the work to the downstream system." style="width: 100%; display: block;">
+        <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson11-image2.png" alt="Two panels comparing a synchronous call, where your service and its user wait for the downstream response, with an asynchronous flow, where your service replies at once with a reference and a queue carries the work to the downstream system." style="width: 100%; display: block;">
         <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The decision is whether the caller must wait and what happens when the dependency cannot respond.</figcaption>-->
       </figure>
 
@@ -122,7 +122,7 @@
       <p>An adapter can translate between the legacy interface and the model used by the new service. This keeps old formats, codes and protocols from spreading through the new design. An <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/acl.html" target="_blank" rel="noopener">anti-corruption layer</a> applies the same principle where systems use different data models or business language.</p>
 
       <figure>
-        <img src="images/lesson11-image3.png" alt="Your service and an adapter you own shown in teal, exchanging clean modern data, while the adapter exchanges batch files and odd codes with a grey legacy system, keeping the quirks away from your service." style="width: 100%; display: block;">
+        <img width="1200" height="406" loading="lazy" decoding="async" src="images/lesson11-image3.png" alt="Your service and an adapter you own shown in teal, exchanging clean modern data, while the adapter exchanges batch files and odd codes with a grey legacy system, keeping the quirks away from your service." style="width: 100%; display: block;">
         <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The adapter contains the translation so the rest of the service does not depend on legacy behaviour.</figcaption>-->
       </figure>
 
@@ -137,7 +137,7 @@
       <p>The government's <a href="https://www.gov.uk/guidance/gds-api-technical-and-data-standards" target="_blank" rel="noopener">API technical and data standards</a> cover consistent resources, standard formats, authentication, versioning and error responses. Apply the relevant standards to the interface and document any justified exceptions.</p>
 
       <figure>
-        <img src="images/lesson11-image4.png" alt="A teal canonical data model at the centre with four grey external systems around it, each connected by a single two way mapping, so no external system needs to understand another one directly." style="width: 100%; display: block;">
+        <img width="1200" height="529" loading="lazy" decoding="async" src="images/lesson11-image4.png" alt="A teal canonical data model at the centre with four grey external systems around it, each connected by a single two way mapping, so no external system needs to understand another one directly." style="width: 100%; display: block;">
         <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">A shared model can reduce pairwise mappings, but it also creates something that must be owned and governed.</figcaption>-->
       </figure>
 

@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Cookie consent and conditional analytics -->
-  <script src="/js/cookie-consent.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Solution Architecture Document (SAD) &mdash; A comprehensive document describing the overall architecture of a solution, including its components, interactions, technology choices, and how it meets both functional and non-functional requirements.">
-  <meta property="og:title" content="Solution Architecture Document (SAD) &mdash; The Solution Architect">
+  <meta name="description" content="Solution Architecture Document (SAD) — A comprehensive document describing the overall architecture of a solution, including its components, interactions, technology choices, and how it meets both functional and non-functional requirements.">
+  <meta property="og:title" content="Solution Architecture Document (SAD) — The Solution Architect">
   <meta property="og:description" content="A comprehensive document describing the overall architecture of a solution, including its components, interactions, technology choices, and how it meets both functional and non-functional requirements.">
-  <link rel="icon" type="image/png" href="../images/favicon.png">
-  <title>Solution Architecture Document (SAD) &mdash; The Solution Architect</title>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Solution Architecture Document (SAD) — The Solution Architect</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -18,7 +24,7 @@
   <header class="header" role="banner">
     <div class="container">
       <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
-        <img src="../images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span class="header__logo-icon">SA</span>
         <span>The Solution Architect</span>
       </a>
       <nav class="nav" aria-label="Main navigation">
@@ -27,7 +33,7 @@
         </button>
         <ul class="nav__list" id="nav-list" role="list">
           <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
-          <li><a href="../lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
           <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
           <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
           <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
@@ -61,7 +67,7 @@
 
         <section class="lesson-section">
           <h2>How to Build</h2>
-          <p>Begin with an executive summary that explains what the solution does, who it serves, and what business problem it solves. Keep this to one page &mdash; it should be readable by non-technical stakeholders.</p>
+          <p>Begin with an executive summary that explains what the solution does, who it serves, and what business problem it solves. Keep this to one page — it should be readable by non-technical stakeholders.</p>
           <p>Document the architecture principles that guided your design decisions. These should align with your organisation's enterprise architecture principles and the Technology Code of Practice.</p>
           <p>Create the views: start with a context diagram showing the solution boundary and external actors/systems. Then produce a logical architecture showing the major components and their responsibilities. Add integration views showing how data flows between systems. Include a deployment view showing the infrastructure topology.</p>
           <p>For each significant component, document its responsibility, technology choice, and key design decisions. Reference ADRs for detailed decision rationale.</p>
@@ -71,10 +77,10 @@
         <section class="lesson-section">
           <h2>Tips</h2>
           <ul>
-            <li>Use diagrams extensively &mdash; a picture is worth a thousand words. Follow C4 model conventions for consistency.</li>
+            <li>Use diagrams extensively — a picture is worth a thousand words. Follow C4 model conventions for consistency.</li>
             <li>Keep the document modular so sections can be updated independently.</li>
             <li>Include a version history and change log.</li>
-            <li>Write for your audience &mdash; executive summary for leadership, detailed views for developers.</li>
+            <li>Write for your audience — executive summary for leadership, detailed views for developers.</li>
             <li>Cross-reference ADRs rather than duplicating decision rationale.</li>
             <li>Include a How to Read This Document section for large SADs.</li>
           </ul>
@@ -85,9 +91,9 @@
           <ul>
             <li>Writing the SAD once and never updating it, so it becomes stale and untrustworthy.</li>
             <li>Including too much implementation detail that belongs in low-level design documents.</li>
-            <li>Omitting the why &mdash; describing what the architecture is without explaining why.</li>
+            <li>Omitting the why — describing what the architecture is without explaining why.</li>
             <li>Not including non-functional requirements and how the architecture addresses them.</li>
-            <li>Making it so long that nobody reads it &mdash; aim for 20-40 pages maximum.</li>
+            <li>Making it so long that nobody reads it — aim for 20-40 pages maximum.</li>
           </ul>
         </section>
 
@@ -127,7 +133,7 @@
           <p class="footer__nav-title">Learn</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../library.html">Architect's Library</a></li>
-            <li><a href="../lifecycle.html">Delivery Phases</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
             <li><a href="../cloud.html">Cloud Fundamentals</a></li>
           </ul>
         </div>
@@ -143,12 +149,12 @@
           <p class="footer__nav-title">About</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../about.html">About This Site</a></li>
-            <li><a href="../privacy.html">Privacy &amp; Cookies</a></li>
           </ul>
         </div>
       </div>
       <div class="footer__bottom">
-        <p>&copy; 2026 thesolutionarchitect.uk</p>
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
       </div>
     </div>
   </footer>

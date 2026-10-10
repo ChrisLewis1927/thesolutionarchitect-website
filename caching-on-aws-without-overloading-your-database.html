@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to use caching on AWS without creating a new failure point, from cache-aside and eviction to ElastiCache scaling, cross-Region recovery and protecting the database when the cache is empty or unavailable.">
+  <meta property="og:title" content="Caching on AWS without overloading your database &mdash; The Solution Architect">
+  <meta property="og:description" content="Learn how to use caching on AWS without creating a new failure point, from cache-aside and eviction to ElastiCache scaling, cross-Region recovery and protecting the database when the cache is empty or unavailable.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="caching-on-aws-without-overloading-your-database.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Caching on AWS without overloading your database &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Cloud</span>
+        <h1 class="article__title">Caching on AWS without overloading your database</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>8 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>A cache can make a busy application faster and take a lot of repeated work away from the database. It can also serve old data, run out of memory, or send a wall of traffic back to the database when it disappears.</p>
+<p>So the useful question is not simply “should we add a cache?” It is <strong>what are we caching, how fresh must it be, and what happens when the cache is empty or unavailable?</strong></p>
+<p>Imagine an online shop. Thousands of people may request the same product description, price or category information. Those repeated reads are good cache candidates. A stock check that decides whether an order can be accepted is a different matter: the cost of using an old answer is much higher.</p>
+<p>That distinction should drive the design.</p>
+<h2><strong>Cache repeated work, not everything</strong></h2>
+<p>A cache works best when the application repeatedly asks for the same data and the answer can be reused for a period of time. The database remains the source of truth; the cache keeps a temporary copy that is cheaper or faster to read.</p>
+<p>Start with three questions:</p>
+<ul>
+<li>Is the same data requested often enough to produce useful cache hits?</li>
+<li>How expensive is the original database read?</li>
+<li>How old can the cached answer safely be?</li>
+</ul>
+<p>If a value changes constantly or almost every request is unique, caching it may add complexity without removing much database work. Measure hit rate, response time and database load rather than assuming that another AWS service will automatically improve the design.</p>
+<p>AWS makes the same point in its guidance on <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/caching-database-query-results.html" target="_blank" rel="noopener noreferrer">caching database query results</a>: caching is most useful for read-heavy workloads where the same queries repeat and the underlying data changes relatively infrequently.</p>
+<h2><strong>Decide how data gets into the cache</strong></h2>
+<p>Two common patterns are <strong>cache-aside</strong> and <strong>write-through</strong>.</p>
+<p>With <strong>cache-aside</strong>, sometimes called lazy loading, the application checks the cache first. If the value is missing, the application reads the database, returns the result and stores a copy in the cache for the next request.</p>
+<p>This is simple and only caches data people actually request. The trade-off is that the first request after a miss is slower and many simultaneous misses can hit the database together.</p>
+<p>With <strong>write-through</strong>, the application updates the cache when the underlying data changes. That can make later reads more likely to find current data, but it means every write has more work to do and you must handle partial failure. A successful database update followed by a failed cache update can still leave an old value behind.</p>
+<p>A <strong>time to live (TTL)</strong> limits how long an entry remains cached. It is a freshness control, not proof that the data is current. If a value was already wrong when it entered the cache, a TTL does not fix it; it only limits how long that copy can survive.</p>
+<p>A useful rule is to match the TTL to the consequence of staleness. A product description may tolerate minutes or hours. A decision about stock, entitlement or account balance may need a much fresher source.</p>
+<p><img src="/images/blog/5.6.1-lazy-loading-and-write-through.png" alt=""></p>
+<h2><strong>Choose the cache deployment after you understand the traffic</strong></h2>
+<p>Amazon ElastiCache supports Valkey, Redis OSS and Memcached. For many application caches, Valkey or Redis OSS is attractive because it supports richer data structures, replication and sharding. Memcached is a simpler distributed key-value cache.</p>
+<p>The engine matters, but so does the deployment model. <strong>ElastiCache Serverless</strong> manages capacity and scaling for you. <strong>Node-based clusters</strong> give you more control over node type, replicas, shards and features such as Global Datastore. AWS summarises the differences in its <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.deployment.html" target="_blank" rel="noopener noreferrer">ElastiCache deployment comparison</a>.</p>
+<p>This article treats the cache as <strong>rebuildable</strong>: the authoritative data exists somewhere else. If the only copy of important data lives in the in-memory service, you are making a different durability and recovery decision.</p>
+<h2><strong>Replicas and shards solve different problems</strong></h2>
+<p>For node-based Valkey and Redis OSS, a <strong>replica</strong> and a <strong>shard</strong> are not two ways of doing the same thing.</p>
+<p>A replica contains a copy of one shard. It can serve reads and can be promoted if the primary fails. Adding replicas therefore helps read capacity and availability, but it does not increase the write capacity of that shard.</p>
+<p>A shard holds part of the dataset. With cluster mode enabled, data is partitioned across multiple shards, each with its own primary and optional replicas. This is how you spread memory and write work across more than one primary. AWS allows up to five read replicas per shard. </p>
+<p>The client must connect in a way that matches the cluster. With cluster mode disabled, applications normally send writes to the <strong>primary endpoint</strong> and can use the <strong>reader endpoint</strong> for replica reads. With cluster mode enabled, use a cluster-aware client and the <strong>configuration endpoint</strong>, which lets the client discover the cluster topology. <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Endpoints.html" target="_blank" rel="noopener noreferrer">AWS documents the endpoint behaviour</a>.</p>
+<p><img src="/images/blog/5.6.2-cluster-mode-disabled-and-enabled.png" alt=""></p>
+<p>For a resilient node-based deployment, Multi-AZ places replicas in different Availability Zones and enables automatic failover. The application still needs sensible connection timeouts, reconnection and retry behaviour; failover is not useful if the client keeps talking to a dead connection.</p>
+<h2><strong>Expiry and eviction are different</strong></h2>
+<p><strong>Expiry</strong> removes an entry because its lifetime has ended.</p>
+<p><strong>Eviction</strong> removes data because the cache needs memory for something else.</p>
+<p>That distinction matters because the default <code>volatile-lru</code> policy for Valkey and Redis OSS only chooses eviction candidates from keys that have an expiry. If the cache is full and none of its keys has a TTL, there may be nothing it is allowed to evict, so a write that needs more memory can fail. AWS documents <code>volatile-lru</code> as the default <code>maxmemory-policy</code>. </p>
+<p>For a disposable cache, a policy such as <code>allkeys-lru</code> or <code>allkeys-lfu</code> may make more sense because every key can become an eviction candidate. That is a workload decision, not a universal setting.</p>
+<p>Monitor memory, cache hit rate, evictions, CPU, connections and latency together. A rising eviction count does not automatically mean “buy a bigger cache”. It may mean the working set is too large, TTLs are wrong, low-value data is being cached, or the application simply does not reuse entries often enough.</p>
+<p><img src="/images/blog/5.6.3-eviction-policy-behaviour.png" alt=""></p>
+<h2><strong>A second Region may not need a second warm cache</strong></h2>
+<p>If the cache is genuinely disposable, the simplest recovery plan may be to create or start a cache in the recovery Region and let the application warm it from the database. The important question is whether the database can safely absorb that burst of misses.</p>
+<p>For workloads that need a warm cross-Region copy, <strong>ElastiCache Global Datastore</strong> can replicate a node-based Valkey or Redis OSS cluster from one primary Region to secondary Regions. The primary accepts writes; secondaries are read-only until one is promoted. Replication is asynchronous, and AWS supports up to two secondary Regions. Cross-Region promotion is not automatic. <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastores-Getting-Started.html" target="_blank" rel="noopener noreferrer">AWS documents the current Global Datastore model and limitations</a>.</p>
+<p>That makes Global Datastore useful for some disaster-recovery and local-read designs, but it is not mandatory just because the application itself spans Regions. Serverless caches do not support Global Datastore. </p>
+<p><img src="/images/blog/5.6.4-global-datastore-across-regions.png" alt=""></p>
+<h2><strong>Design the cache-down path before you rely on the cache</strong></h2>
+<p>A cache can reduce database load during normal operation and then cause the worst database spike of the year when it fails.</p>
+<p>If every cache lookup suddenly becomes a database read, thousands of previously cheap requests can arrive at the source at once. The fallback therefore needs limits.</p>
+<p>Use short cache timeouts, bounded retries and a controlled route to the database. Limit concurrent fallback work to something the database can actually sustain. For less important features, degraded behaviour or a temporary error may be safer than overwhelming the system of record.</p>
+<p>AWS Prescriptive Guidance makes the underlying principle explicit: if a cache becomes unavailable, the application can treat requests as misses, but the cache layer should not make the application more fragile. <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/dynamodb-elasticache-integration/design.html" target="_blank" rel="noopener noreferrer">AWS discusses this fallback design</a>.</p>
+<p>Also plan for a <strong>cache stampede</strong>. If a popular key expires, hundreds of requests can all discover the miss at nearly the same time and race to rebuild it. Techniques such as adding small random variation to TTLs, allowing one request to refresh a key while others wait, or refreshing very hot entries before expiry can reduce the spike.</p>
+<p><img src="/images/blog/5.6.5-the-cache-must-be-optional.png" alt=""></p>
+<h2><strong>Test the three states that matter</strong></h2>
+<p>A cache design is not finished when the hit rate looks good.</p>
+<p>Test it <strong>warm</strong>, when popular data is already cached. Test it <strong>empty</strong>, as it will be after creation, recovery or a widespread expiry. Then test it <strong>unreachable</strong>, so you can see what timeouts, retries and fallback actually do.</p>
+<p>For each test, record response time, error rate, cache hit rate and database load. The useful result is not “ElastiCache stayed healthy”. It is that the <strong>application remained within acceptable limits when the cache did not</strong>.</p>
+<p>That is the real architectural value of caching: removing repeated work without turning a performance optimisation into another critical failure mode.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

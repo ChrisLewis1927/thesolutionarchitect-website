@@ -61,7 +61,7 @@
       <p>Technical work and architecture work overlap. Both involve uncertainty, evidence and trade-offs. A query rewrite may have a measurable answer, but choosing a database, API style or deployment model rarely has one universally correct answer. The right choice depends on the service and the conditions in which it must operate.</p>
       <p>A technical choice has architecture significance when it affects several teams or services, changes important qualities such as security or availability, creates a substantial cost or dependency, or would be difficult to reverse. The same choice may be routine in one service and architectural in another.</p>
       <figure>
-        <img src="images/lesson2-image1.png" alt="A grey box labelled technical thinking, asking how do I build this, with an arrow pointing to a teal box labelled architecture thinking, asking whether we should build this and what follows if we do.">
+        <img width="1200" height="800" loading="lazy" decoding="async" src="images/lesson2-image1.png" alt="A grey box labelled technical thinking, asking how do I build this, with an arrow pointing to a teal box labelled architecture thinking, asking whether we should build this and what follows if we do.">
        <!-- <figcaption>The same project, two completely different questions.</figcaption> -->
       </figure>
       <p>The distinction is therefore not "engineers solve technical problems while architects make architecture decisions". Engineers, architects, security specialists, service owners and other delivery roles may all contribute. The architect helps the group understand the wider effects, compare options and keep the reasoning visible. Who recommends, decides, assures or approves depends on the organisation, the risk and the governance in place.</p>
@@ -84,7 +84,7 @@
       <h2>Think about the whole service</h2>
       <p>A service is more than its software components. It includes users, staff, policy, process, suppliers, data, operational support and the other services it depends on. A collection of well-designed parts can still produce a poor outcome if the interactions between them fail.</p>
       <figure>
-        <img src="images/lesson2-image2.png" alt="A small system. The user, front end and API are joined by emphasised interaction lines, and the API calls two services. Service A is healthy while service B is unavailable, shown as a broken connection. Every part except one is working, yet the user still sees a degraded result.">
+        <img width="1200" height="800" loading="lazy" decoding="async" src="images/lesson2-image2.png" alt="A small system. The user, front end and API are joined by emphasised interaction lines, and the API calls two services. Service A is healthy while service B is unavailable, shown as a broken connection. Every part except one is working, yet the user still sees a degraded result.">
         <!--<figcaption>Every part but one is healthy. Because of how they connect, the user still feels it.</figcaption>-->
       </figure>
       <p>Before going deeper into a component, ask:</p>
@@ -101,7 +101,7 @@
       <h2>Understand the setting in which the solution must work</h2>
       <p>The diagram below uses four useful lenses for government delivery. They are a teaching aid, not an official framework or an exhaustive list.</p>
       <figure>
-        <img src="images/lesson2-image3.png" alt="A central teal box for the solution architect, connected to four grey boxes: organisational context covering stakeholders and authority, political context covering ministers and commitments, commercial context covering budgets and frameworks, and delivery context covering team, method and assessment.">
+        <img width="1200" height="800" loading="lazy" decoding="async" src="images/lesson2-image3.png" alt="A central teal box for the solution architect, connected to four grey boxes: organisational context covering stakeholders and authority, political context covering ministers and commitments, commercial context covering budgets and frameworks, and delivery context covering team, method and assessment.">
        <!-- <figcaption>The architect sits inside all four at once.</figcaption>-->
       </figure>
       <ul>
@@ -146,7 +146,7 @@
       <h2>Work at the level of detail the decision needs</h2>
       <p>Architecture thinking moves between levels deliberately. A discussion about funding or service risk needs a different view from a discussion about an API contract or deployment configuration.</p>
       <figure>
-        <img src="images/lesson2-image4.png" alt="Three stacked boxes. Strategic at the top, for senior leadership, covering cloud first and open standards. Solution in the middle in teal, for the programme board, covering front end, API, business logic and managed data. Component at the bottom, for the delivery team, naming Node.js, containers and PostgreSQL.">
+        <img width="1200" height="800" loading="lazy" decoding="async" src="images/lesson2-image4.png" alt="Three stacked boxes. Strategic at the top, for senior leadership, covering cloud first and open standards. Solution in the middle in teal, for the programme board, covering front end, API, business logic and managed data. Component at the bottom, for the delivery team, naming Node.js, containers and PostgreSQL.">
         <!--<figcaption>Same system, pitched at three heights for three audiences.</figcaption>-->
       </figure>
       <p>Senior leaders usually need the outcome, cost, risk, dependencies and decision required from them. Delivery teams need enough technical detail to build and operate the solution. Security, data, commercial and operational specialists need views that expose the concerns they are responsible for.</p>

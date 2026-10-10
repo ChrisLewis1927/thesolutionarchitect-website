@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="essential concepts from container fundamentals, orchestration services and incorporating persistent storage.">
+  <meta property="og:title" content="Understanding containers and choosing how to run them on AWS &mdash; The Solution Architect">
+  <meta property="og:description" content="essential concepts from container fundamentals, orchestration services and incorporating persistent storage.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="understanding-containers-and-choosing-how-to-run-them-on-aws.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Understanding containers and choosing how to run them on AWS &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Cloud</span>
+        <h1 class="article__title">Understanding containers and choosing how to run them on AWS</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>13 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>Packaging an application into a container is only one part of running it. The image still needs to be stored, the application needs somewhere to execute, and something needs to keep it available when traffic changes or a process fails. AWS offers services for each of these jobs, which is why the names can be confusing at first.</p>
+<p>It helps if you separate three decisions: </p>
+<ol>
+<li>How the application is packaged</li>
+<li>How its containers are coordinated</li>
+<li>Who manages the machines underneath</li>
+</ol>
+<p>Images address the first. Amazon ECS and Amazon EKS address the second. Compute options such as AWS Fargate and Amazon EC2 address the third.</p>
+<h3><strong>What a container actually is</strong></h3>
+<p>For a typical Linux container, the application runs as one or more processes sharing the kernel of its host. The kernel is the part of the operating system that manages hardware and system resources. Linux namespaces give processes separate views of things such as process IDs, network interfaces and filesystems. Control groups, or cgroups, account for resources and can limit or prioritise their use. <a href="https://docs.docker.com/engine/containers/resource_constraints/" target="_blank" rel="noopener noreferrer">CPU shares</a>, for example, express relative priority under contention; they are not a hard CPU cap. These mechanisms work alongside other security controls. <a href="https://docs.docker.com/engine/security/" target="_blank" rel="noopener noreferrer">Docker explains these isolation mechanisms in its security documentation.</a></p>
+<p>A virtual machine has its own guest kernel. A container image can include operating system libraries and tools, but a standard Linux container does not boot its own kernel. Containers can also run inside virtual machines, as they commonly do on EC2. The two approaches are often used together. <a href="https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/" target="_blank" rel="noopener noreferrer">Docker’s container overview</a> describes this distinction.</p>
+<p><img src="/images/blog/5.1.1-virtual-machines-and-containers.png" alt="Side-by-side virtual machine and container stacks, contrasting separate guest operating systems with a shared host kernel."></p>
+<p><em>A simplified comparison. The VM side shows one application per VM, but a VM can run several applications: the guest kernel belongs to the VM. Hypervisor arrangements vary, and the container host can itself be a VM.</em></p>
+<p>Sharing a kernel can reduce overhead and help containers start quickly, although actual startup time depends on image downloads, available capacity and application initialisation. It also creates a shared security dependency: a host kernel compromise can put other containers on that host at risk.</p>
+<p>For ECS on Fargate, each task has its own isolation boundary and does not share a kernel with other tasks. Containers within the same task share that boundary. Separate accounts and VPCs address different concerns, such as administrative and network separation; they are not interchangeable with runtime isolation. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html" target="_blank" rel="noopener noreferrer">AWS documents the task isolation differences between Fargate and shared container hosts.</a></p>
+<p><strong>Build changes into the image.</strong> A reliable deployment process builds and tests a new image, then replaces the old containers. Editing a running container is technically possible, but changes to its writable layer are lost when that container is removed. Persistent application data belongs in storage designed to outlive it. <a href="https://docs.docker.com/get-started/docker-concepts/building-images/understanding-image-layers/" target="_blank" rel="noopener noreferrer">Docker’s layer model</a> explains why.</p>
+<h3>Why image layers make build order matter</h3>
+<p>A container image combines filesystem layers with configuration describing how the container should run. Layers are identified by their content, allowing identical layers to be reused where the local image store or registry supports it. A running container adds a writable layer above the image. <a href="https://docs.docker.com/get-started/docker-concepts/building-images/understanding-image-layers/" target="_blank" rel="noopener noreferrer">See Docker’s explanation of image layers.</a></p>
+<p>The build cache avoids repeating work whose instructions and relevant inputs have not changed. Consider a Python application: copying <code>requirements.txt</code> and installing dependencies before copying the application code means a source edit can reuse the dependency installation. Copying the entire project first makes source changes invalidate the dependency step as well. For Node.js, the same principle applies to the package manifest and lockfile. <a href="https://docs.docker.com/build/cache/optimize/" target="_blank" rel="noopener noreferrer">Docker recommends ordering build steps around how frequently their inputs change.</a></p>
+<p><img src="/images/blog/5.1.2-image-layers-and-the-build-cache.png" alt="Build steps arranged from a base image through operating system packages and dependencies to application code at the top."></p>
+<p><em>Stable inputs go earlier in this linear build. Application code is rebuilt when its inputs change or its cache is unavailable, not on every push. Earlier steps can also lose their cached results. The COPY labels are shorthand rather than complete Dockerfile instructions.</em></p>
+<p>In a linear sequence, invalidating one step also invalidates subsequent dependent steps. Independent stages in a more complex build can still reuse their caches. A registry push does not itself trigger a rebuild, and an unchanged package-install command may stay cached even when newer packages become available upstream. Cache reuse and dependency updates therefore need separate consideration. <a href="https://docs.docker.com/build/cache/invalidation/" target="_blank" rel="noopener noreferrer">Docker documents the cache invalidation rules.</a></p>
+<h3>Where Amazon ECR fits</h3>
+<p>Amazon Elastic Container Registry, or ECR, stores images for deployment. Its private registries belong to an AWS account and Region, with access controlled through IAM. <a href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/Registries.html" target="_blank" rel="noopener noreferrer">The ECR registry documentation</a> describes this model.</p>
+<p>ECR can also check images for known vulnerabilities. Basic scanning covers operating system packages and supports manual or push-triggered scans. Enhanced scanning integrates with Amazon Inspector, adds supported programming language packages, and can scan on push or continuously. Scanning has to be configured; it is not a guarantee that an image is safe. <a href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html" target="_blank" rel="noopener noreferrer">AWS compares the scanning options here.</a></p>
+<p>A pull through cache stores images from supported upstream registries in ECR. Once cached, an image can still be served if an upstream refresh fails. The first fetch still needs the upstream image to be available, so this reduces external dependencies without eliminating them. Also, applying tag immutability to a cache repository prevents it from refreshing an existing tag. <a href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/pull-through-cache.html" target="_blank" rel="noopener noreferrer">ECR’s cache documentation explains these behaviours.</a></p>
+<p><strong>Make releases identifiable.</strong> Use an image digest to identify the exact application image being deployed, and retain the images needed for rollback. Immutable release tags can help prevent accidental replacement. Pinning a base image improves build reproducibility, but it does not, by itself, identify the finished application release. <a href="https://docs.docker.com/build/building/best-practices/#pin-base-image-versions" target="_blank" rel="noopener noreferrer">Docker describes the benefits and update trade-offs of digest pinning.</a></p>
+<h3>How ECS turns an image into a running service</h3>
+<p>Amazon Elastic Container Service coordinates containers using a few related objects. A <strong>task definition</strong> describes one or more containers: their images, resource requirements, ports, environment settings, secret references, logging and IAM roles. Each update creates a numbered revision. A <strong>task</strong> is an instance of that definition.</p>
+<p>A <strong>service</strong> maintains the desired number of tasks and replaces failed tasks. It can also integrate with a load balancer and coordinate deployments. A task can run independently of a service too, which suits work intended to finish rather than run continuously. A <strong>cluster</strong> is the logical grouping for these workloads. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html" target="_blank" rel="noopener noreferrer">AWS explains task definitions, tasks and services together.</a></p>
+<p><img src="/images/blog/5.1.3-the-ecs-object-model.png" alt="An ECS cluster contains a service with three tasks. A task definition describes the tasks, and a capacity provider connects workloads to compute."></p>
+<p><em>The main ECS relationships. A cluster groups workloads and their compute options; it does not guarantee reserved capacity or provide a security boundary. The capacity examples shown are not exhaustive: ECS Managed Instances is another option.</em></p>
+<p>A <strong>capacity provider</strong> connects workloads to a compute option. These include Fargate, Fargate Spot, EC2 Auto Scaling groups and ECS Managed Instances. Managed Instances lets AWS handle instance provisioning, scaling and patching while providing access to EC2 capabilities such as GPUs and specialised instance types. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ManagedInstances.html" target="_blank" rel="noopener noreferrer">AWS describes Managed Instances and its capacity providers here.</a></p>
+<p>Containers in one task are placed together. With Linux <code>awsvpc</code> networking, they share the task’s network namespace and can communicate through <code>localhost</code>. That is useful for an application and a supporting proxy or logging container, often called a sidecar. Shared networking depends on the network mode, rather than simply on being in the same task. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html" target="_blank" rel="noopener noreferrer">See the ECS task networking documentation.</a></p>
+<h3>Two IAM roles with different jobs</h3>
+<p>The easiest way to distinguish the task execution role from the task role is to ask who needs the permission.</p>
+<p>The <strong>task execution role</strong> authorises the ECS or Fargate agent to perform operations on the task’s behalf. Depending on the configuration, these include pulling private images, retrieving secrets referenced by the task definition and sending logs to CloudWatch Logs. Some happen at startup; logging can continue throughout the task’s lifetime. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html" target="_blank" rel="noopener noreferrer">AWS lists the execution role’s uses here.</a></p>
+<p>The <strong>task role</strong> supplies permissions to the application containers. An application reading an S3 object or sending an SQS message normally uses credentials associated with this role. It can also use the task role to retrieve a secret directly through an AWS API. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html" target="_blank" rel="noopener noreferrer">AWS explains how task role credentials reach containers.</a></p>
+<p><img src="/images/blog/5.1.4-task-execution-role-and-task-role.png" alt="A conceptual diagram contrasting agent access to images, secrets and logging with application access to AWS APIs."></p>
+<p><em>The distinction is the actor using the permissions. The agent box represents platform activity, not an application container that belongs inside the task. Execution role activity is not limited to “before start”.</em></p>
+<p>Failure timing gives a useful clue, but it is not a diagnosis. An image pull or secret retrieval failure can involve permissions, networking or a missing resource. An application access-denied error can involve its task role, a resource policy or another policy restriction. Check the actual error before changing permissions. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/resource-initialization-error.html" target="_blank" rel="noopener noreferrer">AWS’s startup troubleshooting guidance</a> includes several network-related causes.</p>
+<p><strong>Reference secrets instead of writing their values into the task definition.</strong> ECS can inject a referenced secret into the container’s environment at startup. The value still exists in that environment and must be protected. Rotation does not automatically refresh an already running container; start new tasks, or design the application to retrieve updated secrets itself. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html" target="_blank" rel="noopener noreferrer">AWS documents secret injection and its limitations.</a></p>
+<h3>Connecting containers to each other</h3>
+<p>With <code>awsvpc</code>, each ECS task receives its own elastic network interface, and security groups apply to that interface. Tasks can reuse the same security groups; each does not need a uniquely created group. This mode is required for Fargate and is useful on EC2 when you want network rules applied at task level. Plan for subnet address capacity and, on EC2, network interface limits. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html" target="_blank" rel="noopener noreferrer">AWS’s networking guide</a> covers the details.</p>
+<p>ECS Service Connect is an optional way to connect ECS services using short names, proxy-based load balancing and consistent connection metrics. It uses AWS Cloud Map namespaces to group participating services. It needs configuration and is not a universal default. There is no extra Service Connect feature charge, but the proxy consumes compute and associated services can still incur costs. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-connect.html" target="_blank" rel="noopener noreferrer">See the Service Connect overview and pricing notes.</a></p>
+<p>The connection method should fit the caller and protocol. DNS-based discovery can suit simpler needs. An Application Load Balancer is a common entry point for HTTP and HTTPS applications, while other traffic patterns may need different routing or load balancing.</p>
+<h3>Choosing the operating model</h3>
+<p>ECS and EKS are orchestrators. Fargate and EC2 provide compute. Keeping those choices separate makes the comparison more useful: first decide how the team wants to define and operate workloads, then choose infrastructure that meets their requirements.</p>
+<p><img src="/images/blog/5.1.5-choosing-an-aws-container-service.png" alt="A starting decision tree: Kubernetes requirements lead to EKS, while ECS compute choices depend on infrastructure requirements and management preferences."></p>
+<p><em>A starting point rather than a complete service map. ECS Managed Instances adds managed EC2 capacity, Fargate also offers Spot capacity for eligible ECS workloads, and Express Mode supports private as well as public HTTPS applications.</em></p>
+<h2>When Kubernetes is part of the requirement</h2>
+<p>Amazon EKS is a natural candidate when a team needs the Kubernetes API, existing Helm charts, operators or established Kubernetes tooling. The benefit is compatibility with that ecosystem. The work includes managing application configuration, access controls, networking and compatibility with supported Kubernetes versions.</p>
+<p>EKS Auto Mode reduces infrastructure work by managing capabilities such as node provisioning, scaling, networking, load balancing and block storage integration. Its nodes have a maximum lifetime of 21 days. Managed node groups, self-managed nodes and Fargate offer other ways to run supported workloads, each with different responsibilities and restrictions. <a href="https://docs.aws.amazon.com/eks/latest/userguide/automode.html" target="_blank" rel="noopener noreferrer">AWS describes Auto Mode’s management responsibilities here.</a></p>
+<h3>When a direct AWS integration is the priority</h3>
+<p>ECS is a useful starting point for teams that want container orchestration without adopting the Kubernetes API and its ecosystem. The compute choice then depends on the workload:</p>
+<ul>
+<li><strong>Fargate</strong> removes the need to provision and patch worker machines and provides isolation between tasks. Check its supported task sizes and features: it does not support GPU requests or privileged containers. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-tasks-services.html" target="_blank" rel="noopener noreferrer">AWS lists Fargate task restrictions.</a></li>
+<li><strong>EC2 managed by your team</strong> gives more control over instance types, host configuration and software running on the machines. That flexibility comes with responsibility for the fleet.</li>
+<li><strong>ECS Managed Instances</strong> provides EC2 capabilities while AWS manages much of the instance lifecycle. It deserves consideration when Fargate’s capabilities do not fit but the team wants less infrastructure maintenance. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ManagedInstances.html" target="_blank" rel="noopener noreferrer">Check its capabilities and limitations against the workload.</a></li>
+</ul>
+<p>For ECS Linux tasks on Fargate platform version 1.4.0 or later, ephemeral storage starts at 20 GiB and can be configured up to 200 GiB. Downloaded and unpacked container images consume part of that space. This is temporary task storage, so it should not be confused with durable application storage. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-storage.html" target="_blank" rel="noopener noreferrer">AWS documents the storage allowance and platform differences.</a></p>
+<p>Cost depends on utilisation, resource sizing, purchasing options and the effort of operating the platform. Savings Plans are not exclusive to EC2: Compute Savings Plans also cover eligible Fargate usage. Fargate Spot is available for eligible ECS workloads that can tolerate interruption. <a href="https://aws.amazon.com/fargate/faqs/" target="_blank" rel="noopener noreferrer">The Fargate FAQs cover both options.</a></p>
+<h3>A simpler route for web applications</h3>
+<p>ECS Express Mode automates much of the setup around a Fargate web application or API. You provide an image and the necessary execution and infrastructure roles; it configures the ECS service, HTTPS load balancing, scaling and supporting resources. It supports public and private HTTPS applications. The resources are created in your account and remain accessible for further configuration. There is no separate Express Mode fee, although the underlying resources are billed. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/express-service-overview.html" target="_blank" rel="noopener noreferrer">AWS explains Express Mode’s scope here.</a></p>
+<p>Express Mode added <a href="https://aws.amazon.com/about-aws/whats-new/2026/07/amazon-ecs-express-mode-custom-task-def/" target="_blank" rel="noopener noreferrer">custom task definition support in July 2026</a> and <a href="https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-ecs-express-mode-arm-architecture/" target="_blank" rel="noopener noreferrer">ARM64 support for Graviton in September 2026</a>. These make it more flexible than its initial configuration options suggested.</p>
+<p>AWS App Runner stopped accepting new customers on 30 April 2026. Existing customers can continue using it, including creating new services and resources. AWS recommends evaluating ECS Express Mode as a migration option; it is not a requirement for existing customers to move immediately. <a href="https://docs.aws.amazon.com/apprunner/latest/dg/apprunner-availability-change.html" target="_blank" rel="noopener noreferrer">AWS’s availability notice sets out the change.</a></p>
+<h3>Batch jobs and workloads outside AWS</h3>
+<p>AWS Batch adds job queues and scheduling for work that is submitted, processed and completed. It supports compute environments using ECS on EC2, ECS on Fargate, or EKS on EC2. That makes it a different fit from a continuously running web service. <a href="https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html" target="_blank" rel="noopener noreferrer">AWS introduces Batch and its compute choices here.</a></p>
+<p>The hybrid options solve different problems:</p>
+<ul>
+<li><strong>ECS Anywhere</strong> connects supported external servers or virtual machines to the AWS-hosted ECS control plane. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-anywhere.html" target="_blank" rel="noopener noreferrer">ECS Anywhere documentation.</a></li>
+<li><strong>EKS Hybrid Nodes</strong> connects your on-premises or edge machines to an AWS-managed EKS control plane in an AWS Region. <a href="https://docs.aws.amazon.com/eks/latest/userguide/hybrid-nodes-overview.html" target="_blank" rel="noopener noreferrer">EKS Hybrid Nodes documentation.</a></li>
+<li><strong>EKS Anywhere</strong> runs Kubernetes on infrastructure you manage, including its control plane. It does not require the control plane to run in AWS. <a href="https://anywhere.eks.amazonaws.com/docs/overview/" target="_blank" rel="noopener noreferrer">EKS Anywhere overview.</a></li>
+</ul>
+<p>For simpler hosting needs, <a href="https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-services.html" target="_blank" rel="noopener noreferrer">Lightsail Containers</a> is another option to assess. Whatever the service, check availability in the intended Region and test the features the application actually needs before making the choice.</p>
+<p>A useful design starts with the application’s needs and the team’s responsibilities: whether Kubernetes is required, what isolation is needed, which compute capabilities matter, and who will maintain the infrastructure. Those answers narrow the AWS choices far more effectively than comparing service names alone.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

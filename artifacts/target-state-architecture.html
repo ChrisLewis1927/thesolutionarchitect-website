@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Cookie consent and conditional analytics -->
-  <script src="/js/cookie-consent.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Target State Architecture &mdash; A description of the desired future architecture that the organisation is working towards, showing the end-state technology landscape, capabilities, and integration patterns after transformation is complete.">
-  <meta property="og:title" content="Target State Architecture &mdash; The Solution Architect">
+  <meta name="description" content="Target State Architecture — A description of the desired future architecture that the organisation is working towards, showing the end-state technology landscape, capabilities, and integration patterns after transformation is complete.">
+  <meta property="og:title" content="Target State Architecture — The Solution Architect">
   <meta property="og:description" content="A description of the desired future architecture that the organisation is working towards, showing the end-state technology landscape, capabilities, and integration patterns after transformation is complete.">
-  <link rel="icon" type="image/png" href="../images/favicon.png">
-  <title>Target State Architecture &mdash; The Solution Architect</title>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Target State Architecture — The Solution Architect</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -18,7 +24,7 @@
   <header class="header" role="banner">
     <div class="container">
       <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
-        <img src="../images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span class="header__logo-icon">SA</span>
         <span>The Solution Architect</span>
       </a>
       <nav class="nav" aria-label="Main navigation">
@@ -27,7 +33,7 @@
         </button>
         <ul class="nav__list" id="nav-list" role="list">
           <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
-          <li><a href="../lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
           <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
           <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
           <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
@@ -61,20 +67,20 @@
 
         <section class="lesson-section">
           <h2>How to Build</h2>
-          <p>Start with the business architecture &mdash; what capabilities does the organisation need in the future? What services will it provide? How will users interact with it?</p>
+          <p>Start with the business architecture — what capabilities does the organisation need in the future? What services will it provide? How will users interact with it?</p>
           <p>Define the target application landscape: what applications will exist, what will be retired, and how will they integrate? Group by business capability.</p>
           <p>Specify the target technology platforms: cloud services, development platforms, integration middleware, data platforms. Define standards for each layer.</p>
           <p>Document the target data architecture: where will data live, how will it flow, what are the master data sources?</p>
-          <p>Show the gap between current state and target state clearly &mdash; this gap drives the transformation roadmap.</p>
+          <p>Show the gap between current state and target state clearly — this gap drives the transformation roadmap.</p>
         </section>
 
         <section class="lesson-section">
           <h2>Tips</h2>
           <ul>
-            <li>Keep it aspirational but achievable &mdash; a target state that is too far from reality will be ignored.</li>
+            <li>Keep it aspirational but achievable — a target state that is too far from reality will be ignored.</li>
             <li>Show the target state at multiple levels: business, application, data, and technology.</li>
             <li>Include principles and standards that govern the target state.</li>
-            <li>Make it visual &mdash; architecture diagrams communicate better than text descriptions.</li>
+            <li>Make it visual — architecture diagrams communicate better than text descriptions.</li>
             <li>Review with delivery teams to ensure it is realistic and achievable.</li>
           </ul>
         </section>
@@ -85,7 +91,7 @@
             <li>Defining a target state without understanding the current state and the gap.</li>
             <li>Making the target state too detailed, constraining future decisions unnecessarily.</li>
             <li>Not linking the target state to business outcomes, making it a purely technical exercise.</li>
-            <li>Ignoring the transition path &mdash; a beautiful target state is useless without a way to get there.</li>
+            <li>Ignoring the transition path — a beautiful target state is useless without a way to get there.</li>
             <li>Not reviewing and updating as the organisation's strategy evolves.</li>
           </ul>
         </section>
@@ -125,7 +131,7 @@
           <p class="footer__nav-title">Learn</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../library.html">Architect's Library</a></li>
-            <li><a href="../lifecycle.html">Delivery Phases</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
             <li><a href="../cloud.html">Cloud Fundamentals</a></li>
           </ul>
         </div>
@@ -141,12 +147,12 @@
           <p class="footer__nav-title">About</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../about.html">About This Site</a></li>
-            <li><a href="../privacy.html">Privacy &amp; Cookies</a></li>
           </ul>
         </div>
       </div>
       <div class="footer__bottom">
-        <p>&copy; 2026 thesolutionarchitect.uk</p>
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
       </div>
     </div>
   </footer>

@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Cookie consent and conditional analytics -->
-  <script src="/js/cookie-consent.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF1MYHFXP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DF1MYHFXP4');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sequence Diagram &mdash; A diagram showing the order of interactions between components or actors over time, illustrating how messages flow between participants to accomplish a specific scenario or use case.">
-  <meta property="og:title" content="Sequence Diagram &mdash; The Solution Architect">
+  <meta name="description" content="Sequence Diagram — A diagram showing the order of interactions between components or actors over time, illustrating how messages flow between participants to accomplish a specific scenario or use case.">
+  <meta property="og:title" content="Sequence Diagram — The Solution Architect">
   <meta property="og:description" content="A diagram showing the order of interactions between components or actors over time, illustrating how messages flow between participants to accomplish a specific scenario or use case.">
-  <link rel="icon" type="image/png" href="../images/favicon.png">
-  <title>Sequence Diagram &mdash; The Solution Architect</title>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <title>Sequence Diagram — The Solution Architect</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -18,7 +24,7 @@
   <header class="header" role="banner">
     <div class="container">
       <a href="../index.html" class="header__logo" aria-label="The Solution Architect - Home">
-        <img src="../images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span class="header__logo-icon">SA</span>
         <span>The Solution Architect</span>
       </a>
       <nav class="nav" aria-label="Main navigation">
@@ -27,7 +33,7 @@
         </button>
         <ul class="nav__list" id="nav-list" role="list">
           <li><a href="../library.html" class="nav__link">Architect's Library</a></li>
-          <li><a href="../lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="../lifecycle.html" class="nav__link">Lifecycle</a></li>
           <li><a href="../guardrails.html" class="nav__link">AI Guardrails</a></li>
           <li><a href="../cloud.html" class="nav__link">Cloud</a></li>
           <li><a href="../artifacts.html" class="nav__link nav__link--active">Artifacts</a></li>
@@ -64,14 +70,14 @@
           <p>Identify the scenario or use case you want to illustrate. Choose a specific, concrete example rather than trying to show all possible paths in one diagram.</p>
           <p>List the participants (actors and components) involved in this interaction. Arrange them left to right in the order they are first involved.</p>
           <p>Draw the interactions as horizontal arrows between participant lifelines, ordered from top to bottom chronologically. Label each arrow with the message or method call.</p>
-          <p>Show return values where they add clarity. Include alt/opt/loop fragments for conditional logic, but keep these minimal &mdash; separate diagrams for separate scenarios is often clearer.</p>
+          <p>Show return values where they add clarity. Include alt/opt/loop fragments for conditional logic, but keep these minimal — separate diagrams for separate scenarios is often clearer.</p>
           <p>Annotate with timing constraints or notes where relevant for non-functional requirements.</p>
         </section>
 
         <section class="lesson-section">
           <h2>Tips</h2>
           <ul>
-            <li>One scenario per diagram &mdash; do not try to show all paths in one sequence diagram.</li>
+            <li>One scenario per diagram — do not try to show all paths in one sequence diagram.</li>
             <li>Show the happy path first, then create separate diagrams for error scenarios.</li>
             <li>Include response/return messages to show what data flows back.</li>
             <li>Use activation bars to show when a component is actively processing.</li>
@@ -85,14 +91,14 @@
             <li>Trying to show too many scenarios in one diagram, making it unreadable.</li>
             <li>Omitting return messages, making it unclear what data flows back to the caller.</li>
             <li>Not showing error/exception paths that are critical for implementation.</li>
-            <li>Making diagrams too detailed with every method call &mdash; focus on significant interactions.</li>
+            <li>Making diagrams too detailed with every method call — focus on significant interactions.</li>
             <li>Not aligning with the actual component names used in the architecture.</li>
           </ul>
         </section>
 
         <section class="lesson-section">
           <h2>Government Context</h2>
-          <p>In UK government, sequence diagrams are useful for demonstrating how security controls operate in practice &mdash; showing authentication flows, authorisation checks, and audit logging. They support GDS service assessment evidence by showing how the service handles user journeys technically. For cross-government integrations, they clarify the interaction protocol between departments.</p>
+          <p>In UK government, sequence diagrams are useful for demonstrating how security controls operate in practice — showing authentication flows, authorisation checks, and audit logging. They support GDS service assessment evidence by showing how the service handles user journeys technically. For cross-government integrations, they clarify the interaction protocol between departments.</p>
         </section>
 
         <section class="lesson-section">
@@ -124,7 +130,7 @@
           <p class="footer__nav-title">Learn</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../library.html">Architect's Library</a></li>
-            <li><a href="../lifecycle.html">Delivery Phases</a></li>
+            <li><a href="../lifecycle.html">Project Lifecycle</a></li>
             <li><a href="../cloud.html">Cloud Fundamentals</a></li>
           </ul>
         </div>
@@ -140,12 +146,12 @@
           <p class="footer__nav-title">About</p>
           <ul class="footer__nav-list" role="list">
             <li><a href="../about.html">About This Site</a></li>
-            <li><a href="../privacy.html">Privacy &amp; Cookies</a></li>
           </ul>
         </div>
       </div>
       <div class="footer__bottom">
-        <p>&copy; 2026 thesolutionarchitect.uk</p>
+        <p class="footer__tagline">Built by a UK government Solution Architect</p>
+        <p>&copy; 2025 thesolutionarchitect.uk</p>
       </div>
     </div>
   </footer>

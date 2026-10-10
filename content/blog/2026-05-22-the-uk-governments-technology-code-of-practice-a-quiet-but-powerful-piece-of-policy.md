@@ -93,4 +93,4 @@ It also doesn't address some of the harder questions in government technology to
 
 If you're working on a public sector technology project in the UK, the TCoP is the document you should be able to recite from memory by the end of your first month. Even if you're outside government, it's a useful lens. Most of the principles travel well to any organisation buying or building digital services.
 
-You can read the current version, with links to detailed guidance on each point, at [gov.uk/guidance/the-technology-code-of-practice.](gov.uk/guidance/the-technology-code-of-practice.)
+You can read the current version, with links to detailed guidance on each point, at [gov.uk/guidance/the-technology-code-of-practice](https://www.gov.uk/guidance/the-technology-code-of-practice).

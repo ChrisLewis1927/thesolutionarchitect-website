@@ -70,7 +70,7 @@
       <p>The feature list does not usually distinguish between all credible architectures, but it can still contain decisions with major architectural consequences. A service that must take payments, exchange data with several public bodies, support delegated authority or continue a process across online and offline channels needs capabilities that affect boundaries, integrations, data, identity and failure handling.</p>
       <p>Quality requirements then help the team judge which approaches can provide those capabilities at the required level. A deadline-driven peak, a small support team, a demanding recovery objective or a need to change policy rules frequently may each favour or rule out different approaches.</p>
       <figure>
-        <img src="images/lesson5-image1.png" alt="Candidate architectures, monolith, microservices, serverless and spreadsheet, all meet the functional requirements and pass into a teal funnel labelled non functional requirements: submission volume in a two-week window, availability during the deadline, WCAG 2.2 AA, run by a small team. Out of the bottom come the few options that actually fit.">
+        <img width="1200" height="637" loading="lazy" decoding="async" src="images/lesson5-image1.png" alt="Candidate architectures, monolith, microservices, serverless and spreadsheet, all meet the functional requirements and pass into a teal funnel labelled non functional requirements: submission volume in a two-week window, availability during the deadline, WCAG 2.2 AA, run by a small team. Out of the bottom come the few options that actually fit.">
         <!--<figcaption>The feature list lets almost anything through. The behavioural demands do the narrowing.</figcaption>-->
       </figure>
       <p>The diagram is a useful simplification: quality requirements narrow and differentiate credible options. They rarely select one architecture by themselves. Cost, delivery risk, existing capabilities, constraints and evidence about the team and service still matter.</p>
@@ -107,7 +107,7 @@
       <p>Performance can include page loading, response time, transaction throughput, integration latency, batch windows and the duration of long-running work. Define the part of the service being measured and the experience or process that the measure protects.</p>
       <p>Average demand can hide the period that changes the design. Regulatory returns, grants and other government services may have sharp peaks near a deadline. Use analytics and monitoring from the current service where possible. For a new service, record forecasts as assumptions and test them as evidence improves.</p>
       <figure>
-        <img src="images/lesson5-image2.png" alt="A chart of load over time. Load sits low and almost flat near the average line for most of the period, then climbs steeply to a high peak as the deadline approaches. The peak is marked in teal as the level to design for.">
+        <img width="1200" height="565" loading="lazy" decoding="async" src="images/lesson5-image2.png" alt="A chart of load over time. Load sits low and almost flat near the average line for most of the period, then climbs steeply to a high peak as the deadline approaches. The peak is marked in teal as the level to design for.">
         <!--<figcaption>Design for the peak, optimise for the norm.</figcaption>-->
       </figure>
       <p>Frontend performance needs its own evidence. The <a href="https://www.gov.uk/service-manual/technology/how-to-test-frontend-performance" target="_blank" rel="noopener">Service Manual guidance on frontend performance</a> recommends setting a performance budget for measures such as load time, number of requests and page size, then measuring throughout development. Test on the devices and connections users actually have, not only a developer's laptop.</p>
@@ -121,7 +121,7 @@
       <p>The government's <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/" target="_blank" rel="noopener">Secure by Design</a> approach requires central government departments and arm's-length bodies to incorporate effective security practices into digital delivery. Other public sector organisations can adopt the approach voluntarily. It treats security as work throughout the lifecycle rather than a check at the end.</p>
       <p>Start with the information, users, service functions, threats and potential harm. Establish the applicable classification, additional markings, law, departmental policy and risk ownership. Those inputs may create requirements for identity, authorisation, audit, encryption, monitoring, data handling, incident response and other controls, but they do not prescribe the same design for every service.</p>
       <figure>
-        <img src="images/lesson5-image3.png" alt="Stacked layers of control, perimeter and edge, network controls, application controls, and identity and access, sit above a teal box holding OFFICIAL-SENSITIVE data, illustrating defence in depth.">
+        <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson5-image3.png" alt="Stacked layers of control, perimeter and edge, network controls, application controls, and identity and access, sit above a teal box holding OFFICIAL-SENSITIVE data, illustrating defence in depth.">
         <!--<figcaption>No single layer is the defence. The stack of them is.</figcaption>-->
       </figure>
       <p>The existing diagram illustrates defence in depth; it is not an official control stack. Effective controls do not always form a simple perimeter-to-data sequence, and their strength should follow the threats and consequences involved.</p>
@@ -166,7 +166,7 @@
       <h2>How this relates to the Service Standard</h2>
       <p>Quality requirements support the whole service, not just an architecture document. Several current <a href="https://www.gov.uk/service-manual/service-standard" target="_blank" rel="noopener">Service Standard</a> points have particularly direct links:</p>
       <figure>
-        <img src="images/lesson5-image4.png" alt="Four teal boxes, your NFRs, connect across to four grey Service Standard points. Accessibility to point 5, everyone can use it. Security and privacy to point 9. Technology choices to point 11, right tools. Reliability to point 14, a reliable service.">
+        <img width="1200" height="675" loading="lazy" decoding="async" src="images/lesson5-image4.png" alt="Four teal boxes, your NFRs, connect across to four grey Service Standard points. Accessibility to point 5, everyone can use it. Security and privacy to point 9. Technology choices to point 11, right tools. Reliability to point 14, a reliable service.">
         <!--<figcaption>The qualities you captured as requirements are the ones assessors come to check.</figcaption>-->
       </figure>
       <ul>

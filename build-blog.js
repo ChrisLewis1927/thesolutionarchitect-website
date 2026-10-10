@@ -31,6 +31,27 @@ function sanitiseHtml(html) {
   return s;
 }
 
+// The post template supplies the page's single <h1> (the article title).
+// Markdown bodies tend to start their sections at #### (h4), which skips
+// heading levels. Shift all body headings so the shallowest becomes <h2>,
+// preserving relative nesting and clamping at h6.
+function shiftHeadings(html) {
+  const levels = [];
+  const re = /<(\/?)h([1-6])\b/gi;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    if (!m[1]) levels.push(Number(m[2]));
+  }
+  if (levels.length === 0) return html;
+  const min = Math.min(...levels);
+  const delta = 2 - min; // make the shallowest heading an h2
+  if (delta === 0) return html;
+  return html.replace(/<(\/?)h([1-6])\b/gi, function (_, slash, lvl) {
+    const next = Math.min(6, Math.max(2, Number(lvl) + delta));
+    return '<' + slash + 'h' + next;
+  });
+}
+
 function isExternalHref(href) {
   if (typeof href !== 'string') return false;
   // Treat only absolute http(s) URLs as external. Relative links, anchors,
@@ -141,7 +162,7 @@ function buildBlog() {
     const excerpt = data.excerpt || content.trim().split(/\n\s*\n/)[0].slice(0, 300);
 
     // Convert markdown
-    const htmlContent = sanitiseHtml(marked.parse(content, { async: false }));
+    const htmlContent = shiftHeadings(sanitiseHtml(marked.parse(content, { async: false })));
     const readingTime = calculateReadingTime(content);
 
     posts.push({ title: data.title, date: dateStr, category, author, excerpt, slug, htmlContent, readingTime });

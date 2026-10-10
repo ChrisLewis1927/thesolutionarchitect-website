@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how Aurora Global Database, RDS Proxy and AWS Application Recovery Controller work together to recover data, applications and traffic when a Region fails.">
+  <meta property="og:title" content="Recovering a database across AWS Regions with Aurora and ARC &mdash; The Solution Architect">
+  <meta property="og:description" content="Learn how Aurora Global Database, RDS Proxy and AWS Application Recovery Controller work together to recover data, applications and traffic when a Region fails.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="recovering-a-database-across-aws-regions-with-aurora-and-arc.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Recovering a database across AWS Regions with Aurora and ARC &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Cloud</span>
+        <h1 class="article__title">Recovering a database across AWS Regions with Aurora and ARC</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>8 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>A second Region can contain a healthy copy of your database and still leave you with an outage. The data has to be current enough, one database has to accept writes, the application has to reconnect, and user traffic has to move at the right time.</p>
+<p>Imagine a service running in London with an Aurora Global Database secondary in Ireland. If London fails, “promote Ireland” is only one step. The useful question is whether the <strong>whole service</strong> can recover within the time and data-loss limits you agreed.</p>
+<p>Those limits are normally expressed as:</p>
+<ul>
+<li><strong>Recovery point objective (RPO):</strong> how much recent data you can afford to lose.</li>
+<li><strong>Recovery time objective (RTO):</strong> how long the service can be unavailable.</li>
+</ul>
+<p>Aurora, RDS Proxy and Amazon Application Recovery Controller (ARC) each help with a different part of that problem. None of them solves it alone.</p>
+<h2><strong>Aurora protects storage before you add replicas</strong></h2>
+<p>An Aurora cluster separates database compute from its storage. The writer and any readers use the same distributed cluster volume rather than keeping a separate full copy of the database for every instance.</p>
+<p>Aurora stores six copies of the data across three Availability Zones in one Region. AWS says the storage layer can lose up to two copies without affecting write availability and up to three without affecting read availability. <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.StorageReliability.html" target="_blank" rel="noopener noreferrer">AWS explains the storage architecture</a>.</p>
+<p>That changes how to think about resilience. Adding an Aurora reader gives you another <strong>database instance</strong> that can serve reads and potentially be promoted; it does not create another six-copy database.</p>
+<p>For high availability inside one Region, place compute across Availability Zones and make sure a potential replacement writer has enough capacity for the workload. Durable storage is only half the story: the application still needs a database instance it can connect to.</p>
+<p><img src="/images/blog/5.5.1-aurora-separates-compute-from-storage.png" alt=""></p>
+<h2><strong>Connect to the role, not a particular machine</strong></h2>
+<p>Aurora gives you different endpoints because applications usually care about a <strong>role</strong>, not the name of a database instance.</p>
+<p>The <strong>cluster endpoint</strong> points to the current writer in a regional Aurora cluster. The <strong>reader endpoint</strong> distributes new read connections across available replicas. An <strong>instance endpoint</strong> deliberately targets one specific DB instance. <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html" target="_blank" rel="noopener noreferrer">AWS documents the endpoint types</a>.</p>
+<p>That difference becomes important during failover. If a reader is promoted to writer, the cluster endpoint is updated to point to the new writer. The application can keep the same endpoint in its configuration, but existing database connections can still break. Clients need sensible DNS behaviour, reconnection and retry handling.</p>
+<p>An instance endpoint behaves differently: it continues to refer to that particular instance. That is useful when you intentionally need a specific instance, but it is the wrong abstraction when the application simply needs “whichever instance is the writer”.</p>
+<p>Aurora Global Database adds a <strong>global writer endpoint</strong>. It follows the primary Region after a switchover or failover, which can avoid changing the application&#39;s database address. The application still needs network access to the new Region and must pick up the DNS change.</p>
+<p><img src="/images/blog/5.5.2-endpoints-follow-the-failover.png" alt=""></p>
+<h2><strong>A second Region is not a second independent writer</strong></h2>
+<p>Aurora Global Database extends the design across Regions. One Region is primary and performs writes; secondary Regions contain read-only clusters that receive changes through Aurora&#39;s storage-based replication. AWS describes replication latency as typically under a second, although it is asynchronous and a secondary can therefore be behind. <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html" target="_blank" rel="noopener noreferrer">AWS explains how Aurora Global Database works</a>.</p>
+<p>That gives you two different recovery cases.</p>
+<p>A <strong>planned switchover</strong> is for healthy clusters. Aurora synchronises the target and changes the primary Region without data loss. An <strong>unplanned failover</strong> is for a Regional outage. Because replication is asynchronous, changes that had not reached the secondary can be lost. That is why the database&#39;s measured replication lag matters to your RPO.</p>
+<p>Global write forwarding does not turn the secondary into another writer. It lets an application connected to a secondary Region submit supported write statements there; Aurora forwards them to the primary writer, then replicates the result back. That saves the application from implementing its own write-routing logic, but it adds a cross-Region round trip and the available SQL and consistency behaviour depend on the engine and configuration. <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-write-forwarding.html" target="_blank" rel="noopener noreferrer">AWS documents Global Database write forwarding</a>.</p>
+<p><img src="/images/blog/5.5.3-global-database-write-forwarding.png" alt=""></p>
+<h2><strong>Replication is not a backup</strong></h2>
+<p>A second Region protects you from some infrastructure failures. It does not protect you from every data problem.</p>
+<p>If the application writes a bad value or deletes the wrong records, replication can carry that change to the secondary as designed. Keep a tested backup and point-in-time recovery path for recovering a known-good state. <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/BackupRestoreAurora.html" target="_blank" rel="noopener noreferrer">AWS documents Aurora backup and restore</a>.</p>
+<p>This is an important distinction: <strong>failover recovers service location; backup recovers data state</strong>. A resilient design often needs both.</p>
+<h2><strong>Do not let application scaling become a database problem</strong></h2>
+<p>Database recovery can also fail for a much less dramatic reason: too many connections.</p>
+<p>Suppose six application tasks can each open 20 database connections. That is up to 120 potential connections. Scale the same application to 40 tasks and the theoretical maximum becomes 800. The database may be doing exactly the same work, but it now has far more connections to manage.</p>
+<p><strong>RDS Proxy</strong> sits between the application and Aurora, pooling and reusing database connections. This can reduce the connection-management load on the database and makes sudden scale-out less likely to create a connection storm. <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy.howitworks.html" target="_blank" rel="noopener noreferrer">AWS explains how RDS Proxy works</a>.</p>
+<p>It is not magic. Some session state can pin a client to a database connection and reduce multiplexing. During failover, RDS Proxy can keep idle client connections open and redirect them to the new writer, but statements or transactions already in progress can still be interrupted. Applications still need bounded connection pools and tested retry behaviour.</p>
+<p><img src="/images/blog/5.5.4-rds-proxy-and-connection-storms.png" alt=""></p>
+<h2><strong>ARC coordinates recovery; it does not make the database decision for you</strong></h2>
+<p>At this point there are two separate jobs:</p>
+<ol>
+<li>make the database writable in the recovery Region; and</li>
+<li>move application traffic to a service that is actually ready to use it.</li>
+</ol>
+<p>ARC helps coordinate the second job and, with <strong>Region switch</strong>, can orchestrate both as part of a recovery plan.</p>
+<p>ARC <strong>routing controls</strong> are highly available on/off switches connected to Route 53 health checks. Changing a routing-control state can influence which application replica receives traffic. Safety rules can block combinations of states that you have defined as unsafe. The routing-control data plane is spread across five Regional endpoints, so recovery automation should be able to use another endpoint if one is unavailable. <a href="https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html" target="_blank" rel="noopener noreferrer">AWS explains ARC routing controls</a>.</p>
+<p>A routing control does <strong>not</strong> promote an Aurora database. Traffic should not be sent to the recovery Region merely because a switch can be flipped.</p>
+<p>For a fuller workflow, <strong>ARC Region switch</strong> lets you define a recovery plan made of ordered or parallel steps. AWS provides an Aurora Global Database execution block that can perform a switchover or failover as part of that plan, alongside application and traffic actions. <a href="https://docs.aws.amazon.com/r53recovery/latest/dg/region-switch.html" target="_blank" rel="noopener noreferrer">AWS documents Region switch</a>.</p>
+<p>ARC readiness checks serve a different purpose. They can highlight capacity or configuration differences between your primary and recovery environments before an incident. AWS explicitly says not to use them as the primary failover trigger or assume they will be available during an outage.</p>
+<p>Zonal shift is different again: it moves supported resources away from an impaired Availability Zone <strong>within a Region</strong>. It is useful for zonal problems, but it is not a substitute for a cross-Region recovery design.</p>
+<p><img src="/images/blog/5.5.5-the-arc-control-plane.png" alt=""></p>
+<h2><strong>The recovery sequence matters more than the individual services</strong></h2>
+<p>A sensible recovery runbook might look like this:</p>
+<ol>
+<li><strong>Stop or fence writes to the old primary</strong> so two sides cannot accept conflicting updates.</li>
+<li><strong>Switch or fail over Aurora Global Database</strong> to the intended recovery Region.</li>
+<li><strong>Check the data and capacity</strong> before treating the new primary as healthy.</li>
+<li><strong>Reconnect or restart application components</strong> so they use the current writer.</li>
+<li><strong>Move user traffic</strong> only when the application is ready.</li>
+<li><strong>Watch errors, database lag and business transactions</strong>, not just infrastructure health.</li>
+<li><strong>Plan the return journey</strong> rather than improvising failback later.</li>
+</ol>
+<p>The exact automation will differ by service, but the architectural principle is the same: database failover, application recovery and traffic movement are separate events that need to happen in a controlled order.</p>
+<p>A useful design review therefore asks more than “do we have Aurora Global Database?” Ask instead: <strong>how much data could we lose, how long until the application is genuinely usable, what prevents writes going to the wrong place, and have we proved the whole sequence works?</strong></p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

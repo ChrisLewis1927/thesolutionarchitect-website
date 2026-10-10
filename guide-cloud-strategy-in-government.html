@@ -152,7 +152,7 @@
       <p>Some lock-in is unavoidable. Current government guidance on <a href="https://www.gov.uk/guidance/managing-technical-lock-in-in-the-cloud" target="_blank" rel="noopener">managing technical lock-in</a> says its benefits can outweigh its disadvantages, but value and portability must be assessed together. Managed services may reduce operational work or improve delivery while increasing the effort needed to change provider.</p>
 
       <figure>
-        <img src="images/lesson16-image1.png" alt="Three areas where cloud lock-in can accumulate. Commercial commitments cover contract terms and minimum spend. Service dependencies cover proprietary APIs, runtimes and operational tooling. Data and exit cover formats, volume, transfer, retention and deletion. Each area has a corresponding question to test." style="width: 100%; display: block;">
+        <img width="1200" height="565" loading="lazy" decoding="async" src="images/lesson16-image1.png" alt="Three areas where cloud lock-in can accumulate. Commercial commitments cover contract terms and minimum spend. Service dependencies cover proprietary APIs, runtimes and operational tooling. Data and exit cover formats, volume, transfer, retention and deletion. Each area has a corresponding question to test." style="width: 100%; display: block;">
       </figure>
 
       <p>Describe lock-in in concrete terms rather than labelling a design portable or proprietary. Record contractual commitments; provider-specific APIs, identity and operational tooling; data formats and volumes; transfer paths and charges; skills dependencies; and the estimated time and cost of switching.</p>
@@ -164,7 +164,7 @@
       <p>Start with needs and risks, then choose the posture. Government hosting-strategy guidance warns against selecting a single, hybrid or multi-cloud label first and designing the strategy around it. It also notes that running an identical service across providers creates significant additional work to secure and operate.</p>
 
       <figure>
-        <img src="images/lesson16-image2.png" alt="Three cloud postures. One workload across providers may address an exceptional resilience requirement but duplicates engineering and operational work. Different services on different providers can match specialist needs but increase estate-wide governance. A primary provider with justified exceptions concentrates common capability while requiring concentration and exit risks to be managed." style="width: 100%; display: block;">
+        <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson16-image2.png" alt="Three cloud postures. One workload across providers may address an exceptional resilience requirement but duplicates engineering and operational work. Different services on different providers can match specialist needs but increase estate-wide governance. A primary provider with justified exceptions concentrates common capability while requiring concentration and exit risks to be managed." style="width: 100%; display: block;">
       </figure>
 
       <p>Multi-cloud can mean one workload spanning providers, different services using different providers, or a primary provider with exceptions. These postures have different costs and risks. State which one you mean, at service and portfolio level.</p>
@@ -176,7 +176,7 @@
       <p>A selected UK region answers only part of the data-location question. Government's <a href="https://www.gov.uk/government/publications/cloud-guide-for-the-public-sector/cloud-guide-for-the-public-sector" target="_blank" rel="noopener">Cloud guide for the public sector</a> defines offshoring broadly enough to include where a service is managed and who can access UK-hosted data. It says departments must make risk-based decisions about location rather than applying a general prohibition on particular countries.</p>
 
       <figure>
-        <img src="images/lesson16-image3.png" alt="A selected cloud region surrounded by five verification questions: where primary and derived data are stored and processed; where backups and resilience copies go; where identity, keys and control-plane services operate; who can administer or support the service and from where; and which suppliers, subprocessors and legal jurisdictions apply." style="width: 100%; display: block;">
+        <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson16-image3.png" alt="A selected cloud region surrounded by five verification questions: where primary and derived data are stored and processed; where backups and resilience copies go; where identity, keys and control-plane services operate; who can administer or support the service and from where; and which suppliers, subprocessors and legal jurisdictions apply." style="width: 100%; display: block;">
       </figure>
 
       <p><a href="https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles/principle-2-asset-protection-and-resilience" target="_blank" rel="noopener">NCSC Principle 2</a> says to identify where data is stored, processed, managed and supported; who can access it; the provider's rights; and the legal jurisdictions involved. Include credentials, logs, metadata, models, backups and support data, not only the primary database. The region available for one service may not apply to every dependency.</p>
@@ -188,7 +188,7 @@
       <p>There is no single fixed line between the customer and cloud provider. The NCSC's <a href="https://www.ncsc.gov.uk/collection/cloud/understanding-cloud-services/cloud-security-shared-responsibility-model" target="_blank" rel="noopener">shared responsibility guidance</a> says the allocation changes with the service and deployment model and with how the provider implements it.</p>
 
       <figure>
-        <img src="images/lesson16-image4.png" alt="A comparison of IaaS, PaaS and SaaS. The provider typically manages progressively more of the technology stack from IaaS to SaaS, while the department always remains responsible for deciding whether the service meets its security needs, securely configuring the controls it owns and deciding what data to use." style="width: 100%; display: block;">
+        <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson16-image4.png" alt="A comparison of IaaS, PaaS and SaaS. The provider typically manages progressively more of the technology stack from IaaS to SaaS, while the department always remains responsible for deciding whether the service meets its security needs, securely configuring the controls it owns and deciding what data to use." style="width: 100%; display: block;">
       </figure>
 
       <p>The department always remains responsible for selecting a service that can meet its security needs, securely configuring the controls it owns and deciding what data to place in it. For each component, name the control owner, provider commitment, configuration, evidence, monitoring and response. Cover identity and privileged access, network exposure, encryption and keys, secure configuration, vulnerabilities, logging and alerting, backups and recovery, incident handling, and offboarding.</p>
@@ -217,7 +217,7 @@
       <p>A hybrid estate may be necessary because of migration sequencing, legacy constraints, security needs or specific infrastructure requirements. It becomes a strategy only when the environments are deliberately coordinated. Government guidance warns that retrospectively calling an uncoordinated estate hybrid merely describes its current state.</p>
 
       <figure>
-        <img src="images/lesson16-image5.png" alt="Public cloud, Crown Hosting or co-location, and a departmental estate connected through explicit interfaces and trust boundaries. Four consistent control outcomes span them: identity and access, deployment and configuration, observability and incident response, and governed data flows. The tools may differ between environments." style="width: 100%; display: block;">
+        <img width="1200" height="529" loading="lazy" decoding="async" src="images/lesson16-image5.png" alt="Public cloud, Crown Hosting or co-location, and a departmental estate connected through explicit interfaces and trust boundaries. Four consistent control outcomes span them: identity and access, deployment and configuration, observability and incident response, and governed data flows. The tools may differ between environments." style="width: 100%; display: block;">
       </figure>
 
       <p>Define the interfaces, data flows, trust boundaries, service ownership and failure behaviour between environments. Connectivity might use private circuits, virtual private networks or protected public endpoints; select it from security, availability, performance and cost requirements rather than applying a universal rule.</p>

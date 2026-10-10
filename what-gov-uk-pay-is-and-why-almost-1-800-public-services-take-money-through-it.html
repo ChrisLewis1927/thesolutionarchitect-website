@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GOV.UK Pay is the shared payment platform behind almost 1,800 public services. What it does, who can use it, what it costs, and who processes the money.">
+  <meta property="og:title" content="What GOV.UK Pay is, and why almost 1,800 public services take money through it &mdash; The Solution Architect">
+  <meta property="og:description" content="GOV.UK Pay is the shared payment platform behind almost 1,800 public services. What it does, who can use it, what it costs, and who processes the money.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="what-gov-uk-pay-is-and-why-almost-1-800-public-services-take-money-through-it.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>What GOV.UK Pay is, and why almost 1,800 public services take money through it &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Government</span>
+        <h1 class="article__title">What GOV.UK Pay is, and why almost 1,800 public services take money through it</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>6 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>Renewing a passport. Paying a parking fine. Sending money to someone in prison. Registering a birth certificate copy. A great many interactions with the state end with a payment, and every one of those payments needs a card form, a receipt, a refund route, a way of proving the transaction happened, and a way of getting the money into the right bank account.</p>
+<p>For most of the history of digital government, every organisation solved that problem on its own. GOV.UK Pay exists so they don&#39;t have to. It is a shared payment platform built by the Government Digital Service, and in its first decade it has <a href="https://gds.blog.gov.uk/2026/09/02/gov-uk-pay-at-10-how-it-started-and-how-its-going/" target="_blank" rel="noopener noreferrer">handled close to £10 billion across almost 1,800 public services</a>.</p>
+<p>The technology is the least interesting part of it. The argument behind it is that a payment page is the last thing a government service should have to build for itself.</p>
+<h2><strong>The problem it was built to solve</strong></h2>
+<p>GDS describes the pre-Pay world in <a href="https://gds.blog.gov.uk/2026/09/02/gov-uk-pay-at-10-how-it-started-and-how-its-going/" target="_blank" rel="noopener noreferrer">two images</a>. At one end, &quot;cheques being posted accompanied by home-printed PDF forms&quot;. At the other, &quot;commercially-branded, inaccessible payment pages&quot;.</p>
+<p>The second is the more damaging of the two. A user part-way through a GOV.UK service would be handed off to a page carrying a payment supplier&#39;s logo, styled nothing like the service they started in, and often failing basic accessibility standards. Every organisation that wanted to take card payments had to procure a provider, meet the Payment Card Industry Data Security Standard, handle its own refunds and disputes, and build the page. Hundreds of public bodies were each solving an identical problem, badly and expensively.</p>
+<p>The first service to move onto the platform was the Ministry of Justice&#39;s &quot;Send money to someone in prison&quot;. The pattern it set has held for everything since: the service handles the thing the user came to do, and the platform handles the money.</p>
+<h2><strong>What it actually does</strong></h2>
+<p>Pay provides hosted payment pages in the GOV.UK style. A service creates a payment through the API, redirects the user to Pay, and gets the result back. Card details never touch the service&#39;s own systems, which is where most of the compliance saving comes from.</p>
+<p>It <a href="https://www.gov.uk/government/publications/govuk-pay/govuk-pay" target="_blank" rel="noopener noreferrer">takes card payments, Apple Pay and Google Pay, payments over the phone or by post (MOTO), and recurring payments</a> on a schedule the organisation sets. Refunds, full or partial, can be issued from the admin tool or the API. There is reporting and reconciliation data, payout tracking, dispute records, and webhooks for payment events. Pages can carry the organisation&#39;s own logo and colours, be shown in Welsh, and return the user to a page the service controls once the payment finishes. The platform is WCAG 2.1 AA compliant and PCI DSS compliant, and it integrates with GOV.UK Forms and finance software.</p>
+<p><a href="https://gds.blog.gov.uk/2026/09/02/gov-uk-pay-at-10-how-it-started-and-how-its-going/" target="_blank" rel="noopener noreferrer">Payment links, added in 2018</a>, matter more than the feature list suggests. They let a team with no developers produce a working payment page for a fee, which is how a lot of smaller organisations start.</p>
+<h2><strong>Who can use it, and what it costs</strong></h2>
+<p>Most of the public sector is <a href="https://www.payments.service.gov.uk/using-govuk-pay/" target="_blank" rel="noopener noreferrer">eligible</a>: central government departments, local authorities, the armed forces, the NHS including trusts, and emergency services. The exclusions are narrow but real. Public bodies cannot use it for commercial purposes, and organisations classified as &quot;enterprises&quot; under the Subsidy Control Act 2022 cannot use it at all.</p>
+<p>The pricing is unusual enough to state plainly. &quot;<a href="https://www.payments.service.gov.uk/cost-benefits-of-pay/" target="_blank" rel="noopener noreferrer">GOV.UK Pay is free to use. You only pay transaction fees to your Payment Service Provider (PSP)</a>.&quot; There is no licence fee, no minimum transaction volume, and no charge for training, software upgrades, new feature releases, branding, PCI DSS compliance or accessibility updates. The only cost an adopting organisation carries is the per-transaction fee it would pay any card processor.</p>
+<p>Getting started is deliberately quick. Creating an account takes a couple of minutes, and an organisation can be taking real payments the same day using payment links. Building a full API integration is a project; putting a fee online is not.</p>
+<h2><strong>Two payment providers, split along an old line</strong></h2>
+<p>Behind the platform sit two commercial card processors, and which one an organisation gets depends on whether it is a Crown body.</p>
+<p>Central government, arm&#39;s length bodies and the NHS use Worldpay, contracted through Government Banking. Everyone else — local authorities, police forces, the armed forces, government-owned charitable groups — uses GOV.UK Pay&#39;s own non-Crown provider, which is now <a href="https://gds.blog.gov.uk/2026/06/02/building-for-the-future-making-change-simple-on-gov-uk-pay/" target="_blank" rel="noopener noreferrer">Adyen, replacing Stripe</a>. Around 1,000 services are moving across, and GDS&#39;s position is that &quot;there will be no discernible difference for paying users and no loss in functionality&quot;.</p>
+<p>The Adyen arrangement is also the route to pay by bank, which is in development. GDS expects it to &quot;reduce fraud and lost payments, as well as saving significant money for government&quot;, which is a reasonable expectation given that bank-to-bank payments avoid card interchange entirely.</p>
+<p>This is the quiet advantage of a shared platform. A change of card processor affecting a thousand services was negotiated and delivered centrally. Under the old model it would have been a thousand separate procurements.</p>
+<h2><strong>What the numbers look like after ten years</strong></h2>
+<p>Pay <a href="https://gds.blog.gov.uk/2026/09/02/gov-uk-pay-at-10-how-it-started-and-how-its-going/" target="_blank" rel="noopener noreferrer">took four years to process its first £1 billion</a>. It now does that in roughly five months.</p>
+<p>The current figures: nearly £10 billion in total, across more than 135 million transactions, on almost 1,800 services run by over 600 organisations, at <a href="https://www.payments.service.gov.uk/" target="_blank" rel="noopener noreferrer">more than 70,000 payments a day</a>. The largest single user is HM Passport Office, which joined in 2020 and puts through 6.5 to 7 million transactions a year; its busiest month on record was January 2023, at 1.11 million payments.</p>
+<p>Local government adoption tells a more interesting story. 157 UK local authorities use Pay, which is 41% of them, and they accounted for 3.5 million transactions in 2025-26. That also means the majority of councils are not yet on the platform. Satisfaction among adopting organisations sits at a Net Promoter Score of +40, with 90% reporting satisfaction in the 2025 survey, up from 83% the year before.</p>
+<h2><strong>What it does not do</strong></h2>
+<p>Pay is a payment platform, not a finance system. Matching payments to ledgers, chasing exceptions and closing the books remain the organisation&#39;s job. It will not tell anyone whether the fee is set correctly, whether the service should be charging at all, or whether the payment step sits in the right place in the user&#39;s task. Those are service design and policy questions, and adopting a shared platform does not answer them.</p>
+<p>It also does not remove transaction fees, and Crown bodies do not get a choice of processor. And GDS itself has <a href="https://www.gov.uk/government/news/machinery-of-government-changes-fact-sheet" target="_blank" rel="noopener noreferrer">moved department twice in as many years</a>, from the Cabinet Office to DSIT and, in 2026, into the Department for Digital, Culture, Media and Sport. That is a fair question for any organisation weighing up a dependency, though the platform has outlasted every reorganisation so far.</p>
+<p>A shared payment platform is unglamorous infrastructure, and that is the point of it. The real measure of GOV.UK Pay is how few of the people using it have any idea it is there.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
