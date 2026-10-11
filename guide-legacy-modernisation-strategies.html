@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Choose a legacy modernisation approach and plan a controlled transition.">
+  <meta property="og:title" content="Legacy modernisation strategies: how to choose and how to deliver &mdash; Architect's Library">
+  <meta property="og:description" content="Choose a legacy modernisation approach and plan a controlled transition.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Legacy modernisation strategies: how to choose and how to deliver &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Legacy modernisation strategies: how to choose and how to deliver</h1>
+        <p class="lesson-hero__description">Choose a legacy modernisation approach and plan a controlled transition.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How to distinguish legacy classification from legacy risk scoring</li>
+          <li>Six practical strategies and the trade-offs behind each</li>
+          <li>How to plan incremental replacement, data migration and recovery</li>
+          <li>How to assign ownership, prevent new legacy and measure results</li>
+        </ul>
+      </div>
+
+      <h2>What makes a system legacy</h2>
+      <p>A system's age does not tell you whether it needs modernising. Start with the burden and risk it creates: can it meet user needs, remain supported and secure, and be maintained at an acceptable cost?</p>
+      <p>The government's <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/updated-definition-of-legacy-it" target="_blank" rel="noopener">August 2026 definition of legacy IT</a> centres on persistent, unacceptable burden or risk and an inability to support or secure a system effectively or economically. It classifies systems as Accepted, Action-Required or Legacy. Action-Required means a system will become legacy within 12 months without action; Legacy requires urgent remediation.</p>
+      <p>Classification is not a score. The definition covers seven criteria, including support, contracts, skills, business needs, hardware, cyber security and legacy dependencies. Use the applicable thresholds with the risk owner. Missing tests or documentation are warning signs to investigate, rather than automatic proof of legacy status.</p>
+      <p>The separately published <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener">Legacy IT Risk Assessment Framework</a> still describes seven likelihood criteria scored 1–6 and six impact criteria scored 1–5 over an assumed three-year period. For each category, average its mean and maximum criterion scores, then multiply the two category results. The maximum is 30; 16 or above is red-rated.</p>
+      <p>The framework is under review to align with the new definition. Its older score-based test for identifying legacy has been superseded. Confirm the current assessment and reporting arrangements with your organisation before using it. The framework retains the CDDO name, although <a href="https://www.gov.uk/government/organisations/central-digital-and-data-office" target="_blank" rel="noopener">CDDO merged into the Government Digital Service in January 2025</a>.</p>
+      <figure>
+        <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image1.png" alt="Illustrative risk matrix showing likelihood from 1 to 6 and impact from 1 to 5, with products of 16 or above marked red-rated. Lower scores do not mean no action is needed. Legacy classification is a separate assessment." data-lightbox="images/lesson20-image1.png" data-title="Legacy risk scoring and classification" tabindex="0" role="button" aria-label="Enlarge the legacy risk matrix">
+        <figcaption>Reference values for the published risk scales; aggregated scores can be fractional. The matrix helps prioritise risk, but does not determine legacy status.</figcaption>
+      </figure>
+      <p>Record the evidence behind the assessment: support dates, incidents, vulnerabilities, skills, costs and dependencies. A low combined score can conceal a serious individual issue. Agree the action, owner and review date rather than treating the colour as a decision.</p>
+
+      <h2>The six strategies and what each one is for</h2>
+      <p>These six strategies are a teaching model, not an official or exhaustive taxonomy. Different parts of a system can need different approaches. <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html" target="_blank" rel="noopener">AWS's cloud migration strategies</a>, for example, distinguish rehosting, replatforming and repurchasing.</p>
+      <figure>
+        <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image2.png" alt="Six strategy cards: retain and manage, wrap and extend, replatform, refactor or re-architect, replace by building or buying, and retire. Each pairs a possible use with a limitation. They are not ranked by cost or disruption." data-lightbox="images/lesson20-image2.png" data-title="Six modernisation strategies" tabindex="0" role="button" aria-label="Enlarge the six strategy cards">
+        <figcaption>Compare each strategy with the actual problem. Cost, disruption and risk depend on the system and transition.</figcaption>
+      </figure>
+      <ul>
+        <li><strong>Retain and manage.</strong> Keep the system while maintaining support, monitoring, recovery and knowledge. This can suit acceptable risk or provide a temporary bridge to replacement. An unacceptable risk needs treatment; lower running cost alone does not justify keeping it.</li>
+        <li><strong>Wrap and extend.</strong> Add an API or adapter so other services can use existing functionality. This can improve integration, but leaves the core's support, security and change constraints in place. Assess the new interface's access controls, capacity and failure behaviour.</li>
+        <li><strong>Replatform.</strong> Move to a different platform with limited application changes, such as a managed database. It can address platform support or operational burdens. Moving unchanged software to new hosting is usually called rehosting. Neither automatically fixes application design, and modernisation need not mean cloud migration.</li>
+        <li><strong>Refactor or re-architect.</strong> Improve internal structure or change architectural boundaries. In <a href="https://martinfowler.com/bliki/DefinitionOfRefactoring.html" target="_blank" rel="noopener">software engineering, refactoring</a> preserves observable behaviour; migration guidance sometimes uses the term more broadly. Incremental replacement can accompany this work, but the strangler fig pattern is not a synonym for refactoring.</li>
+        <li><strong>Replace.</strong> Build a new solution or adopt an existing product, including software as a service. Compare fit, integration, data portability, operating cost and supplier dependency. Replacement can be phased; buying a product still requires migration and operational change.</li>
+        <li><strong>Retire.</strong> Remove a system whose function is no longer needed or is provided elsewhere. Confirm user and system dependencies, records retention, archive access and disposal arrangements before switching it off.</li>
+      </ul>
+      <p>A useful combination might be to replatform an unsupported database, wrap an existing integration and replace one constrained business capability. Explain what each step fixes and what risk remains.</p>
+
+      <h2>Choosing a strategy</h2>
+      <p>Define the outcome before choosing a route. Removing unsupported software, enabling a policy change and reducing operating costs are different objectives. Establish the constraints: deadlines, service continuity, data protection and security requirements, skills, contracts and available funding.</p>
+      <p>Compare credible options against agreed criteria. Include current arrangements as a baseline, with their costs and risks. Estimate the whole transition, including discovery, data cleansing, integration, running two systems, training, commercial exit and decommissioning. Test uncertain assumptions with a small experiment before committing to a larger plan.</p>
+      <p>Disruption matters, but the least disruptive option may preserve the problem or cost more over time. A wrapper cannot fix unsupported software. Replatforming may remove infrastructure risk while leaving slow business-rule changes untouched. Replacement may be justified when the existing design cannot meet the required outcome.</p>
+      <p>For example, imagine a licensing service needs a partner API while its database approaches end of support. Wrapping may address the API requirement, but the database also needs an upgrade, replatforming or replacement. A phased plan could address the deadline first, then replace constrained licence journeys. This is an illustrative decision, not a prescribed government approach.</p>
+      <p>Record the recommendation, evidence, assumptions, consequences and review triggers. Identify who owns the service outcome, who can accept residual risk and who approves funding. The architect develops and explains the options with operational, security, data and commercial colleagues; decision authority follows the organisation's arrangements.</p>
+
+      <h2>The strangler fig in government</h2>
+      <p><a href="https://martinfowler.com/bliki/StranglerFigApplication.html" target="_blank" rel="noopener">The strangler fig approach</a> replaces functionality gradually while old and new coexist. It can suit a large system that can be divided into useful parts, but coexistence has costs and the old system must remain viable during the transition.</p>
+      <figure>
+        <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image3.png" alt="An illustrative migration across five stages. New licence journey, partner API, reference data and transactions move from the existing system to the replacement one slice at a time. Routing directs requests; safe return also needs compatible data and tested recovery." data-lightbox="images/lesson20-image3.png" data-title="Incremental replacement and recovery" tabindex="0" role="button" aria-label="Enlarge the incremental replacement diagram">
+        <figcaption>An illustrative sequence, chosen around dependencies. Changing the route alone does not make rollback safe.</figcaption>
+      </figure>
+      <p>Choose a slice with a clear outcome and manageable dependencies, such as a licence application journey or partner integration. Understand its rules, data, batch jobs and downstream consumers. Some boundaries need preparatory changes before they can be separated.</p>
+      <p>Requests may be directed through an API gateway or reverse proxy. <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig" target="_blank" rel="noopener">Microsoft's Strangler Fig pattern guidance</a> highlights shared data, cross-system dependencies and the risk of a routing layer becoming a bottleneck or single point of failure. If calls cannot be intercepted, or the old system must close quickly, another approach may fit better.</p>
+      <p>Plan four things before moving a slice:</p>
+      <ol>
+        <li><strong>Acceptance evidence.</strong> Agree which behaviour to preserve and which defects or obsolete rules to change. Compare representative cases, edge cases and operational performance with agreed requirements. Shadow testing can compare outputs without letting the new system trigger real payments or other duplicate actions.</li>
+        <li><strong>Data ownership.</strong> Identify the authoritative writer for each record at every stage. Plan initial transfer, validation and reconciliation of differences. If you synchronise changes, define how delays, duplicates, ordering and conflicts are handled. Avoid independent writes to the same records unless conflict handling is designed and tested.</li>
+        <li><strong>Recovery.</strong> Define failure triggers, decision authority and tested recovery steps. After the replacement accepts writes, returning traffic to the old system may require data replay, reconciliation or a pause. Schema changes can close the rollback window; sometimes a forward fix is safer. State the expected recovery time and possible data loss explicitly.</li>
+        <li><strong>Completion.</strong> Set exit criteria for the slice and fund the temporary architecture. Keep support for the remaining system and a plan to remove adapters, synchronisation and old contracts. Incremental delivery does not remove business-case or approval requirements.</li>
+      </ol>
+      <p>Retire the old system only after operational and data owners confirm that users, integrations, scheduled jobs and reporting no longer depend on it. Complete archive access, retention, recovery and disposal arrangements, then close licences, infrastructure and support obligations.</p>
+
+      <h2>The people and contracts behind the system</h2>
+      <p>Include the people who operate and maintain the service from the start. Walk through difficult cases with them, document workarounds and check which rules still serve a valid purpose. Code and documentation alone may not reveal how the service actually works.</p>
+      <p>Plan knowledge transfer, training and support for both systems. Give experienced maintainers clear roles in testing and transition, and make time for this work alongside live-service responsibilities. Do not assume staff resistance or supplier obstruction without evidence.</p>
+      <p>Review contracts with commercial and legal colleagues. Establish access to code and data, licence restrictions, intellectual property rights, notice periods, exit charges and transition assistance. The <a href="https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks/the-sourcing-playbook-html" target="_blank" rel="noopener">Sourcing Playbook's section on contract end</a> calls for early exit planning, clear responsibilities and sufficient time for knowledge transfer. It does not create rights missing from an existing contract.</p>
+
+      <h2>Making the case for investment</h2>
+      <p>Connect the work to an outcome leaders can assess: fewer service interruptions, supported technology, a policy capability or lower whole-life cost. Show evidence of the current constraint and how the proposal will address it. Avoid promising faster delivery when the intervention is designed to reduce a different risk.</p>
+      <p><a href="https://www.gov.uk/government/publications/the-green-book--2/the-green-book-2026" target="_blank" rel="noopener">HM Treasury's Green Book</a> sets out appraisal of costs, benefits and risks across options. It is mandatory for UK government departments and arm's length bodies developing proposals involving significant public spending. Use a proportionate business case with finance and delivery colleagues.</p>
+      <p>The <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook, section 8.7</a>, asks assurers to check whether initiatives tackle existing legacy debt or avoid creating future legacy. This supports scrutiny of the proposal; it does not grant approval or funding.</p>
+      <p>Offer stages with useful results and explicit continuation criteria. Include the cost of stopping safely or sustaining a partly migrated service. A successful slice can inform the next decision, but does not guarantee its budget.</p>
+
+      <h2>Preventing the next generation of legacy</h2>
+      <p>The government's <a href="https://www.gov.uk/guidance/prevent-technical-debt-and-legacy" target="_blank" rel="noopener">guidance on preventing technical debt and legacy</a> requires a legacy-proofing plan for digital products and services. It asks for a business risk owner, a technical health owner, upgrade funding and an asset register, and requires scoring of associated legacy technology.</p>
+      <p>That 2024 page still references the previous spend-control process. Use the current Digital Assurance Playbook and your organisation's arrangements for assurance and approval. Apply the updated legacy definition alongside the framework's published review notice.</p>
+      <ul>
+        <li><strong>Plan lifecycle work.</strong> Track support dates, dependencies and upgrade responsibilities. Reserve time and funding to act before support ends.</li>
+        <li><strong>Keep boundaries clear.</strong> Reduce unnecessary coupling and document interfaces. Independent replacement is an aim to weigh against transaction, performance and operating needs.</li>
+        <li><strong>Understand managed services.</strong> They can transfer some maintenance work, but not eliminate lifecycle management. For example, <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html" target="_blank" rel="noopener">Amazon RDS maintenance guidance</a> describes updates, engine deprecations and maintenance that can require downtime. Check responsibilities and test compatibility.</li>
+        <li><strong>Maintain evidence and knowledge.</strong> Keep architecture decisions, interface documentation and runbooks current. Automate repeatable checks and test important business rules and recovery paths; a coverage percentage alone does not establish safety.</li>
+        <li><strong>Plan commercial exit.</strong> Agree usable data export, transition assistance and exit responsibilities before signing. Test that those arrangements work in practice.</li>
+      </ul>
+      <p>These are continuing product and service responsibilities. Assign owners rather than leaving prevention as a design-time aspiration.</p>
+
+      <h2>Measuring whether it is working</h2>
+      <p>Set a baseline before starting. Choose measures that test the intended outcomes, with a defined scope, owner, data source and review interval. These four groups are a useful starting point:</p>
+      <figure>
+        <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image4.png" alt="Four measurement groups: technical health, ability to change, risk reduction and service outcomes. Evidence informs delivery teams, programme boards and investment decision makers. Review timing depends on risk and decision needs." data-lightbox="images/lesson20-image4.png" data-title="Measures and decisions" tabindex="0" role="button" aria-label="Enlarge the measures and decisions diagram">
+        <figcaption>Use consistent evidence, with enough detail for each decision. Reporting cadence is a local choice.</figcaption>
+      </figure>
+      <ul>
+        <li><strong>Technical health:</strong> supported components, upgrade readiness and evidence that important rules and recovery paths have been tested.</li>
+        <li><strong>Ability to change:</strong> time from an agreed business need to working service behaviour. <a href="https://dora.dev/guides/dora-metrics/" target="_blank" rel="noopener">DORA's software delivery metrics</a> add change lead time, deployment frequency, failed deployment recovery time, change fail rate and deployment rework rate. Change lead time starts at a code commit, so it measures only part of a policy change's journey.</li>
+        <li><strong>Risk reduction:</strong> treatment of named risks, exploitable vulnerabilities, recovery capability and access to required skills. Reassess classification and scores using consistent scope and criteria.</li>
+        <li><strong>Service outcomes:</strong> availability, processing accuracy, user completion, new capability and whole-life cost, including temporary running costs.</li>
+      </ul>
+      <p>A lower risk score is evidence to investigate, not proof of every benefit or a precise percentage reduction in risk. Record changes in assessment scope or method so comparisons remain meaningful. Report trends with their explanations, rather than presenting a score alone.</p>
+      <figure>
+        <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image5.png" alt="Two illustrative charts: assessed risk falls, while time to deliver a business change stays flat. This can show successful risk reduction without an improvement in change speed; judgement depends on the agreed objective." data-lightbox="images/lesson20-image5.png" data-title="Risk reduction and change speed" tabindex="0" role="button" aria-label="Enlarge the risk and change speed charts">
+        <figcaption>Illustrative trends, not measured results. Lower risk with unchanged delivery time can still meet a risk-reduction objective.</figcaption>
+      </figure>
+      <p>If faster policy change was promised and delivery remains slow, investigate the remaining constraint: architecture, approvals, testing, skills or work queues. If the objective was to remove unsupported infrastructure, unchanged delivery time does not by itself mean the work failed.</p>
+      <p>Finish each review with a decision: continue, adjust, pause or close the work. Name the remaining risks and owners, and confirm which legacy dependencies and costs have actually been removed.</p>
+
+      <div class="info-box" id="sources" style="margin-top: 2.5rem; font-size: 0.9rem;">
+        <h2 style="margin-top: 0;">Sources</h2>
+        <p>Last reviewed October 2026.</p>
+        <ul>
+          <li><a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/updated-definition-of-legacy-it" target="_blank" rel="noopener">Updated definition of legacy IT</a></li>
+          <li><a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener">Legacy IT Risk Assessment Framework</a></li>
+          <li><a href="https://www.gov.uk/government/organisations/central-digital-and-data-office" target="_blank" rel="noopener">CDDO organisation history</a></li>
+          <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html" target="_blank" rel="noopener">AWS migration strategies</a></li>
+          <li><a href="https://martinfowler.com/bliki/DefinitionOfRefactoring.html" target="_blank" rel="noopener">Martin Fowler: definition of refactoring</a></li>
+          <li><a href="https://martinfowler.com/bliki/StranglerFigApplication.html" target="_blank" rel="noopener">Martin Fowler: Strangler Fig</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig" target="_blank" rel="noopener">Microsoft: Strangler Fig pattern</a></li>
+          <li><a href="https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks/the-sourcing-playbook-html" target="_blank" rel="noopener">The Sourcing Playbook, section 13</a></li>
+          <li><a href="https://www.gov.uk/government/publications/the-green-book--2/the-green-book-2026" target="_blank" rel="noopener">The Green Book (2026)</a></li>
+          <li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook</a></li>
+          <li><a href="https://www.gov.uk/guidance/prevent-technical-debt-and-legacy" target="_blank" rel="noopener">Prevent technical debt and legacy</a></li>
+          <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html" target="_blank" rel="noopener">Amazon RDS: maintaining a DB instance</a></li>
+          <li><a href="https://dora.dev/guides/dora-metrics/" target="_blank" rel="noopener">DORA's software delivery performance metrics</a></li>
+        </ul>
+      </div>
+
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-technical-debt.html">Technical debt: identifying, quantifying and managing it</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decision-records.html">Architecture decision records</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+  </main>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="">
+      <p class="lightbox__title"></p>
+    </div>
+  </div>
+
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
+
