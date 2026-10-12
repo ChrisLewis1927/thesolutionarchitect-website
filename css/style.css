@@ -896,39 +896,80 @@ h4 { font-size: var(--font-size-xl); }
   margin: 0;
 }
 
-.lesson-content table {
+.lesson-content table,
+.article__content table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-bottom: var(--spacing-lg);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .lesson-content th,
-.lesson-content td {
+.lesson-content td,
+.article__content th,
+.article__content td {
   text-align: left;
   vertical-align: top;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--color-border);
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.lesson-content thead th {
-  background: var(--color-light-bg);
-  color: var(--color-text-dark);
+/* Vertical separators between columns, but not after the last one */
+.lesson-content th:not(:last-child),
+.lesson-content td:not(:last-child),
+.article__content th:not(:last-child),
+.article__content td:not(:last-child) {
+  border-right: 1px solid var(--color-border);
+}
+
+/* Last row has no bottom border, so the rounded corner reads cleanly */
+.lesson-content tbody tr:last-child td,
+.article__content tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.lesson-content thead th,
+.article__content thead th {
+  background: var(--color-primary-bg);
+  color: var(--color-white);
   font-weight: 600;
 }
 
-.lesson-content tbody tr:nth-child(even) {
+.lesson-content tbody tr:nth-child(even),
+.article__content tbody tr:nth-child(even) {
   background: var(--color-light-bg);
 }
 
-.lesson-content .table-wrap {
+.lesson-content tbody tr:hover,
+.article__content tbody tr:hover {
+  background: rgba(74, 108, 247, 0.06);
+}
+
+/* Explicit horizontal-scroll wrapper (guide pages) */
+.lesson-content .table-wrap,
+.article__content .table-wrap {
   overflow-x: auto;
   margin-bottom: var(--spacing-lg);
 }
 
-.lesson-content .table-wrap table {
+.lesson-content .table-wrap table,
+.article__content .table-wrap table {
   margin-bottom: 0;
+}
+
+/* Blog tables come from Markdown with no wrapper: let them scroll on
+   narrow screens instead of forcing the layout wider. */
+@media (max-width: 600px) {
+  .article__content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .lesson-nav {
