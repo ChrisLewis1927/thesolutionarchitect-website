@@ -746,7 +746,7 @@ h4 { font-size: var(--font-size-xl); }
 }
 
 .article__header {
-  margin-bottom: var(--spacing-3xl);
+  margin-bottom: 1.25rem;
 }
 
 .article__category {
@@ -762,7 +762,7 @@ h4 { font-size: var(--font-size-xl); }
   display: flex;
   align-items: center;
   gap: var(--spacing-lg);
-  color: var(--color-text-body);
+  color: var(--color-accent-blue);
   font-size: var(--font-size-sm);
   flex-wrap: wrap;
 }
