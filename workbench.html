@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Private practitioner checklist.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Workbench &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .wb-intro { margin-bottom: var(--spacing-lg); }
+    .wb-toolbar {
+      display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-md);
+      margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .wb-toolbar__count { font-size: var(--font-size-sm); color: var(--color-text-body); }
+    .wb-btn {
+      font-family: inherit; font-size: var(--font-size-sm); cursor: pointer;
+      padding: 8px 14px; min-height: 40px; border-radius: var(--border-radius);
+      border: 1px solid var(--color-border); background: var(--color-white);
+      color: var(--color-text-body); transition: var(--transition);
+    }
+    .wb-btn:hover { border-color: var(--color-accent-blue); color: var(--color-accent-blue); }
+    .wb-moment { margin-bottom: var(--spacing-md); border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; }
+    .wb-moment > summary {
+      cursor: pointer; list-style: none; padding: var(--spacing-md) var(--spacing-lg);
+      background: var(--color-light-bg); font-weight: 600; color: var(--color-text-dark);
+      display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md);
+    }
+    .wb-moment > summary::-webkit-details-marker { display: none; }
+    .wb-moment > summary::after { content: '+'; font-size: 1.4rem; line-height: 1; color: var(--color-accent-blue); }
+    .wb-moment[open] > summary::after { content: '\2212'; }
+    .wb-moment__meta { font-size: var(--font-size-sm); font-weight: 400; color: var(--color-text-body); }
+    .wb-moment__body { padding: var(--spacing-lg); }
+    .wb-moment__clear { margin-bottom: var(--spacing-lg); }
+    .wb-lesson { margin-bottom: var(--spacing-lg); }
+    .wb-lesson:last-child { margin-bottom: 0; }
+    .wb-lesson__title { font-size: var(--font-size-lg); margin-bottom: 0.25rem; }
+    .wb-lesson__title a { color: var(--color-text-dark); }
+    .wb-lesson__title a:hover { color: var(--color-accent-blue); }
+    .wb-lesson__heading { font-size: var(--font-size-sm); color: var(--color-text-body); margin-bottom: var(--spacing-sm); font-style: italic; }
+    .wb-q { display: flex; gap: var(--spacing-sm); padding: 6px 0; align-items: flex-start; }
+    .wb-q input { margin-top: 5px; width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--color-accent-blue); cursor: pointer; }
+    .wb-q label { cursor: pointer; line-height: var(--line-height-normal); }
+    .wb-q input:checked + label { color: var(--color-text-body); opacity: 0.55; text-decoration: line-through; }
+    @media print { .wb-toolbar, .wb-moment__clear { display: none; } .wb-moment, .wb-moment[open] > summary { break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Workbench</h1>
+        <p class="lesson-hero__description">Run your own work past the principles. Private, saved in this browser only.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <p class="wb-intro">A personal prompt for the decisions in front of you, drawn from the questions at the end of each guide. Open the moment you are in, work through the questions, and let them challenge the design. Ticks are saved in this browser and nowhere else.</p>
+
+      <div class="wb-toolbar">
+        <span class="wb-toolbar__count" id="wb-total">&nbsp;</span>
+        <button class="wb-btn" id="wb-clear-all" type="button">Clear all</button>
+        <button class="wb-btn" id="wb-expand" type="button">Expand all</button>
+      </div>
+
+      <div id="wb-root"></div>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  // Data: decision moments -> lessons -> questions. Sourced from each guide's
+  // "Questions to ask" section. Keys are stable so saved ticks survive edits.
+  var WB = [
+    {
+      id: "framing",
+      title: "① Framing the problem",
+      blurb: "Before you design anything.",
+      lessons: [
+        { file: "guide-what-a-solution-architect-does.html", title: "What a Solution Architect actually does", heading: "Questions to ask on a real project", q: [
+          "What problem are we solving and what outcome are we trying to achieve?",
+          "Who are the users and what evidence do we have about their needs?",
+          "Which requirements and constraints genuinely affect the solution?",
+          "What criteria will we use to compare the available approaches?",
+          "What credible options have we considered?",
+          "What do we gain and give up with each option?",
+          "What risks and assumptions could change the decision?",
+          "Who has authority to make or approve the decision?",
+          "What evidence should we record so someone can understand the reasoning later?",
+          "What would cause us to revisit the decision?"
+        ]},
+        { file: "guide-stakeholders-and-landscape.html", title: "Users, stakeholders and the people around your design", heading: "Questions to ask on a real project", q: [
+          "Who uses the service, who is affected by it and whose voice is missing?",
+          "Who owns the outcome, funding, data, dependencies and material risks?",
+          "Who can recommend, decide, assure, approve or accept risk for this choice?",
+          "What does each stakeholder know, and what evidence supports their position?",
+          "Which statements are requirements or constraints, and which are assumptions or preferences?",
+          "Where do needs conflict, and what credible options address the conflict differently?",
+          "Who will build, operate, support and change the service?",
+          "What change in scope, policy, risk, ownership or evidence would make us revisit the map or decision?"
+        ]}
+      ]
+    },
+    {
+      id: "deciding",
+      title: "② Making a decision",
+      blurb: "When choosing between options.",
+      lessons: [
+        { file: "guide-architecture-decisions.html", title: "How architecture decisions actually get made", heading: "Questions to ask on a real project", q: [
+          "What exactly needs to be decided, and what outcome should it support?",
+          "Which requirements and constraints materially distinguish the options?",
+          "Which statements are mandatory, and who or what gives them that authority?",
+          "What credible options have been considered at the same level of detail?",
+          "What evidence supports the criteria, scores, costs and risk judgements?",
+          "What does each option improve, and what does it make worse or harder to change?",
+          "Who can recommend, decide, assure, approve and accept the remaining risks?",
+          "Is the amount of analysis proportionate to the consequences and reversibility?",
+          "What needs to be recorded so another person can understand the reasoning?",
+          "What change in evidence would cause the decision to be revisited?"
+        ]},
+        { file: "guide-solution-options-and-appraisal.html", title: "Solution options and option appraisal", heading: "Questions to ask before recommending an option", q: [
+          "What exact decision are we making, and what is outside its scope?",
+          "Which outcomes, requirements, constraints and current-state findings shape it?",
+          "Have we generated genuinely different approaches?",
+          "Why was each longlist option progressed or rejected?",
+          "Which conditions are mandatory, and which criteria allow trade-offs?",
+          "What happens under business as usual, and what does it cost?",
+          "What are the whole-life costs, benefits, risks and dependencies?",
+          "Where is the evidence weak, and could credible changes reverse the recommendation?",
+          "Have the right users, specialists and decision-makers been involved?",
+          "Who has authority to decide, and what would cause the decision to be revisited?"
+        ]},
+        { file: "guide-architecture-decision-records.html", title: "Architecture decision records in practice", heading: "Questions to ask before accepting an ADR", q: [
+          "Is this a significant architecture decision rather than an implementation detail?",
+          "Does the title state the decision clearly?",
+          "Are the scope, requirements, constraints and assumptions explicit?",
+          "Were credible options assessed against relevant criteria?",
+          "Does the chosen option include its disadvantages and remaining risks?",
+          "Are the decision owner, authority and contributors clear?",
+          "Do the consequences include dependencies and follow-on actions?",
+          "Is the status defined and consistent with the rest of the collection?",
+          "Can intended readers find the supporting evidence and related records?",
+          "What change in context would cause the decision to be reviewed?"
+        ]}
+      ]
+    },
+    {
+      id: "designing",
+      title: "③ Designing the solution",
+      blurb: "As the architecture takes shape.",
+      lessons: [
+        { file: "guide-functional-and-nonfunctional-requirements.html", title: "Functional and non-functional requirements", heading: "Questions to ask before choosing an architecture", q: [
+          "Which capabilities are essential to the user and policy outcome?",
+          "Which quality requirements could materially change the design or rule out an option?",
+          "What evidence supports each important target, and what remains an assumption?",
+          "Under which demand, failure, device or operating conditions must the target be met?",
+          "Which statements are genuine requirements or constraints, and which are proposed solutions or preferences?",
+          "Who owns the need, risk or obligation, and who can agree a change?",
+          "How will the team validate the requirement and verify the service?",
+          "What new evidence would cause the requirement or architecture decision to be revisited?"
+        ]},
+        { file: "guide-designing-end-to-end-services.html", title: "Designing end to end services", heading: "Questions to ask on a real service", q: [
+          "What outcome is the user trying to achieve, and where does the journey begin and end?",
+          "Which organisations, teams, suppliers and existing services contribute to it?",
+          "What happens before, after and between the screens we are designing?",
+          "Which online, telephone, paper, face-to-face or assisted digital routes do users need?",
+          "Can a user move between those routes without losing progress or repeating information unnecessarily?",
+          "What do staff need to complete their work safely and efficiently?",
+          "Where are the hand-offs, waiting periods, exceptions and failure paths?",
+          "How will the organisation monitor, support, recover and improve the service?",
+          "Which assumptions about policy, demand, technology or operations could change the design?",
+          "How will user needs, information and dependencies be handled when the service retires?"
+        ]},
+        { file: "guide-integration-patterns.html", title: "Integration patterns for government services", heading: "Questions to ask on a real service", q: [
+          "What user or business outcome does each integration support?",
+          "What information or action crosses the boundary, and why?",
+          "Does the caller need an immediate response, or can the work complete later?",
+          "What volume, response time, ordering and availability are required?",
+          "Which government component, existing API or supported interface could meet the need?",
+          "Who owns the data, interface, credentials and support on each side?",
+          "How will changes to schemas, versions and business rules be managed?",
+          "What happens when the dependency is slow, unavailable or returns invalid data?",
+          "How will duplicate, missing, delayed and out-of-order work be handled?",
+          "How will the team trace, monitor, reconcile and recover the integration?"
+        ]},
+        { file: "guide-security-privacy-trust.html", title: "Security, privacy and trust by design", heading: "Questions to ask on a real service", q: [
+          "What harm could result from disclosure, alteration, loss or unavailability?",
+          "Which users, assets, data flows and trust boundaries are in scope?",
+          "Who owns each important risk and who can accept the residual risk?",
+          "How is the information classified, and what additional handling rules apply?",
+          "What personal information is necessary, for which purpose and for how long?",
+          "How will applicable information rights be supported across every copy and store?",
+          "How are people, devices and services authenticated and authorised?",
+          "What could a compromised user, component or supplier reach next?",
+          "Which controls prevent, detect and correct each significant risk?",
+          "What evidence shows the controls work, and what change would trigger another review?"
+        ]},
+        { file: "guide-data-architecture-and-data-sharing.html", title: "Data architecture and data sharing across government", heading: "Questions to ask before approving a data flow", q: [
+          "What outcome and specific purpose require this data?",
+          "Which organisation is controller, joint controller or processor at each stage?",
+          "What legal power, lawful basis and additional condition apply?",
+          "Which fields are necessary, and what prevents wider use?",
+          "How are identity matches made, reviewed, corrected and explained?",
+          "What classification, markings, aggregation effects and local policies apply?",
+          "Which sharing pattern best fits freshness, volume, availability and recovery needs?",
+          "Who owns the contract, source quality, operation and incident response?",
+          "Where do derived data, exports, logs, caches and backups go?",
+          "How are retention, disposal and applicable individual rights carried out?",
+          "Has DPIA screening happened early enough to influence the design?",
+          "What change would require the agreement, risk assessment or DPIA to be reviewed?"
+        ]},
+        { file: "guide-cloud-strategy-in-government.html", title: "Cloud strategy in a government context", heading: "Questions to ask before approval", q: [
+          "Which user and organisational needs does the strategy address?",
+          "Which cloud and non-cloud options were evaluated, using what evidence?",
+          "Which assumptions, constraints and risks could change the decision?",
+          "Does the commercial route support the required service, term and exit?",
+          "Where are data and derived data stored, processed, managed and supported?",
+          "What does the provider control, what do we control and who owns each action?",
+          "What concentration and lock-in are accepted, and by which authority?",
+          "How have resilience and recovery been demonstrated?",
+          "What drives cost, and how will forecast variance be detected and acted on?",
+          "What makes the hybrid or multi-cloud parts one operable service?",
+          "What evidence would cause the strategy to be reviewed?"
+        ]}
+      ]
+    },
+    {
+      id: "communicating",
+      title: "④ Communicating & recording",
+      blurb: "Before you present or sign off.",
+      lessons: [
+        { file: "guide-architecture-documentation.html", title: "Architecture documentation that people actually read", heading: "Questions to ask before publishing", q: [
+          "Who is the primary reader and what will they use this for?",
+          "Can they find the scope, status and important decisions quickly?",
+          "Does the document name the real systems, interfaces and owners?",
+          "Are requirements, assumptions, decisions and open questions clearly separated?",
+          "Do the diagrams each have one purpose, clear labels and an accessible explanation?",
+          "Are current, interim and target states easy to distinguish?",
+          "Have duplicated details been replaced with links to authoritative sources?",
+          "Are significant trade-offs, risks and consequences visible?",
+          "Who will maintain the document and what changes will trigger a review?",
+          "Can anything be removed without losing evidence or making a decision harder?"
+        ]},
+        { file: "guide-presenting-architecture-to-non-technical-stakeholders.html", title: "Presenting architecture to non-technical stakeholders", heading: "Questions to ask before presenting", q: [
+          "Who is the primary audience, and what authority do they have?",
+          "What decision, steer or action is required?",
+          "Does the opening state the recommendation and why it matters now?",
+          "Are credible options compared against the same relevant criteria?",
+          "Are costs, timescales, risks and benefits supported by evidence?",
+          "Are assumptions, ranges and unresolved uncertainties visible?",
+          "Does each visual answer one question and remain understandable on its own?",
+          "Is the same information available to people who cannot use the visual?",
+          "Is supporting detail available without crowding the main message?",
+          "Will decisions, conditions, risk acceptance and actions be recorded afterwards?"
+        ]}
+      ]
+    }
+  ];
+
+  var STORE = 'tsa-workbench-v1';
+  function loadState() { try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; } }
+  function saveState(s) { try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {} }
+  var state = loadState();
+
+  function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  var root = document.getElementById('wb-root');
+  WB.forEach(function (moment) {
+    var total = 0;
+    moment.lessons.forEach(function (l) { total += l.q.length; });
+
+    var details = document.createElement('details');
+    details.className = 'wb-moment';
+    details.setAttribute('data-moment', moment.id);
+
+    var summary = document.createElement('summary');
+    summary.innerHTML = '<span>' + esc(moment.title) + ' <span class="wb-moment__meta">' + esc(moment.blurb) + '</span></span>' +
+                        '<span class="wb-moment__meta" data-count>' + '0 / ' + total + ' considered</span>';
+    details.appendChild(summary);
+
+    var body = document.createElement('div');
+    body.className = 'wb-moment__body';
+
+    var clearWrap = document.createElement('div');
+    clearWrap.className = 'wb-moment__clear';
+    var clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.className = 'wb-btn';
+    clearBtn.textContent = 'Clear this section';
+    clearWrap.appendChild(clearBtn);
+    body.appendChild(clearWrap);
+
+    moment.lessons.forEach(function (l) {
+      var wrap = document.createElement('div');
+      wrap.className = 'wb-lesson';
+      var h = document.createElement('p');
+      h.className = 'wb-lesson__title';
+      h.innerHTML = '<a href="' + l.file + '">' + esc(l.title) + '</a>';
+      wrap.appendChild(h);
+      var hd = document.createElement('p');
+      hd.className = 'wb-lesson__heading';
+      hd.textContent = l.heading;
+      wrap.appendChild(hd);
+
+      l.q.forEach(function (q, i) {
+        var key = l.file + '#' + i;
+        var row = document.createElement('div');
+        row.className = 'wb-q';
+        var id = 'q_' + key.replace(/[^a-z0-9]/gi, '_');
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = id;
+        cb.checked = !!state[key];
+        cb.addEventListener('change', function () {
+          if (cb.checked) { state[key] = 1; } else { delete state[key]; }
+          saveState(state);
+          updateCounts();
+        });
+        var lab = document.createElement('label');
+        lab.setAttribute('for', id);
+        lab.textContent = q;
+        row.appendChild(cb);
+        row.appendChild(lab);
+        wrap.appendChild(row);
+      });
+      body.appendChild(wrap);
+    });
+
+    details.appendChild(body);
+    root.appendChild(details);
+
+    clearBtn.addEventListener('click', function () {
+      moment.lessons.forEach(function (l) {
+        l.q.forEach(function (q, i) { delete state[l.file + '#' + i]; });
+      });
+      saveState(state);
+      details.querySelectorAll('input[type=checkbox]').forEach(function (c) { c.checked = false; });
+      updateCounts();
+    });
+  });
+
+  function updateCounts() {
+    var grand = 0, grandDone = 0;
+    document.querySelectorAll('.wb-moment').forEach(function (d) {
+      var boxes = d.querySelectorAll('input[type=checkbox]');
+      var done = 0;
+      boxes.forEach(function (c) { if (c.checked) done++; });
+      d.querySelector('[data-count]').textContent = done + ' / ' + boxes.length + ' considered';
+      grand += boxes.length; grandDone += done;
+    });
+    document.getElementById('wb-total').textContent = grandDone + ' of ' + grand + ' questions considered';
+  }
+
+  document.getElementById('wb-clear-all').addEventListener('click', function () {
+    if (!confirm('Clear all ticks across every section?')) return;
+    state = {};
+    saveState(state);
+    document.querySelectorAll('.wb-moment input[type=checkbox]').forEach(function (c) { c.checked = false; });
+    updateCounts();
+  });
+
+  var expandBtn = document.getElementById('wb-expand');
+  expandBtn.addEventListener('click', function () {
+    var all = document.querySelectorAll('.wb-moment');
+    var anyClosed = Array.prototype.some.call(all, function (d) { return !d.open; });
+    all.forEach(function (d) { d.open = anyClosed; });
+    expandBtn.textContent = anyClosed ? 'Collapse all' : 'Expand all';
+  });
+
+  updateCounts();
+  </script>
+</body>
+</html>
