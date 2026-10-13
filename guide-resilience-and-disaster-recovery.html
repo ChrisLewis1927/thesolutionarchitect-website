@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to design government services that survive failure: setting RTO and RPO, designing for failure at every layer, choosing a DR pattern and testing it.">
+  <meta property="og:title" content="Resilience, disaster recovery and business continuity &mdash; Architect's Library">
+  <meta property="og:description" content="How to design government services that survive failure: setting RTO and RPO, designing for failure at every layer, choosing a DR pattern and testing it.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Resilience, disaster recovery and business continuity &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Resilience, disaster recovery and business continuity</h1>
+        <p class="lesson-hero__description">Design services that recover fast and lose as little as possible when they fail.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How to turn service criticality into RTO and RPO targets a service owner will sign up to</li>
+          <li>The patterns that stop failure spreading across infrastructure, application, data and dependencies</li>
+          <li>How to choose between the four disaster recovery patterns without overspending</li>
+          <li>What the Cyber Assessment Framework, GovAssure and service assessors expect, and how to test for it</li>
+        </ul>
+      </div>
+
+      <h2>Resilience is decided at design time</h2>
+
+      <p>Government services fail. Infrastructure fails, cloud regions fail, databases corrupt, third-party APIs go down and operators make mistakes. The question worth asking is whether your architecture lets the service recover quickly, lose as little data as possible and keep the trust of the people who depend on it. In government that trust carries real weight. A benefits system that is down leaves vulnerable people without money they need. A border system outage builds queues at the ports. A tax system that falls over during a filing deadline leaves people unable to meet a legal obligation on time.</p>
+
+      <p>Resilience is a property of the architecture, and it emerges from decisions made at the very beginning. A system designed without it is usually expensive to make resilient later, because the fixes reach into its structure. A resilient service keeps operating when components fail, perhaps at reduced capacity. It recovers quickly when failure lands, loses minimal or no data on the way, and degrades gracefully instead of collapsing all at once.</p>
+
+      <p>Five design decisions do most of that work:</p>
+      <ul>
+        <li>Redundancy, so one instance of a critical component can fail without taking the whole service down</li>
+        <li>Isolation, so a failure in one component cannot cascade into the others</li>
+        <li>Statelessness, so services hold no critical state in memory and can be restarted without losing data</li>
+        <li>Idempotency, so an operation can be retried safely without duplicate side effects</li>
+        <li>Observability, so failures are detected quickly and diagnosed accurately</li>
+      </ul>
+
+      <p>Failure starts in four places, and the architecture has to answer all of them. Infrastructure fails when a server, disk or network link goes. Application failure is a bug that crashes the service or produces wrong results. Data failure is corruption, inconsistency or loss. Dependency failure is a service you rely on becoming unavailable.</p>
+
+      <figure>
+        <img width="1200" height="621" loading="lazy" decoding="async" src="images/lesson21-image1.png" alt="Four grey boxes, infrastructure, application, data and dependency, each with an arrow pointing at a teal box representing your service. Dependency is marked as outside your direct control.">
+        <figcaption>Four places failure starts. The design has to answer every one of them.</figcaption>
+      </figure>
+
+      <p>Government sets expectations against all four. <a href="https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital" target="_blank" rel="noopener">GovS 005</a>, the digital functional standard, expects defined service levels, and business continuity and disaster recovery arrangements with clear accountability for services whose failure would present a clear risk to the organisation's objectives. <a href="https://www.gov.uk/service-manual/service-standard/point-14-operate-a-reliable-service" target="_blank" rel="noopener">Point 14 of the Service Standard</a> expects teams to operate a reliable service, and the Service Manual's <a href="https://www.gov.uk/service-manual/technology/uptime-and-availability-keeping-your-service-online" target="_blank" rel="noopener">uptime and availability guidance</a> asks for components that fall back to minimal functions when something goes wrong. The Cyber Assessment Framework assesses whether an organisation can keep its essential functions running through disruption. How much of each a service needs depends on how critical it is, and that is where the numbers come in.</p>
+
+      <blockquote>Resilience is cheapest when it is designed in from the start.</blockquote>
+
+      <h2>RTO and RPO are business decisions</h2>
+
+      <p>Two numbers turn resilience from an aspiration into a requirement you can design against. The recovery time objective, RTO, is the longest the service can be unavailable before it must be restored. An RTO of four hours means back within four hours of failure. An RTO of zero means no downtime at all, which needs active active redundancy. The recovery point objective, RPO, is the most data you can afford to lose, measured in time. An RPO of one hour accepts losing up to an hour of data, so backups or replication must run at least hourly. An RPO of zero accepts no loss, which needs synchronous replication.</p>
+
+      <figure>
+        <img width="1200" height="406" loading="lazy" decoding="async" src="images/lesson21-image2.png" alt="A timeline with three points: the last good copy of the data, the failure, and the service being restored. A teal bracket labelled RPO spans from the last good copy to the failure, showing how much data you can afford to lose. A second bracket labelled RTO spans from the failure to restoration, showing how long you can afford to be down.">
+        <figcaption>RPO looks back from the moment of failure. RTO looks forward to recovery.</figcaption>
+      </figure>
+
+      <p>Neither number belongs to the architect. Both are business decisions informed by what is technically feasible, and the service owner, product owner or SRO decides what is acceptable based on what downtime and data loss would do to citizens and to the organisation. Your job is to make that trade visible, then design an architecture that meets the targets they choose.</p>
+
+      <p>Criticality varies enormously across government. As an illustration rather than a rule, critical services, such as payments processing, border systems and emergency services systems, might need an RTO under an hour and an RPO near zero. That means active active deployment across regions, synchronous replication and automated failover. Important services, such as application processing, case management and reporting, might sit at an RTO of four to eight hours and an RPO of one to four hours, served by standby infrastructure, regular replication of backups and tested failover. Standard services, such as internal tools, reference data publishing and informational services with little traffic, might accept 24 hours for both, and need regular backups and documented recovery procedures.</p>
+
+      <figure>
+        <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson21-image3.png" alt="A curve of cost against recovery target. Moving from 24 hours towards near zero, cost stays low for a long way and then climbs steeply. Standard services sit at the flat end, important services part way up, and critical services high on the steep part of the curve.">
+        <figcaption>Cost stays flat for a long way, then climbs steeply as the targets approach zero.</figcaption>
+      </figure>
+
+      <p>That curve is the conversation to have with the service owner. Active active deployment across regions with synchronous replication costs far more than a single region with daily backups. Proportion is the whole job. Over engineering resilience for a low criticality service wastes public money, and under engineering it for a critical one leaves a risk nobody should be carrying.</p>
+
+      <h2>Designing for failure at every layer</h2>
+
+      <p>Infrastructure failure is the most obvious category, and in my experience rarely the one that causes a government outage. Cloud platforms supply the mechanisms: multiple availability zones in a region, multiple regions per provider, and managed services that handle their own replication and failover. The decisions are yours. Deploy across at least two availability zones, prefer managed services to infrastructure you run yourself, and decide explicitly whether the service's criticality justifies more than one region.</p>
+
+      <p>Application failure calls for defensive patterns. A circuit breaker stops a failing dependency from dragging the service down with it. When a downstream service stops responding, the breaker opens and returns a degraded response straight away, instead of waiting for a timeout while every available connection is consumed. A bulkhead isolates failure domains, so a pool of connections reserved for one dependency cannot be exhausted by trouble with another.</p>
+
+      <figure>
+        <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson21-image4.png" alt="A teal service box holds three separate connection pools, one each for address lookup, payments and notifications. The payments dependency is not responding. Its pool is full but contained, and a circuit breaker between that pool and the dependency is open. The other two pools and dependencies keep working.">
+        <figcaption>One dependency stops responding. Its own pool fills, the breaker opens, and the rest of the service carries on.</figcaption>
+      </figure>
+
+      <p>Two simpler habits round out the application layer. Retry with exponential backoff handles transient failures without hammering a service that is trying to recover. Health checks let load balancers route traffic away from unhealthy instances automatically.</p>
+
+      <p>Data failure needs defence in layers. Point-in-time recovery restores a database to a chosen moment before corruption began, provided that moment is still inside the backup retention period. Read replicas give you performance and a warm standby at once, and replication across regions protects against losing a whole data centre or region. The application carries part of the load too. Validation before writing keeps corrupt data out. Soft deletes make accidental deletions recoverable. Audit trails show what changed, when and by whom, which is what lets you investigate and put things right.</p>
+
+      <p>In my experience, dependency failure is where most government outages begin, because modern services lean on many external services and every one of them can fail. Four patterns contain it. Cache with a defined tolerance for staleness, so slightly old data can be served while the source is down. Degrade gracefully, so losing a dependency that is not critical reduces functionality instead of ending the service. Set timeouts with fallbacks, so the service never waits indefinitely. Process asynchronously, queuing work for later instead of failing the user's request.</p>
+
+      <blockquote>Every dependency is a failure you have agreed to inherit. Decide now what the service does on the day it goes quiet.</blockquote>
+
+      <h2>What the Cyber Assessment Framework expects</h2>
+
+      <p>The NCSC <a href="https://www.ncsc.gov.uk/collection/cyber-assessment-framework" target="_blank" rel="noopener">Cyber Assessment Framework</a> is the yardstick for cyber resilience across government. <a href="https://www.ncsc.gov.uk/blog-post/caf-v4-0-released-in-response-to-growing-threat" target="_blank" rel="noopener">Version 4.0</a> was published in August 2025, and <a href="https://www.security.gov.uk/policy-and-guidance/govassure/" target="_blank" rel="noopener">GovAssure</a>, the government's cyber assurance scheme, assesses critical government systems against the CAF using government-specific profiles. Knowing what it expects lets you design an architecture that holds up when an assessment asks the questions.</p>
+
+      <p>The CAF is organised around four objectives: managing security risk, protecting against cyber attacks, detecting cyber security events, and minimising the impact of cyber security incidents. Resilience is named in the second, as principle B5, Resilient networks and systems, and the fourth covers response, recovery and lessons learned. Four expectations across the framework translate directly into design work.</p>
+
+      <p>Essential functions must be resilient to disruption. Identify which components support the critical user journeys, and make sure those components have the redundancy to keep the journeys running through a partial failure.</p>
+
+      <p>Resilience must be prepared in advance. Backup strategies, failover mechanisms and recovery procedures are designed, implemented and tested from the start, instead of being retrofitted after the first incident.</p>
+
+      <p>Response and recovery plans must be tested, and the architecture has to support them. That means observability to detect an incident, isolation to contain it, and recovery mechanisms to restore service.</p>
+
+      <p>Lessons must be learned. Comprehensive logging and audit trails support investigation after an incident, and the architecture itself should keep evolving in response to real failures.</p>
+
+      <p><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/" target="_blank" rel="noopener">Secure by Design</a>, the government approach to building security into digital delivery, points the same way. Its <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/" target="_blank" rel="noopener">first principle</a> makes a senior risk owner accountable for the service's cyber security risks throughout its life cycle.</p>
+
+      <h2>Choosing a disaster recovery pattern</h2>
+
+      <p>Disaster recovery covers the catastrophic case: losing a whole site, region or data centre. Four patterns cover the options, and they differ mainly in how much of the service is already running somewhere else when disaster strikes. The names follow the <a href="https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html" target="_blank" rel="noopener">AWS disaster recovery whitepaper</a>, and the recovery times given for each are indicative rather than guaranteed.</p>
+
+      <figure>
+        <img width="1200" height="777" loading="lazy" decoding="async" src="images/lesson21-image5.png" alt="Four rows compare disaster recovery patterns. Each has a full primary region. In the second region, backup and restore holds only backups; pilot light holds a replicating database with the application built on failure; warm standby runs a small application and a replica; active active runs the full application with data in sync. Recovery times fall from hours or days to near zero as cost rises from lowest to highest.">
+        <figcaption>What is already running in the second region decides how fast you recover and how much you pay.</figcaption>
+      </figure>
+
+      <p>Backup and restore is the simplest and cheapest. Data is backed up, daily or more often, to a separate location. After a failure, new infrastructure is provisioned and the data restored. Recovery takes hours to days depending on provisioning time and data volume, you lose everything since the last backup, and it suits services of low criticality. A pilot light keeps a minimal environment running in a second region, typically just the database with replication and no application servers. On failure you provision the application tier and point it at the replica, which brings recovery to one to four hours and data loss down to minutes of replication lag.</p>
+
+      <p>Warm standby runs a complete but scaled down copy of production in the second region. Traffic is redirected and the standby scaled up to production load, giving recovery in minutes to an hour and data loss of seconds to minutes. It fits important services where hours of downtime are unacceptable. Active active runs production in two or more regions at once with traffic spread across them, so when one region fails the others absorb the load without interruption. For the loss of a region, recovery time and data loss both approach zero. Corruption and deletion replicate as well, so active active still needs point-in-time backups. It is the most expensive pattern, and the only one that gets you near zero downtime.</p>
+
+      <p><em>"Anything that matters should be active active."</em></p>
+
+      <p>In my experience, defaulting to active active because it sounds impressive is one of the most common mistakes in government DR design. The RTO and RPO agreed with the service owner should pick the pattern, and for most services they point somewhere cheaper. The opposite mistake does more damage: backup and restore underneath a critical service, where hours of downtime land hard on citizens.</p>
+
+      <h2>Testing is the only proof you have</h2>
+
+      <p>A disaster recovery plan that has never been exercised is a hope with a document attached. Untested plans fail in predictable ways: recovery procedures nobody has run can fail on the day, and backups nobody has restored can turn out to be corrupt. Testing works at several levels, each with its own rhythm.</p>
+
+      <figure>
+        <img width="1200" height="462" loading="lazy" decoding="async" src="images/lesson21-image6.png" alt="A twelve month grid. Backup restore tests run every month. Component failover tests run every quarter at least. Runbook walkthroughs run every quarter. A regional failover test runs once in the year.">
+        <figcaption>A year of resilience testing. The routine checks run monthly and quarterly; the regional failover runs at least once.</figcaption>
+      </figure>
+
+      <p>Component failover testing should be automated and routine, monthly or quarterly. Kill a database instance and confirm the replica takes over. Terminate an application instance and confirm the load balancer routes around it. Backup restore testing runs monthly: restore into a test environment and check integrity through the full procedure, including application configuration, data loading and verification. Runbook walkthroughs happen quarterly, with the operations team reading the DR runbook through without executing it, looking for unclear steps, dependencies that have changed and assumptions that no longer hold.</p>
+
+      <p>Regional failover testing happens at least once a year. It is disruptive and may need a maintenance window, and it is the only way to confirm that the second region can carry production traffic, that replication is current and that every integration works from there. Chaos engineering goes further, deliberately injecting failures into production to see how the system behaves when several things break at once, or when failure arrives at peak load. Netflix's Chaos Monkey, which the company <a href="https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116" target="_blank" rel="noopener">described in 2011</a>, works this way, randomly disabling production instances. Government services can adopt the same principles with appropriate caution and stakeholder agreement.</p>
+
+      <p>Assessors will ask about all of it. There is <a href="https://www.gov.uk/service-manual/service-assessments/how-service-assessments-work" target="_blank" rel="noopener">no fixed list of assessment questions</a>, but point 14 of the Service Standard asks for monitoring and a proportionate plan to respond to problems, so expect a panel to probe DR testing, backup verification and incident response. A service that has never tested its recovery should not expect to pass on the strength of a well written plan. Record every test: what was tested, what worked, what failed and what changed as a result. That record is what shows GovAssure assessors that resilience is actively managed.</p>
+
+      <h2>Degrading gracefully and telling people the truth</h2>
+
+      <p>When failure lands, the service has two jobs. Keep providing as much value as it can, and tell users honestly what is happening.</p>
+
+      <p>Graceful degradation starts with sorting components into two kinds. Essential components are the ones the service cannot function without, and they need full redundancy. Enhancing components make the service better but are not required, and each one needs defined fallback behaviour. In practice, if the payment service is unavailable, let users finish their application and take payment later instead of blocking the whole transaction. If a data lookup is down, accept the application and tell the user eligibility will be confirmed within 24 hours. If a region fails, serve from the remaining region at slightly higher latency.</p>
+
+      <figure>
+        <img width="1200" height="494" loading="lazy" decoding="async" src="images/lesson21-image7.png" alt="A five step application in teal: start, your details, eligibility, payment and submitted. The first two steps rely on a fully redundant core platform. The eligibility lookup service and the payment provider are both unavailable, so those steps fall back to confirming eligibility later and taking payment later. The user still reaches submitted.">
+        <figcaption>Two dependencies are down and the user still completes the application.</figcaption>
+      </figure>
+
+      <p>Communication deserves the same care as recovery. A bare "service unavailable" message with nothing else is poor practice. Say what is affected and what is not, give an estimated time for resolution, offer other ways to get help such as a phone number or postal address, and update the message as things change. The Service Manual expects a status page you can update during unplanned downtime, and the GOV.UK Design System has a pattern for <a href="https://design-system.service.gov.uk/patterns/service-unavailable-pages/" target="_blank" rel="noopener">service unavailable pages</a>. The architecture has to support both: monitoring that detects failure fast enough to update what users see, and content that can be changed quickly without a full deployment.</p>
+
+      <p>Then remember the assisted digital channel. When the digital service is down, contact centre staff need to know, need to know what to tell callers, and ideally need a manual workaround so they can keep helping people. The operational communication plan belongs in the resilience architecture alongside the technical recovery.</p>
+
+      <blockquote>People can work with a service that says what is broken and when it will be back. The failure they remember is the one that went silent.</blockquote>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide covers resilience and disaster recovery for individual digital services. It does not cover organisational business continuity management or crisis management. The criticality tiers, recovery targets and testing rhythms are illustrative teaching aids rather than mandatory thresholds.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed October 2026 against the government, NCSC and primary technical sources below. Policy and guidance change, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Government Functional Standard GovS 005: Digital</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-14-operate-a-reliable-service" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Standard: Point 14, operate a reliable service</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/uptime-and-availability-keeping-your-service-online" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Uptime and availability</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/cyber-assessment-framework" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Cyber Assessment Framework</a></li>
+          <li><a href="https://www.ncsc.gov.uk/blog-post/caf-v4-0-released-in-response-to-growing-threat" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: CAF v4.0 released</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/govassure/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GovAssure</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Secure by Design</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Secure by Design principles</a></li>
+          <li><a href="https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">AWS: Disaster recovery options in the cloud</a></li>
+          <li><a href="https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Netflix: The Netflix Simian Army (Chaos Monkey)</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-assessments/how-service-assessments-work" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: How service assessments work</a></li>
+          <li><a href="https://design-system.service.gov.uk/patterns/service-unavailable-pages/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Design System: Service unavailable pages</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-cloud-strategy-in-government.html">Cloud strategy in a government context</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-technical-debt.html">Managing technical debt</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-security-privacy-trust.html">Security, privacy and trust by design</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
