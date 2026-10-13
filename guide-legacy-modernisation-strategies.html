@@ -15,6 +15,11 @@
     .lesson-content figure { margin: 1rem 0 0.75rem; }
     .lesson-content figure img { border-radius: 8px; }
     .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+    .lesson-content .table-wrap { overflow-x: auto; margin: 1.25rem 0 1.5rem; }
+    .lesson-content .strategy-table { width: 100%; min-width: 640px; font-size: 0.9rem; }
+    .lesson-content .strategy-table th,
+    .lesson-content .strategy-table td { text-align: left; vertical-align: top; }
+    .lesson-content .formula { margin: 0.75rem 0 1rem; padding: 0.75rem 1rem; border-left: 3px solid var(--color-border); font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body>
@@ -22,7 +27,7 @@
 
   <header class="header" role="banner">
     <div class="container">
-      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+      <a aria-label='The Solution Architect - Home' class='header__logo' href='/'>
         <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
         <span>The Solution Architect</span>
       </a>
@@ -31,13 +36,13 @@
           <span class="nav__toggle-icon"></span>
         </button>
         <ul class="nav__list" id="nav-list" role="list">
-          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
-          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
-          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
-          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
-          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
-          <li><a href="blog.html" class="nav__link">Blog</a></li>
-          <li><a href="about.html" class="nav__link">About</a></li>
+          <li><a class='nav__link nav__link--active' href='/library'>Architect's Library</a></li>
+          <li><a class='nav__link' href='/lifecycle'>Delivery Phases</a></li>
+          <li><a class='nav__link' href='/guardrails'>AI Guardrails</a></li>
+          <li><a class='nav__link' href='/cloud'>Cloud</a></li>
+          <li><a class='nav__link' href='/artifacts'>Artifacts</a></li>
+          <li><a class='nav__link' href='/blog'>Blog</a></li>
+          <li><a class='nav__link' href='/about'>About</a></li>
         </ul>
       </nav>
     </div>
@@ -60,112 +65,158 @@
           <li>How to plan incremental replacement, data migration and recovery</li>
           <li>How to assign ownership, maintain the replacement and measure results</li>
         </ul>
+        <p style="margin-top: 0.75rem;"><strong>New to modernisation?</strong> The first three sections cover choosing an approach and moving across safely. The rest cover people, contracts, funding and measurement. Come back to them when you're preparing a business case.</p>
       </div>
 
       <h2>What makes a system legacy</h2>
-      <p>A system's age does not tell you whether it needs modernising. What matters is whether it can still meet users' needs, stay supported and secure, and be maintained at an acceptable cost. The starting point is the burden it creates for the service and the risk of leaving it as it is.</p>
-      <p>Imagine a licensing service whose database is approaching the end of support. Partner organisations need an API, while staff find it difficult to change the rules for licence applications. These problems sit within the same service, but each may need a different response. Understanding them separately helps you decide what to change first.</p>
-      <p>The government's <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/updated-definition-of-legacy-it" target="_blank" rel="noopener">August 2026 definition of legacy IT</a> provides a basis for that assessment. It centres on persistent, unacceptable burden or risk, and an inability to support or secure a system effectively or economically. Systems are classified as Accepted, Action-Required or Legacy. Action-Required means that, without action, the system will become legacy within 12 months; a Legacy classification requires urgent remediation.</p>
-      <p>To establish the classification, work with the risk owner through the applicable thresholds for seven criteria: support, contracts, skills, business needs, hardware, cyber security and legacy dependencies. Evidence such as missing tests or documentation helps identify areas to investigate, but does not automatically establish legacy status.</p>
-      <p>Once you understand the classification, risk scoring helps prioritise the response. Keep the evidence behind both assessments: support dates, incidents, vulnerabilities, available skills, costs and dependencies. A low combined score can hide a serious individual issue, so the assessment should lead to an agreed action, owner and review date.</p>
-      <div class="info-box">
-        <h3>Using the published risk framework</h3>
-        <p>The <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener">Legacy IT Risk Assessment Framework</a> scores seven likelihood criteria from 1–6 and six impact criteria from 1–5, over an assumed three-year period. For likelihood and impact separately, average the mean criterion score and the maximum criterion score, then multiply the two results. The maximum combined score is 30, with 16 or above red-rated.</p>
-        <p>The framework is under review to align with the new definition, which supersedes its older score-based test for identifying legacy. Confirm your organisation's current assessment and reporting arrangements before applying it. You will still see the CDDO name in the framework: <a href="https://www.gov.uk/government/organisations/central-digital-and-data-office" target="_blank" rel="noopener">CDDO merged into the Government Digital Service in January 2025</a>.</p>
-      </div>
-      <figure>
-        <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image1.png" alt="Illustrative risk matrix showing likelihood from 1 to 6 and impact from 1 to 5, with products of 16 or above marked red-rated. Lower scores do not mean no action is needed. Legacy classification is a separate assessment." data-lightbox="images/lesson20-image1.png" data-title="Legacy risk scoring and classification" tabindex="0" role="button" aria-label="Enlarge the legacy risk matrix">
-        <figcaption>Reference values for the published risk scales; aggregated scores can be fractional. The matrix helps prioritise risk, but does not determine legacy status.</figcaption>
-      </figure>
+      <p>Age doesn't tell you whether a system needs modernising. What matters is whether it still meets users' needs, can be supported and secured, and can be maintained at an acceptable cost.</p>
+      <p>Take a licensing service. Its database is approaching the end of support. Partner organisations want an API. Staff find it hard to change the rules for licence applications. All three problems sit in one service, but each may need a different response. This guide follows that service throughout.</p>
+      <p>The government's <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/updated-definition-of-legacy-it" target="_blank" rel="noopener">August 2026 definition of legacy IT</a> is the basis for the assessment. It centres on persistent, unacceptable burden or risk, and an inability to support or secure a system effectively or economically. Systems are classified as Accepted, Action-Required or Legacy. Action-Required means the system will become legacy within 12 months without action. Legacy means it needs urgent remediation.</p>
+      <p>To classify a system, work through the thresholds for seven criteria with the risk owner, the person accountable for managing the risk: support, contracts, skills, business needs, hardware, cyber security and legacy dependencies. Missing tests or documentation show you where to look, but don't on their own make a system legacy.</p>
+      <p>The <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener">Legacy IT Risk Assessment Framework</a> then helps you prioritise. The score ranks risk; it doesn't decide legacy status. Keep the evidence behind both: support dates, incidents, vulnerabilities, skills, costs and dependencies. A low combined score can hide one serious issue, so every assessment should end with an agreed action, an owner and a review date. How the framework scores is in the <a href="#reference">Reference section</a> at the end.</p>
 
-      <h2>The six strategies and what each one is for</h2>
-      <p>With the problems understood, you can consider how to address them. The six strategies below provide a practical way to organise the options. They are a teaching model rather than an official, exhaustive classification; other models, such as <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html" target="_blank" rel="noopener">AWS's cloud migration strategies</a>, use distinctions including rehosting, replatforming and repurchasing.</p>
-      <p>You do not have to choose one strategy for an entire system. In the licensing example, moving the database, adding an API and replacing the application process could all form part of the same plan.</p>
+      <h2>The six strategies and how to choose</h2>
+      <p>Start with the outcome you need. Removing unsupported software, enabling a policy change and reducing running costs lead to different choices, even for the same system.</p>
+      <p>The six strategies below are a teaching model, not an official or exhaustive list. Other models, such as <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html" target="_blank" rel="noopener">AWS's migration strategies</a>, draw the lines differently. You can combine several in one plan.</p>
+      <div class="table-wrap">
+        <table class="strategy-table" aria-label="Six modernisation strategies compared">
+          <thead>
+            <tr>
+              <th scope="col">Strategy</th>
+              <th scope="col">What it means</th>
+              <th scope="col">Consider it when</th>
+              <th scope="col">Watch for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Retain and manage</th>
+              <td>Keep the system running, with support, monitoring, recovery and the knowledge to maintain it</td>
+              <td>The risk is acceptable, or you need a holding step while a replacement is prepared</td>
+              <td>Any unacceptable risk still needs treatment, even if keeping the system looks cheaper</td>
+            </tr>
+            <tr>
+              <th scope="row">Wrap and extend</th>
+              <td>Add an API or adapter so other services can use existing functions</td>
+              <td>Others need access to what the system already does, like the licensing partners</td>
+              <td>The core's support, security and change constraints remain. The new interface needs access controls, capacity and failure handling</td>
+            </tr>
+            <tr>
+              <th scope="row">Replatform</th>
+              <td>Move to a different platform with limited application changes, such as a managed database</td>
+              <td>The platform is the problem: support ending or a heavy operating burden</td>
+              <td>Application design problems stay. Moving unchanged software is rehosting. Modernising doesn't require a move to the cloud</td>
+            </tr>
+            <tr>
+              <th scope="row">Refactor or re-architect</th>
+              <td>Improve the internal structure, or change the boundaries between parts of the application</td>
+              <td>Business rules are hard to change, or one function needs its own release cycle</td>
+              <td>In software engineering, <a href="https://martinfowler.com/bliki/DefinitionOfRefactoring.html" target="_blank" rel="noopener">refactoring keeps observable behaviour the same</a>. Migration guides sometimes use the word more loosely</td>
+            </tr>
+            <tr>
+              <th scope="row">Replace</th>
+              <td>Build something new or adopt a product, including software as a service</td>
+              <td>Parts of the application hold the service back, such as licence rules that are hard to change</td>
+              <td>Fit to needs, integration, moving data in and out, running costs and supplier dependency. Buying still means data migration, training and process change. It can happen in stages</td>
+            </tr>
+            <tr>
+              <th scope="row">Retire</th>
+              <td>Switch the system off</td>
+              <td>Its function is no longer needed or has moved elsewhere</td>
+              <td>Confirm nothing depends on it. Put records retention, archive access and disposal in place first</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image2.png" alt="Six strategy cards: retain and manage, wrap and extend, replatform, refactor or re-architect, replace by building or buying, and retire. Each pairs a possible use with a limitation. They are not ranked by cost or disruption." data-lightbox="images/lesson20-image2.png" data-title="Six modernisation strategies" tabindex="0" role="button" aria-label="Enlarge the six strategy cards">
         <figcaption>Compare each strategy with the actual problem. Cost, disruption and risk depend on the system and transition.</figcaption>
       </figure>
-      <ul>
-        <li><strong>Retain and manage.</strong> Keep the system in use, with support, monitoring, recovery arrangements and the knowledge needed to maintain it. This may be appropriate where the risk is acceptable, or as a temporary step while replacement is prepared. Any unacceptable risk still needs treatment, even if keeping the system appears cheaper.</li>
-        <li><strong>Wrap and extend.</strong> Add an API or adapter to make existing functionality available to other services. For the licensing service, this could give partners access without immediately replacing the core application. The core's support, security and change constraints remain, and the new interface needs suitable access controls, capacity and failure handling.</li>
-        <li><strong>Replatform.</strong> Move to a different platform with limited application changes, perhaps by adopting a managed database. This can address platform support and operational burdens. Moving unchanged software to different hosting is usually called rehosting; both approaches leave application design problems to be addressed separately. Modernisation can also take place without a move to the cloud.</li>
-        <li><strong>Refactor or re-architect.</strong> Improve the internal structure or change the boundaries between parts of the application. The aim might be to make business rules easier to change or separate a function that needs its own release cycle. In <a href="https://martinfowler.com/bliki/DefinitionOfRefactoring.html" target="_blank" rel="noopener">software engineering, refactoring preserves observable behaviour</a>, although migration guidance sometimes uses the term more broadly. This work may accompany incremental replacement using the strangler fig approach described below.</li>
-        <li><strong>Replace.</strong> Build a new solution or adopt an existing product, including software as a service. The choice depends on how well it meets the service's needs, how it integrates, whether data can be moved in and out, and its operating costs and supplier dependencies. Replacement can happen in stages, and buying a product still involves data migration, training and changes to the way the service operates.</li>
-        <li><strong>Retire.</strong> Remove a system when its function is no longer needed or has been taken over elsewhere. Before switching it off, confirm that users and other systems no longer depend on it, and that records retention, archive access and disposal arrangements are in place.</li>
-      </ul>
-      <p>The useful question is what each strategy would fix in your service. A plan might replatform an unsupported database, wrap an integration and replace an application journey that is difficult to change. The recommendation should explain how those steps work together and what risk will remain.</p>
+      <p>For the licensing service, an API wrapper would meet the partners' need but leave the database deadline in place. Upgrading, replatforming or replacing the database deals with the deadline. If the application makes licence rules hard to change, that needs work too. A phased plan might fix the support deadline first, add the partner API, then replace the parts of the application that hold back policy changes. A real service would sequence these by its own risks and dependencies.</p>
+      <p>Deadlines, service continuity, security and data protection, skills, contracts and funding all shape what's feasible. Compare credible options against agreed criteria, with today's arrangements, costs and risks as the baseline. Cost the whole transition: discovery, data cleansing, integration, running two systems, training, commercial exit and decommissioning. If one assumption could change the decision, test it with a small experiment before committing to a larger programme.</p>
+      <p>The least disruptive option deserves a look, but it may keep the underlying problem or cost more over time. Show that trade-off in your recommendation, with the evidence, assumptions and what would trigger a review.</p>
+      <p>Develop the options with operational, security, data and commercial colleagues. Record who owns the service outcome, who can accept residual risk (the risk left once your changes are made) and who approves the funding, so the recommendation can become an authorised plan.</p>
 
-      <h2>Choosing a strategy</h2>
-      <p>Start with the outcome you need. Removing unsupported software, enabling a policy change and reducing operating costs lead to different choices, even when they concern the same system. Deadlines, service continuity, security and data protection requirements, skills, contracts and funding will shape what is feasible.</p>
-      <p>For our licensing service, an API wrapper could meet the partners' immediate need, but would leave the database's end-of-support deadline unresolved. Upgrading, replatforming or replacing the database would address that problem. If the application itself makes licence rules difficult to change, further work would be needed to improve that too.</p>
-      <p>A phased plan could therefore deal with the support deadline first, provide the partner API, then replace the parts of the application that constrain policy changes. This example illustrates how to combine approaches; the sequence for a real service would depend on its risks and dependencies.</p>
-      <p>Compare credible options against agreed criteria, using the current arrangements and their costs and risks as a baseline. Include the whole transition in your estimates: discovery, data cleansing, integration, running two systems, training, commercial exit and decommissioning. Where an assumption could change the decision, a small experiment can give you evidence before you commit to a larger programme.</p>
-      <p>The least disruptive option deserves consideration, but it may preserve the underlying problem or cost more over time. Make that trade-off visible in the recommendation, alongside the evidence, assumptions, consequences and conditions that would prompt a review.</p>
-      <p>Develop the options with operational, security, data and commercial colleagues. Their input helps establish who owns the service outcome, who can accept residual risk and who approves the funding. Record those responsibilities so the recommendation can become an authorised plan.</p>
-
-      <h2>The strangler fig in government</h2>
-      <p>Where replacement is the chosen route, changing everything at once may be difficult to justify. <a href="https://martinfowler.com/bliki/StranglerFigApplication.html" target="_blank" rel="noopener">The strangler fig approach</a> allows functionality to move gradually from the existing system to its replacement, with both operating during the transition.</p>
-      <p>In the licensing service, a new application journey could be the first slice. It would need a clear outcome and manageable dependencies, with its business rules, data, batch jobs and downstream consumers understood before work began. Some dependencies may need preparatory changes before the journey can be separated.</p>
+      <h2>Moving across in stages: the strangler fig</h2>
+      <p>Replacing everything at once is hard to justify. The <a href="https://martinfowler.com/bliki/StranglerFigApplication.html" target="_blank" rel="noopener">strangler fig approach</a> moves functionality across gradually, with the old and new systems running side by side. It's named after a vine that seeds in a tree's upper branches, grows down until it roots in the soil, and over many years strangles the tree it started on.</p>
+      <p>For the licensing service, the first slice could be the new application journey. Pick a slice with a clear outcome and manageable dependencies. Before starting, understand its business rules, data, batch jobs and downstream consumers, the systems that rely on its outputs. Some dependencies may need changing first.</p>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image3.png" alt="An illustrative migration across five stages. New licence journey, partner API, reference data and transactions move from the existing system to the replacement one slice at a time. Routing directs requests; safe return also needs compatible data and tested recovery." data-lightbox="images/lesson20-image3.png" data-title="Incremental replacement and recovery" tabindex="0" role="button" aria-label="Enlarge the incremental replacement diagram">
         <figcaption>An illustrative sequence, chosen around dependencies. Changing the route alone does not make rollback safe.</figcaption>
       </figure>
-      <p>An API gateway or reverse proxy may direct requests to the appropriate system as each slice moves across. <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig" target="_blank" rel="noopener">Microsoft's Strangler Fig guidance</a> highlights the work needed around shared data and cross-system dependencies, as well as the possibility of the routing layer becoming a bottleneck or single point of failure. If requests cannot be intercepted, or the existing system must close quickly, another approach may be more suitable.</p>
-      <p>Coexistence needs its own design, funding and support. Before moving a slice, agree four things:</p>
+      <p>An API gateway or reverse proxy, a component that sits in front of both systems, can send each request to the right one as slices move. <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig" target="_blank" rel="noopener">Microsoft's Strangler Fig guidance</a> flags the work around shared data and cross-system dependencies, and the risk of the routing layer becoming a bottleneck or single point of failure. If requests can't be intercepted, or the old system must close quickly, another approach may suit better.</p>
+      <p>Running both systems needs its own design, funding and support. Before moving each slice, agree four things:</p>
       <ol>
-        <li><strong>How you will know it works.</strong> Agree which behaviour must be preserved and which defects or obsolete rules should change. Test representative cases, edge cases and operational performance against those requirements. Shadow testing can help compare outputs while preventing the new system from triggering real payments or other duplicate actions.</li>
-        <li><strong>Which system owns the data.</strong> Identify the authoritative writer for each record at every stage, then plan the initial transfer, validation and reconciliation. Where changes are synchronised, account for delays, duplicates, ordering and conflicts. Independent writes to the same records require conflict handling that has been designed and tested.</li>
-        <li><strong>How you will recover from failure.</strong> Agree the triggers for recovery, who makes the decision and the tested steps to follow. Once the new system accepts writes, directing traffic back may also require replaying data, reconciling records or pausing the service. Schema changes can close the rollback window, making a forward fix the safer option. State the expected recovery time and possible data loss.</li>
-        <li><strong>What counts as complete.</strong> Set exit criteria for each slice, maintain support for the remaining system and plan to remove temporary adapters, synchronisation and old contracts. Include this work in the business case and approval process, with enough funding to support the temporary architecture.</li>
+        <li><strong>How you'll know it works.</strong> Decide which behaviour must stay and which defects or obsolete rules should change. Test representative cases, edge cases and operational performance. Shadow testing, where the new system processes real inputs but its outputs aren't acted on, lets you compare results without triggering real payments or other duplicate actions.</li>
+        <li><strong>Which system owns the data.</strong> Name the authoritative writer, the one system allowed to create or change each record, at every stage. Plan the initial transfer, validation and reconciliation. If changes are synchronised, handle delays, duplicates, ordering and conflicts. If both systems write to the same records, conflict handling must be designed and tested.</li>
+        <li><strong>How you'll recover from failure.</strong> Agree the triggers, who decides and the tested steps. Once the new system accepts writes, switching traffic back may mean replaying data, reconciling records or pausing the service. Schema changes can close the rollback window, the period when switching back is still safe. After that, a forward fix in the new system is usually the safer option. State the expected recovery time and possible data loss.</li>
+        <li><strong>What counts as complete.</strong> Set exit criteria for each slice and keep the remaining old system supported. Plan to remove temporary adapters, synchronisation and old contracts, and fund that temporary architecture in the business case.</li>
       </ol>
-      <p>For the new licence journey, the important test is whether it works safely within the whole service. Staff must be able to process applications, downstream systems must receive the right information, and recovery must work with the data created since cutover.</p>
-      <p>The existing system can be retired once operational and data owners confirm that users, integrations, scheduled jobs and reporting no longer depend on it. Complete the archive, retention, recovery and disposal arrangements before closing licences, infrastructure and support obligations.</p>
+      <p>The real test for the new licence journey is the whole service. Staff can process applications, downstream systems receive the right information, and recovery works with the data created since cutover.</p>
+      <p>Retire the old system only when operational and data owners confirm that no users, integrations, scheduled jobs or reports depend on it. Complete the archive, retention, recovery and disposal arrangements before closing licences, infrastructure and support.</p>
 
       <h2>The people and contracts behind the system</h2>
-      <p>Understanding those dependencies takes more than reading the code. The people who operate and maintain the service can explain difficult cases, workarounds and rules that documentation may miss. Involve them from the start, and work through which rules still serve a valid purpose.</p>
-      <p>For the licensing service, a maintainer may be able to explain why an overnight job exists or how an unusual application is handled. Give experienced staff clear roles in testing and transition, with time for knowledge transfer, training and support alongside their live-service responsibilities. Explore concerns with them rather than assuming resistance to change.</p>
-      <p>Contracts can also determine what is possible. Review access to code and data, licence restrictions, intellectual property rights, notice periods, exit charges and transition assistance with commercial and legal colleagues. The <a href="https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks/the-sourcing-playbook-html" target="_blank" rel="noopener">Sourcing Playbook's section on contract end</a> calls for early exit planning, clear responsibilities and enough time for knowledge transfer. Apply that guidance alongside the rights you actually hold under the existing contract, and establish where additional agreement is needed.</p>
+      <p>The people who run and maintain the service know the difficult cases, workarounds and rules that documentation misses. A maintainer may know why an overnight job exists, or how an unusual application is handled. Involve them from the start and work through which rules still serve a purpose.</p>
+      <p>Give experienced staff clear roles in testing and transition, with time for knowledge transfer and training alongside their live-service work. Explore their concerns rather than assuming resistance to change.</p>
+      <p>Contracts can limit what's possible. With commercial and legal colleagues, review access to code and data, licence restrictions, intellectual property rights, notice periods, exit charges and transition assistance. The <a href="https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks/the-sourcing-playbook-html" target="_blank" rel="noopener">Sourcing Playbook's section on contract end</a> calls for early exit planning, clear responsibilities and enough time for knowledge transfer. Check that against the rights your current contract actually gives you, and agree anything extra you need.</p>
 
       <h2>Making the case for investment</h2>
-      <p>Once the route and its dependencies are understood, explain what the investment will achieve. Leaders need to see the current constraint, the evidence behind it and how the proposed work will improve the service. Useful outcomes include fewer interruptions, supported technology, the ability to implement a policy change and lower whole-life cost.</p>
-      <p>Keep the claims specific. Moving the licensing database to a supported platform may reduce support risk without making licence rules quicker to change. If faster policy change is also required, show which part of the plan will deliver it and how you will measure the result.</p>
-      <p><a href="https://www.gov.uk/government/publications/the-green-book--2/the-green-book-2026" target="_blank" rel="noopener">HM Treasury's Green Book</a> provides the basis for appraising costs, benefits and risks across options. It is mandatory for UK government departments and arm's length bodies developing proposals involving significant public spending. Work with finance and delivery colleagues on a proportionate business case that includes the cost of transition as well as the intended end state.</p>
-      <p>The <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook, section 8.7</a>, asks assurers to check how initiatives tackle existing legacy debt or avoid creating future legacy. Use that scrutiny to strengthen the proposal, then follow the approval and funding arrangements that apply to your organisation.</p>
-      <p>Where work is phased, give each stage a useful result and clear criteria for deciding whether to continue. Include the cost of stopping safely or supporting a partly migrated service. A successful first slice provides evidence for the next investment decision; the business case should explain what further funding is needed and why.</p>
+      <p>Leaders need to see the current constraint, the evidence for it and how the work will improve the service. Useful outcomes include fewer interruptions, supported technology, the ability to make a policy change and lower whole-life cost.</p>
+      <p>Keep claims specific. Moving the licensing database to a supported platform may reduce support risk without making licence rules any quicker to change. If faster policy change is also promised, show which part of the plan delivers it and how you'll measure it.</p>
+      <p><a href="https://www.gov.uk/government/publications/the-green-book--2/the-green-book-2026" target="_blank" rel="noopener">HM Treasury's Green Book</a> is the basis for appraising costs, benefits and risks across options. It's mandatory for UK government departments and arm's length bodies (public bodies that work at a distance from ministers) developing proposals involving significant public spending. Work with finance and delivery colleagues on a proportionate business case that includes the cost of transition as well as the end state.</p>
+      <p>The <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook, section 8.7</a>, asks assurers to check how initiatives tackle existing legacy debt or avoid creating future legacy. Use that scrutiny to strengthen the proposal, then follow your organisation's approval and funding arrangements.</p>
+      <p>If the work is phased, give each stage a useful result and clear criteria for deciding whether to continue. Include the cost of stopping safely or supporting a partly migrated service. A successful first slice is evidence for the next funding decision.</p>
 
       <h2>Preventing the next generation of legacy</h2>
-      <p>The replacement will need care throughout its life. Support dates, dependencies, contracts and skills will continue to change, so the transition plan should lead into continuing service responsibilities.</p>
-      <p>The government's <a href="https://www.gov.uk/guidance/prevent-technical-debt-and-legacy" target="_blank" rel="noopener">guidance on preventing technical debt and legacy</a> requires a legacy-proofing plan for digital products and services. It asks for a business risk owner, a technical health owner, upgrade funding and an asset register, and requires scoring of associated legacy technology. For the licensing service, that means making it clear who will monitor the replacement's health and who will fund and carry out the work it needs.</p>
-      <p>Put those responsibilities into the way the service is run:</p>
+      <p>The replacement needs care for its whole life, because support dates, dependencies, contracts and skills keep changing. The government's <a href="https://www.gov.uk/guidance/prevent-technical-debt-and-legacy" target="_blank" rel="noopener">guidance on preventing technical debt and legacy</a> requires a legacy-proofing plan for digital products and services. It asks for a business risk owner, a technical health owner, upgrade funding and an asset register, and requires scoring of associated legacy technology.</p>
+      <p>For the licensing service, that means naming who monitors the replacement's health and who funds and does the work it needs. Build those responsibilities into how the service runs:</p>
       <ul>
         <li><strong>Plan lifecycle work.</strong> Track support dates, dependencies and upgrade responsibilities, with time and funding to act before support ends.</li>
-        <li><strong>Keep boundaries clear.</strong> Reduce unnecessary coupling and document interfaces so future changes are easier to assess. Weigh the ability to replace components independently against transaction, performance and operational needs.</li>
-        <li><strong>Understand managed services.</strong> Establish which maintenance tasks the provider takes on and which remain yours. <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html" target="_blank" rel="noopener">Amazon RDS maintenance guidance</a>, for example, describes updates, engine deprecations and maintenance that can require downtime. Plan for those changes and test compatibility.</li>
-        <li><strong>Maintain evidence and knowledge.</strong> Keep architecture decisions, interface documentation and runbooks current. Automate repeatable checks and test important business rules and recovery paths, so you have evidence of what works beyond a test coverage percentage.</li>
-        <li><strong>Plan commercial exit.</strong> Agree usable data exports, transition assistance and exit responsibilities before signing, then test whether those arrangements work in practice.</li>
+        <li><strong>Keep boundaries clear.</strong> Reduce unnecessary coupling, the degree to which one part depends on the inner workings of another, and document interfaces. Weigh independent replacement against transaction, performance and operational needs.</li>
+        <li><strong>Understand managed services.</strong> Establish which maintenance the provider takes on and which stays with you. <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html" target="_blank" rel="noopener">Amazon RDS maintenance guidance</a>, for example, covers updates, engine deprecations and maintenance that can need downtime. Plan for those changes and test compatibility.</li>
+        <li><strong>Maintain evidence and knowledge.</strong> Keep architecture decisions, interface documentation and runbooks current. Automate repeatable checks and test important business rules and recovery paths, so your evidence goes beyond a test coverage percentage.</li>
+        <li><strong>Plan commercial exit.</strong> Agree usable data exports, transition assistance and exit responsibilities before signing, then test that they work.</li>
       </ul>
-      <p>The prevention guidance was published in 2024 and still refers to the previous spend-control process. Apply its lifecycle requirements using the current Digital Assurance Playbook and your organisation's approval arrangements, alongside the updated legacy definition and the risk framework's published review notice.</p>
 
-      <h2>Measuring whether it is working</h2>
-      <p>The measures should follow the outcomes agreed at the start. Establish a baseline before making changes, and give each measure a clear scope, owner, data source and review interval. Four groups provide a useful starting point:</p>
+      <h2>Measuring whether it's working</h2>
+      <p>Measure against the outcomes agreed at the start. Set a baseline before changing anything, and give each measure a scope, owner, data source and review interval. Four groups are a useful starting point:</p>
       <ul>
         <li><strong>Technical health:</strong> whether components are supported and ready for upgrades, with evidence that important business rules and recovery paths have been tested.</li>
-        <li><strong>Ability to change:</strong> how long it takes to turn an agreed business need into a working change to the service. <a href="https://dora.dev/guides/dora-metrics/" target="_blank" rel="noopener">DORA's software delivery metrics</a> provide further measures: change lead time, deployment frequency, failed deployment recovery time, change fail rate and deployment rework rate. Change lead time begins at a code commit, so it captures only part of the journey from policy decision to delivery.</li>
-        <li><strong>Risk reduction:</strong> progress in treating named risks, addressing exploitable vulnerabilities, improving recovery and securing the skills needed to run the service. Reassess classification and scores using consistent scope and criteria.</li>
+        <li><strong>Ability to change:</strong> how long it takes to turn an agreed business need into a working change. <a href="https://dora.dev/guides/dora-metrics/" target="_blank" rel="noopener">DORA's software delivery metrics</a> (DevOps Research and Assessment) add change lead time, deployment frequency, failed deployment recovery time, change fail rate and deployment rework rate. Change lead time starts at a code commit, so it covers only part of the path from policy decision to delivery.</li>
+        <li><strong>Risk reduction:</strong> progress on named risks, exploitable vulnerabilities, recovery and the skills needed to run the service. Reassess classification and scores using the same scope and criteria.</li>
         <li><strong>Service outcomes:</strong> availability, processing accuracy, user completion, new capabilities and whole-life cost, including the temporary cost of running both systems.</li>
       </ul>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image4.png" alt="Four measurement groups: technical health, ability to change, risk reduction and service outcomes. Evidence informs delivery teams, programme boards and investment decision makers. Review timing depends on risk and decision needs." data-lightbox="images/lesson20-image4.png" data-title="Measures and decisions" tabindex="0" role="button" aria-label="Enlarge the measures and decisions diagram">
         <figcaption>Use consistent evidence, with enough detail for each decision. Reporting cadence is a local choice.</figcaption>
       </figure>
-      <p>Use the same evidence to inform delivery teams, programme boards and investment decisions, with the detail and reporting frequency each decision needs. Explain changes in assessment scope or method so comparisons remain meaningful. A lower risk score should lead to a discussion of which risks have reduced and why; it cannot establish every benefit or a precise percentage reduction in risk.</p>
-      <p>For the licensing service, moving off an unsupported database could improve technical health while the time needed to change licence rules stays the same. That would meet a support-risk objective. If faster policy change was also promised, the unchanged delivery time would show that further investigation is needed.</p>
+      <p>Use the same evidence for delivery teams, programme boards and investment decisions, at the detail each needs, and flag any change in scope or method so comparisons stay meaningful. A lower risk score should prompt a discussion of which risks fell and why. It can't establish every benefit or a precise percentage reduction in risk.</p>
+      <p>Moving the licensing service off its unsupported database could improve technical health while the time to change licence rules stays the same. That meets a support-risk objective. If faster policy change was also promised, the flat delivery time tells you to look further: at the application, approvals, testing, skills or work queues. Don't assume another technology change will fix it.</p>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image5.png" alt="Two illustrative charts: assessed risk falls, while time to deliver a business change stays flat. This can show successful risk reduction without an improvement in change speed; judgement depends on the agreed objective." data-lightbox="images/lesson20-image5.png" data-title="Risk reduction and change speed" tabindex="0" role="button" aria-label="Enlarge the risk and change speed charts">
         <figcaption>Illustrative trends, not measured results. Lower risk with unchanged delivery time can still meet a risk-reduction objective.</figcaption>
       </figure>
-      <p>The remaining constraint might lie in the application, approvals, testing, skills or work queues. Use the evidence to decide where to act next, rather than assuming that another technology change will solve it.</p>
-      <p>Finish each review with a decision to continue, adjust, pause or close the work. Confirm which dependencies and costs have been removed, and name the owners of the risks that remain. That keeps the programme focused on improving the service and makes it clear when the modernisation has achieved its purpose.</p>
+      <p>End each review with a decision to continue, adjust, pause or close the work. Confirm which dependencies and costs have gone, and name the owners of the risks that remain. That shows when the modernisation has done its job.</p>
+
+      <h2 id="reference">Reference</h2>
+      <div class="info-box">
+        <h3>How the risk framework scores</h3>
+        <p>The <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener">Legacy IT Risk Assessment Framework</a> scores seven likelihood criteria from 1 to 6 and six impact criteria from 1 to 5, over an assumed three-year period. For likelihood and impact separately, average the mean criterion score and the maximum criterion score, then multiply the two results:</p>
+        <p class="formula"><strong>Score</strong> = ((mean likelihood + maximum likelihood) &divide; 2) &times; ((mean impact + maximum impact) &divide; 2)</p>
+        <p>The maximum is 30, and 16 or above is rated red. Aggregated scores can be fractional. The matrix helps prioritise risk but doesn't determine legacy status.</p>
+      </div>
+      <figure>
+        <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image1.png" alt="Illustrative risk matrix showing likelihood from 1 to 6 and impact from 1 to 5, with products of 16 or above marked red-rated. Lower scores do not mean no action is needed. Legacy classification is a separate assessment." data-lightbox="images/lesson20-image1.png" data-title="Legacy risk scoring and classification" tabindex="0" role="button" aria-label="Enlarge the legacy risk matrix">
+        <figcaption>Reference values for the published risk scales; aggregated scores can be fractional. The matrix helps prioritise risk, but does not determine legacy status.</figcaption>
+      </figure>
+      <div class="info-box">
+        <h3>Currency notes (October 2026)</h3>
+        <ul>
+          <li>The risk framework is under review to align with the August 2026 definition, which supersedes its older score-based test for identifying legacy. Confirm your organisation's current assessment and reporting arrangements before applying it.</li>
+          <li>The framework still carries the CDDO name. <a href="https://www.gov.uk/government/organisations/central-digital-and-data-office" target="_blank" rel="noopener">CDDO merged into the Government Digital Service in January 2025</a>.</li>
+          <li>The prevention guidance was published in 2024 and still refers to the previous spend-control process. Apply its lifecycle requirements using the current Digital Assurance Playbook and your organisation's approval arrangements, alongside the updated legacy definition and the risk framework's review notice.</li>
+        </ul>
+      </div>
 
       <div class="info-box" id="sources" style="margin-top: 2.5rem; font-size: 0.9rem;">
         <h2 style="margin-top: 0;">Sources</h2>
@@ -189,13 +240,13 @@
 
       <nav class="lesson-nav" aria-label="Related guides">
         <div>
-          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+          <a class='btn btn--secondary' href='/library' style='border-color: var(--color-border); color: var(--color-text-body);'>&larr; Back to Library</a>
         </div>
         <div>
           <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
           <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
-            <li style="margin-bottom: 0.25rem;"><a href="guide-technical-debt.html">Technical debt: identifying, quantifying and managing it</a></li>
-            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decision-records.html">Architecture decision records</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href='/guide-technical-debt'>Technical debt: identifying, quantifying and managing it</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href='/guide-architecture-decision-records'>Architecture decision records</a></li>
           </ul>
         </div>
       </nav>
@@ -222,24 +273,24 @@
         <div>
           <p class="footer__nav-title">Learn</p>
           <ul class="footer__nav-list" role="list">
-            <li><a href="library.html">Architect's Library</a></li>
-            <li><a href="lifecycle.html">Delivery Phases</a></li>
-            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+            <li><a href='/library'>Architect's Library</a></li>
+            <li><a href='/lifecycle'>Delivery Phases</a></li>
+            <li><a href='/cloud'>Cloud Fundamentals</a></li>
           </ul>
         </div>
         <div>
           <p class="footer__nav-title">Resources</p>
           <ul class="footer__nav-list" role="list">
-            <li><a href="artifacts.html">Architecture Artifacts</a></li>
-            <li><a href="guardrails.html">AI Guardrails</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href='/artifacts'>Architecture Artifacts</a></li>
+            <li><a href='/guardrails'>AI Guardrails</a></li>
+            <li><a href='/blog'>Blog</a></li>
           </ul>
         </div>
         <div>
           <p class="footer__nav-title">About</p>
           <ul class="footer__nav-list" role="list">
-            <li><a href="about.html">About This Site</a></li>
-            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+            <li><a href='/about'>About This Site</a></li>
+            <li><a href='/privacy'>Privacy &amp; Cookies</a></li>
           </ul>
         </div>
       </div>
@@ -252,4 +303,3 @@
   <script src="js/main.js"></script>
 </body>
 </html>
-
