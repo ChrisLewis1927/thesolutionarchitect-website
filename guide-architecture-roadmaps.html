@@ -15,6 +15,12 @@
     .lesson-content figure { margin: 1rem 0 0.75rem; }
     .lesson-content figure img { border-radius: 8px; }
     .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+    .lesson-content .note {
+      margin: 0 0 1.25rem; padding: 0.5rem 1rem;
+      border-left: 3px solid var(--color-border);
+      font-size: 0.95rem; color: var(--color-text-body);
+    }
+    .lesson-content .note strong { color: var(--color-text-dark); }
   </style>
 </head>
 <body>
@@ -62,21 +68,11 @@
         </ul>
       </div>
 
-      <p>A target state tells you where the estate should end up. A roadmap is the route there, and in government that route has to survive annual budgets, Spending Reviews, shifting ministerial priorities and teams that change halfway through.</p>
-
-      <h2>Why roadmaps fail</h2>
-
-      <p>An architecture without a roadmap is a destination with no route. Government changes incrementally, across funding cycles, political timelines and delivery phases, and the roadmap is what turns an aspirational target state into a sequence of changes somebody can fund and deliver.</p>
-
-      <p>Roadmaps fail for predictable reasons. They promise transformation in timescales that are physically impossible. They describe the end state without specifying the steps to reach it. They sequence work without checking whether the capabilities it depends on exist. They plan multi year programmes as though the money were settled, when Parliament approves spending <a href="https://www.gov.uk/government/publications/supply-estimates-guidance-manual/supply-estimates-a-guidance-manual-2026" target="_blank" rel="noopener">one year at a time</a>. And they propose changes that conflict with ministerial priorities or agreements between departments.</p>
-
-      <p>A good roadmap is honest about constraints, specific about sequence and realistic about timelines. It delivers value at every intermediate state instead of holding it all back for the end, and it assumes priorities will change, budgets will move and teams will come and go before it is finished.</p>
-
-      <blockquote>Every stop on a roadmap should be worth having if it turns out to be the last one.</blockquote>
+      <p>A target state tells you where the estate should end up. A roadmap is the route there: the sequence of changes somebody can fund and deliver. In government that route has to survive annual budgets, Spending Reviews, shifting ministerial priorities and teams that change halfway through.</p>
 
       <h2>What a roadmap is, and what it is not</h2>
 
-      <p>An architecture roadmap is a time sequenced plan showing how the technology estate moves from its current state to a target state through a series of planned changes. Each change delivers value you can identify and leaves the estate in a stable, usable intermediate state.</p>
+      <p>An architecture roadmap is a time-sequenced plan showing how the technology estate moves from its current state to a target state through a series of planned changes. Each change delivers value you can identify and leaves the estate in a stable, usable intermediate state.</p>
 
       <p>Two artefacts get confused with it. A target state diagram shows where you want to end up and says nothing about the route. A project plan specifies tasks, resources and deadlines at a granular level. The roadmap sits between the two, working in architectural states and the transitions that connect them. It says that by September 2027 the authentication service will be migrated to GOV.UK One Login. The project plan says how that migration happens, sprint by sprint.</p>
 
@@ -85,19 +81,36 @@
         <figcaption>Three artefacts, three levels of detail. Only the roadmap shows the states between.</figcaption>
       </figure>
 
-      <p><em>"Once the roadmap is signed off, it is a commitment."</em></p>
+      <p><strong>Common mistake:</strong> <em>"Once the roadmap is signed off, it is a commitment."</em></p>
 
-      <p>It is the best plan on current information, and in government that information moves constantly. Political priorities shift, funding is reallocated and new requirements turn up. Review the roadmap at least quarterly and change it when circumstances change. A roadmap nobody updates is either fiction or irrelevant.</p>
+      <p>It isn't. It is the best plan on current information, and in government that information moves constantly. Political priorities shift, funding is reallocated and new requirements turn up. Review the roadmap at least quarterly and change it when circumstances change. A roadmap nobody updates is either fiction or irrelevant.</p>
 
-      <p>Five tests tell you whether a roadmap is worth keeping: an honest current state with nothing simplified or idealised, value you can identify at every transition before the target is reached, explicit dependencies, a sequence that respects funding cycles and delivery capacity, and intermediate states that are all stable and operable, so there is never a point where the system does not work.</p>
+      <p>Five tests tell you whether a roadmap is worth keeping:</p>
+      <ol style="padding-left: 1.5rem; margin-bottom: 1.1rem;">
+        <li>An honest current state, with nothing simplified or idealised</li>
+        <li>Value you can identify at every transition, before the target is reached</li>
+        <li>Explicit dependencies</li>
+        <li>A sequence that respects funding cycles and delivery capacity</li>
+        <li>Intermediate states that are all stable and operable, so there is never a point where the system does not work</li>
+      </ol>
+
+      <h2>Why roadmaps fail</h2>
+
+      <p>Roadmaps fail for predictable reasons. They promise transformation in timescales that are physically impossible. They describe the end state without specifying the steps to reach it. They sequence work without checking whether the capabilities it depends on exist. They plan multi-year programmes as though the money were settled, when Parliament approves spending <a href="https://www.gov.uk/government/publications/supply-estimates-guidance-manual/supply-estimates-a-guidance-manual-2026" target="_blank" rel="noopener">one year at a time</a>. And they propose changes that conflict with ministerial priorities or agreements between departments.</p>
+
+      <p>A good roadmap is honest about constraints, specific about sequence and realistic about timelines. It delivers value at every intermediate state instead of holding it all back for the end, and it assumes priorities will change, budgets will move and teams will come and go before it is finished.</p>
+
+      <blockquote>Every stop on a roadmap should be worth having if it turns out to be the last one.</blockquote>
 
       <h2>Current state, target state and the states between</h2>
 
       <p>A roadmap connects three views: the current state you have today, the target state you want, and the transition architecture, meaning the intermediate states you pass through on the way.</p>
 
-      <p>Assess the current state honestly. Record each system's condition as well as its existence: which systems are healthy and well maintained, which are accumulating debt, which are approaching end of support and which are actively constraining delivery. For systems that may be legacy, the <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener">Legacy IT Risk Assessment Framework</a> gives you a structured way to score and prioritise the risk. GDS published an updated definition of legacy IT in August 2026 and the framework is being reviewed to align with it, so check the current version before relying on it. An optimistic current state produces an unrealistic roadmap.</p>
+      <p>Assess the current state honestly. Record each system's condition as well as its existence: which systems are healthy and well maintained, which are accumulating debt, which are approaching end of support and which are actively constraining delivery. For systems that may be legacy, the <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener">Legacy IT Risk Assessment Framework</a> gives you a structured way to score and prioritise the risk. An optimistic current state produces an unrealistic roadmap.</p>
 
-      <p>Define the target state with a precision that matches its distance. At the strategic level it describes characteristics: cloud native, event driven, API first, aligned with cross government platforms. At the tactical level it names specific changes, such as legacy system X replaced by modern service Y, or integration pattern A replaced by pattern B. Targets six to twelve months away should be specific. Targets three to five years away can stay directional.</p>
+      <p class="note"><strong>Check before relying on it:</strong> GDS published an updated definition of legacy IT in August 2026 and the framework is being reviewed to align with it.</p>
+
+      <p>Define the target state with a precision that matches its distance. At the strategic level it describes characteristics: cloud-native, event-driven, API-first, aligned with cross-government platforms. At the tactical level it names specific changes, such as legacy system X replaced by modern service Y, or integration pattern A replaced by pattern B. Targets six to twelve months away should be specific. Targets three to five years away can stay directional.</p>
 
       <p>The transition architecture is where roadmapping gets hard, because you cannot jump from current to target in one move. Every intermediate state has to be achievable within a funding period, stable enough to operate in production, valuable enough to justify the investment, and positioned to enable the next transition.</p>
 
@@ -114,7 +127,11 @@
 
       <p>The order you work in decides whether value arrives early or only at the end, and whether risk comes down steadily or piles up. Three pressures pull on it.</p>
 
-      <p>Value first sequencing does the most beneficial changes earliest, so stakeholders see a return quickly, momentum builds for continued funding, and a roadmap interrupted by a funding cut or a change of priority has already delivered its most important improvements. Risk first sequencing deals with the most dangerous items earliest, so an avoidable failure does not land while you are still planning. A system on end of support infrastructure moves ahead of optimisation work on stable systems, and a single point of failure in a critical integration gets resilience before anything gets new features. Dependency aware sequencing stops you planning work that relies on something not yet done. If service B cannot be modernised until service A provides a modern API, A comes first, and those dependencies often cross team and departmental boundaries, which makes them harder to manage.</p>
+      <p><strong>Value-first.</strong> Do the most beneficial changes earliest. Stakeholders see a return quickly, momentum builds for continued funding, and a roadmap interrupted by a funding cut or a change of priority has already delivered its most important improvements.</p>
+
+      <p><strong>Risk-first.</strong> Deal with the most dangerous items earliest, so an avoidable failure does not land while you are still planning. A system on end-of-support infrastructure moves ahead of optimisation work on stable systems, and a single point of failure in a critical integration gets resilience before anything gets new features.</p>
+
+      <p><strong>Dependency-aware.</strong> Do not plan work that relies on something not yet done. If service B cannot be modernised until service A provides a modern API, A comes first. These dependencies often cross team and departmental boundaries, which makes them harder to manage.</p>
 
       <p>In practice you balance all three, and the order in which you apply them matters.</p>
 
@@ -123,30 +140,67 @@
         <figcaption>Dependencies set the order. Value and urgency set the priority inside it.</figcaption>
       </figure>
 
-      <p>Start with dependencies, because they fix an order you cannot change. Within that order, sort what remains by value and urgency, and count risk exposure as urgency. High value, high urgency items go first. Urgent items whose value is mainly risk reduction, such as moving off end of support infrastructure, run in parallel rather than waiting their turn. High value, low urgency items follow. Anything neither valuable nor urgent goes last or comes off the roadmap.</p>
+      <p>Start with dependencies, because they fix an order you cannot change. Within that order, sort what remains by value and urgency, counting risk exposure as urgency:</p>
 
-      <p>Your roadmap also sits inside a cross government frame. The <a href="https://roadmap-for-modern-digital-government.campaign.gov.uk/" target="_blank" rel="noopener">Roadmap for Modern Digital Government</a>, published in January 2026 and due to be updated regularly, sets the direction departmental roadmaps should align with. That matters most where your department has specific commitments, such as adopting GOV.UK One Login, contributing to shared platforms, or remediating legacy systems, which the <a href="https://www.gov.uk/government/publications/state-of-digital-government-review" target="_blank" rel="noopener">State of Digital Government Review</a> identified as a systemic risk.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">High urgency</th>
+              <th scope="col">Low urgency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">High value</th>
+              <td>Do first</td>
+              <td>Do next</td>
+            </tr>
+            <tr>
+              <th scope="row">Lower value</th>
+              <td>Run in parallel: usually risk reduction, such as moving off end-of-support infrastructure</td>
+              <td>Do last, or take off the roadmap</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Your roadmap also sits inside a cross-government frame. The <a href="https://roadmap-for-modern-digital-government.campaign.gov.uk/" target="_blank" rel="noopener">Roadmap for Modern Digital Government</a>, published in January 2026 and due to be updated regularly, sets the direction departmental roadmaps should align with. That matters most where your department has specific commitments, such as adopting GOV.UK One Login, contributing to shared platforms, or remediating legacy systems, which the <a href="https://www.gov.uk/government/publications/state-of-digital-government-review" target="_blank" rel="noopener">State of Digital Government Review</a> identified as a systemic risk.</p>
 
       <h2>Fitting the roadmap to funding cycles</h2>
 
-      <p>Government funding runs in cycles, and a roadmap that ignores them gets broken by them. For digital work the cycles are also changing. In September 2025 GDS and HM Treasury began piloting <a href="https://roadmap-for-modern-digital-government.campaign.gov.uk/changing-how-we-fund-digital-work" target="_blank" rel="noopener">new funding models</a>, including staggered funding for live services and outcome based portfolio funding, to prepare departments for wider adoption at the next Spending Review.</p>
+      <p>Government funding runs in cycles, and a roadmap that ignores them gets broken by them.</p>
+
+      <p class="note"><strong>Funding models are changing:</strong> in September 2025 GDS and HM Treasury began piloting <a href="https://roadmap-for-modern-digital-government.campaign.gov.uk/changing-how-we-fund-digital-work" target="_blank" rel="noopener">new funding models</a> for digital work, including staggered funding for live services and outcome-based portfolio funding, to prepare departments for wider adoption at the next Spending Review.</p>
 
       <p>Spending Reviews set departmental budgets for several years at a time. Under the <a href="https://www.gov.uk/government/news/charter-for-budget-responsibility-approved-by-parliament" target="_blank" rel="noopener">Charter for Budget Responsibility</a>, the Treasury holds one every two years and sets spending plans for at least three. <a href="https://www.gov.uk/government/publications/spending-review-2025-document/spending-review-2025-html" target="_blank" rel="noopener">Spending Review 2025</a> set day to day budgets to the 2028 to 2029 financial year and capital budgets to 2029 to 2030, and the next is due in 2027. If your roadmap needs sustained investment over three years, make the case at Spending Review time.</p>
 
-      <p>The roadmap also has to appear on the digital pipeline. Digital and technology spend controls were removed from 1 April 2026. In their place, HM Treasury requires every organisation to keep and share a pipeline of upcoming digital and technology spend, recorded through Government Assurance Services, and the <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook</a> explains how it works. Unless your organisation sets different thresholds, anything with a whole life cost over &pound;5 million goes on the central pipeline, as does any spend on cryptographic products. Initiatives above your organisation's Delegated Authority Limit still need separate HM Treasury approval. Ideas belong on the pipeline as soon as you know about them, before they have a cost, and the Playbook asks organisations to be ready to add initiatives tied to the Roadmap for Modern Digital Government and to likely commitment areas for Spending Review 2027. Your architecture roadmap is the natural source for those entries.</p>
+      <p>The roadmap also has to appear on the digital pipeline. Digital and technology spend controls were removed from 1 April 2026. In their place, HM Treasury requires every organisation to keep and share a pipeline of upcoming digital and technology spend, recorded through Government Assurance Services. The <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook</a> explains how it works.</p>
+
+      <div class="info-box">
+        <p><strong>What goes on the digital pipeline</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>Anything with a whole-life cost over &pound;5 million, unless your organisation sets different thresholds</li>
+          <li>Any spend on cryptographic products</li>
+          <li>Ideas as soon as you know about them, before they have a cost</li>
+          <li>Initiatives tied to the Roadmap for Modern Digital Government, and to likely commitment areas for Spending Review 2027</li>
+        </ul>
+        <p style="margin-top: 0.75rem;">Being on the pipeline is not approval. Anything above your organisation's Delegated Authority Limit still needs separate HM Treasury approval.</p>
+      </div>
+
+      <p>Your architecture roadmap is the natural source for these entries.</p>
 
       <p>Inside the Spending Review settlement, annual business planning allocates money to programmes year by year, so each year's work should be a complete, fundable package that delivers value within that year even if later years are never funded. Quarterly planning in agile delivery breaks the year down again, so set milestones that can be reached inside a quarter and shown at governance checkpoints.</p>
 
       <p>The test is whether each phase stands on its own. If Phase 1 delivers value whether or not Phase 2 ever happens, the roadmap survives funding uncertainty. If Phase 2 only makes sense once Phase 3 is complete, you have created a dependency that a funding cycle can break.</p>
 
-      <p>The classic trap is a three year plan with all the value at the end. Year 1 is foundations: infrastructure, platforms and technical enabling. Year 2 is build. Year 3 is value realisation, when users finally benefit. Cut the funding after year 1 and you have paid for foundations that deliver nothing on their own.</p>
+      <p>The classic trap is a three-year plan with all the value at the end. Year 1 is foundations: infrastructure, platforms and technical enabling. Year 2 is build. Year 3 is value realisation, when users finally benefit. Cut the funding after year 1 and you have paid for foundations that deliver nothing on their own. Plan every year to deliver something users can see, even if each step is small.</p>
 
       <figure>
         <img width="1200" height="400" loading="lazy" decoding="async" src="images/lesson22-image4.png" alt="Two three year plans compared. The first spends year 1 on foundations and year 2 on build, so users benefit only in year 3. The second delivers an increment users can see in every year. A dashed line marks funding stopping after year 1, fading out the later years. At that point the first plan has spent money with nothing for users, and the second has already delivered its first improvement.">
         <figcaption>Same budget, same target. Only one leaves users with something when the money stops.</figcaption>
       </figure>
-
-      <p>Plan every year to deliver something users can see, even if each step is small.</p>
 
       <blockquote>A plan that only pays out in year three is a bet that nothing changes for three years.</blockquote>
 
@@ -159,15 +213,15 @@
         <figcaption>One phase, four levels of detail, four rhythms of update.</figcaption>
       </figure>
 
-      <p>Senior leadership, meaning the <a href="https://www.gov.uk/government/publications/the-role-of-the-senior-responsible-owner/the-role-of-the-senior-responsible-owner" target="_blank" rel="noopener">senior responsible owner (SRO)</a>, Director General or CTO, see Phase 1 as one bar on a one page visual roadmap: "Users sign in with GOV.UK One Login", with a target date, a cost and a status colour for planned, in progress or complete. The other major transitions sit around it in swimlanes. They need to see what will be different in twelve months, what it costs, what value it delivers and what risk it removes. Leave the technical detail out.</p>
+      <p>Senior leadership, meaning the <a href="https://www.gov.uk/government/publications/the-role-of-the-senior-responsible-owner/the-role-of-the-senior-responsible-owner" target="_blank" rel="noopener">senior responsible owner (SRO)</a>, Director General or CTO, see Phase 1 as one bar on a one-page visual roadmap: "Users sign in with GOV.UK One Login", with a target date, a cost and a status colour for planned, in progress or complete. The other major transitions sit around it in swimlanes. They need to see what will be different in twelve months, what it costs, what value it delivers and what risk it removes. Leave the technical detail out.</p>
 
-      <p>Programme boards see what sits behind the bar: the decision to switch off the old sign in and when it has to be made, the dependency on the One Login integration work, any risk that needs escalating, and whether the phase is on track. Dependencies on other departments, vendors and policy decisions become visible here.</p>
+      <p>Programme boards see what sits behind the bar: the decision to switch off the old sign-in and when it has to be made, the dependency on the One Login integration work, any risk that needs escalating, and whether the phase is on track. Dependencies on other departments, vendors and policy decisions become visible here.</p>
 
       <p>Delivery teams see the bar broken into this quarter's work: extracting the authentication module, putting the routing layer in place and planning the cutover in cohorts. They also need sight of Phase 2 and GOV.UK Notify so that today's work does not block it. Items further out can stay at lower detail.</p>
 
-      <p>Cross government audiences, such as the <a href="https://technology.blog.gov.uk/2025/11/17/shaping-the-future-of-public-sector-technology-with-the-new-enterprise-architecture-team/" target="_blank" rel="noopener">GDS Enterprise Architecture team</a> and the Technical Design Council it set up, see Phase 1 as a platform adoption milestone. They need to know when your department will adopt shared platforms such as One Login, when you will expose APIs for use across government, and where your roadmap might conflict with or benefit from cross government direction.</p>
+      <p>Cross-government audiences, such as the <a href="https://technology.blog.gov.uk/2025/11/17/shaping-the-future-of-public-sector-technology-with-the-new-enterprise-architecture-team/" target="_blank" rel="noopener">GDS Enterprise Architecture team</a> and the Technical Design Council it set up, see Phase 1 as a platform adoption milestone. They need to know when your department will adopt shared platforms such as One Login, when you will expose APIs for use across government, and where your roadmap might conflict with or benefit from cross-government direction.</p>
 
-      <p>Cadence matters as much as content. Update senior leadership quarterly and programme boards monthly. Delivery teams see changes continuously, because roadmap changes are part of their regular planning. Cross government audiences hear at each major milestone.</p>
+      <p>Cadence matters as much as content. Update senior leadership quarterly and programme boards monthly. Delivery teams see changes continuously, because roadmap changes are part of their regular planning. Cross-government audiences hear at each major milestone.</p>
 
       <h2>Designing the transition architecture</h2>
 
@@ -183,11 +237,22 @@
         <li><strong>Minimise dual running.</strong> Every day you operate both systems costs money and creates risk, so migrate users in cohorts instead of running both systems indefinitely.</li>
         <li><strong>Keep the transition invisible to users.</strong> Routing layers such as API gateways and reverse proxies direct traffic transparently, so nobody needs to know which system handled their request and nobody has to switch at once.</li>
         <li><strong>Design for rollback.</strong> If the modern system develops problems, you must be able to route traffic back. Keep the legacy system running until the modern one has proven stable in production for a defined period.</li>
-        <li><strong>Manage data consistency.</strong> Event driven synchronisation can carry changes from either system to the other, but changes then arrive from both sides and you need rules for resolving conflicts. Where you can, make one system the system of record for each data set and synchronise in one direction. Perfect consistency may not be achievable mid transition, so define what inconsistency is tolerable.</li>
+        <li><strong>Manage data consistency.</strong> Event-driven synchronisation can carry changes from either system to the other, but changes then arrive from both sides and you need rules for resolving conflicts. Where you can, make one system the system of record for each data set and synchronise in one direction. Perfect consistency may not be achievable mid transition, so define what inconsistency is tolerable.</li>
         <li><strong>Document the transition state.</strong> It is temporary, and it is also the state you are operating right now. The operations team needs to know how things work today, and the documentation should change as each transition completes.</li>
       </ul>
 
       <blockquote>The state in between is the one you actually run. Design it as carefully as the destination.</blockquote>
+
+      <h2>Roadmap checklist</h2>
+
+      <p>Before you take a roadmap to a board, check that:</p>
+      <ul>
+        <li>Every phase delivers value users can see, even if later phases are never funded</li>
+        <li>Dependencies are explicit, including those across teams and departments</li>
+        <li>Each year's work is a complete, fundable package, and upcoming spend is on the digital pipeline</li>
+        <li>Each audience gets the right level of detail at the right cadence</li>
+        <li>Every transition state is stable, operable, documented and can be rolled back</li>
+      </ul>
 
       <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
         <p style="margin: 0 0 0.4rem;"><em>This guide describes practical architecture roadmapping and transition planning for Solution Architects working around UK government services. The phases, sequencing rules and audience views are teaching aids rather than a mandatory method. Funding cycles, spend thresholds and cross-government arrangements change.</em></p>
