@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to build government architecture roadmaps that survive funding cycles, sequence change for early value and keep every transition state working.">
+  <meta property="og:title" content="Architecture roadmaps and transition planning &mdash; Architect's Library">
+  <meta property="og:description" content="How to build government architecture roadmaps that survive funding cycles, sequence change for early value and keep every transition state working.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Architecture roadmaps and transition planning &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Architecture roadmaps and transition planning</h1>
+        <p class="lesson-hero__description">Plan a route to the target state that survives funding cycles and delivers value along the way.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>What a roadmap shows that a target state diagram and a project plan do not</li>
+          <li>How to sequence change by dependency, value and urgency so value arrives early</li>
+          <li>How to fit phases to Spending Reviews, annual planning and the digital pipeline</li>
+          <li>How to present one roadmap to four audiences, and design the hybrid states between current and target</li>
+        </ul>
+      </div>
+
+      <p>A target state tells you where the estate should end up. A roadmap is the route there, and in government that route has to survive annual budgets, Spending Reviews, shifting ministerial priorities and teams that change halfway through.</p>
+
+      <h2>Why roadmaps fail</h2>
+
+      <p>An architecture without a roadmap is a destination with no route. Government changes incrementally, across funding cycles, political timelines and delivery phases, and the roadmap is what turns an aspirational target state into a sequence of changes somebody can fund and deliver.</p>
+
+      <p>Roadmaps fail for predictable reasons. They promise transformation in timescales that are physically impossible. They describe the end state without specifying the steps to reach it. They sequence work without checking whether the capabilities it depends on exist. They plan multi year programmes as though the money were settled, when Parliament approves spending <a href="https://www.gov.uk/government/publications/supply-estimates-guidance-manual/supply-estimates-a-guidance-manual-2026" target="_blank" rel="noopener">one year at a time</a>. And they propose changes that conflict with ministerial priorities or agreements between departments.</p>
+
+      <p>A good roadmap is honest about constraints, specific about sequence and realistic about timelines. It delivers value at every intermediate state instead of holding it all back for the end, and it assumes priorities will change, budgets will move and teams will come and go before it is finished.</p>
+
+      <blockquote>Every stop on a roadmap should be worth having if it turns out to be the last one.</blockquote>
+
+      <h2>What a roadmap is, and what it is not</h2>
+
+      <p>An architecture roadmap is a time sequenced plan showing how the technology estate moves from its current state to a target state through a series of planned changes. Each change delivers value you can identify and leaves the estate in a stable, usable intermediate state.</p>
+
+      <p>Two artefacts get confused with it. A target state diagram shows where you want to end up and says nothing about the route. A project plan specifies tasks, resources and deadlines at a granular level. The roadmap sits between the two, working in architectural states and the transitions that connect them. It says that by September 2027 the authentication service will be migrated to GOV.UK One Login. The project plan says how that migration happens, sprint by sprint.</p>
+
+      <figure>
+        <img width="1200" height="523" loading="lazy" decoding="async" src="images/lesson22-image1.png" alt="Three rows compare three artefacts. A target state diagram shows only the destination, with no route or order. The roadmap shows the current state, two transition states and the target state in sequence, with the first transition due by September 2027. The project plan expands that single transition into five sprints.">
+        <figcaption>Three artefacts, three levels of detail. Only the roadmap shows the states between.</figcaption>
+      </figure>
+
+      <p><em>"Once the roadmap is signed off, it is a commitment."</em></p>
+
+      <p>It is the best plan on current information, and in government that information moves constantly. Political priorities shift, funding is reallocated and new requirements turn up. Review the roadmap at least quarterly and change it when circumstances change. A roadmap nobody updates is either fiction or irrelevant.</p>
+
+      <p>Five tests tell you whether a roadmap is worth keeping: an honest current state with nothing simplified or idealised, value you can identify at every transition before the target is reached, explicit dependencies, a sequence that respects funding cycles and delivery capacity, and intermediate states that are all stable and operable, so there is never a point where the system does not work.</p>
+
+      <h2>Current state, target state and the states between</h2>
+
+      <p>A roadmap connects three views: the current state you have today, the target state you want, and the transition architecture, meaning the intermediate states you pass through on the way.</p>
+
+      <p>Assess the current state honestly. Record each system's condition as well as its existence: which systems are healthy and well maintained, which are accumulating debt, which are approaching end of support and which are actively constraining delivery. For systems that may be legacy, the <a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener">Legacy IT Risk Assessment Framework</a> gives you a structured way to score and prioritise the risk. GDS published an updated definition of legacy IT in August 2026 and the framework is being reviewed to align with it, so check the current version before relying on it. An optimistic current state produces an unrealistic roadmap.</p>
+
+      <p>Define the target state with a precision that matches its distance. At the strategic level it describes characteristics: cloud native, event driven, API first, aligned with cross government platforms. At the tactical level it names specific changes, such as legacy system X replaced by modern service Y, or integration pattern A replaced by pattern B. Targets six to twelve months away should be specific. Targets three to five years away can stay directional.</p>
+
+      <p>The transition architecture is where roadmapping gets hard, because you cannot jump from current to target in one move. Every intermediate state has to be achievable within a funding period, stable enough to operate in production, valuable enough to justify the investment, and positioned to enable the next transition.</p>
+
+      <p>Take a monolith with a target state of fully decomposed microservices. Phase 1 extracts authentication as an independent service, which carries the most value and enables GOV.UK One Login. Phase 2 extracts notifications and enables GOV.UK Notify. Phase 3 extracts payment processing and enables GOV.UK Pay.</p>
+
+      <figure>
+        <img width="1200" height="731" loading="lazy" decoding="async" src="images/lesson22-image2.png" alt="Four snapshots of the same system. Today a monolith holds sign in, notifications, payments and core functions. After phase 1, authentication runs as its own service on GOV.UK One Login. After phase 2, notifications move to GOV.UK Notify, and after phase 3, payments move to GOV.UK Pay. The monolith shrinks at each step and every snapshot works in production.">
+        <figcaption>The monolith shrinks one phase at a time, and every snapshot runs in production.</figcaption>
+      </figure>
+
+      <p>Each phase delivers value on its own and leaves the system workable. If Phase 3 is delayed or descoped, you lose Phase 3 and keep everything before it.</p>
+
+      <h2>Sequencing for value, risk and dependency</h2>
+
+      <p>The order you work in decides whether value arrives early or only at the end, and whether risk comes down steadily or piles up. Three pressures pull on it.</p>
+
+      <p>Value first sequencing does the most beneficial changes earliest, so stakeholders see a return quickly, momentum builds for continued funding, and a roadmap interrupted by a funding cut or a change of priority has already delivered its most important improvements. Risk first sequencing deals with the most dangerous items earliest, so an avoidable failure does not land while you are still planning. A system on end of support infrastructure moves ahead of optimisation work on stable systems, and a single point of failure in a critical integration gets resilience before anything gets new features. Dependency aware sequencing stops you planning work that relies on something not yet done. If service B cannot be modernised until service A provides a modern API, A comes first, and those dependencies often cross team and departmental boundaries, which makes them harder to manage.</p>
+
+      <p>In practice you balance all three, and the order in which you apply them matters.</p>
+
+      <figure>
+        <img width="1200" height="727" loading="lazy" decoding="async" src="images/lesson22-image3.png" alt="Two stage sequencing. First, dependencies fix the order: service A must expose a modern API before service B can be modernised. Then, inside that order, a grid of value against urgency, where urgency includes risk exposure. High value, high urgency items go first. Urgent items whose value is mostly risk reduction, such as moving off end of support infrastructure, run in parallel. High value, low urgency items follow. Items that are neither go last or come off the roadmap.">
+        <figcaption>Dependencies set the order. Value and urgency set the priority inside it.</figcaption>
+      </figure>
+
+      <p>Start with dependencies, because they fix an order you cannot change. Within that order, sort what remains by value and urgency, and count risk exposure as urgency. High value, high urgency items go first. Urgent items whose value is mainly risk reduction, such as moving off end of support infrastructure, run in parallel rather than waiting their turn. High value, low urgency items follow. Anything neither valuable nor urgent goes last or comes off the roadmap.</p>
+
+      <p>Your roadmap also sits inside a cross government frame. The <a href="https://roadmap-for-modern-digital-government.campaign.gov.uk/" target="_blank" rel="noopener">Roadmap for Modern Digital Government</a>, published in January 2026 and due to be updated regularly, sets the direction departmental roadmaps should align with. That matters most where your department has specific commitments, such as adopting GOV.UK One Login, contributing to shared platforms, or remediating legacy systems, which the <a href="https://www.gov.uk/government/publications/state-of-digital-government-review" target="_blank" rel="noopener">State of Digital Government Review</a> identified as a systemic risk.</p>
+
+      <h2>Fitting the roadmap to funding cycles</h2>
+
+      <p>Government funding runs in cycles, and a roadmap that ignores them gets broken by them. For digital work the cycles are also changing. In September 2025 GDS and HM Treasury began piloting <a href="https://roadmap-for-modern-digital-government.campaign.gov.uk/changing-how-we-fund-digital-work" target="_blank" rel="noopener">new funding models</a>, including staggered funding for live services and outcome based portfolio funding, to prepare departments for wider adoption at the next Spending Review.</p>
+
+      <p>Spending Reviews set departmental budgets for several years at a time. Under the <a href="https://www.gov.uk/government/news/charter-for-budget-responsibility-approved-by-parliament" target="_blank" rel="noopener">Charter for Budget Responsibility</a>, the Treasury holds one every two years and sets spending plans for at least three. <a href="https://www.gov.uk/government/publications/spending-review-2025-document/spending-review-2025-html" target="_blank" rel="noopener">Spending Review 2025</a> set day to day budgets to the 2028 to 2029 financial year and capital budgets to 2029 to 2030, and the next is due in 2027. If your roadmap needs sustained investment over three years, make the case at Spending Review time.</p>
+
+      <p>The roadmap also has to appear on the digital pipeline. Digital and technology spend controls were removed from 1 April 2026. In their place, HM Treasury requires every organisation to keep and share a pipeline of upcoming digital and technology spend, recorded through Government Assurance Services, and the <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook</a> explains how it works. Unless your organisation sets different thresholds, anything with a whole life cost over &pound;5 million goes on the central pipeline, as does any spend on cryptographic products. Initiatives above your organisation's Delegated Authority Limit still need separate HM Treasury approval. Ideas belong on the pipeline as soon as you know about them, before they have a cost, and the Playbook asks organisations to be ready to add initiatives tied to the Roadmap for Modern Digital Government and to likely commitment areas for Spending Review 2027. Your architecture roadmap is the natural source for those entries.</p>
+
+      <p>Inside the Spending Review settlement, annual business planning allocates money to programmes year by year, so each year's work should be a complete, fundable package that delivers value within that year even if later years are never funded. Quarterly planning in agile delivery breaks the year down again, so set milestones that can be reached inside a quarter and shown at governance checkpoints.</p>
+
+      <p>The test is whether each phase stands on its own. If Phase 1 delivers value whether or not Phase 2 ever happens, the roadmap survives funding uncertainty. If Phase 2 only makes sense once Phase 3 is complete, you have created a dependency that a funding cycle can break.</p>
+
+      <p>The classic trap is a three year plan with all the value at the end. Year 1 is foundations: infrastructure, platforms and technical enabling. Year 2 is build. Year 3 is value realisation, when users finally benefit. Cut the funding after year 1 and you have paid for foundations that deliver nothing on their own.</p>
+
+      <figure>
+        <img width="1200" height="400" loading="lazy" decoding="async" src="images/lesson22-image4.png" alt="Two three year plans compared. The first spends year 1 on foundations and year 2 on build, so users benefit only in year 3. The second delivers an increment users can see in every year. A dashed line marks funding stopping after year 1, fading out the later years. At that point the first plan has spent money with nothing for users, and the second has already delivered its first improvement.">
+        <figcaption>Same budget, same target. Only one leaves users with something when the money stops.</figcaption>
+      </figure>
+
+      <p>Plan every year to deliver something users can see, even if each step is small.</p>
+
+      <blockquote>A plan that only pays out in year three is a bet that nothing changes for three years.</blockquote>
+
+      <h2>One roadmap, four audiences</h2>
+
+      <p>One roadmap serves several audiences. The content stays the same while the detail and the framing change. Follow Phase 1 of the monolith example, moving sign in to GOV.UK One Login, through each of them.</p>
+
+      <figure>
+        <img width="1200" height="607" loading="lazy" decoding="async" src="images/lesson22-image5.png" alt="One roadmap phase, users sign in with GOV.UK One Login, sits at the centre. Four audiences see it at different levels of detail: senior leadership see one bar with date, cost, value and status, updated quarterly; the programme board sees decisions, dependencies and risks to escalate, monthly; delivery teams see this quarter's work and what comes next, continuously; cross government audiences see when the department adopts shared platforms and exposes APIs, updated at each milestone.">
+        <figcaption>One phase, four levels of detail, four rhythms of update.</figcaption>
+      </figure>
+
+      <p>Senior leadership, meaning the <a href="https://www.gov.uk/government/publications/the-role-of-the-senior-responsible-owner/the-role-of-the-senior-responsible-owner" target="_blank" rel="noopener">senior responsible owner (SRO)</a>, Director General or CTO, see Phase 1 as one bar on a one page visual roadmap: "Users sign in with GOV.UK One Login", with a target date, a cost and a status colour for planned, in progress or complete. The other major transitions sit around it in swimlanes. They need to see what will be different in twelve months, what it costs, what value it delivers and what risk it removes. Leave the technical detail out.</p>
+
+      <p>Programme boards see what sits behind the bar: the decision to switch off the old sign in and when it has to be made, the dependency on the One Login integration work, any risk that needs escalating, and whether the phase is on track. Dependencies on other departments, vendors and policy decisions become visible here.</p>
+
+      <p>Delivery teams see the bar broken into this quarter's work: extracting the authentication module, putting the routing layer in place and planning the cutover in cohorts. They also need sight of Phase 2 and GOV.UK Notify so that today's work does not block it. Items further out can stay at lower detail.</p>
+
+      <p>Cross government audiences, such as the <a href="https://technology.blog.gov.uk/2025/11/17/shaping-the-future-of-public-sector-technology-with-the-new-enterprise-architecture-team/" target="_blank" rel="noopener">GDS Enterprise Architecture team</a> and the Technical Design Council it set up, see Phase 1 as a platform adoption milestone. They need to know when your department will adopt shared platforms such as One Login, when you will expose APIs for use across government, and where your roadmap might conflict with or benefit from cross government direction.</p>
+
+      <p>Cadence matters as much as content. Update senior leadership quarterly and programme boards monthly. Delivery teams see changes continuously, because roadmap changes are part of their regular planning. Cross government audiences hear at each major milestone.</p>
+
+      <h2>Designing the transition architecture</h2>
+
+      <p>During any transition you operate a hybrid, part legacy and part modern. That hybrid is the transition architecture, and it is more complex than either end because it supports old and new approaches at once: data synchronised between legacy and modern stores, users reaching some functions through the old interface and others through the new, and integrations that work with old protocols and new APIs. It needs designing as carefully as the target state.</p>
+
+      <figure>
+        <img width="1200" height="634" loading="lazy" decoding="async" src="images/lesson22-image6.png" alt="Users reach a routing layer, such as an API gateway or reverse proxy, which sends cohorts not yet moved to the legacy system and migrated cohorts to the modern service. A dashed rollback arrow shows traffic can be routed back to legacy, which keeps running until the modern service is proven. Below, the legacy data store is the system of record and synchronises in one direction, event driven, to the modern data store.">
+        <figcaption>Users see one service. The routing layer and the data rules decide what happens underneath.</figcaption>
+      </figure>
+
+      <p>Five principles keep the hybrid under control:</p>
+      <ul>
+        <li><strong>Minimise dual running.</strong> Every day you operate both systems costs money and creates risk, so migrate users in cohorts instead of running both systems indefinitely.</li>
+        <li><strong>Keep the transition invisible to users.</strong> Routing layers such as API gateways and reverse proxies direct traffic transparently, so nobody needs to know which system handled their request and nobody has to switch at once.</li>
+        <li><strong>Design for rollback.</strong> If the modern system develops problems, you must be able to route traffic back. Keep the legacy system running until the modern one has proven stable in production for a defined period.</li>
+        <li><strong>Manage data consistency.</strong> Event driven synchronisation can carry changes from either system to the other, but changes then arrive from both sides and you need rules for resolving conflicts. Where you can, make one system the system of record for each data set and synchronise in one direction. Perfect consistency may not be achievable mid transition, so define what inconsistency is tolerable.</li>
+        <li><strong>Document the transition state.</strong> It is temporary, and it is also the state you are operating right now. The operations team needs to know how things work today, and the documentation should change as each transition completes.</li>
+      </ul>
+
+      <blockquote>The state in between is the one you actually run. Design it as carefully as the destination.</blockquote>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide describes practical architecture roadmapping and transition planning for Solution Architects working around UK government services. The phases, sequencing rules and audience views are teaching aids rather than a mandatory method. Funding cycles, spend thresholds and cross-government arrangements change.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed October 2026 against the government sources below. Policy, funding routes and guidance change, so check the current source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/government/publications/supply-estimates-guidance-manual/supply-estimates-a-guidance-manual-2026" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">HM Treasury: Supply Estimates guidance manual (2026)</a></li>
+          <li><a href="https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Legacy IT Risk Assessment Framework</a></li>
+          <li><a href="https://roadmap-for-modern-digital-government.campaign.gov.uk/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Roadmap for Modern Digital Government</a></li>
+          <li><a href="https://roadmap-for-modern-digital-government.campaign.gov.uk/changing-how-we-fund-digital-work" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Roadmap for Modern Digital Government: Changing how we fund digital work</a></li>
+          <li><a href="https://www.gov.uk/government/publications/state-of-digital-government-review" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: State of Digital Government Review</a></li>
+          <li><a href="https://www.gov.uk/government/news/charter-for-budget-responsibility-approved-by-parliament" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Charter for Budget Responsibility</a></li>
+          <li><a href="https://www.gov.uk/government/publications/spending-review-2025-document/spending-review-2025-html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">HM Treasury: Spending Review 2025</a></li>
+          <li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Digital Assurance Playbook</a></li>
+          <li><a href="https://www.gov.uk/government/publications/the-role-of-the-senior-responsible-owner/the-role-of-the-senior-responsible-owner" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: The role of the senior responsible owner</a></li>
+          <li><a href="https://technology.blog.gov.uk/2025/11/17/shaping-the-future-of-public-sector-technology-with-the-new-enterprise-architecture-team/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GDS: The new Enterprise Architecture team</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-legacy-modernisation-strategies.html">Legacy modernisation strategies: how to choose and how to deliver</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-technical-debt.html">Managing technical debt</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-governance.html">Architecture governance that enables rather than blocks</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
