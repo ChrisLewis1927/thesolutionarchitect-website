@@ -86,7 +86,7 @@
       <p>In an asynchronous interaction, the service accepts and stores the work before processing it later. The caller can receive an acknowledgement or reference without waiting for every downstream step. This can protect the user journey from slow processing, but it creates new requirements for status updates, message handling, monitoring and recovery. <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-integrating-microservices/asynchronous.html" target="_blank" rel="noopener">AWS guidance on asynchronous communication</a> highlights the need for durable acknowledgement, idempotent processing, dead-letter handling and monitoring.</p>
 
       <figure>
-        <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson11-image2.png" alt="Two panels comparing a synchronous call, where your service and its user wait for the downstream response, with an asynchronous flow, where your service replies at once with a reference and a queue carries the work to the downstream system." style="width: 100%; display: block;">
+        <img width="1200" height="584" loading="lazy" decoding="async" src="images/lesson11-image2.png" alt="Two panels comparing a synchronous call, where your service and its user wait for the downstream response, with an asynchronous flow, where your service replies at once with a reference and a queue carries the work to the downstream system." style="width: 100%; display: block;">
         <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The decision is whether the caller must wait and what happens when the dependency cannot respond.</figcaption>-->
       </figure>
 
@@ -122,7 +122,7 @@
       <p>An adapter can translate between the legacy interface and the model used by the new service. This keeps old formats, codes and protocols from spreading through the new design. An <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/acl.html" target="_blank" rel="noopener">anti-corruption layer</a> applies the same principle where systems use different data models or business language.</p>
 
       <figure>
-        <img width="1200" height="406" loading="lazy" decoding="async" src="images/lesson11-image3.png" alt="Your service and an adapter you own shown in teal, exchanging clean modern data, while the adapter exchanges batch files and odd codes with a grey legacy system, keeping the quirks away from your service." style="width: 100%; display: block;">
+        <img width="1200" height="407" loading="lazy" decoding="async" src="images/lesson11-image3.png" alt="Your service and an adapter you own shown in teal, exchanging clean modern data, while the adapter exchanges batch files and odd codes with a grey legacy system, keeping the quirks away from your service." style="width: 100%; display: block;">
         <!--<figcaption style="font-size: 0.9rem; color: #666; text-align: center; font-style: italic;">The adapter contains the translation so the rest of the service does not depend on legacy behaviour.</figcaption>-->
       </figure>
 
