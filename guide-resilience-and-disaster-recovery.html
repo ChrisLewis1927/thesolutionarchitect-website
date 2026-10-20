@@ -182,7 +182,7 @@
       <p>Graceful degradation starts with sorting components into two kinds. Essential components are the ones the service cannot function without, and they need full redundancy. Enhancing components make the service better but are not required, and each one needs defined fallback behaviour. In practice, if the payment service is unavailable, let users finish their application and take payment later instead of blocking the whole transaction. If a data lookup is down, accept the application and tell the user eligibility will be confirmed within 24 hours. If a region fails, serve from the remaining region at slightly higher latency.</p>
 
       <figure>
-        <img width="1200" height="494" loading="lazy" decoding="async" src="images/lesson21-image7.png" alt="A five step application in teal: start, your details, eligibility, payment and submitted. The first two steps rely on a fully redundant core platform. The eligibility lookup service and the payment provider are both unavailable, so those steps fall back to confirming eligibility later and taking payment later. The user still reaches submitted.">
+        <img width="1200" height="495" loading="lazy" decoding="async" src="images/lesson21-image7.png" alt="A five step application in teal: start, your details, eligibility, payment and submitted. The first two steps rely on a fully redundant core platform. The eligibility lookup service and the payment provider are both unavailable, so those steps fall back to confirming eligibility later and taking payment later. The user still reaches submitted.">
         <figcaption>Two dependencies are down and the user still completes the application.</figcaption>
       </figure>
 
