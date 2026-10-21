@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to design government APIs to the GDS standards: choosing a style, serving many consumers, versioning safely, securing access and using shared platforms.">
+  <meta property="og:title" content="API strategy and design for government &mdash; Architect's Library">
+  <meta property="og:description" content="How to design government APIs to the GDS standards: choosing a style, serving many consumers, versioning safely, securing access and using shared platforms.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>API strategy and design for government &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">API strategy and design for government</h1>
+        <p class="lesson-hero__description">Design APIs that stay reliable, serve many consumers and change without breaking them.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>What the GDS API technical and data standards ask for, and where they leave the choice to you</li>
+          <li>How to choose between REST, events, GraphQL and batch for a government use case</li>
+          <li>How to serve very different consumers from one API, and change it without breaking them</li>
+          <li>How to secure an API in proportion to its data and fit it around One Login, Pay and Notify</li>
+        </ul>
+      </div>
+
+      <p>Most exchanges between government services run through an API, from a frontend calling its own back end to one department checking another's records. Publish one and you have signed a contract with everyone who builds against it, including consumers you never knew were coming.</p>
+
+      <h2>Why API design is a strategic decision</h2>
+
+      <p>APIs carry the traffic between services inside a department, across departments, to shared platforms such as GOV.UK One Login and out to partners. Their design decides whether that traffic stays reliable and cheap to run, or becomes a steady supply of integration failures.</p>
+
+      <p>Once published, an API limits how your service can change, because every consumer has written code against its current shape. A well designed API attracts consumers nobody planned for. A badly designed one becomes technical debt that each of them inherits.</p>
+
+      <p>Government has a shared baseline. The <a href="https://www.gov.uk/guidance/gds-api-technical-and-data-standards" target="_blank" rel="noopener">GDS API technical and data standards</a> cover how to design, build and operate an API, and point 4 of the <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener">Technology Code of Practice</a> asks for open standards so technology can work with other technology. Follow the common conventions and your API feels familiar to anyone who has used another government API. Depart from them and every integration pays for it.</p>
+
+      <blockquote>Other teams write code against your API. Change it carelessly and you break their service along with yours.</blockquote>
+
+      <h2>What the GDS standards ask for</h2>
+
+      <p>Most of what the standards ask is ordinary good practice, written down so every department does the same ordinary things. A developer who has integrated with one government API should be able to pick up the next without starting again. The core fits on one page:</p>
+      <ul>
+        <li>Use the REST style, and turn off any HTTP method a resource does not support, so a record that can never be deleted does not accept DELETE.</li>
+        <li>Name each type of resource consistently, such as /applications, and decide once whether collections are singular or plural, so developers can guess a name without rereading the documentation.</li>
+        <li>Return JSON wherever possible. If your organisation has not already chosen a response format, the standards recommend JSON:API.</li>
+        <li>Use TLS 1.2 or above to secure your API, which the standards make a must. Internal APIs are no exception under the NCSC's <a href="https://www.ncsc.gov.uk/collection/zero-trust/architecture-design-principles" target="_blank" rel="noopener">zero trust principle</a>: don't trust any network, including your own.</li>
+        <li>Control access with OAuth 2.0 and check scope on every request. Never use basic authentication, and avoid API keys.</li>
+        <li>Describe the API in an OpenAPI document, which the <a href="https://www.gov.uk/government/publications/recommended-open-standards-for-government/describing-restful-apis-with-openapi-3" target="_blank" rel="noopener">Open Standards Board recommends</a> for RESTful APIs, and write it before the code.</li>
+      </ul>
+
+      <p>Errors need the same discipline. Match every response to a standard HTTP status code: 200 for success, 201 for something created, 400 for a malformed request, 401 when the caller has not authenticated, 403 when they have and still may not do this, 404 when nothing is there, 429 for a rate limit and 500 when the fault is yours. The classic offender is a 200 with an error in its body, which makes every client parse a success to discover a failure. The standards want error codes that are consistent and documented, and messages that tell an attacker nothing about your internals. A good error body carries a code, a sentence a developer can act on and, where possible, a hint about the fix.</p>
+
+      <p>The standards also ask for rate limiting or throttling, so no single consumer can exhaust the service. Over the limit, return 429 with a Retry-After header saying when to try again.</p>
+
+      <h2>Choosing an API style</h2>
+
+      <p>REST is the government default and, I have found, the right answer for most services. The GDS standards recommend it, while accepting that GraphQL or gRPC may suit specific projects better. The question is what kind of conversation the two systems need to have.</p>
+
+      <p>REST fits creating, reading, updating and deleting resources such as applications and cases, where the caller wants an answer straight away. Mainstream platforms and languages already speak it, which matters most for widely consumed APIs.</p>
+
+      <figure>
+        <img width="1200" height="568" loading="lazy" decoding="async" src="images/lesson23-image1.png" alt="A decision tree. If the caller needs an answer now and consumers do not need very different shapes of the same data, use REST, the default for most government services. If they do need very different shapes, GraphQL may fit. If the caller does not need an answer now, a change that others react to points to events through webhooks or streams, and a bulk move on a schedule points to batch files.">
+        <figcaption>Four styles for four kinds of conversation. Anything other than REST gets an ADR.</figcaption>
+      </figure>
+
+      <p>Event driven APIs, through webhooks or message streams, announce changes of state: an application submitted, a decision made, a payment taken. Nobody waits for a reply, and several consumers can react to one event without the publisher knowing who is listening. That loose coupling suits traffic between your own services and notifications across government.</p>
+
+      <p>GraphQL suits consumers that need very different slices of the same data, where REST would make them assemble each answer from many calls, and the standards note its value for prototyping when nobody yet knows what views other developers will want. I have seldom seen it in government, and the standards are written around REST, so the extra complexity needs a real reason.</p>
+
+      <p>Batch and file transfers still suit bulk movements with no need for real time, such as daily extracts and monthly reporting, and legacy systems that cannot call an API at all.</p>
+
+      <p><em>"Batch files are a legacy habit. A modern service should do everything through APIs."</em></p>
+
+      <p>Batch has its own job. Uploading 100,000 records as one file beats making 100,000 calls, for you and for whoever has to receive them.</p>
+
+      <p>Record the choice as an ADR. A departure from REST should say why the alternative serves this use case better, so the next architect does not have to reverse engineer your reasoning.</p>
+
+      <h2>One API, many consumers</h2>
+
+      <p>A government API rarely has only one consumer. A grant service might serve the citizen facing web application, the caseworker tool, a reporting dashboard, partner organisations checking grant status and other departments sharing data, each wanting different volumes, speeds and levels of detail.</p>
+
+      <p>The standards treat developers as the users of an API, so design from their side of the call: what does this consumer need, in what shape, to finish its task? The mistake I see most often runs the other way. An API that mirrors the database schema exposes your implementation and welds your tables to every consumer's code. The standards ask for resource names that stay stable between versions and an API that hides the data store beneath it.</p>
+
+      <p>Let consumers ask for less. With filtering and field selection, a mobile status view requests the status and nothing else, saving bandwidth and withholding data it had no reason to see. Page every collection with cursors or offsets and a sensible default size, because sooner or later a dashboard will ask for all 500,000 applications at once.</p>
+
+      <figure>
+        <img width="1200" height="671" loading="lazy" decoding="async" src="images/lesson23-image2.png" alt="Five consumers of a grant service API. The citizen web app and the caseworker tool create and update data through a write API working on the primary data store. The reporting dashboard, partner organisations and cross government services only read, through a read API offering filtering, paging and field selection, backed by a read replica or cache that the primary store replicates to.">
+        <figcaption>Writers go to the primary store. Readers get a replica or cache of their own.</figcaption>
+      </figure>
+
+      <p>Where reads dominate, split them from writes. Dashboards and partner queries use a read optimised API backed by a replica or cache, while consumers that change data use a write API on the primary store. This is the CQRS pattern, and its practical effect is that the nine o'clock reporting run never competes with a caseworker saving a decision.</p>
+
+      <p>Then decide how formal each contract needs to be. A private API used only by your own frontend can change freely. A partner API serves known consumers on agreed terms. A public API, open to any government consumer, needs the most formal process of the three. The GDS standards apply to all of them.</p>
+
+      <h2>Changing an API without breaking its consumers</h2>
+
+      <p>Once an API is published, consumers depend on its exact shape, and changing it carelessly breaks things: sometimes catastrophically, always annoyingly. Start by knowing what counts as breaking.</p>
+
+      <p>Removing a field or endpoint breaks consumers. So does changing a field's type, making an optional field required, giving a field a new meaning under its old name or changing the format of error responses. Adding optional fields, endpoints or parameters breaks nobody, so those changes can ship inside the current version.</p>
+
+      <p>The standards ask you to avoid breaking changes where you can. Where you cannot, expose a new version with its number in the URI, /v1 then /v2. They prefer this to custom headers or media types, which proxies and firewalls can block, and want as few live versions as possible.</p>
+
+      <figure>
+        <img width="1200" height="589" loading="lazy" decoding="async" src="images/lesson23-image3.png" alt="A timeline. Version 1 runs first and takes additive changes. A breaking change opens version 2, and version 1 is marked deprecated but keeps answering. Both run side by side through a deprecation window published in advance, with Deprecation and Sunset headers on every version 1 response and known consumers contacted directly. Version 1 is retired once logs show few callers left.">
+        <figcaption>Additive changes ship inside v1. A breaking change opens v2 and starts the clock on v1.</figcaption>
+      </figure>
+
+      <p>The standards set no fixed deprecation period, so publish your own and keep to it, allowing longer for an API many services depend on. Update the documentation, contact known consumers directly and return the Deprecation header on every old version response, adding the Sunset header once the retirement date is fixed. <a href="https://www.rfc-editor.org/info/rfc9745" target="_blank" rel="noopener">RFC 9745</a> and <a href="https://www.rfc-editor.org/info/rfc8594" target="_blank" rel="noopener">RFC 8594</a> define the two. Retire the old version when your logs show few callers left, and tell users it is no longer supported, which the standards make a requirement.</p>
+
+      <blockquote>Adding to an API costs you a release. Taking something away costs every consumer one.</blockquote>
+
+      <p>Keep the OpenAPI document current, since consumers generate client code and validate requests from it, and pair it with guides to getting started and authentication, error codes, rate limits and worked examples. For APIs consumed outside your team, put changes through a light governance step: propose, assess who is affected, tell them, deprecate and support the old version until the window closes. Changes that reach external consumers belong in your Design Authority reviews.</p>
+
+      <h2>Security in proportion to the data</h2>
+
+      <p>Security should match what an API exposes and who calls it. Open data needs far less protection than personal data held at OFFICIAL, which may also carry the <a href="https://www.gov.uk/government/publications/government-security-classifications" target="_blank" rel="noopener">OFFICIAL-SENSITIVE marking</a>. The standards ask you to authenticate every caller and to keep any anonymous endpoint to open data, rate limited.</p>
+
+      <p>How a caller proves who it is depends on what it is. A service with no user involved uses the OAuth 2.0 client credentials grant for a short lived access token. Citizens sign in through GOV.UK One Login, which uses OpenID Connect and returns an ID token your service must validate. When a service then calls your API on that person's behalf, the standards point to token exchange (<a href="https://www.rfc-editor.org/info/rfc8693" target="_blank" rel="noopener">RFC 8693</a>), and to the authorisation code flow with PKCE when a user calls the API directly. For a small, known community such as partner organisations, the <a href="https://www.ncsc.gov.uk/collection/securing-http-based-apis/3-data-in-transit-protection" target="_blank" rel="noopener">NCSC suggests considering mutual TLS</a>, which authenticates both ends of the connection, with OAuth 2.0 still deciding what each partner may do.</p>
+
+      <figure>
+        <img width="1200" height="640" loading="lazy" decoding="async" src="images/lesson23-image4.png" alt="Three kinds of caller, a service with no user, a service acting for a user signed in with One Login, and a partner organisation using mutual TLS, pass through an API gateway. The gateway checks the token, the scope, the rate limit and the schema, rejecting failures early with 401, 403, 429 or 400. Requests that pass reach your service, which checks the caller is allowed the specific record, validates again with full context and logs who received personal data.">
+        <figcaption>The gateway rejects bad calls early. The service still checks who may see which record.</figcaption>
+      </figure>
+
+      <p>Authentication says who is calling. Authorisation decides what they may touch, and it is where the subtler failures live. Grant least privilege through granular scopes such as read:applications and read:decisions, checked on every request, as both the GDS standards and the <a href="https://www.ncsc.gov.uk/collection/securing-http-based-apis/2-api-authentication-and-authorisation" target="_blank" rel="noopener">NCSC</a> ask. Scopes stop at the type of data, so for personal data add a check on the relationship between caller and record. A solicitor may read their client's case, and the scope that allows it must not open anyone else's.</p>
+
+      <p>Validate every input against a schema, checking types, ranges, formats and sizes, and reject attributes you did not expect. The <a href="https://www.ncsc.gov.uk/collection/securing-http-based-apis/4-input-validation" target="_blank" rel="noopener">NCSC adds</a> that a gateway should handle basic checks without being the only place validation happens, so the service checks again with context the gateway lacks. Answer malformed requests with a 400 that explains the problem without describing how the system is built.</p>
+
+      <p>Rate limit each consumer, loosely enough for legitimate bursts and tightly enough to stop abuse, and log how often each one calls so a real surge can be told apart from an attack or a stolen credential. An API management platform or gateway carries much of this load, and the standards note it provides services you would rarely build yourself, such as access control, audit and logging. If the API returns personal or sensitive data, the standards say you must log when it was provided and to whom, which is what lets you answer a subject access request or trace a fraud.</p>
+
+      <h2>Contract first, platforms from day one</h2>
+
+      <p>The standards ask you to design the API before the user interface and make an OpenAPI document the first output of that design. With the contract written first, frontend and backend teams work in parallel against generated mocks, consumers start planning their integration at once, and automated tests hold the implementation to the contract from the first commit. Add a sandbox, behind authentication and free of real personal data, so consumers can try the API before production.</p>
+
+      <p>Check the <a href="https://www.api.gov.uk/#uk-public-sector-apis" target="_blank" rel="noopener">UK API Catalogue</a> at api.gov.uk before designing anything, because the standards ask you to reuse an existing API where one meets the need. Once yours is live, add it to that catalogue and your organisation's own. That is point 8 of the Technology Code of Practice, share, reuse and collaborate, in practice.</p>
+
+      <p>Shared platforms belong in the first sketch, because each sets a pattern your API has to fit. <a href="https://docs.sign-in.service.gov.uk/integrate-with-integration-environment/authenticate-your-user" target="_blank" rel="noopener">GOV.UK One Login</a> returns an authorisation code to your redirect URI, which your service swaps for tokens before validating the ID token. <a href="https://docs.payments.service.gov.uk/making_payments" target="_blank" rel="noopener">GOV.UK Pay</a> sends the user to a hosted payment page at next_url and back to your return_url, where your service checks the payment's status through the API before showing a result, with <a href="https://docs.payments.service.gov.uk/webhooks/" target="_blank" rel="noopener">signed webhooks</a> reporting later events such as refunds. <a href="https://docs.notifications.service.gov.uk/rest-api.html#callbacks" target="_blank" rel="noopener">GOV.UK Notify</a> posts delivery receipts, received text messages and returned letters to a callback URL you provide, so your event model needs somewhere to put them.</p>
+
+      <figure>
+        <img width="1200" height="693" loading="lazy" decoding="async" src="images/lesson23-image5.png" alt="Your service exchanges calls with three shared platforms. It sends users to GOV.UK One Login and receives an authorisation code to swap for tokens and validate. It creates GOV.UK Pay payments and sends users to the payment page, then checks payment status when they return, with signed webhooks reporting later events. It sends messages through GOV.UK Notify and receives callbacks for delivery receipts, received texts and returned letters.">
+        <figcaption>Each shared platform sets a pattern your API has to fit, inbound as well as outbound.</figcaption>
+      </figure>
+
+      <p>Above all, be predictable. Use the same patterns for pagination, errors, authentication and naming as other government APIs, so a developer who knows one finds yours familiar on sight.</p>
+
+      <blockquote>Developers may not read all of your documentation. Build an API they can guess correctly.</blockquote>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide is one practitioner's account of API strategy and design for UK government services, not official guidance. The styles, patterns and security approaches are teaching aids; the authoritative requirements are in the GDS, NCSC and platform sources below.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed October 2026 against the government, NCSC, Open Standards and IETF sources below. Standards and platform details change, so check the source before relying on it.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/guidance/gds-api-technical-and-data-standards" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GDS: API technical and data standards</a></li>
+          <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Technology Code of Practice</a></li>
+          <li><a href="https://www.gov.uk/government/publications/recommended-open-standards-for-government/describing-restful-apis-with-openapi-3" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Open Standards Board: Describing RESTful APIs with OpenAPI 3</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/zero-trust/architecture-design-principles" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Zero trust architecture design principles</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/securing-http-based-apis/2-api-authentication-and-authorisation" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: API authentication and authorisation</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/securing-http-based-apis/3-data-in-transit-protection" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Data in transit protection</a></li>
+          <li><a href="https://www.ncsc.gov.uk/collection/securing-http-based-apis/4-input-validation" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">NCSC: Input validation</a></li>
+          <li><a href="https://www.gov.uk/government/publications/government-security-classifications" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Government Security Classifications</a></li>
+          <li><a href="https://www.api.gov.uk/#uk-public-sector-apis" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">UK API Catalogue (api.gov.uk)</a></li>
+          <li><a href="https://docs.sign-in.service.gov.uk/integrate-with-integration-environment/authenticate-your-user" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK One Login: Authenticate your user</a></li>
+          <li><a href="https://docs.payments.service.gov.uk/making_payments" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Pay: Making payments</a></li>
+          <li><a href="https://docs.payments.service.gov.uk/webhooks/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Pay: Webhooks</a></li>
+          <li><a href="https://docs.notifications.service.gov.uk/rest-api.html#callbacks" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Notify: Callbacks</a></li>
+          <li><a href="https://www.rfc-editor.org/info/rfc9745" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">IETF: RFC 9745 (Deprecation header)</a></li>
+          <li><a href="https://www.rfc-editor.org/info/rfc8594" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">IETF: RFC 8594 (Sunset header)</a></li>
+          <li><a href="https://www.rfc-editor.org/info/rfc8693" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">IETF: RFC 8693 (OAuth 2.0 token exchange)</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-integration-patterns.html">Integration patterns for government services</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decision-records.html">Architecture decision records in practice</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-data-architecture-and-data-sharing.html">Data architecture and data sharing across government</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
