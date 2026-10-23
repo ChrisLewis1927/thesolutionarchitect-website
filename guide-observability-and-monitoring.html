@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to build observability into a government service from alpha: logs, metrics and traces, correlation IDs, alerts tied to SLOs and one set of data for every audience.">
+  <meta property="og:title" content="Observability and monitoring architecture &mdash; Architect's Library">
+  <meta property="og:description" content="How to build observability into a government service from alpha: logs, metrics and traces, correlation IDs, alerts tied to SLOs and one set of data for every audience.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Observability and monitoring architecture &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Observability and monitoring architecture</h1>
+        <p class="lesson-hero__description">A service you cannot see into is a service you cannot run well. How fast you find the 3am fault depends on decisions made in alpha.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How logs, metrics and traces split the work of finding a fault</li>
+          <li>What to build in from alpha: correlation IDs, a logging standard, the right metrics and honest health checks</li>
+          <li>How to alert on service level objectives so that a page means something</li>
+          <li>What the Service Standard, Secure by Design and GovAssure expect, and how one set of data serves every audience</li>
+        </ul>
+      </div>
+
+      <p>A service you cannot see into is a service you cannot run well. When it breaks at 3am, someone has to work out what happened, why, and who is affected, and how long that takes depends largely on design decisions made months earlier.</p>
+
+      <h2>Observability is a design decision</h2>
+
+      <p>Something will go wrong in production, and you will need to know what happened, why, and what it did to users. In my experience, without structured observability incident response becomes guesswork: engineers scroll through logs hoping something jumps out, and the same failure comes back because nobody spotted the pattern.</p>
+
+      <p>Government guidance expects better. Point 14 of the <a href="https://www.gov.uk/service-manual/service-standard/point-14-operate-a-reliable-service" target="_blank" rel="noopener">Service Standard</a> says teams should have appropriate monitoring with a proportionate, sustainable plan to respond to the problems it finds. They should also monitor outcomes for users and ethical issues such as bias, as well as technical faults. GDS announced in July 2026 that it is <a href="https://gds.blog.gov.uk/2026/07/02/evolving-the-service-standard-for-the-future-of-public-services/" target="_blank" rel="noopener">reworking the Service Standard</a>, so check the current version before relying on the point numbers used here. The Service Manual's guide to <a href="https://www.gov.uk/service-manual/technology/monitoring-the-status-of-your-service" target="_blank" rel="noopener">monitoring the status of your service</a> is firmer: you must have monitoring in place by public beta, and should start planning it in alpha. For departments and arm's length bodies, the mandatory <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/" target="_blank" rel="noopener">Secure by Design principles</a> add detect and respond security: security logging, monitoring, alerting and response capabilities that must be continually tested and iterated.</p>
+
+      <p>So observability is an architecture decision. Correlation IDs, log structure, metrics and trace propagation decide whether the engineer on call at 3am finds the fault in minutes or spends the night looking.</p>
+
+      <blockquote>The 3am investigation can only use what somebody decided to record, and the time to decide is alpha.</blockquote>
+
+      <h2>Logs, metrics and traces</h2>
+
+      <p>Observability rests on three kinds of data. Logs are timestamped records of single events: a user signed in, a payment went through, an error was thrown. Structured as JSON with consistent fields, they can be queried, filtered and joined across services. Free text can only be searched and squinted at.</p>
+
+      <p>Metrics are numbers over time, such as request rate, error rate, latency distribution, queue depth and resource utilisation. Tom Wilkie's <a href="https://grafana.com/blog/2018/08/02/the-red-method-how-to-instrument-your-services/" target="_blank" rel="noopener">RED method</a> gives each service its rate, errors and duration. Brendan Gregg's <a href="https://www.brendangregg.com/usemethod.html" target="_blank" rel="noopener">USE method</a> checks each resource underneath, such as CPU, memory and connection pools, for utilisation, saturation and errors.</p>
+
+      <p>Traces follow one request through every service it touches, timing each step. Say a grant application passes through an API gateway, sign in, a rules engine, a fraud check and payment, and takes 8 seconds instead of 2. Metrics show the slowdown. A trace shows which of the five caused it.</p>
+
+      <p>Together they narrow the search. Metrics say something is wrong: the error rate has jumped. Traces say where: the fraud check is timing out. Logs say why: its database connection pool is exhausted by a query running with no timeout.</p>
+
+      <figure>
+        <img width="1200" height="487" loading="lazy" decoding="async" src="images/lesson26-image1.png" alt="Three panels read left to right. Metrics show the error rate spiking in the last hour: something is wrong. Traces show an 8 second request in which the fraud check took 6 seconds: that is where it is wrong. Logs carrying the same request ID show the fraud check's connection pool was exhausted by a query running with no timeout: that is why.">
+        <figcaption>One incident, three questions, answered in order.</figcaption>
+      </figure>
+
+      <p><em>"We've got logging, so we've got observability."</em></p>
+
+      <p>Logs answer why, once you know where to look. Without metrics, users often tell you about the problem first. Without traces, you open five services' logs and guess. Without a shared request ID, those logs are hard to join up reliably.</p>
+
+      <h2>Building it in from alpha</h2>
+
+      <p>Observability bolted on late tends to show its gaps at the worst possible moment: log formats that differ by team, request IDs that stop at the first service. The Service Manual says teams should agree in alpha what to monitor and how, and should write monitoring checks alongside the code, treating them as tests for the live system.</p>
+
+      <p>Start with correlation IDs. The API gateway gives every incoming request a unique identifier, such as a UUID (universally unique identifier), and every component passes it on. Services forward it in an HTTP header, either a custom X-Correlation-ID or the traceparent header from <a href="https://www.w3.org/TR/trace-context/" target="_blank" rel="noopener">W3C Trace Context</a>, a W3C Recommendation that gives tracing tools a common format. Message queues carry it in message metadata. Every log line records it, so during an incident one search returns the request's whole route.</p>
+
+      <figure>
+        <img width="1200" height="689" loading="lazy" decoding="async" src="images/lesson26-image2.png" alt="Six components in a row: API gateway, sign in, rules engine, fraud check, queue and payment. The API gateway creates a correlation ID. It travels between services in an HTTP header, either traceparent or a custom X-Correlation-ID, and through the queue in message metadata. Every component writes log lines to a central log store, each carrying the same ID, id=7f3a9c, so one search returns the whole journey of a single request in order, including the fraud check error.">
+        <figcaption>The gateway creates one ID, and every hop, queue message and log line carries it.</figcaption>
+      </figure>
+
+      <p>Keep personal data out of it. The Trace Context specification says its fields must not be used for personally identifiable or otherwise sensitive information.</p>
+
+      <p>Then set one logging standard at architecture level, instead of letting each team invent its own. Agree:</p>
+      <ul>
+        <li>JSON as the format</li>
+        <li>the required fields: an ISO 8601 timestamp, correlation ID, service name and version, severity and message</li>
+        <li>what each severity level means, so ERROR carries the same weight in every service</li>
+        <li>what never goes in a log, starting with personal data, tokens and credentials, with redaction built into the shared logging library</li>
+      </ul>
+
+      <p>Secure by Design's guidance on <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/activities/managing-observability/" target="_blank" rel="noopener">managing observability</a> adds the security side: decide what to capture at the design stage, encrypt logs, restrict who can view, change or delete them, store them apart from the systems that produce them and set retention to fit regulatory needs.</p>
+
+      <h2>What to measure, and how to read it</h2>
+
+      <p>Start from the four golden signals in Google's <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">Site Reliability Engineering (SRE) book</a>: latency, traffic, errors and saturation. If you can measure only four metrics of a user facing system, the book says, measure these. Instrument them at every service boundary.</p>
+
+      <p>Record latency as a distribution, never only as an average. The SRE book's example: a service averaging 100 milliseconds at 1,000 requests a second can easily have 1% of requests taking 5 seconds. Count requests into latency buckets to build a histogram, and read the 50th, 95th and 99th percentiles (p50, p95 and p99). The average hides the users having the worst time.</p>
+
+      <figure>
+        <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson26-image3.png" alt="An illustrative histogram of response times in seven buckets from under 10 milliseconds to over 3,000. Most requests, 62%, fall between 30 and 100 milliseconds. A dashed line marks the average of 100 milliseconds, which looks fine on a dashboard. The highlighted final bucket shows 1% of requests taking over 3 seconds, about 5 seconds in the SRE book's example, so one request in a hundred waits that long.">
+        <figcaption>An average that looks healthy, and the one request in a hundred it hides.</figcaption>
+      </figure>
+
+      <p>Give each service two separate health checks. Liveness asks whether the process is still working. Readiness asks whether it can take traffic now, for example whether it has finished starting and can reach what it needs. In <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/" target="_blank" rel="noopener">Kubernetes</a>, a container that fails its liveness probe is restarted, and a Pod that fails its readiness probe is marked unready and gets no traffic from services.</p>
+
+      <p>Keep liveness checks cheap and local. The <a href="https://kubernetes.io/docs/concepts/workloads/pods/probes/" target="_blank" rel="noopener">Kubernetes documentation</a> warns that incorrectly implemented liveness probes can lead to cascading failures. Point one at a slow shared database and every instance can fail together, restart together and hammer a database that was already struggling.</p>
+
+      <figure>
+        <img width="1200" height="523" loading="lazy" decoding="async" src="images/lesson26-image4.png" alt="A traffic router, the Kubernetes Service, sends requests to three instances. Instance A passes both its liveness and readiness probes and receives traffic. Instance B passes liveness but fails readiness, so it keeps running but gets no traffic until it is ready. Instance C fails its liveness probe and is restarted by the kubelet.">
+        <figcaption>Liveness decides whether an instance restarts. Readiness decides whether it gets traffic.</figcaption>
+      </figure>
+
+      <h2>Alerts worth waking someone for</h2>
+
+      <p>The SRE book describes what happens when pages come too often: engineers second guess, skim or ignore them, and a real one gets lost in the noise.</p>
+
+      <p>Service level objectives (SLOs) give alerting a principled basis. Write them from the user's side. CPU below 80% is a resource metric; "citizens can submit an application within 3 seconds, 99.5% of the time" is an SLO. The Service Manual says you must track user related metrics, such as the percentage of users who can complete a task, as well as technical and security ones. Consider objectives for availability, latency, correctness and data freshness.</p>
+
+      <p>Whatever the SLO leaves over is the error budget. At 99.9% over 30 days, that is 0.1% of requests, or about 43 minutes of complete outage. How fast you spend it is the burn rate: at 1 the budget lasts exactly the 30 days, and a total outage burns at 1,000. Alert on burn rate, never on individual errors. Google's <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">SRE Workbook</a> suggests starting, for a 99.9% SLO, by paging when 2% of the budget goes in an hour or 5% in six hours, and raising a ticket when 10% goes in three days. Each alert also checks a short window, a twelfth as long, so it stops firing soon after the problem does.</p>
+
+      <figure>
+        <img width="1200" height="646" loading="lazy" decoding="async" src="images/lesson26-image5.png" alt="A chart of error budget left against days into a 30 day window, for a 99.9% SLO. Four lines start at 100%. A total outage, burn rate 1,000, empties the budget in 43 minutes. A fast burn at rate 14.4 empties it in about two days and pages when 2% goes in an hour. A steady burn at rate 6 empties it in five days and pages when 5% goes in six hours. A slow burn at rate 1 empties it on day 30 and raises a ticket when 10% goes in three days.">
+        <figcaption>The faster the budget burns, the sooner and louder the alert.</figcaption>
+      </figure>
+
+      <p>Every page should lead to an action; if the person paged would not know what to do, delete the alert. The Service Manual adds that alert messages should make sense to someone just woken up, and that a call out for an issue that does not affect users and could have waited until morning is a reason to rethink the alert. Link every alert to a runbook. And if the programme board was told 99.9% availability, alert while that target is at risk, before the monthly report shows it was missed.</p>
+
+      <blockquote>An alert nobody acts on is teaching the team to ignore the next one.</blockquote>
+
+      <h2>One set of data, four audiences</h2>
+
+      <p>Different people need different views of the same data, and one dashboard built for everyone serves nobody in particular.</p>
+
+      <p>The operations team needs to know whether anything is broken now: error rates, degraded dependencies and firing alerts, on dashboards that refresh every few seconds and read at a glance. Service owners need trends: SLO compliance, error budget left, how response times moved over the month and where reliability work should go next. That view updates daily and belongs in sprint reviews and service assessments. Programme boards need red, amber or green status, SLO compliance as a percentage and an arrow for the trend.</p>
+
+      <figure>
+        <img width="1200" height="681" loading="lazy" decoding="async" src="images/lesson26-image6.png" alt="One set of instrumentation, logs, metrics and traces carrying the same request IDs, sits at the centre and feeds four views. The operations team asks whether anything is broken right now, on a dashboard that refreshes every few seconds. The service owner asks whether SLOs are being met, using error budget and monthly trends. The programme board asks whether the service is reliable enough and what the risks are, shown as red, amber or green with a trend arrow. The public sees the mandatory KPIs on data.gov.uk and a status page during incidents.">
+        <figcaption>Build the instrumentation once and give each audience its own view of it.</figcaption>
+      </figure>
+
+      <p>Then there is the public. <a href="https://www.gov.uk/service-manual/service-standard/point-10-define-success-publish-performance-data" target="_blank" rel="noopener">Point 10</a> of the Service Standard covers publishing performance data, and the Service Manual's page on <a href="https://www.gov.uk/service-manual/measuring-success/data-you-must-publish" target="_blank" rel="noopener">data you must publish</a> sets four mandatory KPIs (key performance indicators) for data.gov.uk: cost per transaction, user satisfaction, completion rate and digital take-up. It lists monitoring systems among the sources. The monitoring guide adds that, unless it is unsafe, you should make monitoring information widely available, for example through a status page like GOV.UK Notify's.</p>
+
+      <p>So instrument once and give each audience its own view. Separate instrumentation for each audience means four sets of numbers, and in my experience someone eventually notices they disagree.</p>
+
+      <h2>When it goes wrong, and afterwards</h2>
+
+      <p>Observability earns its keep during an incident. Alerting detects the problem before users report it, dashboards show how many users and which services are affected, traces and logs show what failed and why, and live numbers feed the updates. "It affects, say, 15% of users and should be fixed within 30 minutes" tells people far more than "we are investigating".</p>
+
+      <p>Afterwards, the same data makes a blameless retrospective possible. Rebuild the timeline, see which signals were there and which were missed, and ask what the systems were saying instead of who got it wrong. Over months, it shows the slower trends: error rates creeping up as technical debt builds, endpoints that lag behind the rest, incidents that cluster around deployments.</p>
+
+      <p>Critical systems face formal assurance too. <a href="https://www.security.gov.uk/policy-and-guidance/govassure/govassure-guidance/" target="_blank" rel="noopener">GovAssure</a>, the government's cyber security assurance process, assesses critical OFFICIAL systems against the NCSC's Cyber Assessment Framework (CAF), and must be used for those that count as government sector critical national infrastructure. The outcomes and indicators of good practice under the CAF's <a href="https://www.ncsc.gov.uk/collection/cyber-assessment-framework/caf-objective-c-detecting-cyber-security-events/principle-c1-security-monitoring" target="_blank" rel="noopener">security monitoring principle</a> include logs held securely with access limited to a business need, a suitable retention period followed by deletion, log datasets synchronised to an accurate common time source, and runbooks for triaging alerts. If your service is in scope, design the logging to serve security monitoring as well as operations from the start.</p>
+
+      <p>Runbooks turn all of this into action. For each alert, write down:</p>
+      <ul>
+        <li>what the alert means</li>
+        <li>what to check first</li>
+        <li>the known causes and how to fix each one</li>
+        <li>when to escalate, and when it can wait for working hours</li>
+        <li>a template for updating stakeholders</li>
+      </ul>
+
+      <p>Keep them reachable when the platform is down: the Service Manual says to make sure every team member has a local copy of the documentation in case cloud storage is unavailable.</p>
+
+      <blockquote>An alert tells someone to get up. The runbook tells them what to do next.</blockquote>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide is one practitioner's account of observability and monitoring for UK government services, not official guidance. The grant service example and the figures used to illustrate error budgets and burn rates are teaching aids; the authoritative requirements are in the government and industry sources below.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed October 2026 against the sources below. Government policy and the referenced documentation change, so check the source before relying on this.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/service-manual/service-standard/point-14-operate-a-reliable-service" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Standard: Point 14, operate a reliable service</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/monitoring-the-status-of-your-service" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK Service Manual: Monitoring the status of your service</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/activities/managing-observability/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Secure by Design: Managing observability</a></li>
+          <li><a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Google SRE book: Monitoring distributed systems</a></li>
+          <li><a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Google SRE Workbook: Alerting on SLOs</a></li>
+          <li><a href="https://www.w3.org/TR/trace-context/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">W3C: Trace Context recommendation</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/govassure/govassure-guidance/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GovAssure guidance</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-resilience-and-disaster-recovery.html">Resilience, disaster recovery and business continuity</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-risk-management.html">Architecture risk management</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
