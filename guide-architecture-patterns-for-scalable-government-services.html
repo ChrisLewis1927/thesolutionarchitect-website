@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to choose between a monolith, a modular monolith and microservices, and when events, backends for frontends and sagas earn their cost in government services.">
+  <meta property="og:title" content="Architecture patterns for scalable government services &mdash; Architect's Library">
+  <meta property="og:description" content="How to choose between a monolith, a modular monolith and microservices, and when events, backends for frontends and sagas earn their cost in government services.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Architecture patterns for scalable government services &mdash; Architect's Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; border-radius: 6px;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link nav__link--active">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Architecture patterns for scalable government services</h1>
+        <p class="lesson-hero__description">A pattern is a known answer to a problem that keeps coming back, and it comes with a cost. Know where each one stops paying for itself.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>How to choose between a monolith, a modular monolith and microservices for the team and load you have</li>
+          <li>When events, backends for frontends and sagas earn their extra moving parts</li>
+          <li>How to build human decision points and appeal routes into a multi service process</li>
+          <li>Five patterns that cost more than they return, and a test that catches them</li>
+        </ul>
+      </div>
+
+      <p>A pattern is a known answer to a problem that keeps coming back, and it comes with a cost. Government services run from a grant scheme taking, say, 100 applications a week to platforms carrying a department's whole public offer, so a pattern that suits one can sink the other. This guide covers the ones you are likely to meet and the point where each stops paying for itself.</p>
+
+      <h2>Size the problem first</h2>
+
+      <p>HMRC's figures for the 2024 to 2025 tax year show <a href="https://www.gov.uk/government/news/1148-million-beat-the-self-assessment-deadline" target="_blank" rel="noopener">475,722 people waiting until the final day</a>, 31 January, to file a Self Assessment return. The busiest hour, 17:00 to 17:59, saw 32,982 returns, about nine a second. Returns are not requests, so real traffic is higher, but it is a useful number to hold against your own.</p>
+
+      <p>A scheme taking, say, 100 applications a week needs nothing like that. The <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener">Technology Code of Practice</a> will not choose for you. Neither it nor its <a href="https://www.gov.uk/guidance/integrate-and-adapt-technology" target="_blank" rel="noopener">point 9</a> mentions microservices, monoliths or event driven design, and point 9 asks that your plans show you have considered how the technology integrates into your organisation. The choice is yours to justify.</p>
+
+      <h2>Monolith, modular monolith or microservices</h2>
+
+      <p>A monolith is one deployable unit holding all the functionality, and it deserves better than its reputation. You get one codebase, one pipeline and one monitoring stack. The price is that every change ships everything, and one team can become the bottleneck when several features need to move at once. It suits a single team that owns the lot and has nothing that must scale on its own.</p>
+
+      <figure>
+        <img width="1200" height="512" loading="lazy" decoding="async" src="images/lesson25-image1.png" alt="Three panels showing the same service packaged three ways. A monolith is one deployment holding all functionality in one codebase, with one database. A modular monolith, highlighted, is one deployment divided into four modules, sign in, casework, payments and notices, with defined links between them and one database. Microservices are four separate deployments, each with its own data store, shown with some of the calls between them.">
+        <figcaption>One service packaged three ways. The modular monolith keeps a single deployment but gives each part a defined boundary.</figcaption>
+      </figure>
+
+      <p>A modular monolith keeps the single deployment but divides the code into modules with explicit boundaries and interfaces, so you can split later if you must. <a href="https://www.martinfowler.com/bliki/MonolithFirst.html" target="_blank" rel="noopener">Martin Fowler's 2015 case for starting with a monolith</a> rests partly on boundaries being the hard part: even experienced architects struggle to draw them at the start, and moving functionality between services is much harder than inside a monolith. He adds that most systems pick up too many dependencies between modules to be split sensibly later.</p>
+
+      <p>Microservices split the system into independently deployable services that each own their data. They pay off when several teams must release independently, when parts of the system scale at different rates, or when one codebase has outgrown the people maintaining it. They also carry what Fowler calls the microservice premium, the cost of managing a suite of services. A <a href="https://lifeathmrc.blog.gov.uk/2019/06/18/why-we-held-a-hack-day/" target="_blank" rel="noopener">2019 HMRC blog</a> mentions more than 800 microservices on its Multi-channel Digital Tax Platform. Any given one is likely to depend on several others, so a hack day team graphed which called what.</p>
+
+      <p><em>"We'll build microservices now so we don't have to rebuild later."</em></p>
+
+      <p>Fowler reports that almost all the successful microservice stories he had heard began with a monolith that grew too big, and almost all the systems built as microservices from scratch ended up in serious trouble. That comes from stories he has heard rather than a study, and he says the view is not unanimous. For one team, a modular monolith split along boundaries that have survived real users is the sensible default.</p>
+
+      <blockquote>Moving a boundary inside one codebase is a refactor. Moving it between two services is a negotiation.</blockquote>
+
+      <h2>Four things people mean by event driven</h2>
+
+      <p>In an event driven design, services publish and consume events, each recording something that happened, such as an application submitted or a payment received. The publisher does not know who is listening, which suits a payment that must trigger a notification, a dashboard update and an analytics feed without the payment service knowing any of them exist. In <a href="https://www.martinfowler.com/articles/201701-event-driven.html" target="_blank" rel="noopener">a 2017 note</a>, Fowler picked out four patterns that go under that name.</p>
+
+      <p>Event notification sends a minimal event, such as "application 12345 was submitted", and a consumer that needs more calls back. Coupling stays low, but the wider flow, one reaction triggering the next, is not explicit in any program text, and Fowler notes the only way to see it is often by watching a live system. An event that is really an instruction is what he calls a passive aggressive command. Send a command instead.</p>
+
+      <p>Event-carried state transfer puts the data in the event, so consumers keep their own copy and need not call the publisher. Fowler lists the gains as resilience and lower latency, with less query load on the source, and the costs as more data in flight and more state for each receiver to maintain.</p>
+
+      <figure>
+        <img width="1200" height="568" loading="lazy" decoding="async" src="images/lesson25-image2.png" alt="Two lanes. In event notification, a publisher sends an event reading application 12345 was submitted to a consumer, and a dashed arrow shows the consumer calling back to the publisher for the details it needs. In event-carried state transfer, the publisher sends an event reading application 12345 was submitted with the name, address and amount, the consumer keeps its own copy, and there is no call back.">
+        <figcaption>The same submission announced two ways, and what the consumer has to do next.</figcaption>
+      </figure>
+
+      <p>Event sourcing stores the events as the primary record and derives current state by replaying them. Fowler's examples are version control, where the commit log is the record, and accounting, where transactions are the record and a balance is derived. You get a strong audit capability and can rebuild any past state, at the price of replay problems, changing event schemas and complexity. CQRS keeps separate models for reading and writing, often paired with events though it does not need them, and Fowler reports that many colleagues are wary of it because it is often misused.</p>
+
+      <p>With a timestamp on each event, the stream can form the basis of an audit trail, and with a durable queue a consumer that is briefly down catches up on return. What events take away is immediacy. A caseworker who changes a status and does not see it everywhere at once may assume the system is broken, so agree with policy and operations colleagues what "updated" means in each place before launch. Budget for monitoring event flows too, and for poison messages that no consumer can process.</p>
+
+      <blockquote>An event says something happened. A command asks someone to act. Dress one up as the other and the dependency is still there, only hidden.</blockquote>
+
+      <h2>One backend for each kind of client</h2>
+
+      <p>A grant service can have citizens on the web, caseworkers on an internal tool and partner organisations calling an API. <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends" target="_blank" rel="noopener">Microsoft's Azure Architecture Center</a> documents the Backend for Frontend pattern, which it attributes to Sam Newman. Each client type gets its own backend between it and the shared domain services, handling only what is specific to that interface, such as gathering data from several services and shaping it for the client.</p>
+
+      <figure>
+        <img width="1200" height="523" loading="lazy" decoding="async" src="images/lesson25-image3.png" alt="Three rows, left to right. Citizens on the web connect to a citizen backend for frontend that validates the One Login ID token. Caseworkers connect to a caseworker backend for frontend that handles staff sign in. Partner organisations connect to a partner backend for frontend that handles partner credentials and scopes. All three backends call the same domain services in a dashed group: eligibility, applications and payments.">
+        <figcaption>One grant service with a backend for each kind of client, all calling the same domain services.</figcaption>
+      </figure>
+
+      <p>The citizen BFF would combine the eligibility check, form data and case status, and return only what a citizen needs. It is also where the citizen sign in is handled: the <a href="https://docs.sign-in.service.gov.uk/how-gov-uk-one-login-works" target="_blank" rel="noopener">GOV.UK One Login documentation</a> has the integrating service validate the signature of the ID token it receives. The caseworker BFF validates staff credentials. The partner BFF returns only what the data sharing agreement allows and authenticates partners however the agreement requires, such as mutual TLS.</p>
+
+      <p>The cost is more services to build and run. Microsoft expects some code duplication, asks you to keep each BFF to client specific logic with monitoring and authorisation handled as shared concerns, and says the pattern may not suit a service with one client or clients making much the same requests. Decide who owns each BFF before you build it.</p>
+
+      <h2>Sagas for processes that span services</h2>
+
+      <p>A grant application might need an eligibility check, a fraud check, a budget allocation and a payment, each in a different service with its own database. A single database transaction cannot wrap them, because traditional guarantees such as ACID do not apply directly across independently managed data stores, as <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/saga" target="_blank" rel="noopener">Microsoft's description of the saga pattern</a> explains. A saga swaps that for a sequence of local transactions, where each step that can be undone is paired with a compensating action that runs if a later step fails.</p>
+
+      <p>In a choreographed saga each service publishes an event when it finishes and the next one reacts, with no coordinator. That suits simple workflows and gets confusing as steps are added. An orchestrated saga has a central orchestrator that calls each service, stores the state of each case and invokes compensating actions on failure. Microsoft counts the extra coordination logic and a point of failure among its drawbacks, and a better fit for complex workflows among its benefits.</p>
+
+      <p>Orchestration fits government work better when a workflow includes a human decision, when audit needs a clear view of where each case stands, or when a failure may need a person to look at it before anything is reversed. Where a step decides or informs a decision about a citizen, the <a href="https://www.gov.uk/government/publications/ethics-transparency-and-accountability-framework-for-automated-decision-making" target="_blank" rel="noopener">Ethics, Transparency and Accountability Framework for Automated Decision-Making</a> applies and asks for systems that are fully answerable and auditable.</p>
+
+      <figure>
+        <img width="1200" height="614" loading="lazy" decoding="async" src="images/lesson25-image4.png" alt="An orchestrator, highlighted, sits above four steps in order: eligibility, fraud check, budget and payment. It holds the state of each case and decides what happens next. Dashed arrows lead from three steps to what happens when that step cannot complete. Not eligible: tell the applicant why and give the appeal route. Flagged by the fraud check, highlighted: pause the case and alert a caseworker. Payment cannot start: release the budget allocation.">
+        <figcaption>An orchestrated saga for a grant application, with the failure path drawn for each step that can stop.</figcaption>
+      </figure>
+
+      <p>Compensating actions go further than undoing work: they define what happens when a step cannot complete. If payment cannot start, release the budget allocation. If the fraud check flags an application, pause it and alert a caseworker instead of rejecting it. The framework separates decisions made with no human judgement from those where automation assists a person, and says the legal requirements differ. If eligibility fails, tell the applicant why and how to appeal, as the framework's call for clear guidance on challenging a decision suggests. Plan for the step you cannot reverse as well. Microsoft calls it the pivot transaction, and warns that compensating transactions might not always succeed.</p>
+
+      <blockquote>When a step fails, the question is what should happen to the citizen next. Undoing the work is only one answer.</blockquote>
+
+      <h2>Patterns to avoid, or apply with care</h2>
+
+      <p>Some popular patterns cost more than the problem they solve. Five are worth knowing by name.</p>
+
+      <p>The first is microservices for a small team, covered above. A modular monolith gives the same separation without the operating cost.</p>
+
+      <p>A shared database between services hides coupling: change the schema and every service that reads it may have to change too. Either those services are really one service, or they need APIs between them.</p>
+
+      <p>A distributed monolith has the deployment burden of microservices and the coupling of a monolith, because the services share a database, a library or a chain of synchronous calls. In my experience it tends to appear when a team adopts the structure of microservices without the independence.</p>
+
+      <figure>
+        <img width="1200" height="536" loading="lazy" decoding="async" src="images/lesson25-image5.png" alt="Three services, A, B and C, each on its own deployment, call each other in a chain. All three connect to a dashed group labelled shared by all three, containing one library and one database. A highlighted note beneath reads: a change to the library or schema means all three deploy together.">
+        <figcaption>Three separate deployments that cannot change separately.</figcaption>
+      </figure>
+
+      <p>Over abstraction wraps components in layers "in case we need to swap this later" when no realistic swap exists. Abstract where change is likely, such as a vendor integration or an external API, and leave alone what will not change, such as your database driver or logging library.</p>
+
+      <p>The fifth is premature event sourcing, which is strong where the event history is the requirement, as with a financial ledger or a compliance audit record. Fowler notes it is often useful to build snapshots so you do not replay every event each time. Do not adopt it because it sounds sophisticated.</p>
+
+      <p>Every pattern you adopt should solve a problem you can name in your own context. If you cannot say what it solves, you do not need it. Government architecture should be as simple as the problem allows, and no more sophisticated than you can justify to the people paying for it.</p>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide is one practitioner's account of architecture patterns for scalable UK government services, not official guidance. The pattern descriptions and the grant service examples are teaching aids; the authoritative sources are linked below.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed October 2026 against the sources below. Government policy and the referenced documentation change, so check the source before relying on this.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: The Technology Code of Practice</a></li>
+          <li><a href="https://www.martinfowler.com/bliki/MonolithFirst.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Martin Fowler: MonolithFirst</a></li>
+          <li><a href="https://www.martinfowler.com/articles/201701-event-driven.html" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Martin Fowler: What do you mean by "Event-Driven"?</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Microsoft: Backends for Frontends pattern</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/saga" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Microsoft: Saga design pattern</a></li>
+          <li><a href="https://www.gov.uk/government/publications/ethics-transparency-and-accountability-framework-for-automated-decision-making" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GOV.UK: Ethics, Transparency and Accountability Framework for Automated Decision-Making</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-decision-records.html">Architecture decision records in practice</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-legacy-modernisation-strategies.html">Legacy modernisation strategies</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-api-strategy-and-design.html">API strategy and design</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
