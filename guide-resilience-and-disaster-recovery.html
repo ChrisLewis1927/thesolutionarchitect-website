@@ -81,7 +81,7 @@
 
       <figure>
         <img width="1200" height="621" loading="lazy" decoding="async" src="images/lesson21-image1.png" alt="Four grey boxes, infrastructure, application, data and dependency, each with an arrow pointing at a teal box representing your service. Dependency is marked as outside your direct control.">
-        <figcaption>Four places failure starts. The design has to answer every one of them.</figcaption>
+        <!--<figcaption>Four places failure starts. The design has to answer every one of them.</figcaption>-->
       </figure>
 
       <p>Government sets expectations against all four. <a href="https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital" target="_blank" rel="noopener">GovS 005</a>, the digital functional standard, expects defined service levels, and business continuity and disaster recovery arrangements with clear accountability for services whose failure would present a clear risk to the organisation's objectives. <a href="https://www.gov.uk/service-manual/service-standard/point-14-operate-a-reliable-service" target="_blank" rel="noopener">Point 14 of the Service Standard</a> expects teams to operate a reliable service, and the Service Manual's <a href="https://www.gov.uk/service-manual/technology/uptime-and-availability-keeping-your-service-online" target="_blank" rel="noopener">uptime and availability guidance</a> asks for components that fall back to minimal functions when something goes wrong. The Cyber Assessment Framework assesses whether an organisation can keep its essential functions running through disruption. How much of each a service needs depends on how critical it is, and that is where the numbers come in.</p>
@@ -94,7 +94,7 @@
 
       <figure>
         <img width="1200" height="406" loading="lazy" decoding="async" src="images/lesson21-image2.png" alt="A timeline with three points: the last good copy of the data, the failure, and the service being restored. A teal bracket labelled RPO spans from the last good copy to the failure, showing how much data you can afford to lose. A second bracket labelled RTO spans from the failure to restoration, showing how long you can afford to be down.">
-        <figcaption>RPO looks back from the moment of failure. RTO looks forward to recovery.</figcaption>
+        <!--<figcaption>RPO looks back from the moment of failure. RTO looks forward to recovery.</figcaption>-->
       </figure>
 
       <p>Neither number belongs to the architect. Both are business decisions informed by what is technically feasible, and the service owner, product owner or SRO decides what is acceptable based on what downtime and data loss would do to citizens and to the organisation. Your job is to make that trade visible, then design an architecture that meets the targets they choose.</p>
@@ -103,7 +103,7 @@
 
       <figure>
         <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson21-image3.png" alt="A curve of cost against recovery target. Moving from 24 hours towards near zero, cost stays low for a long way and then climbs steeply. Standard services sit at the flat end, important services part way up, and critical services high on the steep part of the curve.">
-        <figcaption>Cost stays flat for a long way, then climbs steeply as the targets approach zero.</figcaption>
+        <!--<figcaption>Cost stays flat for a long way, then climbs steeply as the targets approach zero.</figcaption>-->
       </figure>
 
       <p>That curve is the conversation to have with the service owner. Active active deployment across regions with synchronous replication costs far more than a single region with daily backups. Proportion is the whole job. Over engineering resilience for a low criticality service wastes public money, and under engineering it for a critical one leaves a risk nobody should be carrying.</p>
@@ -116,7 +116,7 @@
 
       <figure>
         <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson21-image4.png" alt="A teal service box holds three separate connection pools, one each for address lookup, payments and notifications. The payments dependency is not responding. Its pool is full but contained, and a circuit breaker between that pool and the dependency is open. The other two pools and dependencies keep working.">
-        <figcaption>One dependency stops responding. Its own pool fills, the breaker opens, and the rest of the service carries on.</figcaption>
+        <!--<figcaption>One dependency stops responding. Its own pool fills, the breaker opens, and the rest of the service carries on.</figcaption>-->
       </figure>
 
       <p>Two simpler habits round out the application layer. Retry with exponential backoff handles transient failures without hammering a service that is trying to recover. Health checks let load balancers route traffic away from unhealthy instances automatically.</p>
@@ -149,7 +149,7 @@
 
       <figure>
         <img width="1200" height="777" loading="lazy" decoding="async" src="images/lesson21-image5.png" alt="Four rows compare disaster recovery patterns. Each has a full primary region. In the second region, backup and restore holds only backups; pilot light holds a replicating database with the application built on failure; warm standby runs a small application and a replica; active active runs the full application with data in sync. Recovery times fall from hours or days to near zero as cost rises from lowest to highest.">
-        <figcaption>What is already running in the second region decides how fast you recover and how much you pay.</figcaption>
+        <!--<figcaption>What is already running in the second region decides how fast you recover and how much you pay.</figcaption>-->
       </figure>
 
       <p>Backup and restore is the simplest and cheapest. Data is backed up, daily or more often, to a separate location. After a failure, new infrastructure is provisioned and the data restored. Recovery takes hours to days depending on provisioning time and data volume, you lose everything since the last backup, and it suits services of low criticality. A pilot light keeps a minimal environment running in a second region, typically just the database with replication and no application servers. On failure you provision the application tier and point it at the replica, which brings recovery to one to four hours and data loss down to minutes of replication lag.</p>
@@ -166,7 +166,7 @@
 
       <figure>
         <img width="1200" height="462" loading="lazy" decoding="async" src="images/lesson21-image6.png" alt="A twelve month grid. Backup restore tests run every month. Component failover tests run every quarter at least. Runbook walkthroughs run every quarter. A regional failover test runs once in the year.">
-        <figcaption>A year of resilience testing. The routine checks run monthly and quarterly; the regional failover runs at least once.</figcaption>
+        <!--<figcaption>A year of resilience testing. The routine checks run monthly and quarterly; the regional failover runs at least once.</figcaption>-->
       </figure>
 
       <p>Component failover testing should be automated and routine, monthly or quarterly. Kill a database instance and confirm the replica takes over. Terminate an application instance and confirm the load balancer routes around it. Backup restore testing runs monthly: restore into a test environment and check integrity through the full procedure, including application configuration, data loading and verification. Runbook walkthroughs happen quarterly, with the operations team reading the DR runbook through without executing it, looking for unclear steps, dependencies that have changed and assumptions that no longer hold.</p>
@@ -183,7 +183,7 @@
 
       <figure>
         <img width="1200" height="495" loading="lazy" decoding="async" src="images/lesson21-image7.png" alt="A five step application in teal: start, your details, eligibility, payment and submitted. The first two steps rely on a fully redundant core platform. The eligibility lookup service and the payment provider are both unavailable, so those steps fall back to confirming eligibility later and taking payment later. The user still reaches submitted.">
-        <figcaption>Two dependencies are down and the user still completes the application.</figcaption>
+        <!--<figcaption>Two dependencies are down and the user still completes the application.</figcaption>-->
       </figure>
 
       <p>Communication deserves the same care as recovery. A bare "service unavailable" message with nothing else is poor practice. Say what is affected and what is not, give an estimated time for resolution, offer other ways to get help such as a phone number or postal address, and update the message as things change. The Service Manual expects a status page you can update during unplanned downtime, and the GOV.UK Design System has a pattern for <a href="https://design-system.service.gov.uk/patterns/service-unavailable-pages/" target="_blank" rel="noopener">service unavailable pages</a>. The architecture has to support both: monitoring that detects failure fast enough to update what users see, and content that can be changed quickly without a full deployment.</p>

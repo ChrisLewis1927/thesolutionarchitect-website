@@ -98,7 +98,7 @@
 
       <figure>
         <img width="1200" height="568" loading="lazy" decoding="async" src="images/lesson23-image1.png" alt="A decision tree. If the caller needs an answer now and consumers do not need very different shapes of the same data, use REST, the default for most government services. If they do need very different shapes, GraphQL may fit. If the caller does not need an answer now, a change that others react to points to events through webhooks or streams, and a bulk move on a schedule points to batch files.">
-        <figcaption>Four styles for four kinds of conversation. Anything other than REST gets an ADR.</figcaption>
+        <!--<figcaption>Four styles for four kinds of conversation. Anything other than REST gets an ADR.</figcaption>-->
       </figure>
 
       <p>Event driven APIs, through webhooks or message streams, announce changes of state: an application submitted, a decision made, a payment taken. Nobody waits for a reply, and several consumers can react to one event without the publisher knowing who is listening. That loose coupling suits traffic between your own services and notifications across government.</p>
@@ -123,7 +123,7 @@
 
       <figure>
         <img width="1200" height="671" loading="lazy" decoding="async" src="images/lesson23-image2.png" alt="Five consumers of a grant service API. The citizen web app and the caseworker tool create and update data through a write API working on the primary data store. The reporting dashboard, partner organisations and cross government services only read, through a read API offering filtering, paging and field selection, backed by a read replica or cache that the primary store replicates to.">
-        <figcaption>Writers go to the primary store. Readers get a replica or cache of their own.</figcaption>
+        <!--<figcaption>Writers go to the primary store. Readers get a replica or cache of their own.</figcaption>-->
       </figure>
 
       <p>Where reads dominate, split them from writes. Dashboards and partner queries use a read optimised API backed by a replica or cache, while consumers that change data use a write API on the primary store. This is the CQRS pattern, and its practical effect is that the nine o'clock reporting run never competes with a caseworker saving a decision.</p>
@@ -140,7 +140,7 @@
 
       <figure>
         <img width="1200" height="589" loading="lazy" decoding="async" src="images/lesson23-image3.png" alt="A timeline. Version 1 runs first and takes additive changes. A breaking change opens version 2, and version 1 is marked deprecated but keeps answering. Both run side by side through a deprecation window published in advance, with Deprecation and Sunset headers on every version 1 response and known consumers contacted directly. Version 1 is retired once logs show few callers left.">
-        <figcaption>Additive changes ship inside v1. A breaking change opens v2 and starts the clock on v1.</figcaption>
+        <!--<figcaption>Additive changes ship inside v1. A breaking change opens v2 and starts the clock on v1.</figcaption>-->
       </figure>
 
       <p>The standards set no fixed deprecation period, so publish your own and keep to it, allowing longer for an API many services depend on. Update the documentation, contact known consumers directly and return the Deprecation header on every old version response, adding the Sunset header once the retirement date is fixed. <a href="https://www.rfc-editor.org/info/rfc9745" target="_blank" rel="noopener">RFC 9745</a> and <a href="https://www.rfc-editor.org/info/rfc8594" target="_blank" rel="noopener">RFC 8594</a> define the two. Retire the old version when your logs show few callers left, and tell users it is no longer supported, which the standards make a requirement.</p>
@@ -157,7 +157,7 @@
 
       <figure>
         <img width="1200" height="640" loading="lazy" decoding="async" src="images/lesson23-image4.png" alt="Three kinds of caller, a service with no user, a service acting for a user signed in with One Login, and a partner organisation using mutual TLS, pass through an API gateway. The gateway checks the token, the scope, the rate limit and the schema, rejecting failures early with 401, 403, 429 or 400. Requests that pass reach your service, which checks the caller is allowed the specific record, validates again with full context and logs who received personal data.">
-        <figcaption>The gateway rejects bad calls early. The service still checks who may see which record.</figcaption>
+        <!--<figcaption>The gateway rejects bad calls early. The service still checks who may see which record.</figcaption>-->
       </figure>
 
       <p>Authentication says who is calling. Authorisation decides what they may touch, and it is where the subtler failures live. Grant least privilege through granular scopes such as read:applications and read:decisions, checked on every request, as both the GDS standards and the <a href="https://www.ncsc.gov.uk/collection/securing-http-based-apis/2-api-authentication-and-authorisation" target="_blank" rel="noopener">NCSC</a> ask. Scopes stop at the type of data, so for personal data add a check on the relationship between caller and record. A solicitor may read their client's case, and the scope that allows it must not open anyone else's.</p>
@@ -176,7 +176,7 @@
 
       <figure>
         <img width="1200" height="693" loading="lazy" decoding="async" src="images/lesson23-image5.png" alt="Your service exchanges calls with three shared platforms. It sends users to GOV.UK One Login and receives an authorisation code to swap for tokens and validate. It creates GOV.UK Pay payments and sends users to the payment page, then checks payment status when they return, with signed webhooks reporting later events. It sends messages through GOV.UK Notify and receives callbacks for delivery receipts, received texts and returned letters.">
-        <figcaption>Each shared platform sets a pattern your API has to fit, inbound as well as outbound.</figcaption>
+        <!--<figcaption>Each shared platform sets a pattern your API has to fit, inbound as well as outbound.</figcaption>-->
       </figure>
 
       <p>Above all, be predictable. Use the same patterns for pagination, errors, authentication and naming as other government APIs, so a developer who knows one finds yours familiar on sight.</p>

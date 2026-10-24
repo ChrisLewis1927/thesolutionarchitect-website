@@ -86,7 +86,7 @@
 
       <figure>
         <img width="1200" height="487" loading="lazy" decoding="async" src="images/lesson26-image1.png" alt="Three panels read left to right. Metrics show the error rate spiking in the last hour: something is wrong. Traces show an 8 second request in which the fraud check took 6 seconds: that is where it is wrong. Logs carrying the same request ID show the fraud check's connection pool was exhausted by a query running with no timeout: that is why.">
-        <figcaption>One incident, three questions, answered in order.</figcaption>
+        <!--<figcaption>One incident, three questions, answered in order.</figcaption>-->
       </figure>
 
       <p><em>"We've got logging, so we've got observability."</em></p>
@@ -101,7 +101,7 @@
 
       <figure>
         <img width="1200" height="689" loading="lazy" decoding="async" src="images/lesson26-image2.png" alt="Six components in a row: API gateway, sign in, rules engine, fraud check, queue and payment. The API gateway creates a correlation ID. It travels between services in an HTTP header, either traceparent or a custom X-Correlation-ID, and through the queue in message metadata. Every component writes log lines to a central log store, each carrying the same ID, id=7f3a9c, so one search returns the whole journey of a single request in order, including the fraud check error.">
-        <figcaption>The gateway creates one ID, and every hop, queue message and log line carries it.</figcaption>
+        <!--<figcaption>The gateway creates one ID, and every hop, queue message and log line carries it.</figcaption>-->
       </figure>
 
       <p>Keep personal data out of it. The Trace Context specification says its fields must not be used for personally identifiable or otherwise sensitive information.</p>
@@ -124,7 +124,7 @@
 
       <figure>
         <img width="1200" height="583" loading="lazy" decoding="async" src="images/lesson26-image3.png" alt="An illustrative histogram of response times in seven buckets from under 10 milliseconds to over 3,000. Most requests, 62%, fall between 30 and 100 milliseconds. A dashed line marks the average of 100 milliseconds, which looks fine on a dashboard. The highlighted final bucket shows 1% of requests taking over 3 seconds, about 5 seconds in the SRE book's example, so one request in a hundred waits that long.">
-        <figcaption>An average that looks healthy, and the one request in a hundred it hides.</figcaption>
+        <!--<figcaption>An average that looks healthy, and the one request in a hundred it hides.</figcaption>-->
       </figure>
 
       <p>Give each service two separate health checks. Liveness asks whether the process is still working. Readiness asks whether it can take traffic now, for example whether it has finished starting and can reach what it needs. In <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/" target="_blank" rel="noopener">Kubernetes</a>, a container that fails its liveness probe is restarted, and a Pod that fails its readiness probe is marked unready and gets no traffic from services.</p>
@@ -133,7 +133,7 @@
 
       <figure>
         <img width="1200" height="523" loading="lazy" decoding="async" src="images/lesson26-image4.png" alt="A traffic router, the Kubernetes Service, sends requests to three instances. Instance A passes both its liveness and readiness probes and receives traffic. Instance B passes liveness but fails readiness, so it keeps running but gets no traffic until it is ready. Instance C fails its liveness probe and is restarted by the kubelet.">
-        <figcaption>Liveness decides whether an instance restarts. Readiness decides whether it gets traffic.</figcaption>
+        <!--<figcaption>Liveness decides whether an instance restarts. Readiness decides whether it gets traffic.</figcaption>-->
       </figure>
 
       <h2>Alerts worth waking someone for</h2>
@@ -146,7 +146,7 @@
 
       <figure>
         <img width="1200" height="646" loading="lazy" decoding="async" src="images/lesson26-image5.png" alt="A chart of error budget left against days into a 30 day window, for a 99.9% SLO. Four lines start at 100%. A total outage, burn rate 1,000, empties the budget in 43 minutes. A fast burn at rate 14.4 empties it in about two days and pages when 2% goes in an hour. A steady burn at rate 6 empties it in five days and pages when 5% goes in six hours. A slow burn at rate 1 empties it on day 30 and raises a ticket when 10% goes in three days.">
-        <figcaption>The faster the budget burns, the sooner and louder the alert.</figcaption>
+        <!--<figcaption>The faster the budget burns, the sooner and louder the alert.</figcaption>-->
       </figure>
 
       <p>Every page should lead to an action; if the person paged would not know what to do, delete the alert. The Service Manual adds that alert messages should make sense to someone just woken up, and that a call out for an issue that does not affect users and could have waited until morning is a reason to rethink the alert. Link every alert to a runbook. And if the programme board was told 99.9% availability, alert while that target is at risk, before the monthly report shows it was missed.</p>
@@ -161,7 +161,7 @@
 
       <figure>
         <img width="1200" height="681" loading="lazy" decoding="async" src="images/lesson26-image6.png" alt="One set of instrumentation, logs, metrics and traces carrying the same request IDs, sits at the centre and feeds four views. The operations team asks whether anything is broken right now, on a dashboard that refreshes every few seconds. The service owner asks whether SLOs are being met, using error budget and monthly trends. The programme board asks whether the service is reliable enough and what the risks are, shown as red, amber or green with a trend arrow. The public sees the mandatory KPIs on data.gov.uk and a status page during incidents.">
-        <figcaption>Build the instrumentation once and give each audience its own view of it.</figcaption>
+        <!--<figcaption>Build the instrumentation once and give each audience its own view of it.</figcaption>-->
       </figure>
 
       <p>Then there is the public. <a href="https://www.gov.uk/service-manual/service-standard/point-10-define-success-publish-performance-data" target="_blank" rel="noopener">Point 10</a> of the Service Standard covers publishing performance data, and the Service Manual's page on <a href="https://www.gov.uk/service-manual/measuring-success/data-you-must-publish" target="_blank" rel="noopener">data you must publish</a> sets four mandatory KPIs (key performance indicators) for data.gov.uk: cost per transaction, user satisfaction, completion rate and digital take-up. It lists monitoring systems among the sources. The monitoring guide adds that, unless it is unsafe, you should make monitoring information widely available, for example through a status page like GOV.UK Notify's.</p>

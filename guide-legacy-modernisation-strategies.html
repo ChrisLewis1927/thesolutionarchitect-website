@@ -130,7 +130,7 @@
       </div>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image2.png" alt="Six strategy cards: retain and manage, wrap and extend, replatform, refactor or re-architect, replace by building or buying, and retire. Each pairs a possible use with a limitation. They are not ranked by cost or disruption." data-lightbox="images/lesson20-image2.png" data-title="Six modernisation strategies" tabindex="0" role="button" aria-label="Enlarge the six strategy cards">
-        <figcaption>Compare each strategy with the actual problem. Cost, disruption and risk depend on the system and transition.</figcaption>
+        <!--<figcaption>Compare each strategy with the actual problem. Cost, disruption and risk depend on the system and transition.</figcaption>-->
       </figure>
       <p>For the licensing service, an API wrapper would meet the partners' need but leave the database deadline in place. Upgrading, replatforming or replacing the database deals with the deadline. If the application makes licence rules hard to change, that needs work too. A phased plan might fix the support deadline first, add the partner API, then replace the parts of the application that hold back policy changes. A real service would sequence these by its own risks and dependencies.</p>
       <p>Deadlines, service continuity, security and data protection, skills, contracts and funding all shape what's feasible. Compare credible options against agreed criteria, with today's arrangements, costs and risks as the baseline. Cost the whole transition: discovery, data cleansing, integration, running two systems, training, commercial exit and decommissioning. If one assumption could change the decision, test it with a small experiment before committing to a larger programme.</p>
@@ -142,7 +142,7 @@
       <p>For the licensing service, the first slice could be the new application journey. Pick a slice with a clear outcome and manageable dependencies. Before starting, understand its business rules, data, batch jobs and downstream consumers, the systems that rely on its outputs. Some dependencies may need changing first.</p>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image3.png" alt="An illustrative migration across five stages. New licence journey, partner API, reference data and transactions move from the existing system to the replacement one slice at a time. Routing directs requests; safe return also needs compatible data and tested recovery." data-lightbox="images/lesson20-image3.png" data-title="Incremental replacement and recovery" tabindex="0" role="button" aria-label="Enlarge the incremental replacement diagram">
-        <figcaption>An illustrative sequence, chosen around dependencies. Changing the route alone does not make rollback safe.</figcaption>
+        <!--<figcaption>An illustrative sequence, chosen around dependencies. Changing the route alone does not make rollback safe.</figcaption>-->
       </figure>
       <p>An API gateway or reverse proxy, a component that sits in front of both systems, can send each request to the right one as slices move. <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig" target="_blank" rel="noopener">Microsoft's Strangler Fig guidance</a> flags the work around shared data and cross-system dependencies, and the risk of the routing layer becoming a bottleneck or single point of failure. If requests can't be intercepted, or the old system must close quickly, another approach may suit better.</p>
       <p>Running both systems needs its own design, funding and support. Before moving each slice, agree four things:</p>
@@ -188,13 +188,13 @@
       </ul>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image4.png" alt="Four measurement groups: technical health, ability to change, risk reduction and service outcomes. Evidence informs delivery teams, programme boards and investment decision makers. Review timing depends on risk and decision needs." data-lightbox="images/lesson20-image4.png" data-title="Measures and decisions" tabindex="0" role="button" aria-label="Enlarge the measures and decisions diagram">
-        <figcaption>Use consistent evidence, with enough detail for each decision. Reporting cadence is a local choice.</figcaption>
+        <!--<figcaption>Use consistent evidence, with enough detail for each decision. Reporting cadence is a local choice.</figcaption>-->
       </figure>
       <p>Use the same evidence for delivery teams, programme boards and investment decisions, at the detail each needs, and flag any change in scope or method so comparisons stay meaningful. A lower risk score should prompt a discussion of which risks fell and why. It can't establish every benefit or a precise percentage reduction in risk.</p>
       <p>Moving the licensing service off its unsupported database could improve technical health while the time to change licence rules stays the same. That meets a support-risk objective. If faster policy change was also promised, the flat delivery time tells you to look further: at the application, approvals, testing, skills or work queues. Don't assume another technology change will fix it.</p>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image5.png" alt="Two illustrative charts: assessed risk falls, while time to deliver a business change stays flat. This can show successful risk reduction without an improvement in change speed; judgement depends on the agreed objective." data-lightbox="images/lesson20-image5.png" data-title="Risk reduction and change speed" tabindex="0" role="button" aria-label="Enlarge the risk and change speed charts">
-        <figcaption>Illustrative trends, not measured results. Lower risk with unchanged delivery time can still meet a risk-reduction objective.</figcaption>
+        <!--<figcaption>Illustrative trends, not measured results. Lower risk with unchanged delivery time can still meet a risk-reduction objective.</figcaption>-->
       </figure>
       <p>End each review with a decision to continue, adjust, pause or close the work. Confirm which dependencies and costs have gone, and name the owners of the risks that remain. That shows when the modernisation has done its job.</p>
 
@@ -207,7 +207,7 @@
       </div>
       <figure>
         <img width="1200" height="600" loading="lazy" decoding="async" src="images/lesson20-image1.png" alt="Illustrative risk matrix showing likelihood from 1 to 6 and impact from 1 to 5, with products of 16 or above marked red-rated. Lower scores do not mean no action is needed. Legacy classification is a separate assessment." data-lightbox="images/lesson20-image1.png" data-title="Legacy risk scoring and classification" tabindex="0" role="button" aria-label="Enlarge the legacy risk matrix">
-        <figcaption>Reference values for the published risk scales; aggregated scores can be fractional. The matrix helps prioritise risk, but does not determine legacy status.</figcaption>
+        <!--<figcaption>Reference values for the published risk scales; aggregated scores can be fractional. The matrix helps prioritise risk, but does not determine legacy status.</figcaption>-->
       </figure>
       <div class="info-box">
         <h3>Currency notes (October 2026)</h3>

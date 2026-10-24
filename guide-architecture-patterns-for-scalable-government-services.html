@@ -76,7 +76,7 @@
 
       <figure>
         <img width="1200" height="512" loading="lazy" decoding="async" src="images/lesson25-image1.png" alt="Three panels showing the same service packaged three ways. A monolith is one deployment holding all functionality in one codebase, with one database. A modular monolith, highlighted, is one deployment divided into four modules, sign in, casework, payments and notices, with defined links between them and one database. Microservices are four separate deployments, each with its own data store, shown with some of the calls between them.">
-        <figcaption>One service packaged three ways. The modular monolith keeps a single deployment but gives each part a defined boundary.</figcaption>
+        <!--<figcaption>One service packaged three ways. The modular monolith keeps a single deployment but gives each part a defined boundary.</figcaption>-->
       </figure>
 
       <p>A modular monolith keeps the single deployment but divides the code into modules with explicit boundaries and interfaces, so you can split later if you must. <a href="https://www.martinfowler.com/bliki/MonolithFirst.html" target="_blank" rel="noopener">Martin Fowler's 2015 case for starting with a monolith</a> rests partly on boundaries being the hard part: even experienced architects struggle to draw them at the start, and moving functionality between services is much harder than inside a monolith. He adds that most systems pick up too many dependencies between modules to be split sensibly later.</p>
@@ -99,7 +99,7 @@
 
       <figure>
         <img width="1200" height="568" loading="lazy" decoding="async" src="images/lesson25-image2.png" alt="Two lanes. In event notification, a publisher sends an event reading application 12345 was submitted to a consumer, and a dashed arrow shows the consumer calling back to the publisher for the details it needs. In event-carried state transfer, the publisher sends an event reading application 12345 was submitted with the name, address and amount, the consumer keeps its own copy, and there is no call back.">
-        <figcaption>The same submission announced two ways, and what the consumer has to do next.</figcaption>
+        <!--<figcaption>The same submission announced two ways, and what the consumer has to do next.</figcaption>-->
       </figure>
 
       <p>Event sourcing stores the events as the primary record and derives current state by replaying them. Fowler's examples are version control, where the commit log is the record, and accounting, where transactions are the record and a balance is derived. You get a strong audit capability and can rebuild any past state, at the price of replay problems, changing event schemas and complexity. CQRS keeps separate models for reading and writing, often paired with events though it does not need them, and Fowler reports that many colleagues are wary of it because it is often misused.</p>
@@ -114,7 +114,7 @@
 
       <figure>
         <img width="1200" height="523" loading="lazy" decoding="async" src="images/lesson25-image3.png" alt="Three rows, left to right. Citizens on the web connect to a citizen backend for frontend that validates the One Login ID token. Caseworkers connect to a caseworker backend for frontend that handles staff sign in. Partner organisations connect to a partner backend for frontend that handles partner credentials and scopes. All three backends call the same domain services in a dashed group: eligibility, applications and payments.">
-        <figcaption>One grant service with a backend for each kind of client, all calling the same domain services.</figcaption>
+        <!--<figcaption>One grant service with a backend for each kind of client, all calling the same domain services.</figcaption>-->
       </figure>
 
       <p>The citizen BFF would combine the eligibility check, form data and case status, and return only what a citizen needs. It is also where the citizen sign in is handled: the <a href="https://docs.sign-in.service.gov.uk/how-gov-uk-one-login-works" target="_blank" rel="noopener">GOV.UK One Login documentation</a> has the integrating service validate the signature of the ID token it receives. The caseworker BFF validates staff credentials. The partner BFF returns only what the data sharing agreement allows and authenticates partners however the agreement requires, such as mutual TLS.</p>
@@ -131,7 +131,7 @@
 
       <figure>
         <img width="1200" height="614" loading="lazy" decoding="async" src="images/lesson25-image4.png" alt="An orchestrator, highlighted, sits above four steps in order: eligibility, fraud check, budget and payment. It holds the state of each case and decides what happens next. Dashed arrows lead from three steps to what happens when that step cannot complete. Not eligible: tell the applicant why and give the appeal route. Flagged by the fraud check, highlighted: pause the case and alert a caseworker. Payment cannot start: release the budget allocation.">
-        <figcaption>An orchestrated saga for a grant application, with the failure path drawn for each step that can stop.</figcaption>
+        <!--<figcaption>An orchestrated saga for a grant application, with the failure path drawn for each step that can stop.</figcaption>-->
       </figure>
 
       <p>Compensating actions go further than undoing work: they define what happens when a step cannot complete. If payment cannot start, release the budget allocation. If the fraud check flags an application, pause it and alert a caseworker instead of rejecting it. The framework separates decisions made with no human judgement from those where automation assists a person, and says the legal requirements differ. If eligibility fails, tell the applicant why and how to appeal, as the framework's call for clear guidance on challenging a decision suggests. Plan for the step you cannot reverse as well. Microsoft calls it the pivot transaction, and warns that compensating transactions might not always succeed.</p>
@@ -150,7 +150,7 @@
 
       <figure>
         <img width="1200" height="536" loading="lazy" decoding="async" src="images/lesson25-image5.png" alt="Three services, A, B and C, each on its own deployment, call each other in a chain. All three connect to a dashed group labelled shared by all three, containing one library and one database. A highlighted note beneath reads: a change to the library or schema means all three deploy together.">
-        <figcaption>Three separate deployments that cannot change separately.</figcaption>
+        <!--<figcaption>Three separate deployments that cannot change separately.</figcaption>-->
       </figure>
 
       <p>Over abstraction wraps components in layers "in case we need to swap this later" when no realistic swap exists. Abstract where change is likely, such as a vendor integration or an external API, and leave alone what will not change, such as your database driver or logging library.</p>

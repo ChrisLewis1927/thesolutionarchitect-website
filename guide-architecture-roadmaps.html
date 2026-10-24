@@ -78,7 +78,7 @@
 
       <figure>
         <img width="1200" height="523" loading="lazy" decoding="async" src="images/lesson22-image1.png" alt="Three rows compare three artefacts. A target state diagram shows only the destination, with no route or order. The roadmap shows the current state, two transition states and the target state in sequence, with the first transition due by September 2027. The project plan expands that single transition into five sprints.">
-        <figcaption>Three artefacts, three levels of detail. Only the roadmap shows the states between.</figcaption>
+        <!--<figcaption>Three artefacts, three levels of detail. Only the roadmap shows the states between.</figcaption>-->
       </figure>
 
       <p><strong>Common mistake:</strong> <em>"Once the roadmap is signed off, it is a commitment."</em></p>
@@ -118,7 +118,7 @@
 
       <figure>
         <img width="1200" height="731" loading="lazy" decoding="async" src="images/lesson22-image2.png" alt="Four snapshots of the same system. Today a monolith holds sign in, notifications, payments and core functions. After phase 1, authentication runs as its own service on GOV.UK One Login. After phase 2, notifications move to GOV.UK Notify, and after phase 3, payments move to GOV.UK Pay. The monolith shrinks at each step and every snapshot works in production.">
-        <figcaption>The monolith shrinks one phase at a time, and every snapshot runs in production.</figcaption>
+        <!--<figcaption>The monolith shrinks one phase at a time, and every snapshot runs in production.</figcaption>-->
       </figure>
 
       <p>Each phase delivers value on its own and leaves the system workable. If Phase 3 is delayed or descoped, you lose Phase 3 and keep everything before it.</p>
@@ -137,7 +137,7 @@
 
       <figure>
         <img width="1200" height="727" loading="lazy" decoding="async" src="images/lesson22-image3.png" alt="Two stage sequencing. First, dependencies fix the order: service A must expose a modern API before service B can be modernised. Then, inside that order, a grid of value against urgency, where urgency includes risk exposure. High value, high urgency items go first. Urgent items whose value is mostly risk reduction, such as moving off end of support infrastructure, run in parallel. High value, low urgency items follow. Items that are neither go last or come off the roadmap.">
-        <figcaption>Dependencies set the order. Value and urgency set the priority inside it.</figcaption>
+        <!--<figcaption>Dependencies set the order. Value and urgency set the priority inside it.</figcaption>-->
       </figure>
 
       <p>Start with dependencies, because they fix an order you cannot change. Within that order, sort what remains by value and urgency, counting risk exposure as urgency:</p>
@@ -199,7 +199,7 @@
 
       <figure>
         <img width="1200" height="400" loading="lazy" decoding="async" src="images/lesson22-image4.png" alt="Two three year plans compared. The first spends year 1 on foundations and year 2 on build, so users benefit only in year 3. The second delivers an increment users can see in every year. A dashed line marks funding stopping after year 1, fading out the later years. At that point the first plan has spent money with nothing for users, and the second has already delivered its first improvement.">
-        <figcaption>Same budget, same target. Only one leaves users with something when the money stops.</figcaption>
+        <!--<figcaption>Same budget, same target. Only one leaves users with something when the money stops.</figcaption>-->
       </figure>
 
       <blockquote>A plan that only pays out in year three is a bet that nothing changes for three years.</blockquote>
@@ -210,7 +210,7 @@
 
       <figure>
         <img width="1200" height="607" loading="lazy" decoding="async" src="images/lesson22-image5.png" alt="One roadmap phase, users sign in with GOV.UK One Login, sits at the centre. Four audiences see it at different levels of detail: senior leadership see one bar with date, cost, value and status, updated quarterly; the programme board sees decisions, dependencies and risks to escalate, monthly; delivery teams see this quarter's work and what comes next, continuously; cross government audiences see when the department adopts shared platforms and exposes APIs, updated at each milestone.">
-        <figcaption>One phase, four levels of detail, four rhythms of update.</figcaption>
+        <!--<figcaption>One phase, four levels of detail, four rhythms of update.</figcaption>-->
       </figure>
 
       <p>Senior leadership, meaning the <a href="https://www.gov.uk/government/publications/the-role-of-the-senior-responsible-owner/the-role-of-the-senior-responsible-owner" target="_blank" rel="noopener">senior responsible owner (SRO)</a>, Director General or CTO, see Phase 1 as one bar on a one-page visual roadmap: "Users sign in with GOV.UK One Login", with a target date, a cost and a status colour for planned, in progress or complete. The other major transitions sit around it in swimlanes. They need to see what will be different in twelve months, what it costs, what value it delivers and what risk it removes. Leave the technical detail out.</p>
@@ -229,7 +229,7 @@
 
       <figure>
         <img width="1200" height="634" loading="lazy" decoding="async" src="images/lesson22-image6.png" alt="Users reach a routing layer, such as an API gateway or reverse proxy, which sends cohorts not yet moved to the legacy system and migrated cohorts to the modern service. A dashed rollback arrow shows traffic can be routed back to legacy, which keeps running until the modern service is proven. Below, the legacy data store is the system of record and synchronises in one direction, event driven, to the modern data store.">
-        <figcaption>Users see one service. The routing layer and the data rules decide what happens underneath.</figcaption>
+        <!--<figcaption>Users see one service. The routing layer and the data rules decide what happens underneath.</figcaption>-->
       </figure>
 
       <p>Five principles keep the hybrid under control:</p>
