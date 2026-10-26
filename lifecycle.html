@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <!-- Cookie consent and conditional analytics -->
   <script src="/js/cookie-consent.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Government Project Lifecycle &mdash; Discovery, Alpha, Beta, Live, and Retirement phases explained for Solution Architects.">
-  <meta property="og:title" content="Government Project Lifecycle &mdash; The Solution Architect">
-  <meta property="og:description" content="Understand each phase of government digital delivery and what architecture looks like at every stage.">
+  <meta name="description" content="What architecture looks like in discovery, alpha, beta and live, where service assessments sit, what changed in April 2026 and how to plan retirement.">
+  <meta property="og:title" content="Architecture across the delivery phases &mdash; The Solution Architect">
+  <meta property="og:description" content="What architecture looks like in discovery, alpha, beta and live, where service assessments sit, what changed in April 2026 and how to plan retirement.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Delivery Phases &mdash; The Solution Architect</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content figure { margin: 1rem 0 0.75rem; }
+    .lesson-content figure img { border-radius: 8px; }
+    .lesson-content figcaption { margin-top: 0.25rem; margin-bottom: 1rem; }
+  </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -39,168 +44,170 @@
   </header>
 
   <main id="main">
-    <section class="page-header">
+    <section class="lesson-hero">
       <div class="container">
-        <h1 class="page-header__title">Delivery Phases</h1>
-        <p class="page-header__subtitle">Discovery &larr;’ Alpha &larr;’ Beta &larr;’ Live &larr;’ Retirement. What architecture looks like at every stage of government digital delivery.</p>
+        <h1 class="lesson-hero__title">Architecture across the delivery phases</h1>
+        <p class="lesson-hero__description">Government services move through discovery, alpha, beta and live, and one day they are retired. Anything a phase leaves unanswered becomes the next phase's problem.</p>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="content-wrapper">
-          <p>UK government digital services follow a phased delivery approach defined by the GDS Service Manual. Each phase has a distinct purpose, and the Solution Architect's role shifts significantly between them. Understanding this lifecycle is fundamental to effective architecture practice in government.</p>
-          
-          <div class="info-box mb-2xl">
-            <p>This lifecycle applies to services assessed against the <strong>Service Standard</strong>. Not every project follows it rigidly, but the principles &mdash; start with understanding, test assumptions, build incrementally, iterate based on evidence &mdash; apply broadly.</p>
-          </div>
-
-          <!-- Lifecycle Overview (text) -->
-          <div class="phase-card fade-in mb-2xl" style="border-left-color: var(--color-accent-amber); background: linear-gradient(135deg, rgba(74, 108, 247, 0.03), rgba(245, 158, 11, 0.03));">
-            <h2 class="phase-card__title" style="font-size: 1.5rem;">The Five Phases at a Glance</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-              <div>
-                <p style="font-weight: 700; color: var(--color-accent-blue); margin-bottom: 0.25rem;">1. Discovery</p>
-                <p style="font-size: 0.9rem;">Understand the problem. Research users. Map the landscape. Don't design yet.</p>
-              </div>
-              <div>
-                <p style="font-weight: 700; color: var(--color-accent-amber); margin-bottom: 0.25rem;">2. Alpha</p>
-                <p style="font-size: 0.9rem;">Test hypotheses. Prototype options. Prove feasibility. Test the riskiest assumptions first.</p>
-              </div>
-              <div>
-                <p style="font-weight: 700; color: #10b981; margin-bottom: 0.25rem;">3. Beta</p>
-                <p style="font-size: 0.9rem;">Build the real service. Test with real users. Iterate based on evidence. Prepare for live.</p>
-              </div>
-              <div>
-                <p style="font-weight: 700; color: #6366f1; margin-bottom: 0.25rem;">4. Live</p>
-                <p style="font-size: 0.9rem;">Operate, monitor, and continuously improve. Support the team that inherits it.</p>
-              </div>
-              <div>
-                <p style="font-weight: 700; color: #ef4444; margin-bottom: 0.25rem;">5. Retirement</p>
-                <p style="font-size: 0.9rem;">Plan decommissioning. Migrate data. Transition users. Document lessons learned.</p>
-              </div>
-            </div>
-            <p style="margin-top: 1.5rem; font-size: 0.85rem; color: #666;">Each phase has a service assessment gate. The architect's role shifts significantly between phases &mdash; from understanding, to designing, to guiding, to governing.</p>
-          </div>
-        </div>
-
-        <!-- Discovery -->
-        <div class="phase-card fade-in">
-          <h2 class="phase-card__title">
-            <span class="phase-card__number">1</span>
-            Discovery
-          </h2>
-          <p class="phase-card__description">Discovery is about understanding the problem before committing to a solution. The goal is to identify user needs, understand the existing landscape, and determine whether building a service is the right approach.</p>
-          <h3>What the Solution Architect does in Discovery:</h3>
-          <ul class="phase-card__list">
-            <li>Maps the current technology landscape and identifies existing services that might be reused or extended</li>
-            <li>Engages with stakeholders to understand constraints &mdash; security, data, procurement, timelines</li>
-            <li>Identifies high-level architectural risks and dependencies</li>
-            <li>Contributes to the decision on whether to proceed to Alpha</li>
-            <li>Produces an initial architecture brief &mdash; not a design, but a framing of the problem space</li>
-          </ul>
-          <h3>Key principle:</h3>
-          <p class="phase-card__description"><strong>Don't design in Discovery.</strong> Resist the urge to jump to solutions. Your job is to understand the problem deeply enough that you can make informed decisions in Alpha.</p>
-          <div class="mt-lg fade-in" style="text-align: center;">
-            <img src="images/lifecycle-1-discovery.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Discovery Phase infographic &mdash; understanding the problem before designing the solution" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); cursor: pointer;" data-lightbox="images/lifecycle-1-discovery.webp" data-title="Discovery Phase &mdash; Understanding the problem before designing the solution" tabindex="0" role="button" aria-label="Click to enlarge: Discovery Phase">
-          </div>
-        </div>
-
-        <!-- Alpha -->
-        <div class="phase-card fade-in" style="border-left-color: var(--color-accent-amber);">
-          <h2 class="phase-card__title">
-            <span class="phase-card__number" style="background: var(--color-accent-amber);">2</span>
-            Alpha
-          </h2>
-          <p class="phase-card__description">Alpha is about testing hypotheses and exploring solution options. You build prototypes to test the riskiest assumptions, not to build the final product.</p>
-          <h3>What the Solution Architect does in Alpha:</h3>
-          <ul class="phase-card__list">
-            <li>Develops and evaluates solution options &mdash; typically 2-3 approaches with different trade-offs</li>
-            <li>Produces Architecture Decision Records (ADRs) for significant choices</li>
-            <li>Designs technical prototypes to test feasibility of key components</li>
-            <li>Engages with security, data protection, and accessibility specialists early</li>
-            <li>Produces the initial Solution Architecture Document</li>
-            <li>Identifies integration points and begins engagement with dependent teams</li>
-          </ul>
-          <h3>Key principle:</h3>
-          <p class="phase-card__description"><strong>Test the riskiest assumptions first.</strong> If your architecture depends on a particular integration working, prove it in Alpha. Don't leave the hardest problems for Beta.</p>
-          <div class="mt-lg fade-in" style="text-align: center;">
-            <img src="images/lifecycle-2-alpha.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Alpha Phase infographic &mdash; prototyping options and testing the riskiest assumptions" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); cursor: pointer;" data-lightbox="images/lifecycle-2-alpha.webp" data-title="Alpha Phase &mdash; Prototyping options and testing the riskiest assumptions" tabindex="0" role="button" aria-label="Click to enlarge: Alpha Phase">
-          </div>
-        </div>
-
-        <!-- Beta -->
-        <div class="phase-card fade-in" style="border-left-color: #10b981;">
-          <h2 class="phase-card__title">
-            <span class="phase-card__number" style="background: #10b981;">3</span>
-            Beta
-          </h2>
-          <p class="phase-card__description">Beta is about building the real service and testing it with real users. The architecture moves from design to implementation, and the architect's role shifts from designing to guiding and governing.</p>
-          <h3>What the Solution Architect does in Beta:</h3>
-          <ul class="phase-card__list">
-            <li>Guides the development team on implementing the architecture &mdash; available for questions, reviews, and unblocking</li>
-            <li>Reviews technical decisions against the architecture principles and ADRs</li>
-            <li>Manages architecture changes as requirements evolve based on user feedback</li>
-            <li>Ensures non-functional requirements (performance, security, accessibility) are being met</li>
-            <li>Prepares for the Live service assessment</li>
-            <li>Documents the as-built architecture (which always differs from the as-designed)</li>
-          </ul>
-          <h3>Key principle:</h3>
-          <p class="phase-card__description"><strong>The architecture will change.</strong> Beta reveals things Alpha couldn't. Good architects adapt the design based on evidence rather than defending the original plan.</p>
-          <div class="mt-lg fade-in" style="text-align: center;">
-            <img src="images/lifecycle-3-beta.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Beta Phase infographic &mdash; building the real service and testing with real users" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); cursor: pointer;" data-lightbox="images/lifecycle-3-beta.webp" data-title="Beta Phase &mdash; Building the real service and testing with real users" tabindex="0" role="button" aria-label="Click to enlarge: Beta Phase">
-          </div>
-        </div>
-
-        <!-- Live -->
-        <div class="phase-card fade-in" style="border-left-color: #6366f1;">
-          <h2 class="phase-card__title">
-            <span class="phase-card__number" style="background: #6366f1;">4</span>
-            Live
-          </h2>
-          <p class="phase-card__description">Live is not the end &mdash; it's the beginning of the service's operational life. The architecture must support ongoing operation, monitoring, iteration, and evolution.</p>
-          <h3>What the Solution Architect does in Live:</h3>
-          <ul class="phase-card__list">
-            <li>Ensures operational readiness &mdash; monitoring, alerting, runbooks, and incident response procedures</li>
-            <li>Supports the transition from build team to operational team</li>
-            <li>Reviews and approves changes that affect the architecture</li>
-            <li>Monitors technical debt and plans for remediation</li>
-            <li>Evaluates new requirements against the existing architecture</li>
-            <li>Plans for scaling, evolution, and eventual retirement</li>
-          </ul>
-          <h3>Key principle:</h3>
-          <p class="phase-card__description"><strong>Design for the team that inherits it.</strong> The people operating the service in two years probably weren't involved in building it. Clear documentation, sensible patterns, and good observability are essential.</p>
-          <div class="mt-lg fade-in" style="text-align: center;">
-            <img src="images/lifecycle-4-live.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Live Phase infographic &mdash; operating, monitoring, and evolving the service" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); cursor: pointer;" data-lightbox="images/lifecycle-4-live.webp" data-title="Live Phase &mdash; Operating, monitoring, and evolving the service" tabindex="0" role="button" aria-label="Click to enlarge: Live Phase">
-          </div>
-        </div>
-
-        <!-- Retirement -->
-        <div class="phase-card fade-in" style="border-left-color: #ef4444;">
-          <h2 class="phase-card__title">
-            <span class="phase-card__number" style="background: #ef4444;">5</span>
-            Retirement
-          </h2>
-          <p class="phase-card__description">All services eventually reach end-of-life. Retirement needs to be planned and executed carefully &mdash; data must be preserved or migrated, users must be transitioned, and dependencies must be managed.</p>
-          <h3>What the Solution Architect does in Retirement:</h3>
-          <ul class="phase-card__list">
-            <li>Plans the decommissioning approach &mdash; what gets migrated, what gets archived, what gets deleted</li>
-            <li>Identifies all dependencies and ensures they're addressed</li>
-            <li>Ensures data retention obligations are met</li>
-            <li>Manages the transition of users to replacement services</li>
-            <li>Documents lessons learned for future projects</li>
-          </ul>
-          <h3>Key principle:</h3>
-          <p class="phase-card__description"><strong>Plan for retirement from the start.</strong> The best time to think about how a service will be decommissioned is when you're designing it. Data formats, vendor contracts, and integration patterns all affect how easy retirement will be.</p>
-        </div>
-
-        <div class="content-wrapper mt-2xl">
-          <div class="info-box">
-            <p><strong>Further reading:</strong> The <a href="https://www.gov.uk/service-manual" target="_blank" rel="noopener noreferrer">GDS Service Manual</a> provides comprehensive guidance on each phase, including what's expected at service assessments.</p>
-          </div>
-        </div>
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>What the Service Manual expects in each phase, and where service assessments actually sit</li>
+          <li>Where the architect's attention belongs in discovery, alpha, beta and live</li>
+          <li>What the April 2026 assurance changes mean for moving between phases</li>
+          <li>How to plan retirement so a service can be switched off without stranding anyone</li>
+        </ul>
       </div>
-    </section>
+
+      <p>Government services move through discovery, alpha, beta and live, and one day they are retired. The architecture question changes at every step, and anything a phase leaves unanswered becomes the next phase's problem.</p>
+
+      <h2>Four phases, three assessments and an exit</h2>
+
+      <p>The <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener">GOV.UK Service Manual</a> describes four phases: discovery, alpha, beta and live. Beta has two stages, private and public. Retiring a service has its own guidance, separate from the phases. Discovery and alpha each end in a decision about whether to carry on, and the manual is clear that stopping is a legitimate answer.</p>
+
+      <p>Three service assessments sit along the way. The <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-alpha-phase-works" target="_blank" rel="noopener">alpha assessment</a> comes before the move into beta. The <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-beta-phase-works" target="_blank" rel="noopener">beta assessment</a> is the step from private beta into public beta, and the <a href="https://www.gov.uk/service-manual/agile-delivery/how-the-live-phase-works" target="_blank" rel="noopener">live assessment</a> comes at the end of public beta. Discovery has none.</p>
+
+      <figure>
+        <img width="1200" height="417" loading="lazy" decoding="async" src="images/lifecycle-image1.png" alt="Six boxes in a row: discovery, alpha, private beta, public beta, live and retirement. A bracket joins private and public beta as one phase in two stages, and retirement has a dashed outline because it has its own guidance rather than being a phase. Markers above the row show three service assessments: the alpha assessment after alpha, the beta assessment between private and public beta, and the live assessment between public beta and live. Discovery has no assessment. Beneath, teal boxes give the architect's focus: find the constraints in discovery, test the riskiest assumptions in alpha, build it for real and prove it runs at scale across beta, run it and change it safely in live, and plan a clean exit at retirement.">
+        <!--<figcaption>Where the assessments sit, and what the architect is working on in each phase.</figcaption>-->
+      </figure>
+
+      <p>Not every service has to be assessed. The Service Manual says a <a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard" target="_blank" rel="noopener">transactional service for central government</a> must be, even one used only by civil servants, with an exception for low volume forms built on an assured form building platform. A cross government panel takes services likely to handle more than 100,000 transactions a year, or used by civil servants in more than one organisation. Departmental panels take the rest. A <a href="https://www.gov.uk/service-manual/service-assessments/how-service-assessments-work" target="_blank" rel="noopener">green result</a> means the service can continue to the next phase. Amber means it can continue while the team fixes the issues, usually within three months. Red means it stays where it is until the critical issues are fixed and reassessed. Departmental panels may rate a service met or not met instead.</p>
+
+      <p>The approvals around the phases changed in 2026. The <a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener">Digital Assurance Playbook</a> removed digital and technology spend controls from 1 April 2026. Approving a business case to move from one phase to the next now sits with the organisation. GDS is involved only where the spend exceeds the organisation's Delegated Authority Limit or is judged novel, contentious or repercussive, and those cases also need HM Treasury approval. The playbook still asks assurers to check that a new service is aligned with the principles in the Service Manual, including through the service assessment process. Some Service Manual pages still mention spend controls approval; that reflects the process before April 2026.</p>
+
+      <p>The Service Standard itself is moving. In July 2026 GDS said it is <a href="https://gds.blog.gov.uk/2026/07/02/evolving-the-service-standard-for-the-future-of-public-services/" target="_blank" rel="noopener">reimagining the Service Standard</a> as part of a shift away from a static, assessment led model. It described the work as at an early stage and gave no dates, so check the current guidance before relying on the assessment details here.</p>
+
+      <h2>Discovery: learn the constraints before anyone designs</h2>
+
+      <p>Some of the work starts before discovery does. The Digital Assurance Playbook says assurance must be undertaken before any procurement or discovery phase activities. Initiatives over the reporting threshold, &pound;5 million whole life cost for anything other than cryptographic products, go on the pipeline at the earliest sensible time, unless your organisation sets a different threshold. Your organisation also sets its own checkpoints for when.</p>
+
+      <p>Discovery itself is about understanding the problem before committing to build. The Service Manual asks teams to learn about their users and what they are trying to achieve, the constraints on changing how the service runs, the policy intent behind the work and the chances to improve things. It says you should not start building the service in discovery. There is no set length, though four to eight weeks is typical.</p>
+
+      <p>The constraints are where an architect earns a place. The manual lists legislation, contracts, legacy technology and existing processes and systems, and asks the team to separate the hard constraints, such as primary legislation, from soft ones like an existing process, which it says to change rather than work around. Its <a href="https://www.gov.uk/service-manual/technology/choosing-technology-an-introduction" target="_blank" rel="noopener">guidance on choosing technology</a> fills in the technical side: the systems and data sources the service may need to work with and whether they are changing, why earlier technology decisions were made, where to find existing components and what the security threats are.</p>
+
+      <p><em>"Nothing gets built in discovery, so it doesn't need an architect."</em></p>
+
+      <p>Nothing should get built, and the Service Manual's <a href="https://www.gov.uk/service-manual/the-team/set-up-a-service-team" target="_blank" rel="noopener">team guidance</a> does not list an architect among the discovery roles. It gives teams access to a technical architect from alpha. But legacy technology and existing systems are on its own list of discovery constraints, and somebody has to read the estate to judge which of them are hard. A hard constraint nobody spotted in discovery comes back in alpha as a surprise.</p>
+
+      <p>Discovery is finished when the team has decided whether to move on to alpha, weighing whether there is a viable service to build and whether it is cost effective to pursue. The manual says it is not a failure to stop there, and it names alternatives to building anything: publishing content, running a campaign, or making data or an API available to others. If the honest architectural answer is that the existing system can be changed, or that no new system is needed, discovery is the place to say so.</p>
+
+      <blockquote>Discovery is the cheapest point at which to say the answer is not a new system.</blockquote>
+
+      <h2>Alpha: test the riskiest assumptions</h2>
+
+      <p>Alpha is where the team tries out different solutions to the problems found in discovery, by building prototypes and testing ideas. The Service Manual is direct about what those prototypes are for. Build things just complex enough to test ideas, not production quality code, and expect to throw the code away at the end. You do not have to prototype the whole journey, and it often makes sense to focus on the parts you expect to be hardest. Alpha services should not be open to the public, and alphas tend to last six to eight weeks.</p>
+
+      <p>Some of the riskiest assumptions are technical. The manual's own example is Register to vote, whose team realised it would need an API that integrated with the registration systems of more than 400 local councils. If that had not been possible the service would not have worked, so that is what the alpha focused on. Integration, data reuse and legacy constraints are the assumptions an architect is best placed to test, and alpha is the last cheap moment to find out one of them is wrong.</p>
+
+      <p>At alpha, the manual expects you to show you have started thinking about:</p>
+      <ul>
+        <li>the programming tools you would choose for beta, and why they would be value for money</li>
+        <li>how you will identify threats to the service, deal with them and keep up to date with them</li>
+        <li>how you will open source your code</li>
+        <li>whether you will use common platforms</li>
+        <li>how users would be affected if the online part of the service had technical problems</li>
+      </ul>
+
+      <p>It also says to start planning monitoring in alpha, agreeing what to monitor, how, and how issues will be recorded. The choosing technology guidance says you must follow the <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener">Technology Code of Practice</a> when choosing technology, and adds a warning worth heeding: it is easy to get the boundaries between components wrong early on, so use prototypes to learn about them and be ready to change your mind.</p>
+
+      <p>Constraints get sharper too. By the end of alpha you should be able to explain how the service will meet user needs within the immovable constraints, and where a constraint could be removed over time, what the organisation plans to do about it. The code is disposable. The decisions it informed are not, so record the significant ones as you make them.</p>
+
+      <blockquote>Throw the alpha code away. Keep the reasons.</blockquote>
+
+      <p>To move on to beta the team needs to be confident it can create something that meets users' needs and is cost effective, with the budget and people to deliver it. If it cannot say that, the manual's options are to stop, or to repeat discovery or alpha.</p>
+
+      <h2>Beta: build it for real, then open it up</h2>
+
+      <p>Beta takes the best idea from alpha and builds it for real. The Service Manual frames it as thinking about how the service will integrate with or start to replace existing services, and preparing for live. In private beta a limited number of invited people use the service so the team can learn and improve it. Once the team is confident it can run the service at scale, it takes a beta assessment to move into public beta, which opens the service to anyone who needs it.</p>
+
+      <p>Replacement is where beta gets architecturally hard. The manual says to keep a legacy service running until the new service moves into its live phase. Throughout beta, then, two services do overlapping jobs. Decide which one is the system of record for each set of data, how users move from one to the other, and what happens if the new service has to be pulled back.</p>
+
+      <figure>
+        <img width="1200" height="400" loading="lazy" decoding="async" src="images/lifecycle-image2.png" alt="Two lanes over time. The top lane, in teal, is the new service: private beta for invited users only, so the team can learn and fix; public beta, open to anyone who needs it, with monitoring in place and an accessibility page published; then live, supported in a sustainable way and still improving. The beta assessment sits between private and public beta, and the live assessment between public beta and live. The bottom lane, in grey, is the legacy service being replaced. It keeps running until the new service moves into live, and is retired after that once it is safe to switch off.">
+        <!--<figcaption>If beta replaces a legacy service, both run until the new one goes live.</figcaption>-->
+      </figure>
+
+      <p>Several things become firm at the step into public beta. The <a href="https://www.gov.uk/service-manual/technology/monitoring-the-status-of-your-service" target="_blank" rel="noopener">monitoring guidance</a> says you must have monitoring in place by then. Accessibility audit issues have to be fixed before the move, and an accessibility page published when it happens. If the service reuses information that users have already given another part of government, you will need to show it is shared in a way that is secure, stable and works at scale, for example through an API that follows the government API standards.</p>
+
+      <p>The beta assessment has no fixed list of questions, but the manual says you will usually need to talk about technology, and its examples include how you deploy software safely and often, keep users' data secure, handle cookies, make source code open, manage the limits of your stack and toolchain, use open standards and common platforms, manage availability and test the service. The panel asks about the decisions you made and how you built the service, so keep the architecture records in step with what is actually running.</p>
+
+      <h2>Live: run it, improve it, keep it changeable</h2>
+
+      <p>Live is about supporting the service in a sustainable way while continuing to improve it. The live assessment comes at the end of public beta, and the manual says to spend public beta preparing for live. Running a live service does not necessarily mean keeping an agile team on it all the time; the team should work out during public beta how much continuous improvement to support, and who it needs to do that.</p>
+
+      <p>Before a service goes live, the manual says the team needs to be sure it can:</p>
+      <ul>
+        <li>secure the service's information</li>
+        <li>maintain uptime and availability, and monitor the status of the service</li>
+        <li>continue vulnerability and penetration testing</li>
+        <li>continue testing service performance and maintain quality assurance</li>
+      </ul>
+
+      <p>The people who support users also need to understand the online part of the service, which can mean updating call centre scripts or training operations staff. During public beta the team should start a roadmap for the work that continues in live, including the constraints still to be addressed, such as legacy technology.</p>
+
+      <p>Security stays live too. For central government departments and arm's length bodies, the <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/" target="_blank" rel="noopener">Secure by Design principles</a> must be met by delivery teams throughout the service life cycle, and the team guidance expects a live team that can evaluate the security impact of changes, manage security alerts and retire service components securely.</p>
+
+      <p>The cost of change needs the same attention. The government's guidance on <a href="https://www.gov.uk/guidance/prevent-technical-debt-and-legacy" target="_blank" rel="noopener">preventing technical debt and legacy</a> says plans must show how you will prevent the build up of technical debt and future legacy. It asks for a named owner for the service's technical health and money set aside for upgrades. It was published before the April 2026 changes and still describes the old spend control process, but the Digital Assurance Playbook asks assurers to check the same thing: that new work does not introduce future legacy.</p>
+
+      <h2>Retirement: plan the exit before you need it</h2>
+
+      <p>Services are retired when policy changes, when evidence shows users' needs have changed, or when so few people need a service that running it is no longer cost effective. The Service Manual's guidance on <a href="https://www.gov.uk/service-manual/agile-delivery/retiring-your-service" target="_blank" rel="noopener">retiring your service</a> starts where the build did, with the user need. Either the need no longer exists, a new government service will meet it, or government will stop meeting it, and each case changes what the team has to hand on and to whom.</p>
+
+      <p>Then there are the people to tell. The GOV.UK team needs to know as soon as retirement is likely. People who use the service directly need to know what is changing, what they will have to do and what will happen to their data. Assisted digital users must be told too, through the service's assisted digital channel and support organisations. API consumers need time to update their software, so the manual says to contact them as soon as possible.</p>
+
+      <figure>
+        <img width="1200" height="523" loading="lazy" decoding="async" src="images/lifecycle-image3.png" alt="A teal box in the centre, retiring the service, asks how the user need will be met afterwards. Six grey boxes connect to it. The GOV.UK team: tell them as soon as retirement is likely. People who use the service directly: tell them what changes, what they need to do next and what happens to their data. Assisted digital users: use assisted digital channels and contact centres to tell them. API consumers: contact them early, because they need time to change their software. The old web address: keep SSL and a redirect to the GOV.UK start page for a set time. Information you hold: keep it secure and hand it on in line with your data protection policy.">
+        <!--<figcaption>A retirement plan covers people, consumers, the web address and the data.</figcaption>-->
+      </figure>
+
+      <p>Some of the infrastructure has to outlive the service. After retirement you must keep using SSL and serve a redirect to the GOV.UK start page. If the service was live for less than six months, that lasts until a year after it went live. Otherwise it lasts a year from retirement, or until the current certificate expires if that comes first. The information the service holds needs a plan for keeping it secure, support to maintain the retention policies, and, if it passes to a new service owner, a transfer made in line with data protection policy and explained to users.</p>
+
+      <p>An exit is easier when it was designed for. Exit terms in contracts, data that can be exported in a usable form and APIs that can be versioned and deprecated are all choices you can make in alpha and beta. The live team guidance expects a team that can retire service components securely; the architecture has to make that possible.</p>
+
+      <blockquote>The cheapest time to plan an exit is before there is anything to exit from.</blockquote>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>This guide is one practitioner's account of architecture across the UK government delivery phases, not official guidance. The architect's focus in each phase is a teaching aid; the authoritative requirements are in the Service Manual and the government sources below.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed October 2026 against the sources below. Government policy and the referenced guidance change, so check the source before relying on this.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: How the discovery phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-alpha-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: How the alpha phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-beta-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: How the beta phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/how-the-live-phase-works" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: How the live phase works</a></li>
+          <li><a href="https://www.gov.uk/service-manual/agile-delivery/retiring-your-service" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Retiring your service</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-assessments/check-if-need-to-meet-service-standard" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Check if you need to meet the Service Standard or get an assessment</a></li>
+          <li><a href="https://www.gov.uk/service-manual/service-assessments/how-service-assessments-work" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: What happens at a service assessment</a></li>
+          <li><a href="https://www.gov.uk/service-manual/the-team/set-up-a-service-team" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Set up a service team at each phase</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/choosing-technology-an-introduction" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Choosing technology</a></li>
+          <li><a href="https://www.gov.uk/service-manual/technology/monitoring-the-status-of-your-service" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Service Manual: Monitoring the status of your service</a></li>
+          <li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Digital Assurance Playbook</a></li>
+          <li><a href="https://gds.blog.gov.uk/2026/07/02/evolving-the-service-standard-for-the-future-of-public-services/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">GDS: Evolving the Service Standard for the future of public services</a></li>
+          <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Technology Code of Practice</a></li>
+          <li><a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Secure by Design principles</a></li>
+          <li><a href="https://www.gov.uk/guidance/prevent-technical-debt-and-legacy" target="_blank" rel="noopener" style="color: #0f6e56; text-decoration: none;">Prevent technical debt and legacy</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-understanding-the-problem.html">Understanding the problem before you design the solution</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-governance.html">Architecture governance that enables rather than blocks</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-architecture-roadmaps.html">Architecture roadmaps and transition planning</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-legacy-modernisation-strategies.html">Legacy modernisation strategies</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   </main>
 
   <footer class="footer" role="contentinfo">
@@ -239,14 +246,6 @@
       </div>
     </div>
   </footer>
-
-  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
-    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
-    <div class="lightbox__content">
-      <img class="lightbox__image" src="" alt="">
-      <p class="lightbox__title"></p>
-    </div>
-  </div>
 
   <script src="js/main.js"></script>
 </body>
