@@ -820,11 +820,13 @@ h4 { font-size: var(--font-size-xl); }
 .lesson-hero {
   background-color: var(--color-primary-bg);
   padding: var(--spacing-3xl) 0;
+  text-align: center;
 }
 
 .lesson-hero__meta {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
   flex-wrap: wrap;
@@ -841,6 +843,8 @@ h4 { font-size: var(--font-size-xl); }
   font-size: var(--font-size-lg);
   line-height: var(--line-height-relaxed);
   max-width: var(--max-width-content);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .lesson-content {
