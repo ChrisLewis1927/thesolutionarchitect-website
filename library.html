@@ -49,14 +49,16 @@
     <section class="section">
       <div class="container">
         <div class="info-box mb-2xl">
-          <p><strong>How this works:</strong> The guides below are designed to be read in order, each one building on the last. They cover the foundations of solution architecture in UK government, from understanding the role through to the practical skills you'll use every day. Use the filters to browse by topic.</p>
+          <p><strong>How this works:</strong> The early guides follow the arc of a piece of architecture work, from understanding the role through framing the problem, capturing requirements and making decisions, so they make most sense read in order. The later guides are standalone references on specific topics such as cloud, data, security, resilience and APIs, which you can read in any order or dip into when you need them. Use the filters to browse by topic.</p>
         </div>
 
         <div class="filter-bar mb-xl" role="toolbar" aria-label="Filter guides by topic">
           <button class="filter-btn filter-btn--active" data-filter="all">All</button>
           <button class="filter-btn" data-filter="role">The Role</button>
-          <button class="filter-btn" data-filter="discovery">Discovery and Framing</button>
-          <button class="filter-btn" data-filter="decisions">Requirements and Decisions</button>
+          <button class="filter-btn" data-filter="discovery">Discovery &amp; Framing</button>
+          <button class="filter-btn" data-filter="decisions">Requirements &amp; Decisions</button>
+          <button class="filter-btn" data-filter="design">Design &amp; Delivery</button>
+          <button class="filter-btn" data-filter="governance">Governance &amp; Change</button>
         </div>
 
         <div class="grid grid--2 mt-xl" id="library-grid">
@@ -130,21 +132,21 @@
               <p class="lesson-card__meta">Connecting the user journey, supporting systems and operations into one coherent service, front stage to back stage.</p>
             </div>
           </a>
-          <a href="guide-integration-patterns.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-integration-patterns.html" class="lesson-card fade-in" data-category="design">
             <span class="lesson-card__number">11</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Integration Patterns for Government Services</h2>
               <p class="lesson-card__meta">Choosing integration patterns, managing trade-offs, and handling legacy systems and failure modes.</p>
             </div>
           </a>
-          <a href="guide-security-privacy-trust.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-security-privacy-trust.html" class="lesson-card fade-in" data-category="design">
             <span class="lesson-card__number">12</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Security, Privacy and Trust by Design</h2>
               <p class="lesson-card__meta">Making security and privacy part of how you design, from threat modelling to zero trust and data classification.</p>
             </div>
           </a>
-          <a href="guide-architecture-documentation.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-architecture-documentation.html" class="lesson-card fade-in" data-category="governance">
             <span class="lesson-card__number">13</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Architecture Documentation That People Actually Read</h2>
@@ -165,77 +167,77 @@
               <p class="lesson-card__meta">How to explain architecture in plain language, present options and trade-offs, use purposeful visuals and support clear decisions.</p>
             </div>
           </a>
-          <a href="guide-cloud-strategy-in-government.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-cloud-strategy-in-government.html" class="lesson-card fade-in" data-category="design">
             <span class="lesson-card__number">16</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Cloud strategy in a government context</h2>
               <p class="lesson-card__meta">How to make evidence-based cloud strategy decisions in government, covering Cloud First, procurement, security, data location, lock-in, cost and hybrid estates.</p>
             </div>
           </a>
-          <a href="guide-data-architecture-and-data-sharing.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-data-architecture-and-data-sharing.html" class="lesson-card fade-in" data-category="design">
             <span class="lesson-card__number">17</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Data architecture and data sharing across government</h2>
               <p class="lesson-card__meta">How to design government data sharing around purpose, legal authority, classification, data protection, quality, interfaces and operational control.</p>
             </div>
           </a>
-          <a href="guide-technical-debt.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-technical-debt.html" class="lesson-card fade-in" data-category="governance">
             <span class="lesson-card__number">18</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Managing technical debt</h2>
               <p class="lesson-card__meta">How to identify technical debt, assess its impact and decide when to reduce, accept or remove it.</p>
             </div>
           </a>
-          <a href="guide-architecture-governance.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-architecture-governance.html" class="lesson-card fade-in" data-category="governance">
             <span class="lesson-card__number">19</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Architecture governance that enables rather than blocks</h2>
               <p class="lesson-card__meta">How to design proportionate architecture governance, route decisions to the right level and apply the 2026 government assurance model.</p>
             </div>
           </a>
-          <a href="guide-legacy-modernisation-strategies.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-legacy-modernisation-strategies.html" class="lesson-card fade-in" data-category="governance">
             <span class="lesson-card__number">20</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Legacy modernisation strategies: how to choose and how to deliver</h2>
               <p class="lesson-card__meta">Choose a legacy modernisation approach and plan a controlled transition.</p>
             </div>
           </a>
-          <a href="guide-resilience-and-disaster-recovery.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-resilience-and-disaster-recovery.html" class="lesson-card fade-in" data-category="design">
             <span class="lesson-card__number">21</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Resilience, disaster recovery and business continuity</h2>
               <p class="lesson-card__meta">How to design government services that survive failure: setting RTO and RPO, designing for failure at every layer, choosing a DR pattern and testing it.</p>
             </div>
           </a>
-          <a href="guide-architecture-roadmaps.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-architecture-roadmaps.html" class="lesson-card fade-in" data-category="governance">
             <span class="lesson-card__number">22</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Architecture roadmaps and transition planning</h2>
               <p class="lesson-card__meta">How to build government architecture roadmaps that survive funding cycles, sequence change for early value and keep every transition state working.</p>
             </div>
           </a>
-          <a href="guide-api-strategy-and-design.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-api-strategy-and-design.html" class="lesson-card fade-in" data-category="design">
             <span class="lesson-card__number">23</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">API strategy and design for government</h2>
               <p class="lesson-card__meta">How to design government APIs to the GDS standards: choosing a style, serving many consumers, versioning safely, securing access and using shared platforms.</p>
             </div>
           </a>
-          <a href="guide-architecture-risk-management.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-architecture-risk-management.html" class="lesson-card fade-in" data-category="governance">
             <span class="lesson-card__number">24</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Architecture risk management</h2>
               <p class="lesson-card__meta">How to assess and treat architecture risk with the Orange Book, spot seven risks that recur in government, and put them to a board that can act on them.</p>
             </div>
           </a>
-          <a href="guide-architecture-patterns-for-scalable-government-services.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-architecture-patterns-for-scalable-government-services.html" class="lesson-card fade-in" data-category="design">
             <span class="lesson-card__number">25</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Architecture patterns for scalable government services</h2>
               <p class="lesson-card__meta">How to choose between a monolith, a modular monolith and microservices, and when events, backends for frontends and sagas earn their cost.</p>
             </div>
           </a>
-          <a href="guide-observability-and-monitoring.html" class="lesson-card fade-in" data-category="decisions">
+          <a href="guide-observability-and-monitoring.html" class="lesson-card fade-in" data-category="design">
             <span class="lesson-card__number">26</span>
             <div class="lesson-card__content">
               <h2 class="lesson-card__title">Observability and monitoring architecture</h2>
