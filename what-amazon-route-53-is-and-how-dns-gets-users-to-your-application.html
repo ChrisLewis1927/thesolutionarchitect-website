@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Amazon Route 53 is AWS&#39;s DNS service, helping users find applications and directing them towards the right endpoints. This guide explains how Route 53 works, including hosted zones, DNS records, routing policies, health checks and failover, and what architects need to consider when designing resilient applications.">
+  <meta property="og:title" content="What Amazon Route 53 is, and how DNS gets users to your application &mdash; The Solution Architect">
+  <meta property="og:description" content="Amazon Route 53 is AWS&#39;s DNS service, helping users find applications and directing them towards the right endpoints. This guide explains how Route 53 works, including hosted zones, DNS records, routing policies, health checks and failover, and what architects need to consider when designing resilient applications.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="what-amazon-route-53-is-and-how-dns-gets-users-to-your-application.html">
+  <link rel="icon" type="image/png" href="images/favicon.png?v=2">
+  <title>What Amazon Route 53 is, and how DNS gets users to your application &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png?v=2" alt="SA" class="header__logo-icon" style="width: 40px; height: 40px; object-fit: contain;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Cloud</span>
+        <h1 class="article__title">What Amazon Route 53 is, and how DNS gets users to your application</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>16 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>You have built an application in AWS. It runs behind an Application Load Balancer, the database is working, and everything is ready for users. But there is still a fairly basic problem to solve. How does someone typing your application&#39;s web address into a browser actually reach it?</p>
+<p>The application might be running on servers in London, behind a load balancer with an AWS-generated hostname. Your users don&#39;t know that hostname, and you wouldn&#39;t want them to have to remember it. They expect to type something familiar, such as <code>www.example.com</code>, and arrive at the right place.</p>
+<p>This is where Amazon Route 53 comes in.</p>
+<p><a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/" target="_blank" rel="noopener noreferrer">Amazon Route 53</a> is AWS&#39;s Domain Name System (DNS) service. Its main job is to answer questions about domain names, including which IP addresses an application should be reached through. It can also register domain names, monitor the health of application endpoints, and use different rules to decide which destination to return.</p>
+<p>There is an important distinction to understand from the beginning. Route 53 does not normally carry the application&#39;s web traffic. It helps the client find the destination. The client then connects to that destination directly.</p>
+<p>That distinction becomes particularly important when you start designing for performance, availability and disaster recovery.</p>
+<h2><strong>Start with DNS</strong></h2>
+<p>Every device communicating over an IP network uses Internet Protocol (IP) addresses to identify where it needs to send traffic. For example, an IPv4 address might look like <code>192.0.2.44</code>.</p>
+<p>Remembering those addresses would make using the internet rather difficult, particularly when the infrastructure behind a website changes. DNS solves that problem by allowing people and applications to use names instead.</p>
+<p>Think of DNS as a directory. You know the name of the service you want, and DNS helps you find the address needed to reach it.</p>
+<p>Suppose someone enters <code>www.example.com</code> into their browser.</p>
+<p>The browser asks a DNS resolver for the information it needs. A resolver is a service that looks up DNS records on behalf of a client. It might be operated by an internet service provider, a corporate network or another DNS provider.</p>
+<p>If the resolver already has a valid cached answer, it can return that. Otherwise, it works through the DNS hierarchy to identify the authoritative name servers for the domain.</p>
+<p>An authoritative name server holds the DNS records that define the answers for a particular domain. If the domain uses Route 53 for DNS hosting, the resolver can query a Route 53 name server.</p>
+<p>Route 53 looks up the relevant record and returns an answer, such as an IP address. The resolver passes that answer back to the browser, which can then establish a connection to the application.</p>
+<p>AWS describes this sequence in its <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/welcome-dns-service.html" target="_blank" rel="noopener noreferrer">explanation of how internet traffic is routed</a>.</p>
+<p>Notice where Route 53&#39;s involvement ends. Once the browser has the address, its HTTP or HTTPS requests go to the destination. They do not need to travel through Route 53.</p>
+<h2><strong>Domain registration and DNS hosting are different jobs</strong></h2>
+<p>Route 53 can register domain names, but registering a domain and hosting its DNS records are separate activities.</p>
+<p>A domain registrar manages the registration of a name, such as <code>example.com</code>. DNS hosting determines what answers are returned when someone looks up that name.</p>
+<p>You can use Route 53 for both. When you register a new domain through Route 53, AWS creates a public hosted zone and configures the domain to use the name servers assigned to it.</p>
+<p>Alternatively, you can keep a domain registered with another provider and use Route 53 only for DNS hosting. You create a hosted zone in AWS and update the name server settings at your registrar to delegate DNS for the domain to Route 53.</p>
+<p>AWS explains both arrangements in <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-configuring-new-domain.html" target="_blank" rel="noopener noreferrer">configuring DNS routing for a new domain</a>.</p>
+<p>For an architect, the distinction matters during migrations. Moving an application into AWS does not require transferring ownership or registration of its domain. You can change the DNS hosting arrangement independently.</p>
+<p>It also means DNS is something that needs to be included in a migration plan. Building the new application is only part of the work. You still need to decide when its domain records will point to the new environment.</p>
+<h2><strong>Hosted zones are where the records live</strong></h2>
+<p>The main configuration object in Route 53 is a <strong>hosted zone</strong>.</p>
+<p>A hosted zone is a collection of DNS records for a domain and its subdomains. For example, a hosted zone for <code>example.com</code> might contain records for the main website, an application API and the organisation&#39;s email service.</p>
+<p>Each record provides information about a particular name. The type of record determines what that information represents.</p>
+<p>Some common record types are:</p>
+<ul>
+<li><strong>A records</strong> associate a name with an IPv4 address.</li>
+<li><strong>AAAA records</strong> associate a name with an IPv6 address.</li>
+<li><strong>CNAME records</strong> associate one DNS name with another DNS name.</li>
+<li><strong>MX records</strong> specify mail servers for a domain.</li>
+<li><strong>TXT records</strong> hold text information, commonly used for purposes such as domain verification and email authentication.</li>
+</ul>
+<p>AWS maintains the full list of <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/ResourceRecordTypes.html" target="_blank" rel="noopener noreferrer">supported DNS record types</a>.</p>
+<p>Imagine an organisation running a website and an API. Both sit behind AWS load balancers, but they serve different purposes.</p>
+<p>The website might use <code>www.example.com</code>, while the API uses <code>api.example.com</code>. Both names can be managed within the same hosted zone, with separate records pointing towards the appropriate resources.</p>
+<p>The applications themselves do not have to run in the same AWS Region, or even in AWS. Route 53 can provide DNS answers for resources hosted outside AWS as well.</p>
+<h2><strong>Why AWS uses alias records</strong></h2>
+<p>One Route 53 feature you will encounter frequently is the <strong>alias record</strong>.</p>
+<p>An alias is an AWS-specific extension to DNS. It allows Route 53 to direct DNS queries towards supported AWS resources, including Application Load Balancers, CloudFront distributions and API Gateway endpoints.</p>
+<p>Suppose your application sits behind an Application Load Balancer. AWS assigns that load balancer a DNS name, but you want users to access it through <code>www.example.com</code>.</p>
+<p>You can create an alias record pointing to the load balancer. Route 53 then returns the appropriate IP addresses for that resource. If those addresses change, Route 53 can reflect the change without you maintaining a list of addresses yourself.</p>
+<p>Aliases also solve a limitation of CNAME records.</p>
+<p>Standard DNS does not permit a CNAME at the root of a hosted zone, sometimes called the <em>zone apex</em>. For a hosted zone named <code>example.com</code>, that means you cannot create a CNAME record directly at <code>example.com</code>.</p>
+<p>A supported Route 53 alias record can be created there.</p>
+<p>There is another difference worth knowing. When an alias points to an AWS resource, you cannot set its time-to-live value independently. Route 53 uses the TTL associated with the resource. An alias pointing to another record in the same hosted zone uses that record&#39;s TTL.</p>
+<p>AWS explains the restrictions and behaviour in <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-choosing-alias-non-alias.html" target="_blank" rel="noopener noreferrer">choosing between alias and non-alias records</a>.</p>
+<p>For most straightforward AWS-hosted web applications, an alias pointing to a load balancer or CloudFront distribution is a sensible starting point.</p>
+<h2><strong>Route 53 can choose between different destinations</strong></h2>
+<p>So far, Route 53 has simply returned information for a particular destination. It becomes more interesting when an application has multiple possible destinations.</p>
+<p>AWS calls the rules used to select between them <strong>routing policies</strong>.</p>
+<p>The simplest policy is appropriately named <em>simple routing</em>. It works for straightforward arrangements where a single resource, or a set of values within one record, serves a particular name.</p>
+<p>Other policies give you more control.</p>
+<p><strong>Weighted routing</strong> allows multiple records to be assigned relative weights. For example, you could configure two application environments with weights of 90 and 10, so Route 53 normally selects their records in a 90:10 proportion.</p>
+<p>This can be useful when introducing a new application version. You might initially give the new environment a small weighting, observe its behaviour, and adjust the weights as confidence increases.</p>
+<p>There is an important qualification, though. The weights influence DNS answers, not an exact percentage of application requests or individual users. DNS resolvers cache responses, and many users might share a resolver. A 90:10 configuration does not guarantee that exactly 10% of HTTP requests reach the new environment.</p>
+<p><strong>Latency-based routing</strong> is intended for applications deployed across multiple AWS Regions. Route 53 uses AWS latency measurements to select an appropriate Region from the latency records you have configured.</p>
+<p>For example, an application might be deployed in London and Frankfurt. Route 53 can select between them based on its latency data.</p>
+<p>That does not mean it performs a live performance test of your application for every user. The measurements relate to network latency between users and AWS Regions, and the selected Region is not necessarily the one physically closest to the user.</p>
+<p><strong>Geolocation routing</strong> uses geographic rules. You might configure one destination for queries associated with the United Kingdom and another for queries associated with other countries.</p>
+<p>AWS explains that location is estimated using IP address information. Depending on the resolver, Route 53 may use the resolver&#39;s location or a shortened client IP address supplied through the EDNS Client Subnet extension.</p>
+<p>This is useful for localisation, but it should not be mistaken for a guaranteed way to identify a user&#39;s physical location or enforce data residency requirements.</p>
+<p><strong>Failover routing</strong> is designed for active-passive arrangements. You specify primary and secondary destinations, allowing Route 53 to return the secondary when the primary is considered unhealthy.</p>
+<p>Route 53 also supports geoproximity, IP-based and multivalue answer routing. These address more specialised needs, such as adjusting routing around geographic resource locations, selecting responses from defined IP ranges, or returning several healthy records.</p>
+<p>All eight supported policies are explained in AWS&#39;s <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html" target="_blank" rel="noopener noreferrer">routing policy documentation</a>.</p>
+<p>The choice is an architectural decision. Latency routing is concerned with network performance, while failover routing addresses an availability requirement. Weighted routing can support a controlled deployment. These are different problems, even though they all influence DNS responses.</p>
+<h2><strong>Health checks and what happens when something fails</strong></h2>
+<p>Imagine an application running in two AWS Regions. London is the primary environment and Frankfurt is available as a secondary.</p>
+<p>If the London application becomes unavailable, you want users to reach Frankfurt instead.</p>
+<p>Route 53 supports health checks that can monitor endpoints using HTTP, HTTPS or TCP. Health checking can also use the state of a CloudWatch alarm or other health checks.</p>
+<p>For an application endpoint, a health check might periodically request a dedicated health endpoint to see whether the application responds as expected.</p>
+<p>You can associate health information with routing policies so that Route 53 selects a healthy destination when answering DNS queries.</p>
+<p>For some AWS resources, such as Elastic Load Balancing load balancers, alias records can use an option called <strong>Evaluate Target Health</strong>. This allows Route 53 to consider the resource&#39;s health information without requiring a separate Route 53 endpoint health check for the load balancer.</p>
+<p>The detail matters because simply creating a failover record does not automatically mean Route 53 understands whether your application is functioning correctly. You need to configure the appropriate health evaluation.</p>
+<p><a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/health-checks-how-route-53-chooses-records.html" target="_blank" rel="noopener noreferrer">AWS documents how health checks and routing decisions work together</a>.</p>
+<p>But there is a limitation that every architect should understand.</p>
+<p><strong>DNS failover is not instantaneous.</strong></p>
+<p>A DNS resolver might have cached the original London address. It can continue returning that cached response until the applicable time-to-live, or TTL, expires.</p>
+<p>The TTL is a value, expressed in seconds, that tells resolvers how long a DNS answer may be cached.</p>
+<p>For example, a record with a TTL of 60 seconds allows a compliant resolver to cache the answer for that period. Reducing the TTL can help clients discover changes sooner, but it does not force existing connections to move to the new destination.</p>
+<p>AWS recommends considering the trade-off between shorter TTLs, which improve responsiveness to DNS changes, and longer TTLs, which reduce lookup frequency. Its <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/best-practices-dns.html" target="_blank" rel="noopener noreferrer">DNS best practices</a> discuss common settings for failover scenarios.</p>
+<p>There is a less obvious behaviour too. If all the records in a routing group are considered unhealthy, Route 53 can still return an answer rather than returning no destination at all. AWS deliberately uses this behaviour to reduce the risk that failed or misconfigured health checks make an incident worse.</p>
+<p>The practical consequence is that a DNS response does not prove an application is healthy.</p>
+<p>And even successful DNS failover does not mean your application has recovered. If Frankfurt depends on a database that only exists in London, sending users to Frankfurt will not solve the database problem.</p>
+<p>Route 53 can help users discover a different endpoint. Database replication, application state, session handling, retries and recovery procedures remain separate design concerns.</p>
+<h2><strong>Public DNS and private DNS</strong></h2>
+<p>Not every DNS name needs to be available on the public internet.</p>
+<p>Route 53 supports both public and private hosted zones.</p>
+<p>A <strong>public hosted zone</strong> contains records intended to be resolved through public DNS. This is the arrangement used for externally accessible websites and applications.</p>
+<p>A <strong>private hosted zone</strong> contains DNS records available through the Route 53 VPC Resolver in associated Amazon Virtual Private Clouds (VPCs). A VPC is a logically isolated network environment within AWS.</p>
+<p>For example, an organisation might have an internal application using <code>reports.internal.example.com</code>. It could create a private hosted zone associated with the VPCs that need to resolve that name.</p>
+<p>Resources in those VPCs can then use the private DNS records without publishing them through the public authoritative DNS service.</p>
+<p>However, private DNS does not itself enforce access control to an application. Network routing, security groups and application authentication still need to be designed appropriately.</p>
+<p>AWS explains the behaviour in <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html" target="_blank" rel="noopener noreferrer">working with private hosted zones</a>.</p>
+<h2><strong>What about applications outside AWS?</strong></h2>
+<p>Private DNS becomes particularly relevant in hybrid environments, where some systems run in AWS and others remain in an organisation&#39;s data centre.</p>
+<p>Suppose an application in an AWS VPC needs to connect to an internal database using a DNS name managed by an on-premises DNS server.</p>
+<p>AWS provides <strong>Route 53 VPC Resolver</strong>, which supports DNS resolution inside VPCs and forwarding queries between AWS and other networks.</p>
+<p>An outbound Resolver endpoint can forward selected DNS queries from a VPC towards DNS servers on another network. An inbound Resolver endpoint allows DNS queries from an external network to reach the VPC Resolver.</p>
+<p>With the appropriate networking and forwarding rules, this allows applications in AWS to resolve names managed on-premises, and on-premises systems to resolve names held in private hosted zones.</p>
+<p>AWS describes this in <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html" target="_blank" rel="noopener noreferrer">what is Route 53 VPC Resolver?</a>.</p>
+<p>For a new architect, the important point is that public DNS hosting and private DNS resolution are related but different concerns.</p>
+<p>You might use Route 53 to publish the name of your public website, while also using private hosted zones and Resolver endpoints to support communication between internal applications.</p>
+<h2><strong>How it fits into a typical AWS architecture</strong></h2>
+<p>Consider an illustrative public service application hosted in AWS.</p>
+<p>Users access the service through <code>www.example.com</code>. The application runs behind an Application Load Balancer, which distributes requests across application instances.</p>
+<p>A straightforward arrangement would work like this:</p>
+<ol>
+<li>A public Route 53 hosted zone contains the DNS records for <code>example.com</code>.</li>
+<li>An alias record for <code>www.example.com</code> points to the Application Load Balancer.</li>
+<li>When a DNS resolver queries Route 53, it receives the appropriate IP address information for the load balancer.</li>
+<li>The user&#39;s browser connects to the load balancer.</li>
+<li>The load balancer forwards the request to an appropriate application target.</li>
+</ol>
+<p>Route 53 and the load balancer have different responsibilities.</p>
+<p>Route 53 provides the DNS answer. The load balancer handles incoming application connections and distributes them among its targets.</p>
+<p>If you later introduce Amazon CloudFront, you might change the alias to point to a CloudFront distribution instead. CloudFront can then handle web requests at AWS edge locations, caching suitable responses and forwarding others to the application origin.</p>
+<p>The architectural pattern changes, but Route 53 is still handling DNS.</p>
+<h2><strong>Costs and operational responsibilities</strong></h2>
+<p>Route 53 is a chargeable AWS service, and the costs depend on which features you use.</p>
+<p>AWS charges for hosted zones and eligible public DNS queries. Domain registration is charged separately, and additional charges can apply to features such as health checks, Resolver endpoints and Traffic Flow.</p>
+<p>Certain alias queries to supported AWS resources are provided without a Route 53 DNS query charge, although other charges may still apply.</p>
+<p>Rather than relying on figures that may change, the current charges and exceptions are documented on the <a href="https://aws.amazon.com/route53/pricing/" target="_blank" rel="noopener noreferrer">official Route 53 pricing page</a>.</p>
+<p>Operationally, DNS also needs some attention.</p>
+<p>Route 53 can record public DNS queries in CloudWatch Logs, and CloudTrail can record configuration activity performed through the console or APIs. VPC Resolver has separate query logging capabilities.</p>
+<p>Public DNS query logs only show the queries that actually reach Route 53. Requests answered from a resolver&#39;s cache will not appear as new authoritative DNS queries.</p>
+<p>These facilities can help with troubleshooting and auditing, particularly when diagnosing unexpected changes or routing behaviour. AWS covers them in its <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/logging-monitoring.html" target="_blank" rel="noopener noreferrer">logging and monitoring documentation</a>.</p>
+<p>For production applications, DNS configuration should also be managed with the same care as other infrastructure. Changes to records can affect the ability of users and dependent systems to reach a service, even when the application itself is functioning normally.</p>
+<h2><strong>What Route 53 does not do</strong></h2>
+<p>It is worth being clear about the boundaries of the service.</p>
+<p>Route 53 does not host your application, terminate its normal HTTPS connections or process the requests it receives. Those responsibilities belong to other components of the architecture.</p>
+<p>It does not replace a load balancer, because DNS routing and application request distribution operate differently.</p>
+<p>It does not guarantee immediate recovery when an application fails. Cached DNS answers, existing connections and the readiness of alternative infrastructure all affect recovery.</p>
+<p>And although it supports geographic routing, it does not guarantee where application data is stored or processed. Those requirements must be addressed through the architecture of the application and its underlying services.</p>
+<p>Perhaps the most important architectural question is whether changing a DNS answer actually produces the outcome you need.</p>
+<p>If the application is stateless and both environments are independently capable of serving requests, DNS failover may be a useful part of its resilience design. If the application depends on shared data, long-running sessions or services that cannot operate in the secondary environment, DNS failover alone will achieve very little.</p>
+<p>Route 53 provides a way to make application endpoints discoverable and to influence which endpoints clients use. Understanding that boundary is what allows an architect to use it properly.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
