@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="What the Cloud First policy asks of government, how AWS, Azure and Google Cloud services map to each other, and where each provider has UK regions.">
+  <meta property="og:title" content="Cloud fundamentals &mdash; The Solution Architect">
+  <meta property="og:description" content="What the Cloud First policy asks of government, how AWS, Azure and Google Cloud services map to each other, and where each provider has UK regions.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>Cloud fundamentals &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lesson-content .table-note { font-size: 0.9rem; color: #6b716d; margin-top: -0.75rem; }
+    .lesson-content .table-wrap th[scope="row"] { font-weight: 600; }
+    .nowrap { white-space: nowrap; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png" alt="SA" class="header__logo-icon" style="width: 32px; height: 32px; object-fit: contain;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link nav__link--active">Cloud</a></li>
+          <li><a href="artifacts.html" class="nav__link">Artifacts</a></li>
+          <li><a href="blog.html" class="nav__link">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="lesson-hero">
+      <div class="container">
+        <h1 class="lesson-hero__title">Cloud fundamentals</h1>
+        <p class="lesson-hero__description">What Cloud First asks of you, how AWS, Azure and Google Cloud services line up, and where each provider can keep data in the UK.</p>
+      </div>
+    </section>
+
+    <div class="lesson-content">
+      <div class="info-box mb-2xl">
+        <p><strong>You'll come away with:</strong></p>
+        <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 0.5rem;">
+          <li>What the Cloud First policy and the Technology Code of Practice ask for, in their own words</li>
+          <li>A way to translate a service name between AWS, Azure and Google Cloud</li>
+          <li>Where each provider has UK regions, and what that means for a second copy of your data</li>
+          <li>Where to find the rest of the site's cloud material</li>
+        </ul>
+      </div>
+
+      <p>This page is a starting point. It sets out the policy you are working within, a translation table for AWS, Microsoft Azure and Google Cloud, and the UK region facts that shape disaster recovery and data location. The decisions themselves get fuller treatment in the guides and posts linked at the end.</p>
+
+      <h2>What Cloud First asks of you</h2>
+
+      <p>The government introduced its Cloud First policy in 2013. The current wording of the <a href="https://www.gov.uk/guidance/government-cloud-first-policy" target="_blank" rel="noopener noreferrer">Government Cloud First policy</a> says that when procuring new or existing services, public sector organisations should default to public cloud first, using other solutions only where this is not possible. That approach is mandatory for central government and strongly recommended for the wider public sector. An organisation that does not deploy in public cloud should be able to evidence the decision, the business case and the value for money behind its choice.</p>
+
+      <p>Point 5 of the Technology Code of Practice is where the policy meets your plans. Its guidance, <a href="https://www.gov.uk/guidance/use-cloud-first" target="_blank" rel="noopener noreferrer">Use cloud first</a>, says your plans must show you have considered cloud computing before other options, and that when you procure or renew services, all government organisations must consider and fully evaluate potential cloud solutions first.</p>
+
+      <p>The policy page adds one limit worth knowing early: solutions handling SECRET or TOP SECRET information are unlikely to be suitable for public cloud, and you should seek specialist advice. Neither page tells you which provider or service to choose. That belongs to the hosting strategy, and the <a href="guide-cloud-strategy-in-government.html">Cloud strategy in a government context</a> guide works through it: options, evidence, lock-in, data location and cost.</p>
+
+      <h2>Buying cloud services</h2>
+
+      <p>Crown Commercial Service became the <a href="https://www.gca.gov.uk/government-commercial-agency-what-you-need-to-know" target="_blank" rel="noopener noreferrer">Government Commercial Agency</a> (GCA) on 1 April 2026, so framework guidance now sits on the GCA site. On cloud, <a href="https://www.gca.gov.uk/agreements/RM1557.15" target="_blank" rel="noopener noreferrer">G-Cloud 15</a> (RM1557.15) has replaced G-Cloud 14, and GCA lists its start date as 6 August 2026.</p>
+
+      <p>Before a design depends on a particular service, check with your commercial team that the service itself can be bought through the route they plan to use. The posts on <a href="what-g-cloud-is-and-why-so-much-public-sector-technology-is-bought-through-it.html">what G-Cloud is</a> and <a href="what-digital-outcomes-and-specialists-7-is-and-how-the-public-sector-buys-digital-teams-through-it.html">Digital Outcomes and Specialists 7</a> cover how the frameworks work and when you would use each.</p>
+
+      <h2>Translating between providers</h2>
+
+      <p>If you already know one provider, mapping the service names is a quick way into another. The table takes each column from that provider's own comparison guidance: Microsoft's <a href="https://learn.microsoft.com/en-us/azure/architecture/aws-professional/" target="_blank" rel="noopener noreferrer">Azure for AWS professionals</a> pages for Azure, and Google's <a href="https://docs.cloud.google.com/docs/get-started/aws-azure-gcp-service-comparison" target="_blank" rel="noopener noreferrer">service comparison</a> for Google Cloud. Google describes its mappings as similar or comparable offerings. Limits, pricing and the split of security responsibility can differ between two services in the same row, so read both providers' documentation before you rely on a match.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption class="visually-hidden">Equivalent services across AWS, Microsoft Azure and Google Cloud</caption>
+          <thead>
+            <tr>
+              <th scope="col">Service type</th>
+              <th scope="col">AWS</th>
+              <th scope="col">Microsoft Azure</th>
+              <th scope="col">Google Cloud</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Virtual machines</th><td>Amazon EC2</td><td>Azure Virtual Machines</td><td>Compute Engine</td></tr>
+            <tr><th scope="row">Functions</th><td>AWS Lambda</td><td>Azure Functions</td><td>Cloud Run functions</td></tr>
+            <tr><th scope="row">Serverless containers</th><td>AWS Fargate</td><td>Azure Container Apps</td><td>Cloud Run</td></tr>
+            <tr><th scope="row">Managed Kubernetes</th><td>Amazon EKS</td><td>Azure Kubernetes Service (AKS)</td><td>Google Kubernetes Engine (GKE)</td></tr>
+            <tr><th scope="row">Object storage</th><td>Amazon S3</td><td>Azure Blob Storage</td><td>Cloud Storage</td></tr>
+            <tr><th scope="row">Block storage</th><td>Amazon EBS</td><td>Azure managed disks</td><td>Google Cloud Hyperdisk</td></tr>
+            <tr><th scope="row">File storage</th><td>Amazon EFS</td><td>Azure Files</td><td>Filestore</td></tr>
+            <tr><th scope="row">Managed relational database</th><td>Amazon RDS</td><td>Azure SQL Database, Azure Database for PostgreSQL, Azure Database for MySQL</td><td>Cloud SQL</td></tr>
+            <tr><th scope="row">Key value and document database</th><td>Amazon DynamoDB</td><td>Azure Cosmos DB for NoSQL</td><td>Firestore, Bigtable</td></tr>
+            <tr><th scope="row">Data warehouse</th><td>Amazon Redshift</td><td>Fabric Data Warehouse</td><td>BigQuery</td></tr>
+            <tr><th scope="row">Virtual network</th><td>Amazon VPC</td><td>Azure Virtual Network</td><td>Virtual Private Cloud (VPC)</td></tr>
+            <tr><th scope="row">Content delivery</th><td>Amazon CloudFront</td><td>Azure Front Door</td><td>Cloud CDN</td></tr>
+            <tr><th scope="row">DNS</th><td>Amazon Route 53</td><td>Azure DNS</td><td>Cloud DNS</td></tr>
+            <tr><th scope="row">Identity and access</th><td>AWS IAM</td><td>Microsoft Entra ID, Azure role-based access control (Azure RBAC)</td><td>Identity and Access Management (IAM)</td></tr>
+            <tr><th scope="row">Key management</th><td>AWS KMS</td><td>Azure Key Vault</td><td>Cloud Key Management Service (Cloud KMS)</td></tr>
+            <tr><th scope="row">Web application firewall</th><td>AWS WAF</td><td>Azure Web Application Firewall</td><td>Google Cloud Armor</td></tr>
+            <tr><th scope="row">Threat detection</th><td>Amazon GuardDuty</td><td>Microsoft Sentinel</td><td>Security Command Center</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Checked November 2026. Where Microsoft's and Google's pages disagree about a match, each provider's own page decides its own column.</p>
+
+      <h2>UK regions and a second copy of your data</h2>
+
+      <p>Each provider publishes where its regions are and how many zones each one has. These are the UK entries in the <a href="https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html" target="_blank" rel="noopener noreferrer">AWS Regions</a> list, Microsoft's <a href="https://learn.microsoft.com/en-us/azure/reliability/regions-list" target="_blank" rel="noopener noreferrer">Azure region list</a> and Google's <a href="https://docs.cloud.google.com/compute/docs/regions-zones" target="_blank" rel="noopener noreferrer">regions and zones</a> page.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption class="visually-hidden">UK cloud regions by provider</caption>
+          <thead>
+            <tr>
+              <th scope="col">Provider</th>
+              <th scope="col">Region and code</th>
+              <th scope="col">Location</th>
+              <th scope="col">Zones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">AWS</th><td>Europe (London), <span class="nowrap">eu-west-2</span></td><td>London</td><td>3 Availability Zones</td></tr>
+            <tr><th scope="row">Microsoft Azure</th><td>UK South, <span class="nowrap">uksouth</span></td><td>London</td><td>3 availability zones</td></tr>
+            <tr><th scope="row">Microsoft Azure</th><td>UK West, <span class="nowrap">ukwest</span></td><td>Cardiff</td><td>None listed</td></tr>
+            <tr><th scope="row">Google Cloud</th><td>London, <span class="nowrap">europe-west2</span></td><td>London</td><td>3 zones</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>AWS and Google Cloud each list one UK region, in London, with three zones. Azure lists two, UK South in London and UK West in Cardiff, and pairs them with each other. Microsoft lists availability zones for UK South but not for UK West.</p>
+
+      <p>That shapes disaster recovery. On AWS or Google Cloud, a second region means leaving the UK, for example AWS's Europe (Ireland) Region, eu-west-1. Whether that is acceptable is a data location decision. The <a href="https://www.gov.uk/government/publications/cloud-guide-for-the-public-sector/cloud-guide-for-the-public-sector" target="_blank" rel="noopener noreferrer">Cloud guide for the public sector</a> defines offshoring to include where data and services are physically located, who manages the services and who has access to the data. Whether you need a second region at all is a resilience question, which the <a href="guide-resilience-and-disaster-recovery.html">resilience and disaster recovery</a> guide covers from RTO and RPO onwards.</p>
+
+      <p>Before you design around a service, check it is offered in the region you need. Each provider keeps its own list: <a href="https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/" target="_blank" rel="noopener noreferrer">AWS Services by Region</a>, <a href="https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table" target="_blank" rel="noopener noreferrer">Azure products by region</a> and <a href="https://cloud.google.com/about/locations" target="_blank" rel="noopener noreferrer">Google Cloud locations</a>.</p>
+
+      <h2>Where to go next</h2>
+
+      <p>The decisions this page only touches on have their own write ups. The design posts so far use AWS for their worked examples.</p>
+
+      <ul>
+        <li><a href="guide-cloud-strategy-in-government.html">Cloud strategy in a government context</a>: Cloud First in practice, procurement, lock-in, data location, cost and hybrid estates</li>
+        <li><a href="guide-resilience-and-disaster-recovery.html">Resilience, disaster recovery and business continuity</a>: setting RTO and RPO, and choosing and testing a recovery pattern</li>
+        <li><a href="understanding-containers-and-choosing-how-to-run-them-on-aws.html">Understanding containers and choosing how to run them on AWS</a></li>
+        <li><a href="designing-reliable-storage-across-aws-regions-with-amazon-s3.html">Designing reliable storage across AWS Regions with Amazon S3</a></li>
+        <li><a href="recovering-a-database-across-aws-regions-with-aurora-and-arc.html">Recovering a database across AWS Regions with Aurora and ARC</a></li>
+        <li><a href="getting-traffic-to-your-application-with-cloudfront-route-53-and-global-accelerator.html">Getting traffic to your application with CloudFront, Route 53 and Global Accelerator</a></li>
+        <li><a href="what-the-aws-well-architected-framework-is-and-how-its-six-pillars-shape-a-workload.html">What the AWS Well-Architected Framework is, and how its six pillars shape a workload</a></li>
+      </ul>
+
+      <div style="margin-top: 2.5rem; padding: 1rem 1.25rem; background: #f9f9f8; border: 1px solid #e3e7e5; border-radius: 8px; font-size: 0.85rem; color: #6b716d; line-height: 1.6;">
+        <p style="margin: 0 0 0.4rem;"><em>One practitioner's account, not official guidance. The service mappings come from Microsoft's and Google's own comparison pages and are a starting point for reading the provider documentation.</em></p>
+        <p style="margin: 0 0 0.6rem;"><em>Last reviewed November 2026 against the primary sources linked below. Government policy and provider services change; check the source before relying on this.</em></p>
+        <ul style="margin: 0; padding-left: 1.25rem; list-style: disc;">
+          <li><a href="https://www.gov.uk/guidance/government-cloud-first-policy" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">GOV.UK: Government Cloud First policy</a></li>
+          <li><a href="https://www.gov.uk/guidance/use-cloud-first" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">GOV.UK: Use cloud first (Technology Code of Practice point 5)</a></li>
+          <li><a href="https://www.gov.uk/government/publications/cloud-guide-for-the-public-sector/cloud-guide-for-the-public-sector" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">GOV.UK: Cloud guide for the public sector</a></li>
+          <li><a href="https://www.gca.gov.uk/government-commercial-agency-what-you-need-to-know" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">Government Commercial Agency: what you need to know</a></li>
+          <li><a href="https://www.gca.gov.uk/agreements/RM1557.15" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">Government Commercial Agency: G-Cloud 15</a></li>
+          <li>Microsoft Learn, Azure for AWS professionals: <a href="https://learn.microsoft.com/en-us/azure/architecture/aws-professional/" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">overview</a>, <a href="https://learn.microsoft.com/en-us/azure/architecture/aws-professional/compute" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">compute</a>, <a href="https://learn.microsoft.com/en-us/azure/architecture/aws-professional/storage" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">storage</a>, <a href="https://learn.microsoft.com/en-us/azure/architecture/aws-professional/databases" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">databases</a>, <a href="https://learn.microsoft.com/en-us/azure/architecture/aws-professional/networking" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">networking</a>, <a href="https://learn.microsoft.com/en-us/azure/architecture/aws-professional/analytics" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">analytics</a></li>
+          <li><a href="https://docs.cloud.google.com/docs/get-started/aws-azure-gcp-service-comparison" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">Google Cloud: Compare AWS and Azure services to Google Cloud</a></li>
+          <li><a href="https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">AWS: AWS Regions</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/azure/reliability/regions-list" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">Microsoft Learn: Azure region list</a></li>
+          <li><a href="https://docs.cloud.google.com/compute/docs/regions-zones" target="_blank" rel="noopener noreferrer" style="color: #0f6e56; text-decoration: none;">Google Cloud: Regions and zones</a></li>
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      <nav class="lesson-nav" aria-label="Related guides">
+        <div>
+          <a href="library.html" class="btn btn--secondary" style="border-color: var(--color-border); color: var(--color-text-body);">&larr; Back to Library</a>
+        </div>
+        <div>
+          <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-dark);">Related guides:</p>
+          <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+            <li style="margin-bottom: 0.25rem;"><a href="guide-cloud-strategy-in-government.html">Cloud strategy in a government context</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-resilience-and-disaster-recovery.html">Resilience, disaster recovery and business continuity</a></li>
+            <li style="margin-bottom: 0.25rem;"><a href="guide-security-privacy-trust.html">Security, Privacy and Trust by Design</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="artifacts.html">Architecture Artifacts</a></li>
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
