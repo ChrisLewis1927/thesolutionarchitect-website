@@ -1,5 +1,5 @@
 ---
-title: "Ingress and egress: understanding which way network traffic flow"
+title: "Ingress and egress: understanding which way network traffic flows"
 date: 2026-11-02T15:54:00.000Z
 category: Cloud
 excerpt: Ingress and egress describe the direction network traffic travels, but
@@ -19,8 +19,8 @@ The interesting part is that the direction depends on where you are looking from
 
 In networking, the terms describe traffic crossing a boundary:
 
-- **Ingress (inbound):** Traffic entering a network, system or application.
-- **Egress (outbound):** Traffic leaving a network, system or application.
+* **Ingress (inbound):** Traffic entering a network, system or application.
+* **Egress (outbound):** Traffic leaving a network, system or application.
 
 Think about the entrance to an office building. People coming through the doors are entering (ingress), while people leaving are exiting (egress).
 
@@ -82,9 +82,7 @@ A common solution is Network Address Translation (NAT).
 
 The server initiates an outbound connection through a NAT device. The device translates its network address, allowing the request to reach its destination and the response to find its way back.
 
-However, an external system cannot simply initiate a new connection to the private server through that NAT device.
-
-[AWS NAT gateways](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) are one implementation of this pattern.
+In an outbound-only NAT setup, external systems cannot initiate new connections to the private server. [AWS NAT gateways](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) work this way. Other NAT implementations can be configured to allow inbound connections through explicit address mappings or port forwarding.[](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html)
 
 This is also why a private subnet does not necessarily mean a server has no internet access. Private resources can be configured for outbound connectivity while remaining inaccessible to unsolicited inbound connections.
 
@@ -126,11 +124,11 @@ When reviewing a network or application architecture, I find it useful to consid
 
 For every connection, there are a few practical questions worth answering:
 
-- Which system initiates the connection?
-- Where does the traffic need to go?
-- Which network boundaries does it cross?
-- What needs to be permitted for the connection and its response?
-- Does the destination need to be accessible over the internet at all?
+* Which system initiates the connection?
+* Where does the traffic need to go?
+* Which network boundaries does it cross?
+* What needs to be permitted for the connection and its response?
+* Does the destination need to be accessible over the internet at all?
 
 These questions help identify where access is necessary, where it can be restricted and whether traffic is following the intended path.
 
