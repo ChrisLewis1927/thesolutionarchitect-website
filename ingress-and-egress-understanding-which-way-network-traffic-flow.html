@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cookie consent and conditional analytics -->
+  <script src="/js/cookie-consent.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ingress and egress describe the direction network traffic travels, but the distinction depends on where you are looking from. This article explains how inbound and outbound traffic works, how firewalls and NAT control connections, and why understanding both matters for network security, cloud architecture and data transfer costs.">
+  <meta property="og:title" content="Ingress and egress: understanding which way network traffic flow &mdash; The Solution Architect">
+  <meta property="og:description" content="Ingress and egress describe the direction network traffic travels, but the distinction depends on where you are looking from. This article explains how inbound and outbound traffic works, how firewalls and NAT control connections, and why understanding both matters for network security, cloud architecture and data transfer costs.">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="ingress-and-egress-understanding-which-way-network-traffic-flow.html">
+  <link rel="icon" type="image/png" href="images/favicon.png?v=2">
+  <title>Ingress and egress: understanding which way network traffic flow &mdash; The Solution Architect</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="index.html" class="header__logo" aria-label="The Solution Architect - Home">
+        <img src="images/logo.png?v=2" alt="SA" class="header__logo-icon" style="width: 40px; height: 40px; object-fit: contain;">
+        <span>The Solution Architect</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav__toggle" aria-expanded="false" aria-label="Open menu" aria-controls="nav-list">
+          <span class="nav__toggle-icon"></span>
+        </button>
+        <ul class="nav__list" id="nav-list" role="list">
+          <li><a href="library.html" class="nav__link">Architect's Library</a></li>
+          <li><a href="lifecycle.html" class="nav__link">Delivery Phases</a></li>
+          <li><a href="guardrails.html" class="nav__link">AI Guardrails</a></li>
+          <li><a href="cloud.html" class="nav__link">Cloud</a></li>
+          <li><a href="blog.html" class="nav__link nav__link--active">Blog</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <header class="article__header">
+        <span class="badge badge--category article__category">Cloud</span>
+        <h1 class="article__title">Ingress and egress: understanding which way network traffic flow</h1>
+        <div class="article__meta">
+          <span>By The Solution Architect</span>
+          <span>6 min read</span>
+        </div>
+      </header>
+
+      <div class="article__content">
+        <p>When designing an application, we spend a lot of time thinking about how users and other systems connect to it. We configure firewalls, open ports, restrict access and decide which services can communicate with each other.</p>
+<p>Two terms that regularly appear in those conversations are <strong>ingress</strong> and <strong>egress</strong>. They sound technical, but describe something straightforward: the direction network traffic is travelling.</p>
+<p>The interesting part is that the direction depends on where you are looking from. Understanding that distinction helps explain how firewalls work, why private servers can still reach the internet and how outbound traffic can become a security risk.</p>
+<h2><strong>What ingress and egress actually mean</strong></h2>
+<p>In networking, the terms describe traffic crossing a boundary:</p>
+<ul>
+<li><strong>Ingress (inbound):</strong> Traffic entering a network, system or application.</li>
+<li><strong>Egress (outbound):</strong> Traffic leaving a network, system or application.</li>
+</ul>
+<p>Think about the entrance to an office building. People coming through the doors are entering (ingress), while people leaving are exiting (egress).</p>
+<p>Network traffic works in much the same way.</p>
+<p>Imagine a website hosted on a server. When someone visits the website, their browser sends a request to the server. That request is ingress traffic from the server&#39;s perspective.</p>
+<p>The server processes the request and sends the webpage back. That response is egress traffic.</p>
+<p>Both directions are involved in a normal interaction.</p>
+<p>This distinction is important because ingress and egress describe the <strong>direction of traffic</strong>, rather than whether the traffic is good, bad, trusted or untrusted.</p>
+<h2><strong>Direction depends on where you are standing</strong></h2>
+<p>Consider an application that retrieves information from a database.</p>
+<p>The application sends a query to the database, which processes it and returns the results.</p>
+<p>From the application&#39;s perspective, the query is egress traffic because it is leaving the application.</p>
+<p>From the database&#39;s perspective, exactly the same query is ingress traffic because it is arriving at the database.</p>
+<p>The response reverses those directions.</p>
+<p>This is why ingress and egress should always be considered relative to a particular boundary. That might be an individual server, a subnet, an entire network or a cloud environment.</p>
+<p>A database query travelling between two servers can be egress from one and ingress to another, even though neither server communicates with the public internet.</p>
+<h2><strong>How firewalls use ingress and egress rules</strong></h2>
+<p>Firewalls use rules to decide which traffic can enter or leave a system.</p>
+<p>An ingress rule might allow HTTPS connections on port 443, enabling users to access a website. Another rule might restrict database connections on port 5432 so that only an application server can reach it.</p>
+<p>Egress rules work in the opposite direction. They control which destinations a system can contact.</p>
+<p>For example, an application might need to contact an external payment provider over HTTPS. An outbound rule could permit that connection while restricting other destinations.</p>
+<p>There is an important detail here: <strong>allowing a connection does not necessarily mean opening both directions separately.</strong></p>
+<p>Many modern firewalls are <em>stateful</em>. They remember an established connection and automatically permit its return traffic.</p>
+<p>If an application initiates an allowed outbound HTTPS connection, a stateful firewall recognises the response as part of that connection. It does not normally require a separate inbound rule.</p>
+<p>A <em>stateless</em> firewall treats traffic in each direction independently. You must ensure the rules permit both the original traffic and its response.</p>
+<p>AWS provides a useful example of this distinction. <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html" target="_blank" rel="noopener noreferrer">Security groups are stateful</a>, while <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html" target="_blank" rel="noopener noreferrer">network access control lists (NACLs) are stateless</a>.</p>
+<p>The underlying principles apply well beyond AWS.</p>
+<h2><strong>Outbound access does not mean inbound access</strong></h2>
+<p>One of the more useful networking patterns is allowing a server to make outbound connections without allowing external systems to initiate connections to it.</p>
+<p>Imagine an application server that needs to download software updates and contact an external API, but should never be directly accessible from the internet.</p>
+<p>A common solution is Network Address Translation (NAT).</p>
+<p>The server initiates an outbound connection through a NAT device. The device translates its network address, allowing the request to reach its destination and the response to find its way back.</p>
+<p>However, an external system cannot simply initiate a new connection to the private server through that NAT device.</p>
+<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html" target="_blank" rel="noopener noreferrer">AWS NAT gateways</a> are one implementation of this pattern.</p>
+<p>This is also why a private subnet does not necessarily mean a server has no internet access. Private resources can be configured for outbound connectivity while remaining inaccessible to unsolicited inbound connections.</p>
+<h2><strong>Why egress deserves as much attention as ingress</strong></h2>
+<p>Security discussions often concentrate on ingress. We want to prevent unauthorised users from reaching our systems, protect public endpoints and restrict access to databases.</p>
+<p>But allowing unrestricted egress creates its own problems.</p>
+<p>Consider an application that has been compromised. Even if an attacker cannot connect directly to the server, malicious software running on it might be able to initiate outbound connections.</p>
+<p>That could allow information to be sent to an external destination, a process known as <strong>data exfiltration</strong>.</p>
+<p>Restricting egress helps reduce that risk. Instead of allowing an application to communicate with any destination, network controls can limit it to the services and endpoints it actually needs.</p>
+<p>This does require some thought. Applications may depend on external APIs, software repositories, monitoring services and authentication providers.</p>
+<p>Blocking everything without understanding those dependencies can break a perfectly functioning service.</p>
+<p>Where supported, private service endpoints offer another option. For example, <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/accessing-aws-resources.html" target="_blank" rel="noopener noreferrer">VPC endpoints</a> can connect workloads privately to certain cloud services without requiring an internet gateway or NAT gateway.</p>
+<h2><strong>There is a cost consideration too</strong></h2>
+<p>In cloud computing, egress also appears in billing discussions.</p>
+<p>Cloud providers may charge for data leaving their infrastructure, particularly when it is transferred to the public internet or between geographical regions.</p>
+<p>For example, <a href="https://aws.amazon.com/about-aws/global-infrastructure/global-network/faqs/" target="_blank" rel="noopener noreferrer">AWS generally provides free data transfer into its cloud from the internet</a>, but applies charges to certain outbound transfers, subject to allowances and exceptions. Transfers between Availability Zones or Regions can have their own charges.</p>
+<p>Network egress and billable internet data transfer are therefore not quite the same thing.</p>
+<p>An application sending a database query to another server is producing outbound traffic, but that does not automatically mean it has incurred an internet data transfer charge.</p>
+<p>For systems handling large volumes of data, understanding the actual traffic path matters when estimating running costs.</p>
+<h2><strong>What this means when designing a system</strong></h2>
+<p>When reviewing a network or application architecture, I find it useful to consider the traffic from the perspective of each component.</p>
+<p>For every connection, there are a few practical questions worth answering:</p>
+<ul>
+<li>Which system initiates the connection?</li>
+<li>Where does the traffic need to go?</li>
+<li>Which network boundaries does it cross?</li>
+<li>What needs to be permitted for the connection and its response?</li>
+<li>Does the destination need to be accessible over the internet at all?</li>
+</ul>
+<p>These questions help identify where access is necessary, where it can be restricted and whether traffic is following the intended path.</p>
+<p>The simplest way to remember the terminology is that <strong>ingress enters and egress exits</strong>.</p>
+<p>Just remember to establish whose entrance or exit you are talking about. The same packet can be leaving one system while entering another, and that difference is what makes the terminology useful when designing and securing networks.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <p class="footer__brand-name">The Solution Architect</p>
+          <p class="footer__brand-tagline">Architecture knowledge with a public service lens.</p>
+        </div>
+        <div>
+          <p class="footer__nav-title">Learn</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="library.html">Architect's Library</a></li>
+            <li><a href="lifecycle.html">Delivery Phases</a></li>
+            <li><a href="cloud.html">Cloud Fundamentals</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">Resources</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="guardrails.html">AI Guardrails</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__nav-title">About</p>
+          <ul class="footer__nav-list" role="list">
+            <li><a href="about.html">About This Site</a></li>
+            <li><a href="privacy.html">Privacy &amp; Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 thesolutionarchitect.uk</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
