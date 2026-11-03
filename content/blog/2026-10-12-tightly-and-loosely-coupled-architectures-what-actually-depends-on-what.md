@@ -52,7 +52,7 @@ Microsoft's [guidance on service data ownership](https://learn.microsoft.com/en-
 
 In the second design, the reporting service depends on an **API**, an application programming interface. Provided the application service preserves the agreed behaviour, it can change its internal storage without requiring the reporting service to understand the new tables. This is the ownership boundary described in AWS's [database-per-service pattern](https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-data-persistence/database-per-service.html).
 
-The dependency has moved to a contract. Changing that contract incompatibly can still affect the reporting service.
+The reporting service now depends on the API contract, so incompatible changes can still break reporting. If a report fetches its data through a live API call, the application service also needs to be available when the report runs.
 
 #### **An API can hide internals while retaining a dependency on availability**
 
@@ -106,7 +106,7 @@ The **transactional outbox** pattern addresses this gap. The service records the
 
 This makes the business change and the intention to publish atomic within that database transaction. It does not make receipt generation and reporting part of the same atomic transaction. Publication can still produce duplicates, and the publishing process still needs to run successfully.
 
-For the illustrative service, this would allow "received" to mean that the application and its pending event were durably recorded, while later work remains visibly pending.
+With an outbox, the service can confirm that the application has been received once it commits the application and pending event together, even if the message broker is temporarily unavailable. The publisher can retry from the outbox when the broker recovers. Receipt delivery remains a separate step.
 
 #### **A monolith and a tightly coupled system are different descriptions**
 
