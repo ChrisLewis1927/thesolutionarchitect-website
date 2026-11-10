@@ -12,186 +12,99 @@ author: The Solution Architect
 ---
 An application can work perfectly and still be badly architected.
 
-It might rely on one server that nobody can rebuild. Its database might be backed up every night, but nobody has tested restoring it. Administrators may have far more access than they need. The infrastructure could be twice the size required, while the team has no idea which part of the application is generating most of the AWS bill.
+It might rely on one server that nobody can rebuild. Its database might be backed up every night, but nobody has tested restoring it. Administrators may have far more access than they need. The infrastructure could be twice the size required, while the team has no idea which part of the application generates most of the AWS bill.
 
-None of those problems necessarily stops the application working today.
+None of that stops the application working today. The [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) is intended to expose those problems before they become bigger ones. AWS describes it as a consistent set of best practices, with questions for evaluating an architecture against them.
 
-The AWS Well-Architected Framework is intended to expose them before they become bigger problems. AWS describes it as a consistent way of reviewing workloads against cloud architecture best practices and identifying areas for improvement.
+At its centre are six pillars: operational excellence, security, reliability, performance efficiency, cost optimisation and sustainability. Each is a different way of looking at the same workload.
 
-At the centre of the framework are six pillars: **operational excellence, security, reliability, performance efficiency, cost optimisation and sustainability**.
+## A review framework, not an architecture
 
-They are not six independent boxes to tick. They are six different ways of looking at the same workload.
+Well-Architected does not tell you to use Amazon ECS instead of Lambda, PostgreSQL instead of DynamoDB, or three Availability Zones instead of two. It asks the questions that help you decide whether the choices you have made are sensible for the workload.
 
-#### **It is a review framework, not an architecture**
+AWS [defines a workload](https://docs.aws.amazon.com/wellarchitected/latest/framework/definitions.html) as a set of components that together deliver business value, where a component is code, configuration and AWS resources. The questions reach well beyond those resources, though. They ask about the people operating the service, the processes around them and things such as runbooks. A beautifully designed AWS environment can still be difficult to operate if nobody knows what to do when it fails.
 
-Well-Architected does not tell you to use Amazon ECS instead of Lambda, PostgreSQL instead of DynamoDB, or three Availability Zones instead of two.
+## Operational excellence: can we actually run this thing?
 
-It asks the questions that help you decide whether the choices you have made are sensible for the workload.
+Operational excellence deals with what happens after an architecture diagram becomes a running service. Can the team see what the workload is doing? Can it deploy changes safely? What happens at 2am when an alarm fires?
 
-AWS uses the term **workload** quite broadly. It is not just the resources shown on an architecture diagram. It includes the components delivering the service, the people operating them, the processes around them and things such as runbooks and operational procedures.
+AWS guidance includes making small, reversible changes, automating where it is safe to, building in observability and anticipating failure.
 
-That distinction is useful. A beautifully designed AWS environment can still be difficult to operate if nobody knows what to do when it fails.
+Take a containerised application on Amazon ECS. Running containers are only part of the design. The team also needs useful logs and metrics, alarms that mean something, a way to roll back a bad release and instructions for common failures. Ideally the infrastructure is defined as code, so the environment can be rebuilt without relying on anyone's memory.
 
-AWS also expects trade-offs. A development environment may accept lower availability to reduce cost. A public-facing service with strict recovery requirements may deliberately spend more for additional resilience. Performance may be critical to one workload and relatively unimportant to another.
+A service that can only be operated by the person who built it has an architectural problem, even if every AWS resource is configured correctly.
 
-The framework gives you a structure for making those decisions deliberately rather than discovering them through an incident.
+## Security: who can do what, and what are we protecting?
 
-#### **Operational excellence: can we actually run this thing?**
+The security pillar covers protecting data, systems and assets.
 
-Operational excellence deals with what happens after an architecture diagram becomes a running service.
+Identity is a large part of it. AWS recommends a strong identity foundation built on least privilege, separation of duties and less reliance on long-lived credentials. The pillar extends well past IAM policies: encryption in transit and at rest, logging so that suspicious activity can be investigated, controls at every layer, and knowing what data the workload holds and how sensitive it is.
 
-Can the team see what the workload is doing? Can it deploy changes safely? Is the infrastructure repeatable? What happens at 2am when an alarm fires?
+Then there is the question people leave too late: what happens when an incident actually occurs? AWS includes preparing for security events in the pillar. Detecting an incident is much less useful if nobody knows who responds, what gets isolated or how evidence is preserved.
 
-AWS guidance includes making small reversible changes, using automation, improving operational procedures, implementing observability and anticipating failure.
+## Reliability: what happens when something fails?
 
-Take a containerised application running on Amazon ECS. Getting the containers running is only part of the design.
+Servers fail. Deployments go wrong. Dependencies become unavailable. People make mistakes. Reliability asks whether the workload can keep performing its intended function, or recover, when those things happen.
 
-The team also needs useful logs and metrics, alarms that indicate something meaningful has gone wrong, a deployment process, a way to roll back a bad release and instructions for dealing with common failures. Ideally the infrastructure and configuration are defined as code so the environment can be recreated rather than depending on someone remembering how it was originally configured.
+AWS guidance includes recovering from failure automatically, testing recovery procedures, scaling horizontally, not guessing capacity and managing change through automation.
 
-Operational excellence is therefore closely tied to how the team works. A service that can only be operated by the person who built it has an architectural problem, even if every AWS resource is configured correctly.
+Backups show the difference. An automated backup gives you a copy of the data. Reliability asks whether you can restore it, how long that takes, how much data you could lose and whether the application works afterwards.
 
-#### **Security: who can do what, and what are we protecting?**
+Availability is similar. Running across multiple Availability Zones protects against some infrastructure failures, but a faulty deployment, corrupted data or a failed dependency can hit every zone at once. A reliable design starts with the failure scenarios that matter and works back from them.
 
-The security pillar looks at protecting data, systems and assets.
+## Performance efficiency: are we using the right resources for the job?
 
-Identity is a large part of it. AWS recommends a strong identity foundation based on principles such as least privilege, separation of duties and reducing dependence on long-lived credentials.
+Performance efficiency is about using computing resources efficiently while still meeting the workload's requirements. The fastest possible architecture is rarely the objective.
 
-But security extends much further than IAM policies.
+A service may need an API response within a set time, or a batch finished before the working day starts. The architecture should meet those requirements without unnecessary resources or complexity.
 
-Data may need encryption in transit and at rest. Activity needs to be logged so suspicious behaviour can be investigated. Network and application layers need appropriate controls. Teams need to understand what information the workload holds and how sensitive it is.
+AWS encourages experimenting, because the cloud makes it cheap to compare resource types and configurations, and choosing technology around the characteristics of the workload. Amazon RDS and DynamoDB can both store application data, but they solve different problems. The choice should start with relationships, query patterns, consistency requirements and expected traffic, not with an assumption that one service is inherently faster.
 
-There is also the question people sometimes leave until too late: what happens when a security incident actually occurs?
+## Cost optimisation: what are we paying for, and why?
 
-AWS explicitly includes preparing for security events in the pillar. Detecting an incident is much less useful if nobody knows who should respond, what should be isolated or how evidence will be preserved.
+Cloud removes much of the need to buy infrastructure years before it is needed, but it also makes waste easier to create. An oversized database running every hour of the year still costs money. So do forgotten development environments, old snapshots and storage nobody has reviewed since launch.
 
-The framework treats security as something designed through the workload rather than a security product added around the outside of it. AWS says security and operational excellence are generally not areas that should simply be traded away to improve another pillar.
+AWS defines the pillar as delivering business value at the lowest price point, and recommends treating financial management as an ongoing capability rather than something you do after the bill arrives. Costs should be measurable and attributable, so teams know where the money goes and can decide whether it is justified.
 
-#### **Reliability: what happens when something fails?**
+None of this means picking the cheapest architecture. The test is whether you know what each extra expense buys and can explain why you are paying for it.
 
-Reliability is not the same as preventing failure.
+## Sustainability: how much resource does the workload really need?
 
-Servers fail. Deployments go wrong. Dependencies become unavailable. Networks experience problems. People make mistakes.
+Sustainability became the sixth pillar in 2021. Its focus is the environmental impact of cloud workloads, particularly energy consumption and efficient use of resources.
 
-The question is whether the workload can continue performing its intended function or recover when those things happen.
+It overlaps with cost: switching off resources nobody uses reduces both. Sustainability goes further by asking what resources each useful unit of work needs, such as compute per transaction or storage per user. [AWS guidance](https://docs.aws.amazon.com/wellarchitected/latest/framework/sus-design-principles.html) includes maximising utilisation, removing idle resources, adopting more efficient hardware and software as they appear and using managed services.
 
-AWS reliability guidance includes automatically recovering from failure, testing recovery procedures, scaling horizontally, managing capacity and controlling infrastructure changes through automation.
+Take data retention. Keeping every log, export and intermediate file indefinitely consumes storage and the infrastructure that manages it. A sensible lifecycle policy helps cost, security and sustainability at once.
 
-A database backup is a good example of the difference.
+## One decision can affect several pillars
 
-Creating an automated backup gives you a copy of the data. Reliability asks whether you can restore it, how long the restore takes, how much data could be lost and whether the application actually works afterwards.
+Consider auto scaling. Adding and removing compute capacity with demand can improve reliability, because the application is less likely to run out of capacity, and performance, because resources arrive when demand rises. It can also cut cost and idle resource when demand falls.
 
-The same applies to availability. Running an application across multiple Availability Zones can protect it from some infrastructure failures, but it does not protect it from every failure. A faulty deployment, corrupted data or dependency failure can affect every Availability Zone at once.
+Other decisions pull in different directions. Spreading infrastructure across more Availability Zones improves reliability while increasing cost and resource consumption. Caching improves performance, but done badly it introduces security or data consistency problems.
 
-A reliable architecture therefore starts with the failure scenarios that matter and designs recovery around them.
+AWS expects these trade-offs, with one exception: it says security and operational excellence are generally not traded off against the other pillars.
 
-#### **Performance efficiency: are we using the right resources for the job?**
+## How a review works
 
-Performance efficiency is about using computing resources efficiently while still meeting the workload's performance requirements.
+AWS provides the [Well-Architected Tool](https://docs.aws.amazon.com/wellarchitected/latest/userguide/tutorial.html) in the console to structure a review. You define the workload and answer questions for each pillar. AWS also publishes [lenses](https://docs.aws.amazon.com/wellarchitected/latest/userguide/definitions.html), which add question sets for particular kinds of workload, and you can write your own.
 
-That wording matters because the fastest possible architecture is rarely the objective.
+From your answers the tool identifies high-risk and medium-risk issues, which feed an improvement plan. A milestone records the state of the workload at a point in time, so a later review can show what has changed.
 
-A service may need an API response within a particular time, support a known number of concurrent users or process a batch before the start of the working day. The architecture needs to satisfy those requirements without adding unnecessary resources and complexity.
+AWS [recommends reviewing](https://docs.aws.amazon.com/wellarchitected/latest/framework/the-review-process.html) early in design, before go-live and after significant architectural changes, and describes the review as a conversation, not an audit. A high-risk issue is something worth understanding, and there may be a legitimate reason to accept it, as long as that decision is visible.
 
-AWS encourages experimentation because cloud infrastructure makes it relatively easy to compare different resource types and configurations. It also encourages the use of managed and serverless services where they make sense, and choosing technology around the characteristics of the workload.
+## What the framework does not give you
 
-A database is a simple example.
+Well-Architected cannot tell you what your users need, what level of risk your organisation should accept or which business outcome matters most. It is not evidence that a workload complies with a law, security standard or organisational policy either. Those need their own assessment.
 
-Amazon RDS and DynamoDB can both store application data, but they solve different problems. Choosing between them should start with things such as relationships, query patterns, consistency requirements and expected traffic rather than the assumption that one AWS service is inherently more performant than another.
+Nor does answering every question once make an architecture permanently well designed. Services change, workloads grow, teams change and old assumptions stop being true.
 
-The same principle applies throughout an architecture. Compute, storage, databases, networks and caching should be selected around what the workload actually does.
+That is why I find the six pillars more useful as questions than as categories:
 
-#### **Cost optimisation: what are we paying for, and why?**
+* Can we operate it?
+* Can we protect it?
+* Can it survive failure?
+* Does it perform as required?
+* Do we understand what it costs?
+* Are we wasting resources?
 
-Cloud removes much of the need to buy infrastructure years before it is needed, but it does not automatically make an application cheap.
-
-It can make waste easier to create.
-
-An oversized database running every hour of the year still costs money. So do forgotten development environments, unnecessary data transfers, old snapshots and storage that nobody has reviewed since the application launched.
-
-The cost optimisation pillar looks at delivering the required business value at the lowest appropriate cost.
-
-AWS recommends treating financial management as an ongoing capability rather than looking at the bill after the architecture has been built. Costs should be measurable and attributable so teams understand where money is being spent and can decide whether that expenditure is justified.
-
-This is different from choosing the cheapest architecture.
-
-Adding redundancy may increase cost while substantially improving reliability. Better monitoring creates additional logging and storage costs but may make the service easier to operate. The right answer depends on what the workload needs to achieve.
-
-Cost optimisation means knowing that the extra expense exists and being able to explain why you are paying it.
-
-#### **Sustainability: how much resource does the workload really need?**
-
-Sustainability became the sixth Well-Architected pillar in 2021.
-
-Its focus is the environmental impact of cloud workloads, particularly energy consumption and the efficient use of resources.
-
-There is an obvious overlap with cost optimisation. Switching off resources that nobody uses can reduce both cost and energy consumption.
-
-The sustainability pillar goes further by asking teams to consider the resources required for each useful unit of work. That might mean compute per transaction, storage per user or infrastructure required to process a particular dataset.
-
-AWS guidance includes improving utilisation, removing idle resources, adopting more efficient hardware and software as they become available, using managed services appropriately and reducing unnecessary data processing and movement.
-
-Data retention is a good example. Keeping every log, export, intermediate file and historical dataset indefinitely consumes storage and the infrastructure required to manage it. A sensible lifecycle policy can address cost, security and sustainability at the same time.
-
-That overlap between pillars is normal.
-
-#### **One design decision can affect several pillars**
-
-Consider Auto Scaling.
-
-Adding or removing compute capacity in response to demand can improve reliability because the application is less likely to run out of capacity. It can improve performance because additional resources arrive when demand rises. It can reduce cost by removing capacity when it is no longer needed, and it can improve sustainability by reducing idle resources.
-
-Other decisions pull in different directions.
-
-Adding more infrastructure across Availability Zones can improve reliability while increasing cost and resource consumption. Collecting more telemetry may improve security and operations while increasing storage costs. Caching content can improve performance and reduce load on the origin, but badly designed caching can introduce security or data consistency problems.
-
-There is rarely one architecture that maximises every pillar simultaneously.
-
-AWS explicitly recognises these trade-offs. The useful part is making them visible.
-
-#### **How a Well-Architected review works**
-
-AWS provides the Well-Architected Tool in the AWS console to structure the review.
-
-You define the workload and work through questions covering the six pillars. The questions are designed to establish which recommended practices apply and where the architecture may contain risks.
-
-The tool can identify **high-risk issues** and **medium-risk issues**, which can then feed an improvement plan. A milestone records the state of the workload at a particular point, allowing another review to show how the architecture has changed.
-
-This should not be treated as a one-off exercise immediately before production.
-
-AWS recommends reviewing architectures throughout their lifecycle, including during design, before go-live and after significant architectural changes.
-
-More importantly, AWS describes the review as a conversation rather than an audit.
-
-That changes how it should be used. Finding a high-risk issue does not mean somebody failed an architecture test. It means the team has found something worth understanding and deciding what to do about.
-
-There may even be a legitimate reason for accepting the risk.
-
-The important part is that the decision is visible.
-
-#### **What the framework does not give you**
-
-Well-Architected cannot tell you what your users need, what level of risk your organisation should accept or which business outcome matters most.
-
-It is also not evidence that a workload complies with a particular law, security standard or organisational policy. Those requirements still need their own assessment.
-
-Nor does answering every question once make an architecture permanently well designed.
-
-Cloud services change. Workloads grow. Teams change. New dependencies appear and old assumptions stop being true.
-
-An architecture that was reasonable two years ago may no longer be the best option.
-
-That is why I find the six pillars more useful as questions than as categories.
-
-Can we operate it?
-
-Can we protect it?
-
-Can it survive failure?
-
-Does it perform as required?
-
-Do we understand what it costs?
-
-Are we wasting resources?
-
-If a team can answer those questions with evidence, the architecture diagram becomes considerably more useful. And if it cannot, the Well-Architected Framework gives you somewhere sensible to start looking.
+If a team can answer those with evidence, the architecture diagram becomes considerably more useful. If it cannot, the framework gives you somewhere sensible to start looking.
