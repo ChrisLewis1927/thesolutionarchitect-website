@@ -12,7 +12,7 @@ The biggest mistake new architects make is treating every decision as a technica
 
 Most architecture decisions are really about people, politics, and money. The technical bit is often the easiest part.
 
-#### **The decision that looks technical but isn't**
+# **The decision that looks technical but isn't**
 
 I've seen this scenario play out quite a few times. A team needs to choose between building a custom integration and buying a commercial product. The architect produces a thorough comparison of features, performance, scalability and security. On those measures the custom build clearly wins.
 
