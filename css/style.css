@@ -735,7 +735,7 @@ h4 { font-size: var(--font-size-xl); }
 .article {
   max-width: var(--max-width-content);
   margin: 0 auto;
-  padding: var(--spacing-3xl) var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-3xl);
 }
 
 .article__header {
