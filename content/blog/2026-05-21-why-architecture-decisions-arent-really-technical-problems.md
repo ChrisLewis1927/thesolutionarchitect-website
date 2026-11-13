@@ -22,13 +22,13 @@ The decision was never only about technical merit. It was about risk appetite: t
 
 None of those factors appear in the comparison. But they all shape the decision. An architect who only presents the technical analysis has done half the job.
 
-#### **What architecture decisions are really about**
+# **What architecture decisions are really about**
 
 That build-versus-buy decision turned on four things: risk appetite, timeline, skills and commercial relationships. Two more sit alongside them. One is political context: does the option align with departmental strategy, and will it survive a change of minister? The other is whole-life cost, which is whether the department can afford to run the thing for five years as well as build it.
 
 Risk appetite varies widely between organisations, and even between programmes in the same department, so the balance has to be worked out each time. A good architecture decision weighs all of these alongside technical feasibility. A purely technical one ignores most of them.
 
-#### **The architect's real job**
+## **The architect's real job**
 
 Technical analysis still matters. But the architect's job isn't to find the technically optimal solution. It's to find the solution that best serves the organisation given its constraints.
 
@@ -40,7 +40,7 @@ When you recommend an option that isn't the strongest technically, say so plainl
 
 That recommendation is honest about trade-offs, grounded in context, and defensible to anyone who asks why.
 
-#### **How to make better architecture decisions**
+### **How to make better architecture decisions**
 
 Start by separating the decisions that are yours from the ones that are not. The design is yours to decide. Build versus buy, funding and timeline usually belong to the programme, and there your job is to make sure the people deciding understand what they are choosing.
 
