@@ -17,7 +17,7 @@ Here's what it is and what each of its thirteen points asks teams to do.
 
 The Technology Code of Practice (TCoP, if you're being efficient) is a set of criteria to help government design, build and buy technology. The Government Digital Service publishes it and describes it as the agreed standard for cross-government projects and programmes.
 
-It applies to any technology project, whatever the budget is, and will usually get checked at spend approval: if a department wants to spend above the digital and technology thresholds, the TCoP is one of the standards GDS assurers weigh, alongside value for money and how risky the work is. Which of the TCoP points that will apply to your project is a question for your own department's assurance team. Councils that have signed the Local Digital Declaration have also committed to buying new IT that follows it, where appropriate.
+It applies to any technology project, whatever the budget is, and will usually get checked at spend approval: if a department wants to spend above the digital and technology thresholds, the TCoP is one of the standards GDS assurers weigh, alongside value for money and how risky the work is. Which of the TCoP points that will apply to your project is a question for your own department's assurance team. 
 
 It's not a standard you get certified against, like ISO 27001. It's a checklist of principles, each backed by more detailed guidance, that pushes teams toward good decisions and away from the kinds of mistakes that have produced expensive legacy systems in the past.
 
@@ -75,19 +75,19 @@ Added in late 2021, this point asks teams to think about the environmental impac
 
 If what you're building is a service rather than just back-end technology, you also need to pass the Service Standard, a separate but related set of fourteen points used at service assessments.
 
-#### What it actually changes in practice
+# **What it actually changes in practice**
 
 Reading the points, you might think they're obvious. Most of them are. The TCoP's power isn't in surprising anyone. It's in giving spend control reviewers a shared vocabulary to push back on weak proposals. If a business case says "we'll build this on-premise because that's how we've always done it," a reviewer can point at point 5 and ask for a stronger justification. If a team has skipped user research, point 1 is right there.
 
 It also gives teams something to point at internally. "The TCoP says we need to consider this" carries weight in conversations with senior stakeholders who might otherwise prefer the comfortable option.
 
-\# **Where it falls short**
+# **Where it falls short**
 
 The TCoP is a set of criteria, and how hard it bites depends on who's checking. G-Cloud suppliers are contractually required to help buyers meet it, but a determined department can still produce a business case that ticks every box on paper and ship something nobody asked for. The sustainability point in particular is still light on practical metrics. There's guidance on what to think about, but less on how to measure whether you've done it well.
 
 It's also thin on some of the harder questions. On AI it does little more than point you to the AI Playbook. It has less to say about build-versus-buy when capable suppliers are scarce, or about the long tail of legacy systems that can't realistically meet the standard.
 
-#### The short version
+#** The short version**
 
 If you're working on a public sector technology project in the UK, the TCoP is the document you should be able to recite from memory by the end of your first month. Even if you're outside government, it's a useful lens. Most of the principles travel well to any organisation buying or building digital services.
 
