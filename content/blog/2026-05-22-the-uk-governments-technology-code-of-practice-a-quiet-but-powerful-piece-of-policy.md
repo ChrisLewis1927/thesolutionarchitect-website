@@ -9,7 +9,7 @@ excerpt: "The Technology Code of Practice is a set of criteria used to design,
   sits at the heart of the Cabinet Office spend control process. "
 author: The Solution Architect
 ---
-If you've ever wondered why a particular government service feels coherent, works on your phone, lets you sign in without three printed forms, and doesn't ask you the same question twice, there's a reasonable chance the team behind it was working to the Technology Code of Practice. It rarely gets headlines, but it shapes a lot of what gets built and bought across UK public sector technology.
+If you've ever wondered why a particular government service feels coherent, why it works on your phone, why it lets you sign in without three printed forms or why it doesn't ask you the same question twice, there's a reasonable chance the team behind it was working to the Technology Code of Practice. It rarely gets headlines, but it shapes a lot of what gets built and bought across UK public sector technology.
 
 Here's what it is and what each of its thirteen points asks teams to do.
 
@@ -17,15 +17,15 @@ Here's what it is and what each of its thirteen points asks teams to do.
 
 The Technology Code of Practice (TCoP, if you're being efficient) is a set of criteria to help government design, build and buy technology. The Government Digital Service publishes it and describes it as the agreed standard for cross-government projects and programmes.
 
-It applies to any technology project, whatever the budget. Where it gets checked is at spend approval: if a department wants to spend above the digital and technology thresholds, the TCoP is one of the standards GDS assurers weigh, alongside value for money and how risky the work is. Which points apply to your project is a question for your own department's assurance team. Councils that have signed the Local Digital Declaration have also committed to buying new IT that follows it, where appropriate.
+It applies to any technology project, whatever the budget is, and will usually get checked at spend approval: if a department wants to spend above the digital and technology thresholds, the TCoP is one of the standards GDS assurers weigh, alongside value for money and how risky the work is. Which of the TCoP points that will apply to your project is a question for your own department's assurance team. Councils that have signed the Local Digital Declaration have also committed to buying new IT that follows it, where appropriate.
 
 The current version dates from July 2021 and replaced earlier ones. Sustainability was added as point 12 that November, which moved the Service Standard to point 13, and the page was restructured in October 2026.
 
 It's not a standard you get certified against, like ISO 27001. It's a checklist of principles, each backed by more detailed guidance, that pushes teams toward good decisions and away from the kinds of mistakes that have produced expensive legacy systems in the past.
 
-#** The thirteen points**
+# **The thirteen points**
 
-##### 1. Define user needs
+### 1. Define user needs
 
 Start with research. Understand who you're building for and what they need to do, rather than building what someone in a meeting room assumed they need. This is the principle that links the TCoP to the wider Government Design Principles and the Service Standard.
 
@@ -83,7 +83,7 @@ Reading the points, you might think they're obvious. Most of them are. The TCoP'
 
 It also gives teams something to point at internally. "The TCoP says we need to consider this" carries weight in conversations with senior stakeholders who might otherwise prefer the comfortable option.
 
-#** Where it falls short**
+\# **Where it falls short**
 
 The TCoP is a set of criteria, and how hard it bites depends on who's checking. G-Cloud suppliers are contractually required to help buyers meet it, but a determined department can still produce a business case that ticks every box on paper and ship something nobody asked for. The sustainability point in particular is still light on practical metrics. There's guidance on what to think about, but less on how to measure whether you've done it well.
 
