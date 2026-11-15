@@ -27,7 +27,7 @@ It's not a standard you get certified against, like ISO 27001. It's a checklist 
 
 Start with research. Understand who you're building for and what they need to do, rather than building what someone in a meeting room assumed they need. This is the principle that links the TCoP to the wider Government Design Principles and the Service Standard.
 
-### 2. Make things accessible and inclusive
+## 2. Make things accessible and inclusive
 
 Technology paid for by the public has to work for the public. That includes disabled users, people on low-spec devices, and people whose English is shaky. For public sector websites and apps, meeting accessibility standards is a legal requirement, not just a framework or nice to have. 
 
