@@ -21,13 +21,13 @@ It applies to any technology project, whatever the budget is, and will usually g
 
 It's not a standard you get certified against, like ISO 27001. It's a checklist of principles, each backed by more detailed guidance, that pushes teams toward good decisions and away from the kinds of mistakes that have produced expensive legacy systems in the past.
 
-# The thirteen points
+# **The thirteen points**
 
-## 1. Define user needs
+## **1. Define user needs**
 
 Start with research. Understand who you're building for and what they need to do, rather than building what someone in a meeting room assumed they need. This is the principle that links the TCoP to the wider Government Design Principles and the Service Standard.
 
-### 2. Make things accessible and inclusive
+## 2. Make things accessible and inclusive
 
 Technology paid for by the public has to work for the public. That includes disabled users, people on low-spec devices, and people whose English is shaky. For public sector websites and apps, meeting accessibility standards is a legal requirement, not just a framework or nice to have. 
 
