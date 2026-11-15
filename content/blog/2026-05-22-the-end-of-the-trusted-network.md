@@ -16,29 +16,25 @@ That model no longer works on its own. It has been failing for years, but the pa
 
 # **Why the walls came down**
 
-Three things broke the perimeter, and none of them are reversing.
+Three things broke the perimeter, and none of them are reversing:
 
-Your applications left the data centre. They're in AWS, Azure, three different SaaS platforms, and a vendor's environment you don't even have a contract with. The perimeter you spent years hardening now wraps around an empty building.
-
-Your users left the office. They work from kitchens and trains and hotel lobbies, on devices you may or may not own. Routing everything through the corporate VPN became a bottleneck, and a successful VPN login said nothing about whether the person or the device behind it deserved access to everything on the other side.
-
-And attackers got better. Phishing a credential, compromising a contractor, slipping malware into a software update: the NCSC describes it as [common in breaches](https://www.ncsc.gov.uk/collection/zero-trust/introduction) for an attacker to gain a foothold and then move sideways, because everything already on the network is trusted. Once they were in, the castle worked against the defender.
+1. **Your applications left the data centre:** They're in AWS, Azure, three different SaaS platforms, and a vendor's environment you don't even have a contract with. The perimeter you spent years hardening now wraps around an empty building.
+2. **Your users left the office:** They work from kitchens and trains and hotel lobbies, on devices you may or may not own. Routing everything through the corporate VPN became a bottleneck, and a successful VPN login said nothing about whether the person or the device behind it deserved access to everything on the other side.
+3. **Attackers got better:** Phishing a credential, compromising a contractor, slipping malware into a software update. the NCSC describes it as [common in breaches](https://www.ncsc.gov.uk/collection/zero-trust/introduction) for an attacker to gain a foothold and then move sideways, because everything already on the network is trusted. Once they were in, the castle worked against the defender.
 
 "Inside the network" was only ever a stand-in for "trustworthy", and it stopped being a good one.
 
 # **What Zero Trust actually means**
 
-Zero Trust, a term [John Kindervag coined at Forrester in 2010](https://www.nist.gov/blogs/taking-measure/zero-trust-cybersecurity-never-trust-always-verify), is the response to all of this. The shorthand is "never trust, always verify". Every request, whether internal or external, human or machine, on a corporate laptop or a personal phone, gets authenticated and authorised on its own merits. Network location stops being enough on its own. Identity, device and context carry the decision.
+Zero Trust, a term [John Kindervag coined at Forrester in 2010](https://www.nist.gov/blogs/taking-measure/zero-trust-cybersecurity-never-trust-always-verify), is the response to all of this. The shorthand is "never trust, always verify". Every request, whether internal or external, human or machine, on a corporate laptop or a personal phone, gets authenticated and authorised on its own merits. Network location stops being enough on its own, identity, device and context carry the decision.
 
-The name oversells it slightly. As the NCSC [points out](https://www.ncsc.gov.uk/collection/zero-trust/demystifying-zero-trust), there is plenty of trust in a zero trust architecture. It has to be earned for each request and can't be inherited from the network.
+The name does oversell it slightly. As the NCSC [points out](https://www.ncsc.gov.uk/collection/zero-trust/demystifying-zero-trust), there is plenty of trust in a zero trust architecture, it just has to be earned for each request, and can't be inherited from the network.
 
-[Microsoft's three guiding principles](https://learn.microsoft.com/en-gb/security/zero-trust/) are the most quoted summary.
+[Microsoft's three guiding principles](https://learn.microsoft.com/en-gb/security/zero-trust/) are the most quoted summary:
 
-**Assume breach:** Design as though the attacker is already on your network. Once you do, encrypting internal traffic and microsegmentation look like common sense.
-
-**Verify explicitly:** Make access decisions on everything you know: who the user is, whether their device is healthy, where they're coming from, what they're trying to reach, whether the request looks anything like their normal behaviour. No single factor is enough.
-
-**Least privilege:** Give the minimum access required, for the shortest sensible duration. When something does go wrong, and it eventually will, you want the damage to stay small.
+1. **Assume breach:** Design as though the attacker is already on your network. Once you do, encrypting internal traffic and microsegmentation look like common sense.
+2. **Verify explicitly:** Make access decisions on everything you know: who the user is, whether their device is healthy, where they're coming from, what they're trying to reach, whether the request looks anything like their normal behaviour. No single factor is enough.
+3. **Least privilege:** Give the minimum access required, for the shortest sensible duration. When something does go wrong, and it eventually will, you want the damage to stay small.
 
 The NCSC's [eight zero trust architecture design principles](https://www.ncsc.gov.uk/collection/zero-trust/architecture-design-principles) cover the same ground in more detail, and they are the better reference for a UK government design.
 
