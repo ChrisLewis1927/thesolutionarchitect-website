@@ -16,7 +16,7 @@ That model no longer works on its own. It has been failing for years, but the pa
 
 # **Why the walls came down**
 
-Three things broke the perimeter, and none of them are reversing:
+Three things broke the perimeter, and none of them are reversing.
 
 1. **Your applications left the data centre:** They're in AWS, Azure, three different SaaS platforms, and a vendor's environment you don't even have a contract with. The perimeter you spent years hardening now wraps around an empty building.
 2. **Your users left the office:** They work from kitchens and trains and hotel lobbies, on devices you may or may not own. Routing everything through the corporate VPN became a bottleneck, and a successful VPN login said nothing about whether the person or the device behind it deserved access to everything on the other side.
@@ -28,7 +28,7 @@ Three things broke the perimeter, and none of them are reversing:
 
 Zero Trust, a term [John Kindervag coined at Forrester in 2010](https://www.nist.gov/blogs/taking-measure/zero-trust-cybersecurity-never-trust-always-verify), is the response to all of this. The shorthand is "never trust, always verify". Every request, whether internal or external, human or machine, on a corporate laptop or a personal phone, gets authenticated and authorised on its own merits. Network location stops being enough on its own, identity, device and context carry the decision. The name does oversell it slightly. As the NCSC [points out](https://www.ncsc.gov.uk/collection/zero-trust/demystifying-zero-trust), there is plenty of trust in a zero trust architecture, it just has to be earned for each request, and can't be inherited from the network.
 
-[Microsoft's three guiding principles](https://learn.microsoft.com/en-gb/security/zero-trust/) are the most quoted summary:
+[Microsoft's three guiding principles](https://learn.microsoft.com/en-gb/security/zero-trust/) are the most quoted summary.
 
 1. **Assume breach:** Design as though the attacker is already on your network. Once you do, encrypting internal traffic and microsegmentation look like common sense.
 2. **Verify explicitly:** Make access decisions on everything you know. Who the user is, whether their device is healthy, where they're coming from, what they're trying to reach, whether the request looks anything like their normal behaviour. No single factor is enough.
@@ -60,7 +60,7 @@ For anyone designing or building services in UK government, zero trust is becomi
 
 It's interesting to compare this with the United States, where the government took a more prescriptive approach. In 2022, the White House issued memorandum [M-22-09](https://zerotrust.cyber.gov/federal-zero-trust-strategy), requiring federal civilian agencies to work towards a defined zero trust security strategy.
 
-But here's the thing: whether zero trust is mandatory or not, you're increasingly likely to be asked about it. In my experience, these questions regularly come up during design reviews and architecture governance boards, where fellow architects and cyber security teams want to understand how a proposed solution approaches identity, access and security. Simply pointing to a VPN and a perimeter firewall isn't going to be enough. You'll need to explain how your design protects individual resources, verifies who's accessing them and limits what they can do once they're inside.
+But here's the thing, whether zero trust is mandatory or not, you're increasingly likely to be asked about it. In my experience, these questions regularly come up during design reviews and architecture governance boards, where fellow architects and cyber security teams want to understand how a proposed solution approaches identity, access and security. Simply pointing to a VPN and a perimeter firewall isn't going to be enough. You'll need to explain how your design protects individual resources, verifies who's accessing them and limits what they can do once they're inside.
 
 # **Where to start**
 
