@@ -21,7 +21,7 @@ It applies to any technology project, whatever the budget is, and will usually g
 
 It's not a standard you get certified against, like ISO 27001. It's a checklist of principles, each backed by more detailed guidance, that pushes teams toward good decisions and away from the kinds of mistakes that have produced expensive legacy systems in the past.
 
-# **The thirteen points**
+# The thirteen points
 
 ## 1. Define user needs
 
