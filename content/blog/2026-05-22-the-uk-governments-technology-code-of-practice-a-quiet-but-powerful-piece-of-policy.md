@@ -23,23 +23,23 @@ It's not a standard you get certified against, like ISO 27001. It's a checklist 
 
 # **The thirteen points**
 
-### 1. Define user needs
+## 1. Define user needs
 
 Start with research. Understand who you're building for and what they need to do, rather than building what someone in a meeting room assumed they need. This is the principle that links the TCoP to the wider Government Design Principles and the Service Standard.
 
-## 2. Make things accessible and inclusive
+### 2. Make things accessible and inclusive
 
 Technology paid for by the public has to work for the public. That includes disabled users, people on low-spec devices, and people whose English is shaky. For public sector websites and apps, meeting accessibility standards is a legal requirement, not just a framework or nice to have. 
 
-### 3. Be open and use open source
+#### 3. Be open and use open source
 
 Publish code by default. Use open source where it fits. The reasoning is transparency, but also accountability: it's harder to hide a bad decision in a public GitHub repo, and other teams can reuse what you've built.
 
-### 4. Make use of open standards
+##### 4. Make use of open standards
 
 Build on open standards so your kit can talk to other kit. This is the principle that prevents a department buying a system today that can't exchange data with a system bought three years from now.
 
-### 5. Use cloud first
+###### 5. Use cloud first
 
 Consider public cloud before anything else. Cloud First has been policy since 2013 and the guidance was last reviewed in 2023. It's mandatory for central government and strongly recommended for everyone else. You can still choose something else, but you have to evidence the decision, the business case and the value for money.
 
@@ -87,7 +87,7 @@ The TCoP is a set of criteria, and how hard it bites depends on who's checking. 
 
 It's also thin on some of the harder questions. On AI it does little more than point you to the AI Playbook. It has less to say about build-versus-buy when capable suppliers are scarce, or about the long tail of legacy systems that can't realistically meet the standard.
 
-#** The short version**
+\# **The short version**
 
 If you're working on a public sector technology project in the UK, the TCoP is the document you should be able to recite from memory by the end of your first month. Even if you're outside government, it's a useful lens. Most of the principles travel well to any organisation buying or building digital services.
 
