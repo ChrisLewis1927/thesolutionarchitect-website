@@ -12,21 +12,21 @@ author: The Solution Architect
 ---
 There's a particular kind of stuck that nobody warns you about.
 
-You can run a good discovery session. You can get the right people in the room, ask sensible questions, separate the must-haves from the nice-to-haves, and write up a requirements document that's solid. You understand the business problem better than anyone. And then someone says "great, so what's the design?" and you realise you have no idea how to get from the pile of requirements in front of you to a diagram with boxes on it.
+You can run a good discovery session, get the right people in the room, ask sensible questions, separate the must-haves from the nice-to-haves, and write up a requirements document that's solid. You understand the business problem better than anyone, and then someone says "great, so what's the design?" and you realise you have no idea how to get from the pile of requirements in front of you to a diagram with boxes on it.
 
-It's one of the most common places to get stuck, especially if you came into architecture from the business or functional side. The requirements are never the problem. The blank canvas is. Almost nobody gets shown the bit in the middle, the actual mechanics of turning "here is what it must do" into "here is how it will be built."
+It's one of the most common places to get stuck, especially if you came into architecture from the business or functional side. The requirements are never the problem, the blank canvas is. Almost nobody gets shown the bit in the middle, the actual mechanics of turning "here is what it must do" into "here is how it will be built."
 
 It turns out there is a method, and anyone can learn it. This is the part every new architect should be handed on day one.
 
-#** The design is hiding in the requirements**
+# **The design is hiding in the requirements**
 
 The first thing to unlearn is the idea that you invent a design. A good high-level design is mostly assembled from the constraints you've already captured. Every meaningful requirement points at a decision, and if you've done discovery properly the requirements have quietly made most of the big calls for you. The job is to read them in the right order and let them push you towards the shape.
 
-Which means the design work starts back in discovery, with the questions you ask. The technical ones matter as much as the functional ones, and they're the ones business-trained architects tend to skip. How quickly must the service recover if it falls over? (You'll hear this called the recovery time objective, or RTO.) How much data can it afford to lose? (That's the recovery point objective, RPO. AWS has [a clear explanation of both](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/disaster-recovery-dr-objectives.html).) How spiky is the traffic, and are there several different spikes? How sensitive is the data, and where must it legally live? Who runs this once it's built, and do they want to manage servers at all? None of those are feature questions. All of them are design questions wearing requirement clothes.
+This means the design work starts in discovery, with the questions you ask. The technical ones matter as much as the functional ones, and they're the ones business-trained architects tend to skip. How quickly must the service recover if it falls over? (You'll hear this called the recovery time objective, or RTO.) How much data can it afford to lose? (That's the recovery point objective, RPO. AWS has [a clear explanation of both](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/disaster-recovery-dr-objectives.html).) How spiky is the traffic, and are there several different spikes? How sensitive is the data, and where must it legally live? Who runs this once it's built, and do they want to manage servers at all? None of those are feature questions. All of them are design questions wearing requirement clothes.
 
 If a stakeholder can't answer one of them, that's not a dead end. That's a finding. Write down the assumption you're making and flag it. An unanswered "how fast must it recover" is itself a design input, because it tells you the organisation hasn't thought about resilience, and now you get to lead that conversation.
 
-#**Read the requirements as decisions**
+# **Read the requirements as decisions**
 
 Once you have the answers, the trick is to stop reading requirements as a feature list and start reading them as a series of forks in the road.
 
@@ -34,7 +34,7 @@ Once you have the answers, the trick is to stop reading requirements as a featur
 
 Get into the habit of asking, for every requirement, "what does this force me to choose?" Do it line by line and you'll find the architecture starts to assemble itself in front of you. Many requirements only point one way once you know what you're looking at. The ones that don't are where [the real trade-offs live](https://thesolutionarchitect.uk/why-architecture-decisions-arent-really-technical-problems).
 
-#**Lean on patterns instead of starting blank**
+# **Lean on patterns instead of starting blank**
 
 Here's the part that closes the gap fastest. You almost never design from nothing, because the problem in front of you is nearly always a variation on a problem that has been solved thousands of times. Experienced architects have simply seen the shapes before and recognise which one they're looking at.
 
