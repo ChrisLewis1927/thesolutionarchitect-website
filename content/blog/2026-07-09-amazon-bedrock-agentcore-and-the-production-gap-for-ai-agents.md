@@ -7,158 +7,88 @@ excerpt: AI agents are easy to demo and hard to run safely. Amazon Bedrock
   production workloads.
 author: The Solution Architect
 ---
-I came away from AWS Summit Washington with one thought that has stuck with me: building an AI agent is not the hard bit.
-
-That sounds wrong, because agents still feel new. They reason, call tools, remember context, interact with systems, and sometimes behave in ways that are difficult to predict. But as a proof of concept, the barrier has fallen quickly. A developer can now stitch together a model, a framework, a prompt, a few tools and a bit of memory in a surprisingly short amount of time.
-
-The hard part starts when someone asks whether that agent is allowed anywhere near a real business process.
-
-That is the gap Amazon Bedrock AgentCore is trying to close. It is not another foundation model. It is not just a better chatbot wrapper. It is AWS's attempt to provide the boring production plumbing around agents: runtime isolation, identity, tool access, memory, policy, observability, evaluation and lifecycle management.
-
-Boring is doing a lot of work there. In architecture, boring is usually where the system becomes real.
-
-#### **The demo is not the system**
-
-Most agent demos follow the same pattern. A user asks for something. The model reasons about it. It calls a tool. The tool returns something useful. The model gives a tidy answer. Everyone nods because the demo has crossed a line that normal chatbots could not cross: it has done something.
-
-That is also where the risk changes.
-
-A chatbot that gives a poor answer creates an information problem. An agent that calls a tool creates an action problem. It might read a customer record, raise a ticket, update a CRM opportunity, run code, query a database, send an email, or trigger a workflow. Once you let a model take action, the architecture has to answer harder questions.
-
-Who is the agent acting for? What is it allowed to call? What data can it see? What happens if the prompt is manipulated? Where does memory live? How do you prove what happened afterwards? How do you test a system that can take different paths on different runs?
-
-Those are not prompt engineering questions. They are architecture questions.
-
-#### **What AgentCore is actually for**
-
-AWS describes Amazon Bedrock AgentCore as an agentic platform for building, deploying and operating agents securely at scale, using any framework and foundation model. The current documentation is explicit that the services can be used together or independently, and that they work with open source frameworks as well as models hosted inside or outside Amazon Bedrock.
-
-That matters, because organisations rarely arrive with a clean slate. One team may be using LangGraph. Another may have built around Strands Agents. A supplier may already have something running against a non-AWS model. A platform that only works if everyone rewrites everything in one approved framework is not much of a platform.
-
-The more useful framing is this: AgentCore is a set of managed services for the things teams otherwise have to build around the agent.
-
-![](/images/blog/chatgpt-image-jul-9-2026-11_56_16-pm.png)
-
-The components have grown since the original launch, but the architectural shape is consistent. You need somewhere to run the agent. You need a way for it to authenticate and access tools. You need memory. You need a safe way to execute code or interact with websites. You need policy controls. You need telemetry. You need evaluation. Eventually, if agents spread across an organisation, you need a registry so people can find and govern what already exists.
-
-None of that makes the agent intelligent by itself. It makes the agent operable.
-
-#### **Runtime: where the agent actually lives**
-
-The first production problem is hosting. A local script is fine for a demo, but it is not enough when an agent needs to handle real users, long-running tasks, stateful reasoning and unpredictable execution paths.
-
-AgentCore Runtime is AWS's managed hosting environment for agents and tools. The documentation describes it as secure, serverless and purpose-built for deploying and running AI agents or tools. It supports different frameworks, different large language models, Model Context Protocol and Agent-to-Agent communication. It also provides session isolation, with each user session running in a dedicated microVM with isolated CPU, memory and filesystem resources.
-
-![](/images/blog/agentcore-runtime-architecture-overview.png)
-
-That isolation point is worth pausing on. Agents are messy workloads. They can reason over intermediate state, generate files, call tools, resume work, and maintain context over time. If one user's session can bleed into another's, the architecture has failed before the model has even answered.
-
-Session isolation does not remove every risk, but it gives architects a much better starting position than a shared runtime with optimistic assumptions.
-
-#### **Memory: useful, dangerous, necessary**
-
-Agents need memory because useful work rarely happens in a single turn. A support agent needs to know what the customer already said. A workflow agent needs to know what step it reached. A personal assistant needs to remember preferences. A multi-agent system may need shared state between specialist agents.
-
-AgentCore Memory is AWS's managed service for short-term and long-term agent memory. The documentation separates short-term memory, which captures turn-by-turn context within a session, from long-term memory, which can retain key facts, preferences and summaries across sessions. 
-
-![](/images/blog/agentcore-memory-system-diagram.png)
-
-This is useful, but it should make architects nervous in exactly the right way.
-
-Memory is not just a feature. It is a data store. It needs data classification, retention rules, access control, deletion behaviour and auditability. The question is not simply whether an agent can remember. The question is what it is allowed to remember, for how long, for whom, and under what governance.
-
-A stateless agent may be limited. A careless stateful agent may be worse.
-
-#### **Gateway and Identity: tool access is the real boundary**
-
-The most important part of an agent is often not the model. It is the tool it is allowed to call.
-
-AgentCore Gateway provides a managed way to connect agents to tools, other agents and models through a secure entry point. AWS says Gateway can convert APIs, Lambda functions and existing services into MCP-compatible tools, and can handle both ingress and egress authentication in a managed service.
-
-![](/images/blog/agentcore-gateway-architecture-overview.png)
-
-AgentCore Identity then deals with the related identity and credential problem. AWS describes it as an identity and credential management service for AI agents and automated workloads, supporting authentication, authorisation and credential management so agents and tools can access AWS resources and third-party services on behalf of users while maintaining security controls and audit trails. 
-
-This is the architectural centre of gravity.
-
-Without a proper identity model, an agent becomes a strange shared service account with better vocabulary. It can do things, but nobody can confidently explain on whose behalf it acted. Without a proper tool gateway, every integration becomes a bespoke trust decision hidden inside code.
-
-That is not sustainable. Agents need to be treated as workloads with identities, permissions and controlled tool access. The model should not be the security boundary. The platform around it should be.
-
-#### **Browser and Code Interpreter: when agents touch the outside world**
-
-Two AgentCore capabilities are especially interesting because they deal with actions that are powerful and risky: browsing the web and executing code.
-
-AgentCore Browser provides an isolated browser environment for agents to interact with web applications. AWS describes session isolation, live viewing, CloudTrail logging and session replay capabilities as part of the browser tooling.
-
-AgentCore Code Interpreter gives agents a sandboxed environment for writing and running code. The documentation positions this as a way to improve accuracy and handle complex tasks, while avoiding the risk of running arbitrary model-generated code in an unsafe environment. 
-
-These are the sort of features that can look like magic in a demo. They are also the sort of features that will rightly attract scrutiny in design review.
-
-Can the agent download files? Can it upload them? Can it browse authenticated systems? Can a human watch or intervene? Are sessions recorded? Where are those recordings stored? What network access does the sandbox have? What happens if generated code tries to reach something it should not?
-
-Again, these are not objections to agents. They are the questions that make agents deployable.
-
-#### **Policy: guardrails need to sit outside the model**
-
-A common mistake is assuming the agent can be instructed into safety. Give it a clear system prompt. Tell it not to do dangerous things. Ask it to be careful. Hope the model obeys.
-
-That is not enough.
-
-AgentCore Policy is designed to enforce controls around agent-to-tool interactions. AWS says Policy can intercept agent traffic through AgentCore Gateway and evaluate each request against policies before allowing tool access. Policies can be written in Cedar, AWS's open source policy language, and AWS also describes natural language policy authoring that generates and validates candidate policies. 
-
-![](/images/blog/agentcore-policy-flow-diagram.png)
-
-The important point is where the control sits. If policy is buried inside the prompt, the agent can misunderstand it, ignore it, or be manipulated around it. If policy sits outside the agent code at the tool boundary, you get something closer to a normal enterprise control: deterministic, inspectable and auditable.
-
-For architects, that is the difference between asking an agent to behave and designing a system that limits what it can do.
-
-#### **Observability and evaluation: logs are not enough**
-
-Traditional application monitoring tells you whether a service is up, how long it took to respond, and whether it threw an error. Agents need that, but they need more.
-
-You need to see the route the agent took: the model calls, the reasoning steps, the tool invocations, the intermediate outputs, the latency, the token usage and the failure points. AgentCore Observability is intended to provide traces, debugging and monitoring for agent performance, with telemetry stored in Amazon CloudWatch and emitted in OpenTelemetry-compatible format. 
-
-Evaluation is the other half of that story. AgentCore Evaluations provides automated assessment for how agents and tools perform tasks, handle edge cases and maintain consistency across different inputs and contexts. AWS says it supports built-in and custom evaluators, using traces from supported frameworks and LLM-as-a-judge techniques. 
-
-![](/images/blog/wo-evaluation-modes-comparison.png)
-
-This is important because agents are not deterministic in the same way as traditional services. You cannot rely only on unit tests and a happy-path demo. You need evidence over time. Did the agent choose the right tool? Did it stay inside policy? Did it complete the task? Did it expose data? Did it degrade after a prompt change, model change or tool update?
-
-The production question is not "does it work once?" It is "how do we know it keeps working acceptably?"
-
-#### **Registry: when agents become a platform problem**
-
-One agent is a project. Ten agents are a platform problem.
-
-AWS Agent Registry is currently documented as a managed discovery service for organising, curating and discovering resources such as MCP servers, tools, agents, agent skills and custom resources. The documentation describes approval workflows, semantic and keyword search, and access through public APIs or an MCP endpoint. 
-
-That becomes relevant as soon as multiple teams start building. Without a registry, teams duplicate tools, rebuild similar agents, lose track of what is approved, and create quiet technical debt. A registry does not solve governance by itself, but it gives governance somewhere to live.
-
-For larger organisations, that may be one of the more important parts of the platform. The difficult question will not be whether an agent can be built. It will be whether the organisation knows what agents already exist, who owns them, what they can access, and whether they should still be running.
-
-#### **What this changes for architects**
-
-AgentCore does not remove the need for architecture. It changes the shape of the conversation.
-
-The old question was: can we build an agent that does this?
-
-The better question is: can we operate an agent that does this safely, measurably and within boundaries?
-
-That leads to a different checklist.
-
-What identity does the agent use? What identity does the user use? Which tools are exposed, and through what gateway? What policies are enforced outside the model? What memory is retained? What is the data classification? What telemetry is captured? What evaluations prove the agent is good enough? What happens when the model, prompt, tool schema or business rule changes? Who owns the agent after go-live?
-
-Those are familiar architecture questions wearing new clothes. Identity, access control, integration, observability, resilience, audit, data governance, lifecycle management. Agentic AI has not made those things obsolete. It has made them more visible.
-
-#### **Where I would start**
-
-The worst way to approach this is to declare an enterprise agent strategy and start with the platform diagram.
-
-Start with one narrow workflow where an agent has a genuine reason to exist. Pick something with a clear user goal, a limited set of tools, visible risk boundaries and a measurable outcome. Build the agent, but design the production wrapper at the same time: identity, permissions, memory, policy, observability and evaluation.
-
-Do not wait until the demo is popular before asking those questions. By then the architecture debt has already formed.
-
-AgentCore is interesting because it acknowledges the thing that tends to be missing from agent hype. The value is not just in making agents clever. The value is in making them governable enough to use.
-
-That is the gap between a prototype and a system. It is also where solution architects need to be paying attention.
+I came away from AWS Summit Washington with one thought that has stuck with me, and it's that building an AI agent isn't really the hard bit any more.
+ 
+That sounds odd, because agents still feel new. They reason, call tools, remember context and occasionally do things nobody predicted. Yet the barrier to a working proof of concept has fallen remarkably quickly, and a developer can now stitch together a model, a prompt, a few tools and a little memory in a surprisingly short time. The hard part starts later, when someone asks whether that agent should be allowed anywhere near a real business process.
+ 
+That's the gap Amazon Bedrock AgentCore is trying to close. Rather than another foundation model or a smarter chatbot wrapper, it's AWS's attempt to supply the boring production plumbing an agent needs before anyone can trust it. Boring is the important word there, because in architecture the boring parts are usually where a system becomes real.
+ 
+# **The demo is not the system**
+ 
+Most agent demos follow a familiar pattern. A user asks for something, the model reasons about it, calls a tool and replies with a tidy answer, and everyone nods because the demo has crossed a line that ordinary chatbots never could. It has actually done something, and that's exactly where the risk changes. A chatbot that gives a poor answer creates an information problem, whereas an agent that calls a tool creates an action problem.
+ 
+Let's make that concrete with an example I'll come back to as we go. Imagine an agent that helps a council caseworker handle a change-of-circumstances request by reading the resident's case record, checking the eligibility rules, updating the record and drafting a letter. Straight away you need to know whose authority it's acting under, what it can see and call, and what happens if someone slips a malicious instruction into the request. You also need to know where its memories are kept, how you'd prove what it did, and how you'd test something that might take a different route every time. Those are architecture questions rather than prompt-engineering ones.
+ 
+# **What AgentCore is actually for**
+ 
+AWS describes [AgentCore](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html) as an agentic platform for building, deploying and operating agents securely at scale with any framework and any foundation model. You can use its services together or on their own, with open-source frameworks such as LangGraph, CrewAI and Strands Agents, and with models hosted inside or outside Amazon Bedrock.
+ 
+That flexibility matters more than it might first appear, because organisations rarely arrive with a clean slate. One team might be using LangGraph while a supplier is already running something against a non-AWS model, and a platform that only works once everyone has rewritten everything in one approved framework isn't much of a platform.
+ 
+The most useful way I've found to think about AgentCore is as a set of managed services for everything a team would otherwise build around the agent themselves. The family has grown since launch, with extras such as Harness, a managed agent loop, but the services below are the ones that decide whether an agent is ready for production. They won't make it any cleverer, but they will make it something you can operate.
+ 
+# **Runtime gives the agent somewhere to live**
+ 
+The first production problem is simply hosting. A script on a laptop is fine for a demo, but it won't cope with real users, long-running tasks and the unpredictable paths agents tend to take.
+ 
+[AgentCore Runtime](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html) is AWS's managed, serverless hosting for agents and tools, and it speaks both the Model Context Protocol (MCP) and Agent-to-Agent (A2A). With the microVM compute type, each user session gets a dedicated microVM with its own CPU, memory and filesystem, which is shut down and sanitised when the session ends.
+ 
+That isolation is worth pausing on, because agents hold intermediate state, generate files and pick up where they left off. If one caseworker's session could bleed into another's, the architecture would have failed before the model had answered a single question. There are two caveats, though. Since August 2026 Runtime has also offered an Instances compute type that can host several collaborating agents on one shared instance, so check which isolation model you're actually getting. AWS is also clear that [Runtime doesn't map sessions to users for you](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-security-best-practices.html), so your own backend still has to make sure a session belongs to the person using it.
+ 
+# **Memory is a data store, so govern it like one**
+ 
+Agents need memory because useful work rarely happens in a single turn. Our caseworker's agent has to remember what the resident has already said and which step it has reached. [AgentCore Memory](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory.html) handles this in two layers, with short-term memory capturing the conversation within a session and long-term memory keeping important facts, preferences and summaries across sessions.
+ 
+That's genuinely useful, and it should also make architects nervous in exactly the right way, because memory is a data store in everything but name. It needs classification, retention rules, access control, deletion and audit like any other store holding personal data. The real question is what the agent is allowed to remember, for how long, about whom and under whose governance. AWS added time-to-live for long-term memory records in October 2026, which helps, but somebody still has to decide what the right period is. A stateless agent might be limited, but a careless stateful one can be far worse.
+ 
+# **Gateway and Identity decide what the agent can touch**
+ 
+If I had to point to the most important part of an agent, I'd usually point at the tools it's allowed to call rather than at the model. [AgentCore Gateway](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html) gives agents a single, secure entry point to tools, other agents and models. It can turn existing APIs, Lambda functions and services into MCP-compatible tools, and it handles authentication in both directions, checking who's allowed in and presenting the right credentials to each tool on the way out. [AgentCore Identity](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html) treats each agent as a workload identity and manages the credentials it needs to act on a user's behalf, keeping an audit trail as it goes.
+ 
+Together these form the architectural centre of gravity. Without a proper identity model, an agent becomes a strange shared service account with a better vocabulary, and nobody can confidently say on whose behalf it acted. Without a proper gateway, every integration becomes a bespoke trust decision buried in the code. In our example, the agent should update the case record as that caseworker, with that caseworker's permissions, and never as an all-powerful system user. The security boundary belongs in the platform around the model rather than in the model itself.
+ 
+# **Browsing the web and running code**
+ 
+Two capabilities deserve a closer look because they're both powerful and risky. [AgentCore Browser](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/browser-tool.html) gives agents an isolated browser for working with web applications, with a live view so a person can watch or step in, optional session recording to your own S3 bucket, and CloudTrail logging. [AgentCore Code Interpreter](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/code-interpreter-tool.html) gives agents a sandbox for writing and running code, and you decide how far that sandbox can reach, from limited access to AWS services through to the public internet or private resources inside your own VPC.
+ 
+These are the features that look like magic in a demo and, quite rightly, attract the most scrutiny in a design review. You'll want to know what files can move in and out, which systems the agent can sign in to, who can watch the recordings and which network mode the sandbox genuinely needs. Asking isn't an objection to agents, because the answers are precisely what make one deployable.
+ 
+# **Policy belongs outside the model**
+ 
+A common mistake is assuming an agent can be instructed into safety with a careful system prompt. AWS's own [Well-Architected guidance for agentic AI](https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsec02-bp01.html) is blunt that authorisation done only through prompt instructions isn't enough, because prompts can be manipulated.
+ 
+[AgentCore Policy](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html) sits on the Gateway instead, intercepting the agent's tool calls and checking each one against your policies before letting it through. Policies are written in Cedar, AWS's open-source policy language, or in Dogwood, a newer superset of Cedar that AWS now recommends. If you'd rather not learn either, you can describe a rule in plain English and let the service draft and validate one for you. In our example, a policy could refuse any payment change above a set amount, or allow it only for users with a particular role, whatever the prompt happened to say.
+ 
+What matters is where the control sits. A rule buried in the prompt can be misunderstood, ignored or argued around, whereas a rule enforced at the tool boundary behaves like any other enterprise control because it's deterministic, inspectable and auditable. That's the difference between asking an agent to behave and designing a system that limits what it can do.
+ 
+# **Observability and Evaluations tell you it still works**
+ 
+Traditional monitoring tells you whether a service is up, how quickly it responded and whether it threw an error. With an agent you also want to see the route it took, every model call and tool invocation along the way, and the point where things went wrong. [AgentCore Observability](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html) provides that tracing in an OpenTelemetry-compatible format and stores it in Amazon CloudWatch, so it can feed the monitoring you already run.
+ 
+[AgentCore Evaluations](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations.html) is the other half of the story. It scores how well agents complete tasks, handle edge cases and stay consistent, using built-in evaluators that rely on a model as the judge, alongside custom evaluators written as judge prompts or as code in a Lambda function. That matters because agents aren't deterministic in the way traditional services are, so a happy-path demo proves very little. What you need is evidence, gathered over time, that the agent picks the right tool, stays inside policy and survives changes to its prompt, model or tools. In production, the question is whether it keeps working acceptably, not whether it worked once.
+ 
+# **When one agent becomes ten**
+ 
+One agent is a project, but ten agents are a platform problem. [AWS Agent Registry](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry.html), generally available since August 2026, is a managed catalogue where teams publish agents, MCP servers, tools and skills, approve them through a workflow and let people and agents search for what already exists.
+ 
+Without something like it, teams duplicate tools, rebuild similar agents and lose track of what's been approved. A registry won't solve governance on its own, and AWS points out that it doesn't verify the packages or endpoints that records point to, but it does give governance somewhere to live. For a larger organisation the hard question soon becomes whether anyone knows which agents exist, who owns them, what they can reach and whether they should still be running.
+ 
+# **What this changes for architects**
+ 
+AgentCore doesn't remove the need for architecture, but it does change the shape of the conversation. The old question was whether we could build an agent that does this, and the better one is whether we can operate it safely, measurably and within clear boundaries. Before go-live, I'd want clear answers to these questions.
+ 
+- Which identity does the agent use, and which does the user use?
+- Which tools are exposed, and through which gateway?
+- Which policies are enforced outside the model?
+- What does the agent remember, and how is that data classified and retained?
+- What telemetry is captured, and which evaluations prove the agent is good enough?
+- What happens when the model, prompt, tools or business rules change, and who owns the agent after go-live?
+Those are familiar architecture questions wearing new clothes. Agentic AI hasn't made identity, access control, observability, audit or data governance obsolete, and if anything it has made them far more visible.
+ 
+# **Where I would start**
+ 
+The worst way to approach this is to announce an enterprise agent strategy and begin with the platform diagram. I'd start instead with one narrow workflow where an agent has a genuine reason to exist, ideally with a clear user goal, a small set of tools, visible risk boundaries and an outcome you can measure. Build the agent, but design its production wrapper at the same time, and don't wait until the demo is popular before asking those questions, because by then the architecture debt has already formed.
+ 
+What makes AgentCore interesting is that it acknowledges the thing agent hype tends to skip. The value lies less in making agents clever and more in making them governable enough to use, and that's the gap between a prototype and a system. It's also exactly where solution architects need to be paying attention.
+ 
+*First published in July 2026 and updated in November 2026 to reflect changes to AgentCore since then.*
