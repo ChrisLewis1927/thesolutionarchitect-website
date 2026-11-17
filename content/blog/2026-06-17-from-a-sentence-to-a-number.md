@@ -2,93 +2,88 @@
 title: From a sentence to a number
 date: 2026-06-17T09:08:00.000Z
 category: Architecture
-excerpt: You can fill a requirements catalogue a business analyst would envy,
-  then freeze the moment someone says "now design it". The gap is smaller than
-  it feels. It's the move from a sentence a stakeholder said to the quality it's
-  really asking for, and from that quality to a number you can build against.
-  Here's the move.
+excerpt: >-
+  "It needs to be reliable" is one of the most common sentences in any brief and
+    one of the least useful, because it doesn't say which quality matters or what
+    level would be good enough. Here's how to turn sentences like that into figures
+    you can design against, using eight qualities that apply everywhere and four
+    more that matter in government.
 author: The Solution Architect
 ---
-There's a move in this job that no book teaches you, and you don't notice it's missing until the moment you need it.
-
-You can run a good discovery session. You can separate the must-haves from the nice-to-haves and write up a requirements catalogue that a business analyst would be proud of. You understand the problem better than anyone in the room. Then someone says "great, so what's the design?" and you reach for the patterns you've read about a hundred times, and nothing connects. The patterns are all still sitting there in your head. They just won't attach to the sentences in front of you.
-
-I know that gap because I lived in it for years. The front half of the job came easily. The requirements were never my problem. What I couldn't do was get from "it needs to be reliable" to an actual decision, and reading more about three-tier apps never once helped, because the thing I was missing wasn't in those books.
-
-Here's what the books give you. They give you destinations: three-tier, serverless, event-driven, the whole catalogue of shapes. What no book drills is the road that gets you from a sentence a stakeholder said to the right destination. And that road has a middle to it that almost nobody names out loud.
-
-### **There's a junction in the middle**
-
-Think of the work as a bridge with three parts. What they say, then what they actually mean, then what you reach for. The first part is the sentence the stakeholder gives you. The third part is the pattern you'll eventually pick. The part in the middle is a quality attribute, and it's the part that connects the other two.
-
-If you're business-trained, you probably own the first part already. Gathering requirements is the thing you're good at. And you've spent your reading time staring at the third part, trying to memorise the shapes. The middle is the bit that was never installed, which is exactly why the shapes wouldn't attach. There is no road straight from the sentence to the pattern. You go sentence, then attribute, then pattern, always through the middle. Name the quality first and the shape stops being a guess.
-
-### **Most requirements are a chord, not a note**
-
-A stakeholder almost never hands you one clean quality. They name one and quietly bury two or three more underneath it.
-
-"It can't fall over at our busiest time of year" sounds like a single thing. It's at least three. It's availability, because they want it up. It's scalability, because "busiest time of year" is a seasonal spike and the real design driver is load. And it's probably durability too, because if it does stumble under that load, nobody wants to lose what people submitted. The junior move is to design for the word they actually said. The experienced move is to hear the whole chord and write down every note, including the ones nobody played out loud.
-
-So your first reflex on any requirement, before anything else, is to ask which qualities are really in play here. Not just the one in the sentence. The hidden ones are usually where the project lives or dies.
-
-### **The eight you design against**
-
-Here is the working set I keep in my head. Eight qualities that apply to any system anywhere, whether it's a bank, a shop or a mobile game. The trick to each one is that it resolves to a question, and the question resolves to a number.
-
-**Availability**. Is it up when someone needs it? The question is what an hour of downtime actually costs, and when it would hurt most. The number is a percentage you're designing to, paired with a price for being down.
-
-**Scalability**. Does it hold up when load climbs? The question is about volumes and spikes: daily, seasonal, event-driven, and which direction they're trending. The number is the peak load you must absorb and the shape of the curve getting there.
-
-**Performance**. Is it quick enough? The question is what response time is acceptable, and at what load. The number is a latency target tied to a stated level of demand, because "fast" with no load behind it means nothing.
-
-**Security**. Who is allowed to see and do what, and how is the data protected in flight and at rest? The question is how sensitive the data is and who genuinely needs which access. The output here is a data classification and an access map. Resist the urge to write down the mechanism yet. The access model and the encryption are answers, and they come later.
-
-**Durability**. If you lost the last few minutes of this data, what would break? The question is how much data the organisation can actually afford to lose. The number is an acceptable data-loss window, and it's the one most people forget to ask for.
-
-**Recoverability**. How fast can you be back after a fall? The question is how long the service can be down before it genuinely hurts. The number is a recovery time. And recoverability is always a pair: a recovery time for the service and a data-loss window for the data. Capture the first and miss the second and you've designed half a resilience story.
-
-**Cost**. What's the budget posture? The question covers the build budget, the run budget, and what you'd be willing to trade away if cost started to bite. The output is a budget and an honest appetite for trade-offs.
-
-**Operability**. Who runs this once it's live, and what can they handle? The question is whether there's an internal team, what they want to keep in-house, and what should sit with a managed service. The output is an operating model, not a feature.
-
-Two of those eight get skipped far more than the rest. Durability and operability are the quiet ones. If you find yourself never reaching for them, that's worth knowing about yourself, because they don't go away just because nobody asked.
-
-### **The number is the deliverable, not the pattern**
-
-Look again at the third part of each attribute above. Every one of them is a question, and the question exists to force out a number. The number is the deliverable. That distinction is the whole game at this stage.
-
-"It needs to be reliable" is useless to a design. You can't build against it and you can't defend it. "Ninety-nine point nine percent, and an hour of downtime costs us tens of thousands in lost applications" designs itself. That single line rules one architecture out and rules another one in, and when a board asks why, you have the figure ready. The conversation that produced it is the conversation you're already good at. You were just never aiming it at a number.
-
-So here's the line worth pinning above your desk. A requirement you can't put a number on isn't a requirement yet. It's a question you haven't finished asking. The requirement with no number is the one that sinks the project six months later, because everyone assumed a different value for the same word.
-
-### **The tier that sits on top, for public sector**
-
-The eight are universal. They hold for any system on earth. In government there's a second tier stacked on top of them, and it behaves differently, so it's worth keeping the two apart in your head.
-
-**Compliance**. The frameworks and the law you simply have to meet: the Service Standard, the Technology Code of Practice, UK GDPR, plus whatever sector rules apply. This resolves to a list, not a number.
-
-**Accessibility**. WCAG 2.2 AA, and it's a genuine design driver rather than a box at the end. It pushes you towards semantic markup, real contrast, and nothing that signals meaning by colour alone. It resolves to a standard you meet and can evidence.
-
-**Data residency**. Where can this data legally and physically live? This is the one I'd flag hardest for public sector work. The OFFICIAL and SECRET hosting boundary is a genuine show-stopper. If a dataset turns out to need SECRET-rated hosting, it rewrites your whole region and account strategy, and you want to know that on day one, not at the governance board. It resolves to a boundary.
-
-**Retention**. How long must you keep it, and when are you obliged to delete it? This resolves to periods and rules.
-
-The two tiers do different jobs, and that's the point of separating them. Tier one is what you design against, and every item turns into a number that picks a pattern. Tier two is what you must satisfy, and every item turns into a list or a boundary. So if a compliance question produces "I'd want a list of every framework and law in scope," that's exactly the right shape of answer for that kind of requirement, even though it never lands on a percentage. Don't go hunting for a number where a list is what the work actually needs.
-
-### **Security is not a bucket**
-
-One habit is worth drilling above all the others. "Security" quietly turns into a catch-all, and a lot of requirements end up dumped there that don't belong.
-
-Half the time, "the data must be safe" or "we must comply with X" is really a compliance, residency or retention requirement wearing a security coat. And it matters which, because each one sends you to a completely different first action. An access design, an accessibility audit, a residency decision and a retention policy are four separate pieces of work, and they're nothing like each other. Reach for "security" by reflex and you'll start designing access control when the real job was an audit or a hosting decision.
-
-So when a requirement smells like security, stop for a second and run it past that second tier first. Is this confidentiality, or compliance, or accessibility, or residency? Most of the time the honest answer reshuffles where you start.
-
-### **Where to start if this is you**
-
-If you recognised yourself in the gap at the top of this piece, the way out isn't more reading. It's reps.
-
-Take ten requirements from a service you already understand. For each one, write down four things: the sentence the way the stakeholder would actually say it, the quality or qualities sitting underneath it with the hidden ones included, the question you'd ask to turn it into a number, and the number you'd push for. Try to spread them across the eight attributes, because the gaps will teach you something. The attributes you keep skipping are the blind spots you didn't know you had.
-
-You'll learn more from ten of those than from a shelf of architecture books, and the reason is the same reason the books frustrated you in the first place. The patterns were never the hard part. The translation was, and translation is a skill rather than a talent, which means it answers to practice.
-
-A sentence comes in. You name the quality underneath it, and the ones hiding behind that. You ask the question that turns it into a number, or into a list if it lives in the second tier. By the time you've done that across a whole brief, the design has half-built itself before you've drawn a single box. That's the move nobody hands you, and it's the one that makes everything after it possible.
+Ask a room of stakeholders whether the new service needs to be reliable and every hand goes up. Ask each of them what reliable means, though, and you'll hear about uptime from one person, speed from another and not losing anybody's application from a third, usually without any of them noticing they've described three different things. That gap between what people say and what they mean by it is where a lot of designs start to go wrong, long before anyone has picked a technology.
+ 
+I've written about choosing patterns in [From requirements to design](https://thesolutionarchitect.uk/from-requirements-to-design), and this post is its companion. It covers the step just before that choice, where you take something a stakeholder has said, work out which quality of the system they're really talking about, and agree a figure precise enough to design against.
+ 
+### **Hearing the quality behind the words**
+ 
+It helps to picture three stages in a row, with the stakeholder's sentence at one end and the pattern you eventually choose at the other. Between them sits the quality attribute, meaning the property of the system that the sentence is really about, such as availability or performance, and it's what lets the other two connect.
+ 
+If your route into architecture was through analysis or delivery work, you're probably strong at the first stage already, and you may have spent your study time on the last one, only to find the patterns don't seem to fit the sentences in your notes. That's usually because the middle stage got skipped, and once you name the quality behind a sentence, the sensible options narrow very quickly.
+ 
+### **One sentence usually carries several qualities**
+ 
+Stakeholders rarely hand you a single, tidy quality. The one they mention usually has two or three others tucked in behind it, and the unspoken ones matter just as much.
+ 
+Take "the service has to cope with the January rush". On the surface that's scalability, because January brings far more users than March, but it's also availability, since coping means staying up while the rush is happening. It's very likely about protecting data too, because nobody who submits a tax return or a grant application that week will forgive you for losing it. A musician would call that a chord rather than a single note, and the habit worth building is hearing every note, even the quiet ones underneath.
+ 
+So whenever a requirement lands, write down every quality it involves rather than just the obvious one, because the ones nobody mentioned often decide whether the project succeeds.
+ 
+### **Eight qualities worth pinning down**
+ 
+This is the working list I use. It isn't a formal standard (that would be [ISO/IEC 25010](https://www.iso.org/standard/78176.html), which defines nine product quality characteristics), but it's tuned to designing cloud services, which is why cost and day-to-day running sit alongside the familiar qualities, and each one comes with a question aimed at getting a number.
+ 
+**Availability** is about whether the service is there when somebody wants to use it. You're asking what an hour offline would really cost, in money, reputation or harm to the people who depend on it, and when an outage would do the most damage. The answer becomes a percentage target, which is worth converting into time so everyone knows what they're agreeing to, since 99.9% still allows roughly eight and three-quarter hours of downtime a year while 99.99% allows less than an hour, and the two come with very different price tags.
+ 
+**Scalability** is about how the service copes as demand grows. You're asking about volumes and their rhythm, whether that's a lunchtime peak, a seasonal surge or a one-off event, and which way the numbers are heading. What you want back is the highest load the service must handle and how quickly it builds.
+ 
+**Performance** is about whether the service feels quick enough, so you're asking how long people can reasonably be kept waiting and at what level of use. The figure is a response-time target linked to a specific amount of traffic, for example 95% of pages loading within two seconds while 2,000 people use the service at once, because a speed target with no load attached can't be tested.
+ 
+**Security** covers who may see and change what, and how the data is protected in transit and at rest. You'll be asking what kind of information the service holds, how damaging a leak would be and who really needs to touch it, and you're aiming for a classification of the data plus a map of who needs what. Encryption settings and identity products can wait, because they're solutions that only make sense once it's clear what needs protecting and from whom.
+ 
+**Durability** asks how much recent data the organisation could live without if the worst happened. The figure that captures it is the RPO, short for recovery point objective, which AWS describes as the [maximum acceptable time since the last point you can recover data from](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_planning_for_recovery_objective_defined_recovery.html). An RPO of fifteen minutes means accepting that, in a bad enough failure, the last fifteen minutes of work might be gone, which is something a service owner should agree to knowingly. Cloud providers use the same word for how unlikely their storage is to lose an object, which describes the platform rather than what your organisation can tolerate.
+ 
+**Recoverability** asks how quickly the service must be back up and running after a serious failure. The figure here is the RTO, short for recovery time objective, meaning the longest acceptable gap between the service going down and working again. RTO and RPO always travel as a pair, since a plan that restores the service in ten minutes but brings back yesterday's data has only solved half the problem.
+ 
+**Cost** is about the money available to build the service and, just as importantly, to run it year after year. You're asking about both budgets and what the organisation would give up if the bill started to climb, and you come away with a budget and a candid view of which qualities could bend to fit it.
+ 
+**Operability** is about who will look after the service after go-live and how much they can realistically take on. You're asking whether there's an in-house team, what skills it has and what it would rather hand to a managed service, and the result is an operating model rather than a feature.
+ 
+Durability and operability are the two most often left off, probably because nobody raises them unprompted, so if you rarely ask about them yourself, treat that as a gap in your own checklist.
+ 
+### **Why the figure matters more than the wording**
+ 
+Every one of those questions exists to draw out a figure, and at this stage that figure is the real output, not the pattern. "It needs to be reliable" gives a designer nothing to build against and a reviewer nothing to check. Compare it with something like "99.9% availability during opening hours, because each hour offline delays around £40,000 of payments", which immediately makes some designs look excessive and others sensible, and gives you a ready answer when someone later asks why you chose what you did.
+ 
+Getting there is the same kind of conversation you already have when gathering requirements, simply aimed at a number rather than a description. For the eight qualities above, a requirement that can't yet be expressed as a figure is better treated as an open question, because vague words are exactly where teams discover, months later, that everyone had a different value in mind.
+ 
+### **Four more if you work in government**
+ 
+Those eight hold for any system, public or private. Government adds a second layer that works differently, because it mostly describes obligations you must meet rather than levels you get to choose, so the answers come back as lists, standards and boundaries rather than percentages.
+ 
+**Compliance** covers the frameworks and laws the service has to satisfy, which in central government usually means the [Service Standard](https://www.gov.uk/service-manual/service-standard), the [Technology Code of Practice](https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy), UK GDPR and the Data Protection Act 2018, plus any sector-specific rules. What you want is a complete inventory of what applies, and that's the right answer even though no number ever appears.
+ 
+**Accessibility** means meeting level AA of WCAG 2.2 as a minimum, and it should guide the design from the start rather than being bolted on before launch. It steers you towards properly structured pages, enough colour contrast and never relying on colour alone to carry meaning. The [Service Manual's accessibility guidance](https://www.gov.uk/service-manual/helping-people-to-use-your-service) expects an accessibility audit before public beta, and public sector websites and apps must publish an accessibility statement, so the answer is a standard you can prove you meet.
+ 
+**Data residency** asks where the data is allowed to live, which is the item I'd raise earliest, because two facts about it regularly surprise people. The first is that, according to [GDS guidance on multi-region cloud](https://www.gov.uk/government/publications/multi-region-cloud-and-software-as-a-service/multi-region-cloud-and-software-as-a-service-html), there's no universal requirement for OFFICIAL data to stay in the UK, provided the legal, data protection and security conditions are met, though organisations can still choose UK hosting for good reasons. The second is that the NCSC advises that public cloud isn't designed to protect SECRET or TOP SECRET information, so if some of the data proves to need that level of protection, the conversation moves from which region to use towards an entirely different hosting arrangement. You want to find that out in the first week rather than in front of a design authority, and the answer is a boundary.
+ 
+**Retention** asks how long the data must be kept and when it has to go. UK GDPR's [storage limitation principle](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/storage-limitation/) means you can't keep personal data for longer than you need it, the ICO expects a retention policy with standard periods wherever possible, and government records can carry further obligations under public records legislation. What you get back is a list of retention periods and the events that trigger them.
+ 
+Keeping the two layers apart is what makes them useful. The first eight are things you design against, so each ends in a number that helps you choose between patterns. These four are things you must satisfy, so each ends in a list, a standard or a boundary, and there's no point hunting for a percentage where the work calls for a list.
+ 
+### **Don't file everything under security**
+ 
+The habit I'd most like you to take from this post is resisting the urge to put anything that sounds serious into the security box. When a stakeholder says "we need to keep this data protected" or "we have to comply with the regulations", they're very often talking about compliance, data location or how long records are kept, and the difference matters because each leads to a different first task altogether. Designing access controls, choosing where to host and writing a retention schedule have very little in common, so filing a requirement in the wrong place means starting the wrong job.
+ 
+So whenever a requirement seems to be about security, check it against the second layer first and ask whether it's really about confidentiality, compliance, residency or retention. More often than you'd expect, the answer changes where you begin.
+ 
+### **Practising the translation**
+ 
+Like most skills in this job, this one improves far more with practice than with reading. Pick a service you know well, write out ten of its requirements, and for each one fill in four columns covering the stakeholder's own words, every quality hiding underneath, the question that would make it measurable and the figure or list you'd push for. Here's how three of them might come out.
+ 
+| Stakeholder's words | Qualities underneath | Question to ask | What to agree |
+| --- | --- | --- | --- |
+| "It has to cope with the January rush" | Scalability, availability, durability | How many people use it in the busiest hour, and how much submitted data could you lose without real damage? | A peak of 3,000 concurrent users, 99.9% availability through January and an RPO of five minutes |
+| "We can't keep people waiting if it breaks" | Recoverability, availability | If it failed at 4pm on a weekday, how long could users wait before the delay did real harm? | An RTO of two hours, agreed with the service owner |
+| "The data has to be kept safe" | Security, compliance, residency, retention | What classification does the data carry, which laws apply, who needs access and how long must it be kept? | A classification, a list of laws in scope, an access map and retention periods |
+ 
+Try to spread your ten across all eight qualities, because the ones you find yourself avoiding point to your own blind spots. Once the habit sticks, a brief stops looking like a page of loose sentences and starts looking like a set of agreed figures, lists and boundaries, and choosing a pattern becomes a much shorter conversation, which is where [From requirements to design](https://thesolutionarchitect.uk/from-requirements-to-design) picks up.
