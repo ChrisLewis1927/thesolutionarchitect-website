@@ -1,6 +1,6 @@
 ---
 title: What an API is, without the jargon
-date: 2026-11-21T16:44:00.000Z
+date: 2026-11-21T17:33:00.000Z
 category: Cloud
 excerpt: "An API is the way one piece of software asks another piece of software
   for something and gets an answer back. "
@@ -12,7 +12,7 @@ The word API turns up in nearly every delivery meeting, and almost nobody stops 
 
 An API is the way one piece of software asks another piece of software for something and gets an answer back. Picture a records office where you can't go through the filing cabinets yourself, so instead you go to a counter, make one of the specific requests they accept, and somebody brings back exactly what you asked for and nothing else. An API is that counter, built for software rather than people, and everything else here is detail about how the asking is done.
 
-You'll hear two words constantly, and neither is any more complicated than that. The program doing the asking is the **client** and the program doing the answering is the **server**, so when a phone app asks a government service for your licence details, the app is the client and whatever answers is the server. It works the same way whether the two belong to different organisations or sit inside one service. The letters stand for application programming interface, which nobody finds especially helpful, so you can safely forget them.
+You'll hear two words constantly, and neither is any more complicated than that. The program doing the asking is the **client** and the program doing the answering is the **server**, so when a mobile app asks a government service for your licence details, the app is the client and whatever answers is the server. It works the same way whether the two belong to different organisations or sit inside one service. The letters stand for application programming interface, which nobody finds especially helpful, so you can safely forget them.
 
 # **Go and look at one**
 
