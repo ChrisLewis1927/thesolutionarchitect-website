@@ -1,118 +1,92 @@
 ---
 title: What an API is, without the jargon
-date: 2026-08-21T08:07:00.000Z
+date: 2026-11-21T16:44:00.000Z
 category: Cloud
 excerpt: "An API is the way one piece of software asks another piece of software
   for something and gets an answer back. "
 author: The Solution Architect
 ---
-The word turns up in every delivery meeting and almost nobody stops to explain it. By the third time you have heard it, asking feels like admitting you should have known, so you nod and look it up later, and what you find is written for people who already understand it.
+The word API turns up in nearly every delivery meeting, and almost nobody stops to explain it. By the third time you've heard it, asking feels like admitting you should already know, so you nod along and look it up later, only to find explanations written for people who understood it in the first place. This one starts from nothing and leaves no acronyms hanging.
 
-This starts from nothing. No assumed knowledge, no acronyms left hanging.
+# **One program asking another for something**
 
-### **One program asking another for something**
+An API is the way one piece of software asks another piece of software for something and gets an answer back. Picture a records office where you can't go through the filing cabinets yourself, so instead you go to a counter, make one of the specific requests they accept, and somebody brings back exactly what you asked for and nothing else. An API is that counter, built for software rather than people, and everything else here is detail about how the asking is done.
 
-An API is the way one piece of software asks another piece of software for something and gets an answer back. Everything else in this piece is detail about how the asking is done.
+You'll hear two words constantly, and neither is any more complicated than that. The program doing the asking is the **client** and the program doing the answering is the **server**, so when a phone app asks a government service for your licence details, the app is the client and whatever answers is the server. It works the same way whether the two belong to different organisations or sit inside one service. The letters stand for application programming interface, which nobody finds especially helpful, so you can safely forget them.
 
-Picture a records office. You cannot walk in and go through the filing cabinets yourself. You go to a counter, make one of the specific requests they accept, and somebody brings back exactly what you asked for and nothing else. An API is that counter, built for software rather than people.
+# **Go and look at one**
 
-Two words you will hear constantly and which mean nothing more complicated than this. The program doing the asking is the **client**. The program doing the answering is the **server**. A phone app asking a government service for your licence details is the client; the thing that answers is the server. Swap the app for a spreadsheet or another department's system and nothing changes. The two programs can belong to different organisations or sit inside the same service, and the arrangement works the same way either way.
+You can watch this happening in about a minute, and it's worth doing once because it makes the rest far more concrete. Open a website you use in Chrome, right-click anywhere on the page and choose [Inspect](https://developer.chrome.com/docs/devtools/open), then pick the Network tab and reload the page, and you'll see a list start filling up. Other browsers have something very similar, and if your work laptop has it locked down, as plenty do, a personal one works just as well.
 
-The letters stand for application programming interface, which nobody finds helpful, so it is safe to forget them.
+Every line in that list is one request the page has made. Some fetch things you can see, like the page's text, styling, images and fonts, while others come back as blocks of labelled data you never see directly, and those are the API calls. Clicking the [Fetch/XHR filter](https://developer.chrome.com/docs/devtools/network/reference) above the list hides most of the rest so you're left looking mainly at those.
 
-### **Go and look at one**
+The first useful lesson here is that a web page isn't one thing arriving from one place but a dozen or more separate requests, often to systems owned by different people. That's why a service that seems to be down is often just one of those requests failing while the rest carry on.
 
-You can watch this happening in about a minute, and it is worth doing once because it makes the rest concrete.
+# **What a request looks like**
 
-Open a website you use, right click anywhere on the page and choose Inspect. A panel opens. Find the tab labelled Network and reload the page. A list starts filling up. If your work laptop has that locked down, and plenty do, it works the same on a personal one.
+A request is simply an address and an instruction, like this one.
 
-Every line in that list is one request the page has made. Some are fetching things you can see: the text and structure of the page, the styling that makes it look like something rather than a wall of text, the images, the fonts. Others are fetching something you cannot see directly. They come back as blocks of labelled data, and those are the API calls.
+```
+GET https://example.gov.uk/licences/12345
+```
 
-The first useful thing to take from that list is that a web page is not one thing arriving from one place. It is a dozen or more separate requests, often to different systems owned by different people. When someone says the service is down, one of those requests has usually failed rather than all of them.
+The address says which thing you want and the word in front of it says what you want done with it, and every request you'll ever see is a variation on those two parts. Four instructions cover most of what you'll meet. **GET** fetches something and is meant to leave it unchanged, **POST** usually creates something new, **PUT** puts a new version in place of whatever is at that address, and **DELETE** removes it.
 
-### **What a request looks like**
+Two more words get used as though everybody already knows them. That address is called an **endpoint**, so a system that exposes three endpoints simply accepts requests at three addresses. And when somebody asks whether it's a REST API, they're asking, loosely speaking, whether it's arranged the way I've just described, with addresses naming things and instructions saying what to do with them. Government's [API technical and data standards](https://www.gov.uk/guidance/gds-api-technical-and-data-standards) describe REST as a good way to design an API, so the answer is usually yes, and it rarely changes anything you need to know.
 
-A request is an address and an instruction. Here is one:
+Many requests also carry a key or a token, which is how the answering system knows who's asking. So when a team says they're waiting on an API key, they're waiting for permission to make requests that are tied to them, which means their use can be counted, limited or switched off.
 
-*`GET https://example.gov.uk/licences/12345`*
+# **What comes back**
 
-The address says which thing you want. The word in front of it says what you want done with it. Every request you will ever see is a variation on those two parts.
+The answer usually arrives as text in a format called JSON, which those same standards recommend wherever possible. Send the request above and you might get something like this back.
 
-There are four instructions you will see most of the time:
+```json
+{
+  "licence_number": "12345",
+  "status": "active",
+  "expires": "2027-04-30",
+  "penalty_points": 3
+}
+```
 
-* **GET** fetches something and changes nothing.
-* **POST** creates something new.
-* **PUT** updates something that already exists.
-* **DELETE** removes it.
+Labels sit on the left and values on the right with a colon between each pair, text goes inside quotation marks while numbers don't, and the whole thing is wrapped in curly brackets, and those few rules cover most of what you'll meet.
 
-Two pieces of vocabulary while we are here, because both get used as though everybody knows them. That address, the specific one you send a request to, is called an **endpoint**. When somebody says a system exposes three endpoints, they mean it accepts requests at three addresses. Nothing more.
+It looks unremarkable, and that's rather the point. Because it's plain text, any system written in any language on any kind of computer can read it, which is a big part of why it ended up everywhere, and a person can read it too, even though it isn't really written for one.
 
-And when somebody asks whether it is a REST API, they are asking whether it is arranged the way described above, with addresses naming things and instructions saying what to do with them. Most of the time the answer is yes, and it rarely changes anything you need to know.
+Notice the date while you're there. Government's [date and time standard](https://www.gov.uk/government/publications/open-standards-for-government/date-times-and-time-stamps-standard) says to use ISO 8601 in government systems, which puts the year first, then the month, then the day, so that nobody has to guess whether 09/08 means the ninth of August or the eighth of September. Small rules like that make up a surprising amount of what data standards actually are.
 
-Many requests also carry a key or a token alongside them, which is how the answering system knows who is asking. If you have heard a team say they are waiting on an API key, that is what they meant: permission to make requests, tied to them, so it can be counted, limited or switched off.
+# **The number that comes with every answer**
 
-### **What comes back**
+Every answer also comes back with a number that tells the asking program what happened, and you've almost certainly seen one already, because 404 is the code behind most "page not found" screens.
 
-The answer arrives as text, in a format called JSON. Send the request from the last section and this is what comes back:
+The [first digit](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes) tells you most of the story. Codes in the 200s mean it worked, with **200** being the plain "OK". Codes in the 400s mean the problem is at the asking end, so **400** means the request didn't make sense, **404** means the thing you asked for isn't there and **429** means you're asking too often and should slow down. Codes in the 500s mean something has gone wrong at the other end, and **500** is the general-purpose "something broke here".
 
-*`{`*
+These matter more than they look, because a program can't read an apology. The number is what tells it whether to give up, try again in a moment or show the user an error, so if a provider gets its numbers wrong, thousands of copies of somebody else's software can make the wrong decision at once.
 
- *` "licence_number": "12345",`*
+# **Why any of this matters in government**
 
- *` "status": "active",`*
+Without APIs, two services that need the same information have two poor options. Either one copies the data and it starts going stale from the day it's copied, or a person retypes it from one screen into another, which is slower and produces mistakes nobody catches for months.
 
- *` "expires": "2027-04-30",`*
+With an API, the organisation that owns the information holds it once and everybody else asks for it when they need it. That's really the whole argument, and it's why the [Technology Code of Practice](https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy) asks teams to share, reuse and collaborate rather than rebuild. There's even a cross-government catalogue at [api.gov.uk](https://www.api.gov.uk/) where public sector organisations list their APIs so others can find them.
 
- *` "penalty_points": 3`*
+It's also why "can we integrate with them?" is a question with a real answer. If a service has an API you can ask it for things, and if it doesn't, your options shrink to a copy of the data, a spreadsheet or a person.
 
-*`}`*
+# **Three ways APIs catch people out**
 
-Labels on the left, values on the right, a colon between them. Text values sit inside quotation marks and numbers do not. The whole thing is wrapped in curly brackets. Those few rules cover most of what you will meet.
+You don't need to build an API to be caught out by one, and it tends to happen in one of three ways.
 
-It looks unremarkable and that is the point. It is plain text, so any system written in any language on any kind of computer can read it, which is why it ended up everywhere. A person can read it too, though it is not really written for one.
+The first is that somebody changes it, perhaps renaming or dropping a field or changing what one means, and everything built on top of it breaks, often so quietly that nobody notices for weeks. That's why teams version their APIs, and why the government standards say you must tell users when an old version is no longer supported and give them time to move, so the useful question to ask any provider is how much warning you'd get.
 
-Notice the date. Government guidance requires dates in that order, year then month then day, precisely so that nobody has to guess whether 09/08 means the ninth of August or the eighth of September. Small rules like that one are most of what data standards are.
+The second is that the other end goes down, and if your service needs four other services to answer before it can respond, you've inherited all four of their bad days. Depending on somebody else's API means depending on their reliability, their maintenance windows and their funding, and my post on [tightly and loosely coupled architectures](https://thesolutionarchitect.uk/tightly-and-loosely-coupled-architectures-what-actually-depends-on-what) looks at how to design around that.
 
-### **When it goes wrong**
+The third is that anything open really is open. If a web page can fetch something without you logging in, so can anybody else who works out the address, and hiding a field on screen doesn't protect it, because the data has still arrived in the browser. [OWASP lists this](https://api-security.owasp.org/editions/2023/en/0xa3-broken-object-property-level-authorization/) among its top API security risks, and it's the [same argument as zero trust](https://thesolutionarchitect.uk/the-end-of-the-trusted-network) at a smaller scale, since what protects information is a control on the data rather than a screen that chooses not to show it.
 
-Every answer comes back with a number attached, and the number tells the asking program what happened. You have seen one of these already, because 404 is the one websites put on their error pages.
+# **If you end up responsible for one**
 
-* **200** means it worked.
-* **400** means you asked for something in a way that made no sense.
-* **404** means the thing you asked for is not there.
-* **429** means you are asking too often and should slow down.
-* **500** means something broke at their end rather than yours.
+You don't need to be technical to ask the questions that matter, and four of them catch most problems early. Who is using this, and do we have a way to contact them? What happens to them when we change it, and how much notice will they get? What does each answer contain, and can we justify every field being in there? And what does our service do on the day the thing we depend on stops answering?
 
-These matter more than they look, because a program cannot read an apology. The number is what tells it whether to give up, try again in a moment, or show the user an error. Get the numbers wrong and thousands of copies of somebody else's software make the wrong decision at once.
+None of those are really technical questions, because they're all about what has been promised to somebody else. That promise is what people mean by an API's contract, and the government standards suggest writing it down as an OpenAPI document, a file both people and machines can read, as the first output of designing one. The [API strategy and design guide](https://thesolutionarchitect.uk/guide-api-strategy-and-design) picks up from there if you want to go further.
 
-### **Why any of this matters in government**
+# **What it comes down to**
 
-Think about what happens without APIs. Two services need the same information, so either one copies the data and it starts going stale from the day it is copied, or a person retypes it from one screen into another, which is slower and produces mistakes nobody catches for months.
-
-An API means the organisation that owns the information holds it once, and everybody else asks for it when they need it. That is the whole argument, and it is why the [Technology Code of Practice](https://thesolutionarchitect.uk/the-uk-governments-technology-code-of-practice-a-quiet-but-powerful-piece-of-policy) pushes departments to share and reuse rather than rebuild. There is a public catalogue at [api.gov.uk](https://www.api.gov.uk/) where organisations list theirs so others can find them.
-
-It is also the reason "can we integrate with them" is a question with an answer. If a service has an API, you can ask it for things. If it does not, your options are a copy of the data, a spreadsheet, or a person.
-
-### **Three things that go wrong**
-
-You do not need to build one of these to be caught out by them.
-
-**Somebody changes it.** A field gets renamed, or dropped, or starts meaning something slightly different. Everything built on top of it breaks, often quietly, and sometimes nobody notices for weeks. This is why teams version their APIs and give notice before changing them, and why the useful question to ask of any provider is how much warning you would get.
-
-**The other end goes down.** If your service needs four other services to answer before it can respond, you have inherited all four of their bad days. Depending on somebody else's API means depending on their reliability, their maintenance windows and their funding.
-
-**Anything open is genuinely open.** If a web page can fetch something without a password, so can anybody else who works out the address. Hiding a field so it does not appear on screen does not hide it, because the data still arrived. It is the [same argument as Zero Trust](https://thesolutionarchitect.uk/the-end-of-the-trusted-network), at a smaller scale: what protects information is a control on the data, not the fact that the screen chose not to show it.
-
-### **If you end up responsible for one**
-
-You do not need to be technical to ask the questions that matter, and these four are the ones that catch problems early.
-
-Who is using this, and do we have a way to contact them? What happens to them when we change it, and how much notice do they get? What information does each answer contain, and can we justify every field being in there? What does our service do on the day the thing we depend on stops answering?
-
-None of those are technical questions. They are all about what has been promised to somebody else.
-
-### **What it comes down to**
-
-An address, an instruction, and a block of labelled text coming back. That is an API, and once you have seen one request and one answer, most of the remaining difficulty is vocabulary rather than concept.
-
-The word sounds like it is protecting something complicated. What it is protecting is a counter, a list of things you are allowed to ask for, and an agreement about what comes back.
+Strip it all back and an API is an address, an instruction and a block of labelled text coming back, and once you've seen one request and one answer, most of the remaining difficulty is vocabulary rather than concept. The word sounds as though it's guarding something complicated, but what it's really guarding is a counter, a list of things you're allowed to ask for, and an agreement about what comes back.
