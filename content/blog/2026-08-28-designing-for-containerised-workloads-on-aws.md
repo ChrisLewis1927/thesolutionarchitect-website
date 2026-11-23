@@ -15,13 +15,13 @@ A virtual machine behaves like a separate computer, with its own operating syste
 
 ![](/images/blog/3-virtual-machines-v-containers.png)
 
-A container image packages the application with the libraries and files it needs, so the exact image you tested can be the one you deploy, and settings or secrets that change between environments are best supplied when it starts rather than built in. It still isn't completely independent of its surroundings, because the processor architecture it was built for, networking, identity, storage and the services it calls can all vary.
+A container image bundles an application with everything it needs to run. This means you can test it and then deploy the same image into production, knowing the application hasn't changed. Settings and sensitive information, such as passwords and API keys, are kept separate and provided when the container starts. It still isn't completely independent of its surroundings, because the processor architecture it was built for, networking, identity, storage and the services it calls can all vary.
 
 # **Images, layers and where they're kept**
 
 An image is built from read-only layers, and a running container adds a thin writable layer on top that's deleted along with the container, so anything written there is lost whenever the container is replaced.
 
-![Read-only image layers, with a writable layer added on top when the container runs](/images/blog/4-container-image-layers.png)
+![](/images/blog/4-container-image-layers.png)
 
 It's worth keeping production images to what the application needs, since smaller images transfer faster and every package you leave out is one less to appear in a vulnerability report.
 
