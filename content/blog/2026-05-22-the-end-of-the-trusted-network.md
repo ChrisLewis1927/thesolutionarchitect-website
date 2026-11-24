@@ -10,60 +10,48 @@ excerpt: "For decades, network security worked like a castle: thick walls, a
   architects can no longer treat it as optional."
 author: The Solution Architect
 ---
-For decades, network security looked something like a medieval castle. You built thick walls (firewalls, VPNs, network segregation), and once someone made it past the gate you mostly trusted them. The crown jewels sat in the middle, protected by the assumption that anyone close enough to touch them must belong there.
-
-That model no longer works on its own. It has been failing for years, but the past decade made it impossible to pretend otherwise.
-
+For decades, network security worked rather like a medieval castle. You built thick walls out of firewalls, VPNs and network segregation, and once someone was through the gate you mostly trusted them. The crown jewels sat in the middle, protected by the assumption that anyone close enough to touch them must belong there, and that model no longer works on its own.
+ 
 # **Why the walls came down**
-
-Three things broke the perimeter, and none of them are reversing.
-
-1. **Your applications left the data centre:** They're in AWS, Azure, three different SaaS platforms, and a vendor's environment you don't even have a contract with. The perimeter you spent years hardening now wraps around an empty building.
-2. **Your users left the office:** They work from kitchens and trains and hotel lobbies, on devices you may or may not own. Routing everything through the corporate VPN became a bottleneck, and a successful VPN login said nothing about whether the person or the device behind it deserved access to everything on the other side.
-3. **Attackers got better:** Phishing a credential, compromising a contractor, slipping malware into a software update. the NCSC describes it as [common in breaches](https://www.ncsc.gov.uk/collection/zero-trust/introduction) for an attacker to gain a foothold and then move sideways, because everything already on the network is trusted. Once they were in, the castle worked against the defender.
-
-"Inside the network" was only ever a stand-in for "trustworthy", and it stopped being a good one.
-
-# **What Zero Trust actually means**
-
-Zero Trust, a term [John Kindervag coined at Forrester in 2010](https://www.nist.gov/blogs/taking-measure/zero-trust-cybersecurity-never-trust-always-verify), is the response to all of this. The shorthand is "never trust, always verify". Every request, whether internal or external, human or machine, on a corporate laptop or a personal phone, gets authenticated and authorised on its own merits. Network location stops being enough on its own, identity, device and context carry the decision. The name does oversell it slightly. As the NCSC [points out](https://www.ncsc.gov.uk/collection/zero-trust/demystifying-zero-trust), there is plenty of trust in a zero trust architecture, it just has to be earned for each request, and can't be inherited from the network.
-
-[Microsoft's three guiding principles](https://learn.microsoft.com/en-gb/security/zero-trust/) are the most quoted summary.
-
-1. **Assume breach:** Design as though the attacker is already on your network. Once you do, encrypting internal traffic and microsegmentation look like common sense.
-2. **Verify explicitly:** Make access decisions on everything you know. Who the user is, whether their device is healthy, where they're coming from, what they're trying to reach, whether the request looks anything like their normal behaviour. No single factor is enough.
-3. **Least privilege:** Give the minimum access required, for the shortest sensible duration. When something does go wrong, and it eventually will, you want the damage to stay small.
-
-The NCSC's [eight zero trust architecture design principles](https://www.ncsc.gov.uk/collection/zero-trust/architecture-design-principles) cover the same ground in more detail, and they are the better reference for a UK government design.
-
-# **What this looks like in practice**
-
-You can't buy a Zero Trust architecture as a product. You assemble it from capabilities, usually over years.
-
-Identity sits at the heart of the approach, with strong multi-factor authentication applied to all users (not just admins) and SSO managed through a central identity provider. Conditional access policies add another layer of protection by assessing factors such as the user, device, location and level of risk before granting access. Increasingly, we are are also adopting passwordless authentication using technologies such as FIDO2 security keys or certificates, reducing reliance on passwords and providing stronger protection against phishing attacks.
-
-Devices become a trust signal. A managed laptop with full-disk encryption, current patches and working endpoint protection is treated differently from a random tablet on a hotel Wi-Fi. BYOD doesn't have to mean unrestricted access, it usually means web-only access, virtual desktops, or some other form of containment.
-
-The network itself becomes untrusted by default. Traffic between services is encrypted even inside your own environment whilst microsegmentation limits what any compromised host can reach. Private applications sit behind connectors or proxies and have no public address, so there is less for an attacker to find.
-
-Applications and APIs participate too. Every service authenticates the caller and service-to-service traffic uses mutual TLS or signed tokens. The days of "the call came from inside the cluster, so it must be fine" are over.
-
-And underneath all of this sits data, classified by sensitivity, encrypted at rest and in transit, monitored for unusual access patterns, with every read and write logged somewhere a security team can review.
-
+ 
+Three changes broke the perimeter, and the first is that applications left the data centre. Many of them now sit across AWS, Azure and a handful of SaaS platforms, so the perimeter you spent years hardening wraps around a building with less and less inside it.
+ 
+Users left the office too, and now work from kitchens, trains and hotel lobbies on devices you may or may not own. Routing it all through a corporate VPN created a bottleneck, and a successful VPN login often proved little more than that the credentials were valid, not that the device was healthy or that the person needed everything on the other side.
+ 
+Attackers also got better at getting in, whether by phishing a password, compromising a contractor or hiding malware in a software update. The National Cyber Security Centre (NCSC) notes that it's [common in breaches](https://www.ncsc.gov.uk/collection/zero-trust/introduction) for an attacker to gain a foothold and then move sideways across the network, which works because everything already on the network is trusted. Being inside the network was only ever a stand-in for being trustworthy, and it stopped being a good one.
+ 
+# **What zero trust actually means**
+ 
+A [NIST blog post](https://www.nist.gov/blogs/taking-measure/zero-trust-cybersecurity-never-trust-always-verify) credits John Kindervag with coining the term zero trust while he was at Forrester Research in 2010, and its shorthand is "never trust, always verify". In a zero trust architecture the network loses its built-in trust, so every request, from inside or outside and from a person or a machine, is checked against an access policy on its own merits. Network location stops being enough, and identity, device and context carry the decision instead.
+ 
+The name oversells it slightly, as the NCSC [points out](https://www.ncsc.gov.uk/collection/zero-trust/demystifying-zero-trust), because there's still plenty of trust in a zero trust architecture. It just has to be earned and kept up for each request, rather than inherited from the network.
+ 
+Microsoft sums it up in [three guiding principles](https://learn.microsoft.com/en-gb/azure/security/fundamentals/zero-trust). Verify explicitly means basing every access decision on everything you know, such as the user, the health of their device, their location and whether the request looks normal for them. Use least privilege access means giving the minimum access for the shortest sensible time, so the damage stays small when something goes wrong. Assume breach means designing as though the attacker is already inside, at which point encrypting internal traffic and segmenting the network start to look like common sense. For a UK government design, the NCSC's [seven zero trust architecture design principles](https://www.ncsc.gov.uk/collection/zero-trust/architecture-design-principles) cover the same ground in more depth and make the better reference.
+ 
+# **What it looks like in practice**
+ 
+The NCSC describes zero trust as an architectural approach rather than something you can buy off the shelf, so you assemble it from capabilities.
+ 
+Identity sits at the heart of it. That means strong multi-factor authentication for every user rather than just administrators, single sign-on through a central identity provider, and conditional access policies that weigh up the user, device, location and risk before letting a request through. Passwordless sign-in with FIDO2 security keys or certificates goes further still, because both resist phishing far better than passwords and one-time codes.
+ 
+Devices become a trust signal as well. A managed laptop with full-disk encryption, current patches and working endpoint protection is treated differently from an unknown tablet on hotel Wi-Fi. Personal devices often get a more contained kind of access, such as browser-only access or a virtual desktop, rather than being shut out altogether.
+ 
+The network itself is treated as untrusted, so traffic between services is encrypted even inside your own environment and microsegmentation limits what a compromised host can reach. Private applications can sit behind connectors or proxies with no public address, which leaves less for an attacker to find. Applications and APIs authenticate every caller too, using mutual TLS or signed tokens between services, rather than trusting a call because it came from inside the cluster. Underneath it all, data is classified by sensitivity, encrypted at rest and in transit, and access to it is logged where your security team can review it.
+ 
 # **What it costs**
-
-Of course, there are challenges to consider. Moving to zero trust isn't cheap, and it's certainly not something you can introduce overnight. The NCSC [makes this clear](https://www.ncsc.gov.uk/collection/zero-trust/demystifying-zero-trust?utm_source=chatgpt.com), warning that the transition can be expensive, disruptive and demanding on resources. It's also important to understand that zero trust doesn't mean getting rid of everything you already have. Take VPNs, for example. They can continue working alongside zero trust controls, and there's no reason to remove them simply for the sake of it. Then there are legacy systems, some of which simply weren't designed to support zero trust principles. In these situations, you may need to maintain a [mixed environment](https://www.ncsc.gov.uk/guidance/zero-trust-building-a-mixed-estate?utm_source=chatgpt.com), keeping older systems appropriately isolated while introducing stronger controls elsewhere. There's also the question of resilience. When your organisation relies heavily on an identity provider and policy engine to control access, those components become critical infrastructure. If they fail, people could find themselves unable to access the systems they need, so reliable recovery mechanisms and emergency access arrangements are essential.
-
+ 
+None of this is cheap or quick. The NCSC [warns](https://www.ncsc.gov.uk/collection/zero-trust/demystifying-zero-trust) that zero trust can be expensive, disruptive and demanding on resources, and that a full migration may mean rearchitecting many systems over several years. It doesn't mean ripping out what you have, either, since zero trust and a VPN can work together, provided traffic isn't trusted just because it arrived through the VPN.
+ 
+Some legacy systems were never designed for this, so you may end up running a [mixed estate](https://www.ncsc.gov.uk/guidance/zero-trust-building-a-mixed-estate), with those systems kept in tightly defined segments while stronger controls go in everywhere else. Resilience matters more, too, because once access depends on an identity provider and a policy engine, an outage there can lock people out of the systems they need, so recovery and emergency access have to be part of the design.
+ 
 # **The UK government angle**
-
-For anyone designing or building services in UK government, zero trust is becoming an increasingly important consideration, although it's worth pointing out that it isn't actually mandatory. The NCSC provides [guidance ](https://www.ncsc.gov.uk/collection/zero-trust)on how to approach it, while the government's [Secure by Design policy](https://www.security.gov.uk/policy-and-guidance/secure-by-design/policy/) highlights zero trust as an example of the flexible, risk-based security architecture organisations should be working towards. I've covered [the ten principles of Secure by Design](https://thesolutionarchitect.uk/secure-by-design-ten-principles-and-what-they-ask-of-your-project) separately, but the important thing to understand here is that zero trust isn't necessarily the right answer for every situation. The NCSC encourages organisations to assess their risks first and consider whether more targeted security controls could achieve the same outcome without the additional complexity.
-
-It's interesting to compare this with the United States, where the government took a more prescriptive approach. In 2022, the White House issued memorandum [M-22-09](https://zerotrust.cyber.gov/federal-zero-trust-strategy), requiring federal civilian agencies to work towards a defined zero trust security strategy.
-
-But here's the thing, whether zero trust is mandatory or not, you're increasingly likely to be asked about it. In my experience, these questions regularly come up during design reviews and architecture governance boards, where fellow architects and cyber security teams want to understand how a proposed solution approaches identity, access and security. Simply pointing to a VPN and a perimeter firewall isn't going to be enough. You'll need to explain how your design protects individual resources, verifies who's accessing them and limits what they can do once they're inside.
-
+ 
+The government's [Secure by Design policy](https://www.security.gov.uk/policy-and-guidance/secure-by-design/policy/) doesn't mandate zero trust itself, but it does require risk-based and adaptable security architectures and gives zero trust as an example of one. Zero trust isn't automatically the right answer, either, and the NCSC [says it should be adopted deliberately](https://www.ncsc.gov.uk/collection/zero-trust/demystifying-zero-trust), starting from your own organisation's security challenges and asking whether more targeted controls could deliver similar benefits without the extra complexity. My post on [the ten Secure by Design principles](https://thesolutionarchitect.uk/secure-by-design-ten-principles-and-what-they-ask-of-your-project) covers the wider policy.
+ 
+Mandated or not, in my experience you're increasingly likely to be asked about it. It comes up regularly at design reviews and architecture governance boards, where architects and cyber security teams want to know how a solution handles identity and access. Pointing at a VPN and a perimeter firewall won't satisfy them, so be ready to explain how your design protects each resource, verifies who's reaching it and limits what they can do once they're in.
+ 
 # **Where to start**
-
-One of the biggest mistakes with zero trust is treating it like a traditional IT project, with a start date, a delivery plan and a point where everyone declares it finished. Unfortunately, it doesn't work like that. You can't simply flick a switch and suddenly have a zero trust architecture. It's a gradual process, and the sensible approach is to start where the risks are greatest. That might mean securing privileged accounts, tightening access to administrative tools or improving protection around sensitive data. Rather than trying to change everything at once, focus on getting the fundamentals right in one area first, making sure identities are properly verified, devices meet the required security standards and users only have access to what they genuinely need. Once you've demonstrated that the approach works, gradually expand it out.
-
-And this doesn't mean traditional network security suddenly becomes irrelevant. Firewalls, VPNs and other perimeter defences still have an important role to play, they're just no longer enough on their own. The real change is recognising that security shouldn't depend entirely on where someone happens to be connected from. Instead, it needs to be built into every layer of the architecture and continually reviewed as the organisation evolves. That's perhaps the most important thing to remember about zero trust: it's not a destination you eventually reach, but an approach to security that you keep improving over time.
+ 
+Zero trust doesn't fit the shape of a traditional IT project, with a start date, a delivery plan and a day when everyone declares it finished. It's gradual, and the sensible place to begin is wherever the risk is greatest, which might mean privileged accounts, administrative tools or your most sensitive data. Get the fundamentals right in that one area first, so identities are properly verified, devices meet your standards and people reach only what they need, then widen it out once you've shown it works.
+ 
+None of this makes traditional network security irrelevant, because firewalls, VPNs and other perimeter defences still have a job to do, even if they can't carry the whole load any more. What really changes is that security stops depending on where someone connects from and gets built into every layer instead, which makes zero trust a way of working that keeps improving rather than a project you finish.
